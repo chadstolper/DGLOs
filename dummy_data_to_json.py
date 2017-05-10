@@ -1,7 +1,7 @@
 from collections import defaultdict
 import json
 
-with open('DummyData.tsv','r') as dummyfile:
+with open('DummyData.tsv', 'r') as dummyfile:
 	new_timestep = True
 	timestamps = []
 	people = []
@@ -19,7 +19,7 @@ with open('DummyData.tsv','r') as dummyfile:
 			new_timestep = True
 			continue
 		if new_timestep:
-			timestamps.append( defaultdict(list) )
+			timestamps.append(defaultdict(list))
 			row_index = 0
 			for pair in pairs:
 				if len(pair) <= 1:
@@ -61,8 +61,8 @@ with open('DummyData.tsv','r') as dummyfile:
 				edge["preference"] = pair[0]
 				edge["consumption"] = pair[1]
 				timestamps[-1]["edges"].append(edge)
-				col_index +=1
-		row_index+=1
+				col_index += 1
+		row_index += 1
 
-with open('dummy.json','w') as outfile:
+with open('dummy.json', 'w') as outfile:
 	outfile.write(json.dumps(timestamps, indent=2))
