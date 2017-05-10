@@ -1,1534 +1,1534 @@
 [
   {
+    "edges": [
+      {
+        "consumption": "6", 
+        "preference": "0.06", 
+        "source": 0, 
+        "source_name": "Ghengis Khan", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.62", 
+        "source": 0, 
+        "source_name": "Ghengis Khan", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "8", 
+        "preference": "0.19", 
+        "source": 0, 
+        "source_name": "Ghengis Khan", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "0", 
+        "preference": "0.78", 
+        "source": 0, 
+        "source_name": "Ghengis Khan", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.76", 
+        "source": 0, 
+        "source_name": "Ghengis Khan", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "7", 
+        "preference": "0.98", 
+        "source": 1, 
+        "source_name": "Oda Nobunaga", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "0", 
+        "preference": "0.37", 
+        "source": 1, 
+        "source_name": "Oda Nobunaga", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.7", 
+        "source": 1, 
+        "source_name": "Oda Nobunaga", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "8", 
+        "preference": "0.02", 
+        "source": 1, 
+        "source_name": "Oda Nobunaga", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "1", 
+        "preference": "0.36", 
+        "source": 1, 
+        "source_name": "Oda Nobunaga", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.71", 
+        "source": 2, 
+        "source_name": "Marco Polo", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "10", 
+        "preference": "0.05", 
+        "source": 2, 
+        "source_name": "Marco Polo", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.41", 
+        "source": 2, 
+        "source_name": "Marco Polo", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.78", 
+        "source": 2, 
+        "source_name": "Marco Polo", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.15", 
+        "source": 2, 
+        "source_name": "Marco Polo", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "1", 
+        "preference": "0.53", 
+        "source": 3, 
+        "source_name": "Churchill", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.92", 
+        "source": 3, 
+        "source_name": "Churchill", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "1", 
+        "preference": "0.46", 
+        "source": 3, 
+        "source_name": "Churchill", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "3", 
+        "preference": "0.66", 
+        "source": 3, 
+        "source_name": "Churchill", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "1", 
+        "preference": "0.57", 
+        "source": 3, 
+        "source_name": "Churchill", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.28", 
+        "source": 4, 
+        "source_name": "Stalin", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.5", 
+        "source": 4, 
+        "source_name": "Stalin", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.95", 
+        "source": 4, 
+        "source_name": "Stalin", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.44", 
+        "source": 4, 
+        "source_name": "Stalin", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "6", 
+        "preference": "0.16", 
+        "source": 4, 
+        "source_name": "Stalin", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "3", 
+        "preference": "0.39", 
+        "source": 5, 
+        "source_name": "Wilson", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "7", 
+        "preference": "0.12", 
+        "source": 5, 
+        "source_name": "Wilson", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.36", 
+        "source": 5, 
+        "source_name": "Wilson", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "8", 
+        "preference": "0.1", 
+        "source": 5, 
+        "source_name": "Wilson", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.48", 
+        "source": 5, 
+        "source_name": "Wilson", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "9", 
+        "preference": "0.41", 
+        "source": 6, 
+        "source_name": "Truman", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "9", 
+        "preference": "0.59", 
+        "source": 6, 
+        "source_name": "Truman", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "0", 
+        "preference": "0.01", 
+        "source": 6, 
+        "source_name": "Truman", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.7", 
+        "source": 6, 
+        "source_name": "Truman", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "1", 
+        "preference": "0.64", 
+        "source": 6, 
+        "source_name": "Truman", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.83", 
+        "source": 7, 
+        "source_name": "Walrus", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "6", 
+        "preference": "0.26", 
+        "source": 7, 
+        "source_name": "Walrus", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "3", 
+        "preference": "0.96", 
+        "source": 7, 
+        "source_name": "Walrus", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.9", 
+        "source": 7, 
+        "source_name": "Walrus", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.08", 
+        "source": 7, 
+        "source_name": "Walrus", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "8", 
+        "preference": "0.53", 
+        "source": 8, 
+        "source_name": "Trotsky", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.23", 
+        "source": 8, 
+        "source_name": "Trotsky", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "4", 
+        "preference": "0.18", 
+        "source": 8, 
+        "source_name": "Trotsky", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "0", 
+        "preference": "0.38", 
+        "source": 8, 
+        "source_name": "Trotsky", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "7", 
+        "preference": "0.84", 
+        "source": 8, 
+        "source_name": "Trotsky", 
+        "target": 4, 
+        "target_name": "Water"
+      }, 
+      {
+        "consumption": "9", 
+        "preference": "0.88", 
+        "source": 9, 
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 0, 
+        "target_name": "Tea"
+      }, 
+      {
+        "consumption": "5", 
+        "preference": "0.85", 
+        "source": 9, 
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 1, 
+        "target_name": "Coffee"
+      }, 
+      {
+        "consumption": "10", 
+        "preference": "0.05", 
+        "source": 9, 
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 2, 
+        "target_name": "Vodka"
+      }, 
+      {
+        "consumption": "2", 
+        "preference": "0.53", 
+        "source": 9, 
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 3, 
+        "target_name": "Soda"
+      }, 
+      {
+        "consumption": "7", 
+        "preference": "0.24", 
+        "source": 9, 
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 4, 
+        "target_name": "Water"
+      }
+    ], 
     "nodes": [
       {
-        "role": null, 
-        "price": "1.25", 
-        "type": "drink", 
+        "id": 0, 
         "name": "Tea", 
-        "id": 0
+        "price": "1.25", 
+        "role": null, 
+        "type": "drink"
       }, 
       {
-        "role": null, 
-        "price": "2.50", 
-        "type": "drink", 
+        "id": 1, 
         "name": "Coffee", 
-        "id": 1
+        "price": "2.50", 
+        "role": null, 
+        "type": "drink"
       }, 
       {
-        "role": null, 
+        "id": 2, 
+        "name": "Vodka", 
         "price": "3.00", 
-        "type": "drink", 
-        "name": "Vodka", 
-        "id": 2
+        "role": null, 
+        "type": "drink"
       }, 
       {
-        "role": null, 
-        "price": "1.50", 
-        "type": "drink", 
+        "id": 3, 
         "name": "Soda", 
-        "id": 3
+        "price": "1.50", 
+        "role": null, 
+        "type": "drink"
       }, 
       {
-        "role": null, 
+        "id": 4, 
+        "name": "Water", 
         "price": "0.25", 
-        "type": "drink", 
-        "name": "Water", 
-        "id": 4
+        "role": null, 
+        "type": "drink"
       }, 
       {
+        "id": 0, 
+        "name": "Ghengis Khan", 
+        "price": null, 
         "role": "Warlord", 
-        "price": null, 
-        "type": "person", 
-        "name": "Ghengis Khan", 
-        "id": 0
+        "type": "person"
       }, 
       {
+        "id": 1, 
+        "name": "Oda Nobunaga", 
+        "price": null, 
         "role": "General", 
-        "price": null, 
-        "type": "person", 
-        "name": "Oda Nobunaga", 
-        "id": 1
+        "type": "person"
       }, 
       {
+        "id": 2, 
+        "name": "Marco Polo", 
+        "price": null, 
         "role": "Traveler", 
-        "price": null, 
-        "type": "person", 
-        "name": "Marco Polo", 
-        "id": 2
+        "type": "person"
       }, 
       {
+        "id": 3, 
+        "name": "Churchill", 
+        "price": null, 
         "role": "Soldier", 
-        "price": null, 
-        "type": "person", 
-        "name": "Churchill", 
-        "id": 3
+        "type": "person"
       }, 
       {
+        "id": 4, 
+        "name": "Stalin", 
+        "price": null, 
         "role": "Laughing Man", 
-        "price": null, 
-        "type": "person", 
-        "name": "Stalin", 
-        "id": 4
+        "type": "person"
       }, 
       {
+        "id": 5, 
+        "name": "Wilson", 
+        "price": null, 
         "role": "Representative", 
-        "price": null, 
-        "type": "person", 
-        "name": "Wilson", 
-        "id": 5
+        "type": "person"
       }, 
       {
+        "id": 6, 
+        "name": "Truman", 
+        "price": null, 
         "role": "Vice President", 
-        "price": null, 
-        "type": "person", 
-        "name": "Truman", 
-        "id": 6
+        "type": "person"
       }, 
       {
+        "id": 7, 
+        "name": "Walrus", 
+        "price": null, 
         "role": "French", 
-        "price": null, 
-        "type": "person", 
-        "name": "Walrus", 
-        "id": 7
+        "type": "person"
       }, 
       {
+        "id": 8, 
+        "name": "Trotsky", 
+        "price": null, 
         "role": "Political Correspondant", 
-        "price": null, 
-        "type": "person", 
-        "name": "Trotsky", 
-        "id": 8
+        "type": "person"
       }, 
       {
+        "id": 9, 
+        "name": "Nicolai Ivanovich Lobachevsky", 
+        "price": null, 
         "role": "The Greatest Mathmatician", 
-        "price": null, 
-        "type": "person", 
-        "name": "Nicolai Ivanovich Lobachevsky", 
-        "id": 9
-      }
-    ], 
-    "edges": [
-      {
-        "source_name": "Ghengis Khan", 
-        "target": 0, 
-        "consumption": "6", 
-        "target_name": "Tea", 
-        "source": 0, 
-        "preference": "0.06"
-      }, 
-      {
-        "source_name": "Ghengis Khan", 
-        "target": 1, 
-        "consumption": "2", 
-        "target_name": "Coffee", 
-        "source": 0, 
-        "preference": "0.62"
-      }, 
-      {
-        "source_name": "Ghengis Khan", 
-        "target": 2, 
-        "consumption": "8", 
-        "target_name": "Vodka", 
-        "source": 0, 
-        "preference": "0.19"
-      }, 
-      {
-        "source_name": "Ghengis Khan", 
-        "target": 3, 
-        "consumption": "0", 
-        "target_name": "Soda", 
-        "source": 0, 
-        "preference": "0.78"
-      }, 
-      {
-        "source_name": "Ghengis Khan", 
-        "target": 4, 
-        "consumption": "4", 
-        "target_name": "Water", 
-        "source": 0, 
-        "preference": "0.76"
-      }, 
-      {
-        "source_name": "Oda Nobunaga", 
-        "target": 0, 
-        "consumption": "7", 
-        "target_name": "Tea", 
-        "source": 1, 
-        "preference": "0.98"
-      }, 
-      {
-        "source_name": "Oda Nobunaga", 
-        "target": 1, 
-        "consumption": "0", 
-        "target_name": "Coffee", 
-        "source": 1, 
-        "preference": "0.37"
-      }, 
-      {
-        "source_name": "Oda Nobunaga", 
-        "target": 2, 
-        "consumption": "4", 
-        "target_name": "Vodka", 
-        "source": 1, 
-        "preference": "0.7"
-      }, 
-      {
-        "source_name": "Oda Nobunaga", 
-        "target": 3, 
-        "consumption": "8", 
-        "target_name": "Soda", 
-        "source": 1, 
-        "preference": "0.02"
-      }, 
-      {
-        "source_name": "Oda Nobunaga", 
-        "target": 4, 
-        "consumption": "1", 
-        "target_name": "Water", 
-        "source": 1, 
-        "preference": "0.36"
-      }, 
-      {
-        "source_name": "Marco Polo", 
-        "target": 0, 
-        "consumption": "5", 
-        "target_name": "Tea", 
-        "source": 2, 
-        "preference": "0.71"
-      }, 
-      {
-        "source_name": "Marco Polo", 
-        "target": 1, 
-        "consumption": "10", 
-        "target_name": "Coffee", 
-        "source": 2, 
-        "preference": "0.05"
-      }, 
-      {
-        "source_name": "Marco Polo", 
-        "target": 2, 
-        "consumption": "5", 
-        "target_name": "Vodka", 
-        "source": 2, 
-        "preference": "0.41"
-      }, 
-      {
-        "source_name": "Marco Polo", 
-        "target": 3, 
-        "consumption": "2", 
-        "target_name": "Soda", 
-        "source": 2, 
-        "preference": "0.78"
-      }, 
-      {
-        "source_name": "Marco Polo", 
-        "target": 4, 
-        "consumption": "4", 
-        "target_name": "Water", 
-        "source": 2, 
-        "preference": "0.15"
-      }, 
-      {
-        "source_name": "Churchill", 
-        "target": 0, 
-        "consumption": "1", 
-        "target_name": "Tea", 
-        "source": 3, 
-        "preference": "0.53"
-      }, 
-      {
-        "source_name": "Churchill", 
-        "target": 1, 
-        "consumption": "4", 
-        "target_name": "Coffee", 
-        "source": 3, 
-        "preference": "0.92"
-      }, 
-      {
-        "source_name": "Churchill", 
-        "target": 2, 
-        "consumption": "1", 
-        "target_name": "Vodka", 
-        "source": 3, 
-        "preference": "0.46"
-      }, 
-      {
-        "source_name": "Churchill", 
-        "target": 3, 
-        "consumption": "3", 
-        "target_name": "Soda", 
-        "source": 3, 
-        "preference": "0.66"
-      }, 
-      {
-        "source_name": "Churchill", 
-        "target": 4, 
-        "consumption": "1", 
-        "target_name": "Water", 
-        "source": 3, 
-        "preference": "0.57"
-      }, 
-      {
-        "source_name": "Stalin", 
-        "target": 0, 
-        "consumption": "4", 
-        "target_name": "Tea", 
-        "source": 4, 
-        "preference": "0.28"
-      }, 
-      {
-        "source_name": "Stalin", 
-        "target": 1, 
-        "consumption": "2", 
-        "target_name": "Coffee", 
-        "source": 4, 
-        "preference": "0.5"
-      }, 
-      {
-        "source_name": "Stalin", 
-        "target": 2, 
-        "consumption": "5", 
-        "target_name": "Vodka", 
-        "source": 4, 
-        "preference": "0.95"
-      }, 
-      {
-        "source_name": "Stalin", 
-        "target": 3, 
-        "consumption": "2", 
-        "target_name": "Soda", 
-        "source": 4, 
-        "preference": "0.44"
-      }, 
-      {
-        "source_name": "Stalin", 
-        "target": 4, 
-        "consumption": "6", 
-        "target_name": "Water", 
-        "source": 4, 
-        "preference": "0.16"
-      }, 
-      {
-        "source_name": "Wilson", 
-        "target": 0, 
-        "consumption": "3", 
-        "target_name": "Tea", 
-        "source": 5, 
-        "preference": "0.39"
-      }, 
-      {
-        "source_name": "Wilson", 
-        "target": 1, 
-        "consumption": "7", 
-        "target_name": "Coffee", 
-        "source": 5, 
-        "preference": "0.12"
-      }, 
-      {
-        "source_name": "Wilson", 
-        "target": 2, 
-        "consumption": "4", 
-        "target_name": "Vodka", 
-        "source": 5, 
-        "preference": "0.36"
-      }, 
-      {
-        "source_name": "Wilson", 
-        "target": 3, 
-        "consumption": "8", 
-        "target_name": "Soda", 
-        "source": 5, 
-        "preference": "0.1"
-      }, 
-      {
-        "source_name": "Wilson", 
-        "target": 4, 
-        "consumption": "5", 
-        "target_name": "Water", 
-        "source": 5, 
-        "preference": "0.48"
-      }, 
-      {
-        "source_name": "Truman", 
-        "target": 0, 
-        "consumption": "9", 
-        "target_name": "Tea", 
-        "source": 6, 
-        "preference": "0.41"
-      }, 
-      {
-        "source_name": "Truman", 
-        "target": 1, 
-        "consumption": "9", 
-        "target_name": "Coffee", 
-        "source": 6, 
-        "preference": "0.59"
-      }, 
-      {
-        "source_name": "Truman", 
-        "target": 2, 
-        "consumption": "0", 
-        "target_name": "Vodka", 
-        "source": 6, 
-        "preference": "0.01"
-      }, 
-      {
-        "source_name": "Truman", 
-        "target": 3, 
-        "consumption": "5", 
-        "target_name": "Soda", 
-        "source": 6, 
-        "preference": "0.7"
-      }, 
-      {
-        "source_name": "Truman", 
-        "target": 4, 
-        "consumption": "1", 
-        "target_name": "Water", 
-        "source": 6, 
-        "preference": "0.64"
-      }, 
-      {
-        "source_name": "Walrus", 
-        "target": 0, 
-        "consumption": "2", 
-        "target_name": "Tea", 
-        "source": 7, 
-        "preference": "0.83"
-      }, 
-      {
-        "source_name": "Walrus", 
-        "target": 1, 
-        "consumption": "6", 
-        "target_name": "Coffee", 
-        "source": 7, 
-        "preference": "0.26"
-      }, 
-      {
-        "source_name": "Walrus", 
-        "target": 2, 
-        "consumption": "3", 
-        "target_name": "Vodka", 
-        "source": 7, 
-        "preference": "0.96"
-      }, 
-      {
-        "source_name": "Walrus", 
-        "target": 3, 
-        "consumption": "2", 
-        "target_name": "Soda", 
-        "source": 7, 
-        "preference": "0.9"
-      }, 
-      {
-        "source_name": "Walrus", 
-        "target": 4, 
-        "consumption": "4", 
-        "target_name": "Water", 
-        "source": 7, 
-        "preference": "0.08"
-      }, 
-      {
-        "source_name": "Trotsky", 
-        "target": 0, 
-        "consumption": "8", 
-        "target_name": "Tea", 
-        "source": 8, 
-        "preference": "0.53"
-      }, 
-      {
-        "source_name": "Trotsky", 
-        "target": 1, 
-        "consumption": "5", 
-        "target_name": "Coffee", 
-        "source": 8, 
-        "preference": "0.23"
-      }, 
-      {
-        "source_name": "Trotsky", 
-        "target": 2, 
-        "consumption": "4", 
-        "target_name": "Vodka", 
-        "source": 8, 
-        "preference": "0.18"
-      }, 
-      {
-        "source_name": "Trotsky", 
-        "target": 3, 
-        "consumption": "0", 
-        "target_name": "Soda", 
-        "source": 8, 
-        "preference": "0.38"
-      }, 
-      {
-        "source_name": "Trotsky", 
-        "target": 4, 
-        "consumption": "7", 
-        "target_name": "Water", 
-        "source": 8, 
-        "preference": "0.84"
-      }, 
-      {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 0, 
-        "consumption": "9", 
-        "target_name": "Tea", 
-        "source": 9, 
-        "preference": "0.88"
-      }, 
-      {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 1, 
-        "consumption": "5", 
-        "target_name": "Coffee", 
-        "source": 9, 
-        "preference": "0.85"
-      }, 
-      {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 2, 
-        "consumption": "10", 
-        "target_name": "Vodka", 
-        "source": 9, 
-        "preference": "0.05"
-      }, 
-      {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 3, 
-        "consumption": "2", 
-        "target_name": "Soda", 
-        "source": 9, 
-        "preference": "0.53"
-      }, 
-      {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 4, 
-        "consumption": "7", 
-        "target_name": "Water", 
-        "source": 9, 
-        "preference": "0.24"
+        "type": "person"
       }
     ]
   }, 
   {
-    "nodes": [
-      {
-        "role": null, 
-        "price": "2.00", 
-        "type": "drink", 
-        "name": "Tea", 
-        "id": 0
-      }, 
-      {
-        "role": null, 
-        "price": "3.50", 
-        "type": "drink", 
-        "name": "Coffee", 
-        "id": 1
-      }, 
-      {
-        "role": null, 
-        "price": "4.00", 
-        "type": "drink", 
-        "name": "Vodka", 
-        "id": 2
-      }, 
-      {
-        "role": null, 
-        "price": "2.50", 
-        "type": "drink", 
-        "name": "Soda", 
-        "id": 3
-      }, 
-      {
-        "role": null, 
-        "price": "1.25", 
-        "type": "drink", 
-        "name": "Water", 
-        "id": 4
-      }, 
-      {
-        "role": "Great Khan", 
-        "price": null, 
-        "type": "person", 
-        "name": "Ghengis Khan", 
-        "id": 0
-      }, 
-      {
-        "role": "Betrayed", 
-        "price": null, 
-        "type": "person", 
-        "name": "Oda Nobunaga", 
-        "id": 1
-      }, 
-      {
-        "role": "Writer", 
-        "price": null, 
-        "type": "person", 
-        "name": "Marco Polo", 
-        "id": 2
-      }, 
-      {
-        "role": "Cigar Tester", 
-        "price": null, 
-        "type": "person", 
-        "name": "Churchill", 
-        "id": 3
-      }, 
-      {
-        "role": "Dictator", 
-        "price": null, 
-        "type": "person", 
-        "name": "Stalin", 
-        "id": 4
-      }, 
-      {
-        "role": "President", 
-        "price": null, 
-        "type": "person", 
-        "name": "Wilson", 
-        "id": 5
-      }, 
-      {
-        "role": "Over-Anxious President", 
-        "price": null, 
-        "type": "person", 
-        "name": "Truman", 
-        "id": 6
-      }, 
-      {
-        "role": "French Leader", 
-        "price": null, 
-        "type": "person", 
-        "name": "Walrus", 
-        "id": 7
-      }, 
-      {
-        "role": "Partner in Crime", 
-        "price": null, 
-        "type": "person", 
-        "name": "Trotsky", 
-        "id": 8
-      }, 
-      {
-        "role": "Found success in mathmatics with one word", 
-        "price": null, 
-        "type": "person", 
-        "name": "Nicolai Ivanovich Lobachevsky", 
-        "id": 9
-      }
-    ], 
     "edges": [
       {
+        "consumption": "4", 
+        "preference": "0.49", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 0, 
-        "consumption": "4", 
-        "target_name": "Tea", 
-        "source": 0, 
-        "preference": "0.49"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.31", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 1, 
-        "consumption": "3", 
-        "target_name": "Coffee", 
-        "source": 0, 
-        "preference": "0.31"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Ghengis Khan", 
-        "target": 2, 
         "consumption": "2", 
-        "target_name": "Vodka", 
+        "preference": "0.37", 
         "source": 0, 
-        "preference": "0.37"
+        "source_name": "Ghengis Khan", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.29", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 3, 
-        "consumption": "4", 
-        "target_name": "Soda", 
-        "source": 0, 
-        "preference": "0.29"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.45", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 4, 
-        "consumption": "8", 
-        "target_name": "Water", 
-        "source": 0, 
-        "preference": "0.45"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.87", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 0, 
-        "consumption": "5", 
-        "target_name": "Tea", 
-        "source": 1, 
-        "preference": "0.87"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.54", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 1, 
-        "consumption": "4", 
-        "target_name": "Coffee", 
-        "source": 1, 
-        "preference": "0.54"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.46", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 2, 
-        "consumption": "6", 
-        "target_name": "Vodka", 
-        "source": 1, 
-        "preference": "0.46"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "0", 
+        "preference": "0.63", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 3, 
-        "consumption": "0", 
-        "target_name": "Soda", 
-        "source": 1, 
-        "preference": "0.63"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.05", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 4, 
-        "consumption": "7", 
-        "target_name": "Water", 
-        "source": 1, 
-        "preference": "0.05"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.73", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 0, 
-        "consumption": "6", 
-        "target_name": "Tea", 
-        "source": 2, 
-        "preference": "0.73"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.66", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 1, 
-        "consumption": "8", 
-        "target_name": "Coffee", 
-        "source": 2, 
-        "preference": "0.66"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Marco Polo", 
-        "target": 2, 
         "consumption": "2", 
-        "target_name": "Vodka", 
+        "preference": "0.84", 
         "source": 2, 
-        "preference": "0.84"
+        "source_name": "Marco Polo", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.27", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 3, 
-        "consumption": "9", 
-        "target_name": "Soda", 
-        "source": 2, 
-        "preference": "0.27"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.96", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 4, 
-        "consumption": "8", 
-        "target_name": "Water", 
-        "source": 2, 
-        "preference": "0.96"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.89", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 0, 
-        "consumption": "7", 
-        "target_name": "Tea", 
-        "source": 3, 
-        "preference": "0.89"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.07", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 1, 
-        "consumption": "5", 
-        "target_name": "Coffee", 
-        "source": 3, 
-        "preference": "0.07"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Churchill", 
-        "target": 2, 
         "consumption": "2", 
-        "target_name": "Vodka", 
+        "preference": "0.52", 
         "source": 3, 
-        "preference": "0.52"
+        "source_name": "Churchill", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.20", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 3, 
-        "consumption": "1", 
-        "target_name": "Soda", 
-        "source": 3, 
-        "preference": "0.20"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.14", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 4, 
-        "consumption": "3", 
-        "target_name": "Water", 
-        "source": 3, 
-        "preference": "0.14"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.34", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 0, 
-        "consumption": "7", 
-        "target_name": "Tea", 
-        "source": 4, 
-        "preference": "0.34"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.79", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 1, 
-        "consumption": "4", 
-        "target_name": "Coffee", 
-        "source": 4, 
-        "preference": "0.79"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.49", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 2, 
-        "consumption": "4", 
-        "target_name": "Vodka", 
-        "source": 4, 
-        "preference": "0.49"
+        "target_name": "Vodka"
       }, 
       {
-        "source_name": "Stalin", 
-        "target": 3, 
         "consumption": "6", 
-        "target_name": "Soda", 
+        "preference": "0.43", 
         "source": 4, 
-        "preference": "0.43"
+        "source_name": "Stalin", 
+        "target": 3, 
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.64", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 4, 
-        "consumption": "9", 
-        "target_name": "Water", 
-        "source": 4, 
-        "preference": "0.64"
+        "target_name": "Water"
       }, 
       {
-        "source_name": "Wilson", 
-        "target": 0, 
         "consumption": "8", 
-        "target_name": "Tea", 
+        "preference": "0.09", 
         "source": 5, 
-        "preference": "0.09"
+        "source_name": "Wilson", 
+        "target": 0, 
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.80", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 1, 
-        "consumption": "7", 
-        "target_name": "Coffee", 
-        "source": 5, 
-        "preference": "0.80"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Wilson", 
-        "target": 2, 
         "consumption": "9", 
-        "target_name": "Vodka", 
+        "preference": "0.75", 
         "source": 5, 
-        "preference": "0.75"
+        "source_name": "Wilson", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.96", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 3, 
-        "consumption": "4", 
-        "target_name": "Soda", 
-        "source": 5, 
-        "preference": "0.96"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.42", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 4, 
-        "consumption": "1", 
-        "target_name": "Water", 
-        "source": 5, 
-        "preference": "0.42"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "0", 
+        "preference": "0.13", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 0, 
-        "consumption": "0", 
-        "target_name": "Tea", 
-        "source": 6, 
-        "preference": "0.13"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.09", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 1, 
-        "consumption": "3", 
-        "target_name": "Coffee", 
-        "source": 6, 
-        "preference": "0.09"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.31", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 2, 
-        "consumption": "7", 
-        "target_name": "Vodka", 
-        "source": 6, 
-        "preference": "0.31"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.78", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 3, 
-        "consumption": "5", 
-        "target_name": "Soda", 
-        "source": 6, 
-        "preference": "0.78"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.50", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 4, 
-        "consumption": "4", 
-        "target_name": "Water", 
-        "source": 6, 
-        "preference": "0.50"
+        "target_name": "Water"
       }, 
       {
-        "source_name": "Walrus", 
-        "target": 0, 
         "consumption": "6", 
-        "target_name": "Tea", 
+        "preference": "0.47", 
         "source": 7, 
-        "preference": "0.47"
+        "source_name": "Walrus", 
+        "target": 0, 
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.69", 
+        "source": 7, 
         "source_name": "Walrus", 
         "target": 1, 
-        "consumption": "1", 
-        "target_name": "Coffee", 
-        "source": 7, 
-        "preference": "0.69"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Walrus", 
-        "target": 2, 
         "consumption": "9", 
-        "target_name": "Vodka", 
+        "preference": "0.16", 
         "source": 7, 
-        "preference": "0.16"
+        "source_name": "Walrus", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.90", 
+        "source": 7, 
         "source_name": "Walrus", 
         "target": 3, 
-        "consumption": "8", 
-        "target_name": "Soda", 
-        "source": 7, 
-        "preference": "0.90"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.88", 
+        "source": 7, 
         "source_name": "Walrus", 
         "target": 4, 
-        "consumption": "1", 
-        "target_name": "Water", 
-        "source": 7, 
-        "preference": "0.88"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.10", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 0, 
-        "consumption": "5", 
-        "target_name": "Tea", 
-        "source": 8, 
-        "preference": "0.10"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.59", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 1, 
-        "consumption": "3", 
-        "target_name": "Coffee", 
-        "source": 8, 
-        "preference": "0.59"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.32", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 2, 
-        "consumption": "3", 
-        "target_name": "Vodka", 
-        "source": 8, 
-        "preference": "0.32"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.30", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 3, 
-        "consumption": "5", 
-        "target_name": "Soda", 
-        "source": 8, 
-        "preference": "0.30"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "0", 
+        "preference": "0.54", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 4, 
-        "consumption": "0", 
-        "target_name": "Water", 
-        "source": 8, 
-        "preference": "0.54"
+        "target_name": "Water"
       }, 
       {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 0, 
         "consumption": "7", 
-        "target_name": "Tea", 
+        "preference": "0.03", 
         "source": 9, 
-        "preference": "0.03"
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 0, 
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.77", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 1, 
-        "consumption": "7", 
-        "target_name": "Coffee", 
-        "source": 9, 
-        "preference": "0.77"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Nicolai Ivanovich Lobachevsky", 
-        "target": 2, 
         "consumption": "0 ", 
-        "target_name": "Vodka", 
+        "preference": "0.77", 
         "source": 9, 
-        "preference": "0.77"
+        "source_name": "Nicolai Ivanovich Lobachevsky", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.00", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 3, 
-        "consumption": "5", 
-        "target_name": "Soda", 
-        "source": 9, 
-        "preference": "0.00"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "10", 
+        "preference": "0.50", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 4, 
-        "consumption": "10", 
-        "target_name": "Water", 
-        "source": 9, 
-        "preference": "0.50"
+        "target_name": "Water"
+      }
+    ], 
+    "nodes": [
+      {
+        "id": 0, 
+        "name": "Tea", 
+        "price": "2.00", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 1, 
+        "name": "Coffee", 
+        "price": "3.50", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 2, 
+        "name": "Vodka", 
+        "price": "4.00", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 3, 
+        "name": "Soda", 
+        "price": "2.50", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 4, 
+        "name": "Water", 
+        "price": "1.25", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 0, 
+        "name": "Ghengis Khan", 
+        "price": null, 
+        "role": "Great Khan", 
+        "type": "person"
+      }, 
+      {
+        "id": 1, 
+        "name": "Oda Nobunaga", 
+        "price": null, 
+        "role": "Betrayed", 
+        "type": "person"
+      }, 
+      {
+        "id": 2, 
+        "name": "Marco Polo", 
+        "price": null, 
+        "role": "Writer", 
+        "type": "person"
+      }, 
+      {
+        "id": 3, 
+        "name": "Churchill", 
+        "price": null, 
+        "role": "Cigar Tester", 
+        "type": "person"
+      }, 
+      {
+        "id": 4, 
+        "name": "Stalin", 
+        "price": null, 
+        "role": "Dictator", 
+        "type": "person"
+      }, 
+      {
+        "id": 5, 
+        "name": "Wilson", 
+        "price": null, 
+        "role": "President", 
+        "type": "person"
+      }, 
+      {
+        "id": 6, 
+        "name": "Truman", 
+        "price": null, 
+        "role": "Over-Anxious President", 
+        "type": "person"
+      }, 
+      {
+        "id": 7, 
+        "name": "Walrus", 
+        "price": null, 
+        "role": "French Leader", 
+        "type": "person"
+      }, 
+      {
+        "id": 8, 
+        "name": "Trotsky", 
+        "price": null, 
+        "role": "Partner in Crime", 
+        "type": "person"
+      }, 
+      {
+        "id": 9, 
+        "name": "Nicolai Ivanovich Lobachevsky", 
+        "price": null, 
+        "role": "Found success in mathmatics with one word", 
+        "type": "person"
       }
     ]
   }, 
   {
-    "nodes": [
-      {
-        "role": null, 
-        "price": "0.75", 
-        "type": "drink", 
-        "name": "Tea", 
-        "id": 0
-      }, 
-      {
-        "role": null, 
-        "price": "1.50", 
-        "type": "drink", 
-        "name": "Coffee", 
-        "id": 1
-      }, 
-      {
-        "role": null, 
-        "price": "2.00", 
-        "type": "drink", 
-        "name": "Vodka", 
-        "id": 2
-      }, 
-      {
-        "role": null, 
-        "price": "2.50", 
-        "type": "drink", 
-        "name": "Soda", 
-        "id": 3
-      }, 
-      {
-        "role": null, 
-        "price": "0.50", 
-        "type": "drink", 
-        "name": "Water", 
-        "id": 4
-      }, 
-      {
-        "role": "Mongolian God", 
-        "price": null, 
-        "type": "person", 
-        "name": "Ghengis Khan", 
-        "id": 0
-      }, 
-      {
-        "role": "Ashes", 
-        "price": null, 
-        "type": "person", 
-        "name": "Oda Nobunaga", 
-        "id": 1
-      }, 
-      {
-        "role": "Game Subject", 
-        "price": null, 
-        "type": "person", 
-        "name": "Marco Polo", 
-        "id": 2
-      }, 
-      {
-        "role": "Prime Minister", 
-        "price": null, 
-        "type": "person", 
-        "name": "Churchill", 
-        "id": 3
-      }, 
-      {
-        "role": "Russian Bias", 
-        "price": null, 
-        "type": "person", 
-        "name": "Stalin", 
-        "id": 4
-      }, 
-      {
-        "role": "League of Nations Creator", 
-        "price": null, 
-        "type": "person", 
-        "name": "Wilson", 
-        "id": 5
-      }, 
-      {
-        "role": "Learned not to mess with Stalin", 
-        "price": null, 
-        "type": "person", 
-        "name": "Truman", 
-        "id": 6
-      }, 
-      {
-        "role": "Masterful Mustache Holder", 
-        "price": null, 
-        "type": "person", 
-        "name": "Walrus", 
-        "id": 7
-      }, 
-      {
-        "role": "Meme", 
-        "price": null, 
-        "type": "person", 
-        "name": "Trotsky", 
-        "id": 8
-      }, 
-      {
-        "role": "Plagarize", 
-        "price": null, 
-        "type": "person", 
-        "name": "Nicolai Ivanovich Lobachevsky", 
-        "id": 9
-      }
-    ], 
     "edges": [
       {
+        "consumption": "8", 
+        "preference": "0.49", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 0, 
-        "consumption": "8", 
-        "target_name": "Tea", 
-        "source": 0, 
-        "preference": "0.49"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.81", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 1, 
-        "consumption": "8", 
-        "target_name": "Coffee", 
-        "source": 0, 
-        "preference": "0.81"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Ghengis Khan", 
-        "target": 2, 
         "consumption": "5", 
-        "target_name": "Vodka", 
+        "preference": "0.87", 
         "source": 0, 
-        "preference": "0.87"
+        "source_name": "Ghengis Khan", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
-        "source_name": "Ghengis Khan", 
-        "target": 3, 
         "consumption": "4", 
-        "target_name": "Soda", 
+        "preference": "0.53", 
         "source": 0, 
-        "preference": "0.53"
+        "source_name": "Ghengis Khan", 
+        "target": 3, 
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.45", 
+        "source": 0, 
         "source_name": "Ghengis Khan", 
         "target": 4, 
-        "consumption": "6", 
-        "target_name": "Water", 
-        "source": 0, 
-        "preference": "0.45"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "0", 
+        "preference": "0.61", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 0, 
-        "consumption": "0", 
-        "target_name": "Tea", 
-        "source": 1, 
-        "preference": "0.61"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.02", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 1, 
-        "consumption": "7", 
-        "target_name": "Coffee", 
-        "source": 1, 
-        "preference": "0.02"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.70", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 2, 
-        "consumption": "6", 
-        "target_name": "Vodka", 
-        "source": 1, 
-        "preference": "0.70"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.62", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 3, 
-        "consumption": "7", 
-        "target_name": "Soda", 
-        "source": 1, 
-        "preference": "0.62"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "2", 
+        "preference": "0.79", 
+        "source": 1, 
         "source_name": "Oda Nobunaga", 
         "target": 4, 
-        "consumption": "2", 
-        "target_name": "Water", 
-        "source": 1, 
-        "preference": "0.79"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.21", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 0, 
-        "consumption": "8", 
-        "target_name": "Tea", 
-        "source": 2, 
-        "preference": "0.21"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "8", 
+        "preference": "0.89", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 1, 
-        "consumption": "8", 
-        "target_name": "Coffee", 
-        "source": 2, 
-        "preference": "0.89"
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Marco Polo", 
-        "target": 2, 
         "consumption": "10", 
-        "target_name": "Vodka", 
+        "preference": "0.82", 
         "source": 2, 
-        "preference": "0.82"
+        "source_name": "Marco Polo", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "4", 
+        "preference": "1.00", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 3, 
-        "consumption": "4", 
-        "target_name": "Soda", 
-        "source": 2, 
-        "preference": "1.00"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.43", 
+        "source": 2, 
         "source_name": "Marco Polo", 
         "target": 4, 
-        "consumption": "1", 
-        "target_name": "Water", 
-        "source": 2, 
-        "preference": "0.43"
+        "target_name": "Water"
       }, 
       {
-        "source_name": "Churchill", 
-        "target": 0, 
         "consumption": "0", 
-        "target_name": "Tea", 
+        "preference": "0.11", 
         "source": 3, 
-        "preference": "0.11"
+        "source_name": "Churchill", 
+        "target": 0, 
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "2", 
+        "preference": "0.04", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 1, 
-        "consumption": "2", 
-        "target_name": "Coffee", 
-        "source": 3, 
-        "preference": "0.04"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.23", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 2, 
-        "consumption": "6", 
-        "target_name": "Vodka", 
-        "source": 3, 
-        "preference": "0.23"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.67", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 3, 
-        "consumption": "3", 
-        "target_name": "Soda", 
-        "source": 3, 
-        "preference": "0.67"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "3", 
+        "preference": "0.36", 
+        "source": 3, 
         "source_name": "Churchill", 
         "target": 4, 
-        "consumption": "3", 
-        "target_name": "Water", 
-        "source": 3, 
-        "preference": "0.36"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.30", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 0, 
-        "consumption": "5", 
-        "target_name": "Tea", 
-        "source": 4, 
-        "preference": "0.30"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.50", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 1, 
-        "consumption": "9", 
-        "target_name": "Coffee", 
-        "source": 4, 
-        "preference": "0.50"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.95", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 2, 
-        "consumption": "6", 
-        "target_name": "Vodka", 
-        "source": 4, 
-        "preference": "0.95"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "5", 
+        "preference": "0.64", 
+        "source": 4, 
         "source_name": "Stalin", 
         "target": 3, 
-        "consumption": "5", 
-        "target_name": "Soda", 
-        "source": 4, 
-        "preference": "0.64"
+        "target_name": "Soda"
       }, 
       {
-        "source_name": "Stalin", 
-        "target": 4, 
         "consumption": "8", 
-        "target_name": "Water", 
+        "preference": "0.59", 
         "source": 4, 
-        "preference": "0.59"
+        "source_name": "Stalin", 
+        "target": 4, 
+        "target_name": "Water"
       }, 
       {
+        "consumption": "2", 
+        "preference": "0.80", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 0, 
-        "consumption": "2", 
-        "target_name": "Tea", 
-        "source": 5, 
-        "preference": "0.80"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.24", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 1, 
-        "consumption": "9", 
-        "target_name": "Coffee", 
-        "source": 5, 
-        "preference": "0.24"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.96", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 2, 
-        "consumption": "9", 
-        "target_name": "Vodka", 
-        "source": 5, 
-        "preference": "0.96"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.91", 
+        "source": 5, 
         "source_name": "Wilson", 
         "target": 3, 
-        "consumption": "1", 
-        "target_name": "Soda", 
-        "source": 5, 
-        "preference": "0.91"
+        "target_name": "Soda"
       }, 
       {
-        "source_name": "Wilson", 
-        "target": 4, 
         "consumption": "5", 
-        "target_name": "Water", 
+        "preference": "0.11", 
         "source": 5, 
-        "preference": "0.11"
+        "source_name": "Wilson", 
+        "target": 4, 
+        "target_name": "Water"
       }, 
       {
+        "consumption": "2", 
+        "preference": "0.58", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 0, 
-        "consumption": "2", 
-        "target_name": "Tea", 
-        "source": 6, 
-        "preference": "0.58"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "2", 
+        "preference": "0.29", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 1, 
-        "consumption": "2", 
-        "target_name": "Coffee", 
-        "source": 6, 
-        "preference": "0.29"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.25", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 2, 
-        "consumption": "4", 
-        "target_name": "Vodka", 
-        "source": 6, 
-        "preference": "0.25"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.47", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 3, 
-        "consumption": "9", 
-        "target_name": "Soda", 
-        "source": 6, 
-        "preference": "0.47"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.94", 
+        "source": 6, 
         "source_name": "Truman", 
         "target": 4, 
-        "consumption": "6", 
-        "target_name": "Water", 
-        "source": 6, 
-        "preference": "0.94"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.66", 
+        "source": 7, 
         "source_name": "Walrus", 
         "target": 0, 
-        "consumption": "6", 
-        "target_name": "Tea", 
-        "source": 7, 
-        "preference": "0.66"
+        "target_name": "Tea"
       }, 
       {
-        "source_name": "Walrus", 
-        "target": 1, 
         "consumption": "8", 
-        "target_name": "Coffee", 
+        "preference": "0.63", 
         "source": 7, 
-        "preference": "0.63"
+        "source_name": "Walrus", 
+        "target": 1, 
+        "target_name": "Coffee"
       }, 
       {
-        "source_name": "Walrus", 
-        "target": 2, 
         "consumption": "3", 
-        "target_name": "Vodka", 
+        "preference": "0.85", 
         "source": 7, 
-        "preference": "0.85"
+        "source_name": "Walrus", 
+        "target": 2, 
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "0", 
+        "preference": "0.32", 
+        "source": 7, 
         "source_name": "Walrus", 
         "target": 3, 
-        "consumption": "0", 
-        "target_name": "Soda", 
-        "source": 7, 
-        "preference": "0.32"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "0", 
+        "preference": "0.05", 
+        "source": 7, 
         "source_name": "Walrus", 
         "target": 4, 
-        "consumption": "0", 
-        "target_name": "Water", 
-        "source": 7, 
-        "preference": "0.05"
+        "target_name": "Water"
       }, 
       {
-        "source_name": "Trotsky", 
-        "target": 0, 
         "consumption": "2", 
-        "target_name": "Tea", 
+        "preference": "0.03", 
         "source": 8, 
-        "preference": "0.03"
+        "source_name": "Trotsky", 
+        "target": 0, 
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.26", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 1, 
-        "consumption": "7", 
-        "target_name": "Coffee", 
-        "source": 8, 
-        "preference": "0.26"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.74", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 2, 
-        "consumption": "4", 
-        "target_name": "Vodka", 
-        "source": 8, 
-        "preference": "0.74"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "4", 
+        "preference": "0.48", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 3, 
-        "consumption": "4", 
-        "target_name": "Soda", 
-        "source": 8, 
-        "preference": "0.48"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "7", 
+        "preference": "0.46", 
+        "source": 8, 
         "source_name": "Trotsky", 
         "target": 4, 
-        "consumption": "7", 
-        "target_name": "Water", 
-        "source": 8, 
-        "preference": "0.46"
+        "target_name": "Water"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.70", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 0, 
-        "consumption": "1", 
-        "target_name": "Tea", 
-        "source": 9, 
-        "preference": "0.70"
+        "target_name": "Tea"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.18", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 1, 
-        "consumption": "9", 
-        "target_name": "Coffee", 
-        "source": 9, 
-        "preference": "0.18"
+        "target_name": "Coffee"
       }, 
       {
+        "consumption": "9", 
+        "preference": "0.93", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 2, 
-        "consumption": "9", 
-        "target_name": "Vodka", 
-        "source": 9, 
-        "preference": "0.93"
+        "target_name": "Vodka"
       }, 
       {
+        "consumption": "1", 
+        "preference": "0.93", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 3, 
-        "consumption": "1", 
-        "target_name": "Soda", 
-        "source": 9, 
-        "preference": "0.93"
+        "target_name": "Soda"
       }, 
       {
+        "consumption": "6", 
+        "preference": "0.16", 
+        "source": 9, 
         "source_name": "Nicolai Ivanovich Lobachevsky", 
         "target": 4, 
-        "consumption": "6", 
-        "target_name": "Water", 
-        "source": 9, 
-        "preference": "0.16"
+        "target_name": "Water"
+      }
+    ], 
+    "nodes": [
+      {
+        "id": 0, 
+        "name": "Tea", 
+        "price": "0.75", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 1, 
+        "name": "Coffee", 
+        "price": "1.50", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 2, 
+        "name": "Vodka", 
+        "price": "2.00", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 3, 
+        "name": "Soda", 
+        "price": "2.50", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 4, 
+        "name": "Water", 
+        "price": "0.50", 
+        "role": null, 
+        "type": "drink"
+      }, 
+      {
+        "id": 0, 
+        "name": "Ghengis Khan", 
+        "price": null, 
+        "role": "Mongolian God", 
+        "type": "person"
+      }, 
+      {
+        "id": 1, 
+        "name": "Oda Nobunaga", 
+        "price": null, 
+        "role": "Ashes", 
+        "type": "person"
+      }, 
+      {
+        "id": 2, 
+        "name": "Marco Polo", 
+        "price": null, 
+        "role": "Game Subject", 
+        "type": "person"
+      }, 
+      {
+        "id": 3, 
+        "name": "Churchill", 
+        "price": null, 
+        "role": "Prime Minister", 
+        "type": "person"
+      }, 
+      {
+        "id": 4, 
+        "name": "Stalin", 
+        "price": null, 
+        "role": "Russian Bias", 
+        "type": "person"
+      }, 
+      {
+        "id": 5, 
+        "name": "Wilson", 
+        "price": null, 
+        "role": "League of Nations Creator", 
+        "type": "person"
+      }, 
+      {
+        "id": 6, 
+        "name": "Truman", 
+        "price": null, 
+        "role": "Learned not to mess with Stalin", 
+        "type": "person"
+      }, 
+      {
+        "id": 7, 
+        "name": "Walrus", 
+        "price": null, 
+        "role": "Masterful Mustache Holder", 
+        "type": "person"
+      }, 
+      {
+        "id": 8, 
+        "name": "Trotsky", 
+        "price": null, 
+        "role": "Meme", 
+        "type": "person"
+      }, 
+      {
+        "id": 9, 
+        "name": "Nicolai Ivanovich Lobachevsky", 
+        "price": null, 
+        "role": "Plagarize", 
+        "type": "person"
       }
     ]
   }

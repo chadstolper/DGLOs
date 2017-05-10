@@ -65,4 +65,5 @@ with open('DummyData.tsv', 'r') as dummyfile:
 		row_index += 1
 
 with open('dummy.json', 'w') as outfile:
-	outfile.write(json.dumps(timestamps, indent=2))
+	outfile.write(json.dumps(timestamps, indent=2, sort_keys=True))
+
