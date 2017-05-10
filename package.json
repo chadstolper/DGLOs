@@ -1,0 +1,12 @@
+{
+  "name": "dGLOs",
+  "version": "0.1.0",
+  "description": "Dynamic Graph Visualization Libary",
+  "main": "index.html",
+  "repository": "https://github.com/chadstolper/dGLOs.git",
+  "author": "Chad Stolper, Matt Sanford, Will Price",
+  "license": "MIT",
+  "dependencies": {
+    "d3": "^4.8.0"
+  }
+}
