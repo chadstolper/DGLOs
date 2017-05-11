@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "module": "es2015",
+        "target": "es2016",
+        "sourceMap": true,
+		//"sourceMapRelative": true,
+        "declaration": true,
+        "removeComments": false,
+        "noImplicitAny": true,
+        "rootDir": ".",
+        "version": true,
+        "outDir": "out"
+					
+    },
+    "include": [
+        "src/ts/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/ts/.baseDir.ts"
+    ]
+}
