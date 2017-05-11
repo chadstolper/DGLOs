@@ -4,4 +4,4 @@ import { square, cube } from "./math";
 import * as d3 from "d3-selection"
  
 d3.select("h3").text("Trying something else!");
-console.log(square(3 ));
+console.log(square(3));

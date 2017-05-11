@@ -6,6 +6,6 @@ export function square(x: number) {
 }
 
 export function cube(x: number) {
-	return x ** 3;   
+	return x ** 3;
 	// return Math.pow(x, 3);
 }

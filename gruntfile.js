@@ -3,6 +3,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-open');
+	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-rollup');
 	var nodeResolve = require("rollup-plugin-node-resolve")
  
@@ -36,16 +37,26 @@ module.exports = function (grunt) {
 		},
 		ts: {
 			default: {
-				tsconfig: true
+				tsconfig: true,
 			},
 			options: {
 				//fast: "never"
 			}
 		},
+		tslint: {
+			options: {
+				configuration: "tslint.json",
+				force: false
+			},
+			files: {
+				src: "src/ts/**/*.ts"
+			}
+			
+		},
 		watch: {
 			typescript: {
 				files: '**/*.ts',
-				tasks: ['ts','rollup']
+				tasks: ['tslint','ts','rollup']
 			}
 		},
 		open: {

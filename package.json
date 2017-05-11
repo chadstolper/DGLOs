@@ -1,5 +1,5 @@
 {
-  "name": "dGLOs",
+  "name": "dglos",
   "version": "0.1.0",
   "description": "Dynamic Graph Visualization Libary",
   "main": "index.html",
@@ -19,6 +19,7 @@
     "grunt-open": "^0.2.3",
     "grunt-rollup": "^1.0.1",
     "grunt-ts": "^6.0.0-beta.15",
+    "grunt-tslint": "^5.0.1",
     "rollup": "^0.41.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "tslint": "^5.2.0",
