@@ -24,7 +24,7 @@ module.exports = function (grunt) {
 			},
 			files: {
 				dest: 'js/bundle.js',
-				src: 'out/src/ts/main.js',
+				src: 'out/src/ts/willMAIN.js',
 			},
 		},
 		connect: {
