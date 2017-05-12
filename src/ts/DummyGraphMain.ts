@@ -26,23 +26,16 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let nodes: Selection<any, any, any, any> = chart.selectAll(".node")
 		.data(graph.nodes, function (d: Node): string { return "" + d.id; }) //calls the id getter
 
-	nodes.enter().append("g")
+	let nodeEnter = nodes.enter().append("g")
 		.classed("node", true)
 		// let circles = nodes.selectAll("circle")
 		// 		.datum(function(d:Node):Node { return d; })
-		.append("circle")
-			.attr("r", 5)
-			.attr("cx", 0)
-			.attr("cy", 0)
-		
-		console.log(nodes)
+	nodeEnter.append("circle")
+		.attr("r", 5)
+		.attr("cx", 0)
+		.attr("cy", 0)
 
-	let nodeUpdate: Selection<any,any,any,any> = nodes.enter().merge(nodes)
-	console.log(nodeUpdate)
-	nodeUpdate
-		// .each(function (d: Node, i: number) {
-		// 	console.log(d);
-		// })
+	nodes = nodeEnter.merge(nodes)
 		.style("fill", function (d: Node): string {
 			console.log(d)
 			//we are letting TS check that d is the right type
@@ -51,10 +44,10 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			console.log(colorscale(d.type));
 			return colorscale(d.type);
 		})
-		.attr("y", 10)
-		.attr("x", function (d: Node, i: number): number {
-			return widthscale(i);
-		});
+		.attr("transform", function (d: Node, i: number): string{
+			return "translate("+widthscale(i)+","+10+")";
+		})
+		
 
 
 
