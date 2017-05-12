@@ -1,0 +1,13 @@
+p {
+	color: green;
+}
+
+.chart circle{
+	fill: goldenrod;
+}
+
+.chart text{
+	fill: white;
+	font: 10px sans-serif;
+	text-anchor: center;
+}
