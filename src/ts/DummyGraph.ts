@@ -76,7 +76,7 @@ export class DrinkEdge extends Edge {
 export class StaticDrinkGraph extends Graph {
 
 	constructor(response: any) {
-		let rawNodeData: Array<any> = response[0].nodes;
+		let rawNodeData: Array<any> = response[0].nodes; //["nodes"]
 		let rawEdgeData: Array<any> = response[0].edges;
 
 		let nodeData = new Array<Node>();

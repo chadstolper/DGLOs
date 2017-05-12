@@ -3,5 +3,19 @@
 
 //import { square, cube } from "./math";
 import * as d3 from "d3-selection"
+import { json as d3json } from "d3-request";
+import { Graph, Node, Edge } from "./Graph";
+import { Person, Drink, DrinkEdge, StaticDrinkGraph } from "./DummyGraph";
 
+d3json("data/dummy/dummy.json", function (response: any) {
+	let graph = new StaticDrinkGraph(response);
+	var edgeListLength = graph.edges.length;
+	var nodeListLength = graph.nodes.length;
+	for(var i = 0; i < edgeListLength; i++){
+		console.log(graph.edges[i]);
+	}
+	for(var i = 0; i <nodeListLength; i++){
+		console.log(graph.nodes[i]);
+	}
+})
 
