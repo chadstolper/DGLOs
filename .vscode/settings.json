@@ -1,0 +1,14 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+	// Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+	"editor.insertSpaces": false,
+
+	// Specifies the folder path containing the tsserver and lib*.d.ts files to use.
+	"typescript.tsdk": "node_modules/typescript/lib"
+
+	// Enable/disable references CodeLens. Requires TypeScript >= 2.0.6.
+  //"typescript.referencesCodeLens.enabled": true,
+
+	// Enable/disable implementations CodeLens. Requires TypeScript >= 2.2.0.
+	//"typescript.implementationsCodeLens.enabled": true
+}
