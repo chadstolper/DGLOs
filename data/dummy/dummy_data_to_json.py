@@ -55,10 +55,10 @@ def translate(infilename, outfilename):
 					is_person = False
 					if not node["name"] in people:
 						people.append(node["name"])
-					node["id"] = people.index(node["name"])
+					node["id"] = people.index(node["name"])+len(drinks)
 				else:
 					edge = {}
-					edge["source"] = row_index
+					edge["source"] = row_index+len(drinks)
 					edge["target"] = col_index
 					edge["source_name"] = people[row_index]
 					edge["target_name"] = drinks[col_index]
