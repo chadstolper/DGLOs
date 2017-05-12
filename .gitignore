@@ -44,3 +44,6 @@ tscommand-*
 #typescript (generate through compliation)
 out/*
 js/bundle.js
+
+#gruntfile
+gruntfile.js
