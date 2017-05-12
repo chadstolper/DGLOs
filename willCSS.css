@@ -1,13 +1,29 @@
-p {
-	color: green;
+#topBar {
+	background-color: lightgray;
+	font-family: Ubuntu, sans-serif;
+	border: inset;
+	
 }
 
-.chart circle{
-	fill: goldenrod;
+#address{
+	border: solid;
+	font-weight: normal;
+	background-color: lightcoral;
 }
 
-.chart text{
-	fill: white;
-	font: 10px sans-serif;
-	text-anchor: center;
+#GhengisKhan{
+	fill: red;
+}
+
+#OdaNobunga{
+	fill: red;
+	color: red;
+}
+
+.topNavBar {
+	background: steelblue;
+}
+
+* {
+	background: lightblue;
 }

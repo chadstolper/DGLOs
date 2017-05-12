@@ -14,10 +14,9 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	var nodeListLength = graph.nodes.length;
 
 
-	for(var i = 0; i <nodeListLength; i++){
-		console.log(graph.nodes[i]);
-		d3.select("#chart")
-			.html("element");
+	for(let n in graph.nodes){
+		console.log(n);
+		alert("update");
 	}
 })
 
