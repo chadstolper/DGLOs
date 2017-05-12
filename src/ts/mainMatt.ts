@@ -1,5 +1,7 @@
-var width;
-var height;
+import * as d3 from "d3"
+
+var width = 0;
+var height = 0;
 var timeStamp1;
 var nodeList;
 var edgeList;
@@ -23,14 +25,14 @@ d3.json("./dummy.json", function(timeStamps){
 		.classed("node", true);
 
 	nodes.enter().append("circle") //create circles
-		.attr("cx", function(d) {
+		.attr("cx", function(d:any) {
 			if(d.type == "person") //therefore y axis
 			{
 				return 55;
 			}//therefore x axis
 			return 55 + 80 + (80*d.id);
 		})
-		.attr("cy", function(d) {
+		.attr("cy", function(d:any) {
 			if(d.type == "person")
 			{
 				return 55 + 80 + (80*d.id);
@@ -41,42 +43,42 @@ d3.json("./dummy.json", function(timeStamps){
 		.attr("fill", "blue");
 
 	nodes.enter().append("text") //create text line 1
-		.attr("x",function(d) {
+		.attr("x",function(d:any) {
 			if(d.type == "person") //therefore name (y axis)
 			{
 				return 30;
 			}
 			return 40 + 80 + (80*d.id);
 		})
-		.attr("y", function(d) {
+		.attr("y", function(d:any) {
 			if(d.type == "person")
 			{
 				return 50 + 80 + (80*d.id);
 			}
 			return 50;
 		})
-		.text(function(d) { return d.name})
+		.text(function(d:any) { return d.name})
 		.attr("font-family", "Arial")
 		.attr("font-size", "12px")
 		.attr("font-weight", "bold")
 		.attr("fill","black");
 
 	nodes.enter().append("text") //create text line 2
-		.attr("x",function(d) {
+		.attr("x",function(d:any) {
 			if(d.type == "person") //therefore name (y axis)
 			{
 				return 30;
 			}
 			return 40 + 80 + (80*d.id);
 		})
-		.attr("y", function(d) {
+		.attr("y", function(d:any) {
 			if(d.type == "person")
 			{
 				return 65 + 80 + (80*d.id);
 			}
 			return 65;
 		})
-		.text(function(d) {
+		.text(function(d:any) {
 			if(d.type == "person")
 			{
 				return d.role;
@@ -96,11 +98,11 @@ d3.json("./dummy.json", function(timeStamps){
 		.classed("edge", true);
 	edges.enter().append("line")
 		.attr("x1", 90)
-		.attr("y1", function(d){return 55 + 80 + (d.source*80)})
-		.attr("x2", function(d){return 55 + 80 + (d.target*80)})
+		.attr("y1", function(d:any){return 55 + 80 + (d.source*80)})
+		.attr("x2", function(d:any){return 55 + 80 + (d.target*80)})
 		.attr("y2", 90)
 		.style("stroke", "black")
-		.style("stroke-width", function(d) { return d.preference});
+		.style("stroke-width", function(d:any) { return d.preference});
 
 		//mouselistener for clicking to switch data views
 	d3.select("svg").append("rect")
@@ -113,13 +115,13 @@ d3.json("./dummy.json", function(timeStamps){
 			console.log("click")
 			if(canSwitch)
 			{
-				d3.selectAll("line").style("stroke-width", function(d) {return d.consumption/10})
+				d3.selectAll("line").style("stroke-width", function(d:any) {return d.consumption/10})
 				d3.select("rect").attr("fill", "blue")
 				canSwitch=false;
 			}
 			else
 			{
-				d3.selectAll("line").style("stroke-width", function(d) { return d.preference})
+				d3.selectAll("line").style("stroke-width", function(d:any) { return d.preference})
 				d3.select("rect").attr("fill", "red")
 				canSwitch = true;
 			}
@@ -140,7 +142,7 @@ d3.json("./dummy.json", function(timeStamps){
 		.attr("fill","red");
 });
 
-function getChartDimensions(d)
+function getChartDimensions(d:any)
 {
 	var xCount = 1;
 	var yCount = 1;
