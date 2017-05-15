@@ -13,10 +13,13 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	var edgeListLength = graph.edges.length;
 	var nodeListLength = graph.nodes.length;
 
+	let num1 = prompt("enter the xAxis", "enter a number");
+	let num2 = prompt("enter the yAxis", "enter a number")
+
 	let width = 650;
 	let height = 650;
-	let xAxis = 10;
-	let yAxis = 10;
+	let xAxis = num1;
+	let yAxis = num2;
 	let numPeople = 0;
 	let numDrinks = 0; 
 
@@ -83,25 +86,51 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let edges = svg.selectAll("edges")
 		.data(graph.edges)
 	edges.enter().append("line")
-		.attr("x1", function (d) {
-			if(d.target.id > 5){
-				return 500;
-			} else {
-				return yAxis;
+		.attr("x1", function(d){
+			console.log(d);
+			console.log("--------------");
+			switch(d.source.id){
+				case 5:
+					return 5 + "%";
+				case 6:
+					return 15 + "%";
+				case 7:
+					return 25 + "%";
+				case 8:
+					return 35 + "%";
+				case 9:
+					return 45 + "%";
+				case 10:
+					return 55 + "%";
+				case 11:
+					return 65 + "%";
+				case 12:
+					return 75 + "%";
+				case 13:
+					return 85 + "%";
+				case 14:
+					return 95 + "%";
+				default:
+					return 500;					
 			}
 		})
-		.attr("y1", function (d) {
-			if(d.target.id > 5){
-				return 50; // 
-			} else {
-				return 30;
+		.attr("y1", xAxis)
+		.attr("x2", yAxis)
+		.attr("y2", function(d){
+			switch(d.target.id){
+				case 0:
+					return 15 + "%";
+				case 1:
+					return 35 + "%";
+				case 2:
+					return 55 + "%";
+				case 3: 
+					return 75 + "%";
+				case 4:
+					return 95 + "%";
+				default:
+					return 500;
 			}
-		})
-		.attr("x2", function (d) {
-			return d.target.id *50;
-		})
-		.attr("y2", function (d) {
-			return d.target.id * 50;
 		})
 		.attr("stroke", "black")
 		.attr("stroke-width", 2);

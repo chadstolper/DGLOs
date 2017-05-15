@@ -11,17 +11,19 @@
 	background-color: lightcoral;
 }
 
-#GhengisKhan{
-	fill: red;
-}
-
-#OdaNobunga{
-	fill: red;
-	color: red;
-}
 
 .topNavBar {
 	background: steelblue;
+}
+
+svg circle:hover{
+	opacity: 0.8;
+	fill: goldenrod;
+}
+
+svg line:hover{
+	opacity: 0.5;
+	fill: goldenrod;
 }
 
 * {
