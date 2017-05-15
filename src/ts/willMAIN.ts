@@ -14,20 +14,25 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	var nodeListLength = graph.nodes.length;
 
 	let num1 = prompt("enter the xAxis", "enter a number");
-	let num2 = prompt("enter the yAxis", "enter a number")
+	let num2 = prompt("enter the yAxis", "enter a number");
 
 	let width = 650;
 	let height = 650;
 	let xAxis = num1;
 	let yAxis = num2;
 	let numPeople = 0;
-	let numDrinks = 0; 
+	let numDrinks = 0;
+
+	function assignAxis() {
+		xAxis = prompt("enter the xAxis", "enter a number");
+		yAxis = prompt("enter the yAxis", "enter a number");
+	}
 
 	//a loop to count the number of drinks and the number of people.
 	//these numbers are neccessary to calculate the spacing of nodes
 	//along their respective axis.
-	for(let n of graph.nodes){
-		if(n.type == "Person"){
+	for (let n of graph.nodes) {
+		if (n.type == "Person") {
 			numPeople += 1;
 		} else {
 			numDrinks += 1;
@@ -50,10 +55,10 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		.data(graph.nodes);
 	nodes.enter().append("circle")
 		.attr("cx", function (d) {
-			if(d.type == "Person"){
+			if (d.type == "Person") {
 				// the objectg is a person, therefore should be evenly
 				// spaced along the xAxis
-				let solution = ((((curPerson) / numPeople)*100) -5) + "%";
+				let solution = ((((curPerson) / numPeople) * 100) - 5) + "%";
 				curPerson += 1;
 				return solution;
 			} else {
@@ -62,22 +67,22 @@ d3json("data/dummy/dummy.json", function (response: any) {
 				return yAxis;
 			}
 		})
-		.attr("cy", function(d){
-			if(d.type == "Person"){
+		.attr("cy", function (d) {
+			if (d.type == "Person") {
 				//The object is a person, so should have a fixed
 				//y position, namely the xAxis
 				return xAxis
 			} else {
 				//the object is a drink, so should be evenly spaced along
 				// the yAxis
-				let solution = (((curDrink / numDrinks) * 100) -5) + "%";
+				let solution = (((curDrink / numDrinks) * 100) - 5) + "%";
 				curDrink += 1;
 				return solution;
 			}
 		})
 		.attr("r", 10)
 		.attr("fill", "red")
-		.attr("id", function(d){
+		.attr("id", function (d) {
 			return d.id;
 		})
 
@@ -86,10 +91,10 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let edges = svg.selectAll("edges")
 		.data(graph.edges)
 	edges.enter().append("line")
-		.attr("x1", function(d){
+		.attr("x1", function (d) {
 			console.log(d);
 			console.log("--------------");
-			switch(d.source.id){
+			switch (d.source.id) {
 				case 5:
 					return 5 + "%";
 				case 6:
@@ -111,20 +116,20 @@ d3json("data/dummy/dummy.json", function (response: any) {
 				case 14:
 					return 95 + "%";
 				default:
-					return 500;					
+					return 500;
 			}
 		})
 		.attr("y1", xAxis)
 		.attr("x2", yAxis)
-		.attr("y2", function(d){
-			switch(d.target.id){
+		.attr("y2", function (d) {
+			switch (d.target.id) {
 				case 0:
 					return 15 + "%";
 				case 1:
 					return 35 + "%";
 				case 2:
 					return 55 + "%";
-				case 3: 
+				case 3:
 					return 75 + "%";
 				case 4:
 					return 95 + "%";

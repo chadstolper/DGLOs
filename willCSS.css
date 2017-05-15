@@ -5,17 +5,6 @@
 	
 }
 
-#address{
-	border: solid;
-	font-weight: normal;
-	background-color: lightcoral;
-}
-
-
-.topNavBar {
-	background: steelblue;
-}
-
 svg circle:hover{
 	opacity: 0.8;
 	fill: goldenrod;
