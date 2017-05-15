@@ -28,24 +28,33 @@ d3.json("./data/dummy/dummy.json", function(timeStamps){
 		.each(function(d : Node): any {console.log(d)})
 		.classed("node", true);
 
+	let hold = 0;
 	nodes.enter().append("circle") //create circles
-		.attr("cx", function(d:any): any{
+		.classed("people", true)
+		.attr("cx", null)
+		.attr("cy", null)
+		.attr("r", 35)
+		.attr("fill", "blue");
+
+	/*	.attr("cx", function(d:any): any{
 			if(d.type == "person") //therefore y axis
 			{
 				return 55;
 			}//therefore x axis
+			hold++;
 			return 55 + 80 + (80*d.id);
 		})
 		.attr("cy", function(d:any): any {
 			if(d.type == "person")
 			{
-				return 55 + 80 + (80*d.id);
+				return 55 + 80 + (80*(d.id-5));
 			}
+			hold++;
 			return 55;
 		})
 		.attr("r", 35)
-		.attr("fill", "blue");
-
+		.attr("fill", "blue"); 
+*/
 	nodes.enter().append("text") //create text line 1
 		.classed("title", true)
 		.attr("x",function(d:any): any {

@@ -41,9 +41,10 @@ jspm_packages
 .baseDir*
 tscommand-*
 
-#typescript (generate through compliation)
+# typescript (generate through compliation)
 out/*
 js/bundle.js
+*.js.map
 
-#gruntfile
+# gruntfile
 gruntfile.js
