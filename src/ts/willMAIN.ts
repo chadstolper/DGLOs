@@ -13,10 +13,45 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	var edgeListLength = graph.edges.length;
 	var nodeListLength = graph.nodes.length;
 
+	let width = 1000;
+	let height = 1000;
+	let xAxis = 50;
+	let yAxis = 50;
 
-	for(let n in graph.nodes){
-		console.log(n);
-		alert("update");
-	}
+	let data = [10, 20, 30, 40, 50]
+
+	//create an SVG element of width and height
+	let svg = d3.select("#dGraph").append("svg")
+	svg.attr("width", width)
+		.attr("height", height);
+
+	let nodes = svg.selectAll("nodes")
+		.data(data);
+	nodes.enter().append("cicle")
+		.attr("cx", function (d) {
+			return d + "%";
+		})
+		.attr("cy", function (d) {
+			return d + "%";
+		})
+		.attr("r", 10)
+		.attr("fill", "red");
+
+	let edges = svg.selectAll("edges")
+		.data(data)
+	edges.enter().append("line")
+		.attr("x1", function (d) {
+			return width - 10 * d;
+		})
+		.attr("y1", function (d) {
+			return width - 10 * d;
+		})
+		.attr("x2,", function (d) {
+			return width - 8 * d;
+		})
+		.attr("y2", function (d) {
+			return width - 8 * d;
+		});
+
 })
 
