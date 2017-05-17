@@ -5,13 +5,13 @@
 import * as d3 from "d3-selection"
 import { json as d3json } from "d3-request";
 import { Graph, Node, Edge } from "./Graph";
-import { Person, Drink, DrinkEdge, StaticDrinkGraph } from "./DummyGraph";
+import { Person, Drink, DrinkEdge, StaticDrinkGraph, DynamicDrinkGraph } from "./DummyGraph";
 import "willCSS.css";
 
 d3json("data/dummy/dummy.json", function (response: any) {
-	let graph:StaticDrinkGraph = new StaticDrinkGraph(response);
-	var edgeListLength = graph.edges.length;
-	var nodeListLength = graph.nodes.length;
+	let graph:StaticDrinkGraph = new DynamicDrinkGraph(response).timesteps[0];
+	let edgeListLength = graph.edges.length;
+	let nodeListLength = graph.nodes.length;
 
 	let num1 = prompt("enter the xAxis", "enter a number");
 	let num2 = prompt("enter the yAxis", "enter a number");
