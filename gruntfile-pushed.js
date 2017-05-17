@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 		},
 		watch: {
 			typescript: {
-				files: '**/*.ts',
+				files: 'src/**/*.ts',
 				tasks: ['tslint','ts','rollup']
 			}
 		},
