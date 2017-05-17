@@ -1,8 +1,10 @@
+import {SimulationNodeDatum} from "d3-force";
 
-
-export class Node {
+export class Node implements SimulationNodeDatum{
 	private _id: number;
 	private _type: string;
+	public x: number;
+	public y: number;
 	constructor(id: number, type: string) {
 		this._id = id;
 		this._type = type;
