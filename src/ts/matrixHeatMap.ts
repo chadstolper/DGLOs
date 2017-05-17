@@ -6,7 +6,8 @@
 */
 
 import * as d3 from "d3-selection";
-import * as d3Scale from "d3-scale";
+//this line breaks vscode
+//import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 import { json as d3json } from "d3-request";
 import { Graph, Node, Edge } from "./Graph";
@@ -19,7 +20,6 @@ d3json("data/dummy/dummy.json", function (response:any){
 	let curGraph = graph.timesteps[0];
 	let width = 700;
 	let height = 700;
-	
 	
 	//TSLINT IS NOT WORKING CORRECTLY
 
@@ -93,9 +93,9 @@ d3json("data/dummy/dummy.json", function (response:any){
 		
 		//ERROR THAT SHOULDN'T BE HAPPENING
 		//Argument of type 'string[]' is not assignable to parameter of type 'number[]'.
-		let colorMap = d3Scale.scaleLinear()
-			.domain(colorDomain)
-			.range(defaultColorRange);
+		// let colorMap = d3Scale.scaleLinear()
+		// 	.domain(colorDomain)
+		// 	.range(defaultColorRange);
 
 		var matrix = new Array(arraySize);
 		for(var i = 0; i < arraySize; i++){
