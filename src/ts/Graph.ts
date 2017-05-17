@@ -21,7 +21,7 @@ export class Edge {
 	private _id: number;
 	private _source: Node;
 	private _target: Node;
-	
+
 	constructor(id: number, source: Node, target: Node) {
 		this._id = id;
 		this._source = source;
