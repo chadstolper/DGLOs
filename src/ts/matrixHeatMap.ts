@@ -15,6 +15,19 @@ d3json("data/dummy/dummy.json", function (response: any){
 	let curTimeStep = 0;
 	let numTimeSteps = graph.timesteps.length;
 	let curGraph = graph.timesteps[0];
+	let width = 700;
+	let height = 700;
+
+	var svg = d3.selectAll("body").append("svg")
+					.attr("width", width)
+					.attr("height", height)
+				.append("g");
+
+	svg.append("rect")
+		.attr("class", "backgorund")
+		.attr("width", width)
+		.attr("height", height);
+
 
 	function timeStepForward(){
 		if(curTimeStep + 1 == numTimeSteps){
@@ -49,6 +62,7 @@ d3json("data/dummy/dummy.json", function (response: any){
 	}
 
 	function graphUpdate(graph:StaticDrinkGraph)/*:return type*/{
+		//make an SVG matrix that is graph.nodes.length by graph.nodes.length
 		
 	}
 
