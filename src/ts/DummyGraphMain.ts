@@ -3,8 +3,8 @@ import * as d3 from "d3-selection";
 import { Selection } from "d3-selection";
 import { scaleOrdinal, scaleLinear, schemeCategory10 } from "d3-scale";
 import { json as d3json } from "d3-request";
-import { Graph, Node, Edge } from "./Graph";
-import { Person, Drink, DrinkEdge, StaticDrinkGraph } from "./DummyGraph";
+import { DynamicGraph, Graph, Node, Edge } from "./Graph";
+import { Person, Drink, DrinkEdge, StaticDrinkGraph, DynamicDrinkGraph } from "./DummyGraph";
 
 
 let width = 500;
@@ -19,12 +19,12 @@ let chart: Selection<any, any, any, any> = d3.select("body").append("svg")
 
 d3json("data/dummy/dummy.json", function (response: any) {
 
-	let graph: Graph = new StaticDrinkGraph(response);
+	let graph: DynamicGraph = new DynamicDrinkGraph(response);
 
-	widthscale.domain([0, graph.nodes.length - 1]);
+	widthscale.domain([0, graph.timesteps[0].nodes.length - 1]);
 
 	let nodes: Selection<any, any, any, any> = chart.selectAll(".node")
-		.data(graph.nodes, function (d: Node): string { return "" + d.id; }) //calls the id getter
+		.data(graph.timesteps[0].nodes, function (d: Node): string { return "" + d.id; }) //calls the id getter
 
 	let nodeEnter = nodes.enter().append("g")
 		.classed("node", true)
