@@ -21,6 +21,7 @@ export class Edge {
 	private _id: number;
 	private _source: Node;
 	private _target: Node;
+	
 	constructor(id: number, source: Node, target: Node) {
 		this._id = id;
 		this._source = source;
@@ -46,6 +47,7 @@ export class Edge {
 export class Graph {
 	private _nodes: Array<Node>;
 	private _edges: Array<Edge>;
+	private _weight: number;
 
 	constructor(nodes: Array<Node>, edges: Array<Edge>) {
 		this._nodes = nodes;
@@ -59,6 +61,22 @@ export class Graph {
 	get edges(): Array<Edge> {
 		return this._edges;
 	}
+
+	get weight(): number {
+		return this._weight;
+	}
 }
 
+
+export class DynamicGraph {
+	private _timesteps: Array<Graph>;
+
+	constructor(timesteps: Array<Graph>) {
+		this._timesteps = timesteps;
+	}
+
+	get timesteps(): Array<Graph> {
+		return this._timesteps;
+	}
+}
 

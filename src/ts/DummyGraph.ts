@@ -1,4 +1,4 @@
-import { Graph, Node, Edge } from "./Graph";
+import { Graph, DynamicGraph, Node, Edge } from "./Graph";
 
 export class Person extends Node {
 	private _name: string;
@@ -73,12 +73,24 @@ export class DrinkEdge extends Edge {
 }
 
 
+export class DynamicDrinkGraph extends DynamicGraph {
+
+	constructor(response: Array<any>) {
+		let graphs: Array<StaticDrinkGraph> = new Array<StaticDrinkGraph>();
+
+		for (let timestep of response) {
+			let rawNodeData: Array<any> = timestep.nodes;
+			let rawEdgeData: Array<any> = timestep.edges;
+			let g: StaticDrinkGraph = new StaticDrinkGraph(rawNodeData, rawEdgeData);
+		}
+
+		super(graphs);
+	}
+}
+
 export class StaticDrinkGraph extends Graph {
 
-	constructor(response: any) {
-		let rawNodeData: Array<any> = response[0].nodes; //["nodes"]
-		let rawEdgeData: Array<any> = response[0].edges;
-
+	constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
 
@@ -107,6 +119,7 @@ export class StaticDrinkGraph extends Graph {
 		}
 
 		super(nodeData, edgeData);
+
 	}
 
 }
