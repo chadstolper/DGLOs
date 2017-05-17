@@ -1,4 +1,9 @@
-import * as d3 from "d3"
+import * as d3 from "d3";
+import { Selection } from "d3-selection";
+import { scaleOrdinal, scaleLinear, schemeCategory10 } from "d3-scale";
+import { json as d3json } from "d3-request";
+import { Graph, Node, Edge } from "./Graph";
+import { Person, Drink, DrinkEdge, StaticDrinkGraph } from "./DummyGraph";
 
 let width = 0;
 let height = 0;
@@ -7,14 +12,24 @@ let stamp = 0
 let nodeList;
 let edgeList;
 let canSwitch = true;
+let numDrinks = 0;
+let showConsumption = false;
 
 d3.json("./data/dummy/dummy.json", function(timeStamps){
 	timeStamp = timeStamps[stamp]; //load in first timestep
 	nodeList = timeStamp.nodes; //load in nodes of first timestep
 
-	getChartDimensions(nodeList); // needed?
-	console.log(width)
-	console.log(height)
+	getChartDimensions(nodeList);
+//	console.log(width)
+//	console.log(height)
+
+	for(let i = 0; i < nodeList.length; i++)
+	{
+		if(nodeList[i].type == "drink")
+		{
+			numDrinks++;
+		}
+	}
 
 	let chart = d3.select("#chart").append("svg") //select chart div
 		.attr("width", width)
@@ -26,17 +41,11 @@ d3.json("./data/dummy/dummy.json", function(timeStamps){
 		.data(nodeList);
 	nodes.append("g") //subsubdiv of groups
 		.each(function(d : Node): any {console.log(d)})
-		.classed("node", true);
-
+		.classed("node", true); //associate an id to go with the new created tag
+	
 	let hold = 0;
-	nodes.enter().append("circle") //create circles
-		.classed("people", true)
-		.attr("cx", null)
-		.attr("cy", null)
-		.attr("r", 35)
-		.attr("fill", "blue");
-
-	/*	.attr("cx", function(d:any): any{
+	nodes.enter().append("circle")//create circles
+		.attr("cx", function(d:any): any{
 			if(d.type == "person") //therefore y axis
 			{
 				return 55;
@@ -44,17 +53,16 @@ d3.json("./data/dummy/dummy.json", function(timeStamps){
 			hold++;
 			return 55 + 80 + (80*d.id);
 		})
-		.attr("cy", function(d:any): any {
+		.attr("cy", function(d:any): number {
 			if(d.type == "person")
 			{
-				return 55 + 80 + (80*(d.id-5));
+				return 55 + 80 + 80*(d.id - numDrinks);
 			}
 			hold++;
 			return 55;
 		})
 		.attr("r", 35)
 		.attr("fill", "blue"); 
-*/
 	nodes.enter().append("text") //create text line 1
 		.classed("title", true)
 		.attr("x",function(d:any): any {
@@ -62,12 +70,12 @@ d3.json("./data/dummy/dummy.json", function(timeStamps){
 			{
 				return 30;
 			}
-			return 40 + 80 + (80*d.id);
+			return 40 + 80 + 80*(d.id);
 		})
 		.attr("y", function(d:any): any {
 			if(d.type == "person")
 			{
-				return 50 + 80 + (80*d.id);
+				return 50 + 80 + 80*(d.id - numDrinks);
 			}
 			return 50;
 		})
@@ -84,12 +92,12 @@ d3.json("./data/dummy/dummy.json", function(timeStamps){
 			{
 				return 30;
 			}
-			return 40 + 80 + (80*d.id);
+			return 40 + 80 + 80*(d.id);
 		})
 		.attr("y", function(d:any): any {
 			if(d.type == "person")
 			{
-				return 65 + 80 + (80*d.id);
+				return 65 + 80 + 80*(d.id - numDrinks);
 			}
 			return 65;
 		})
@@ -113,34 +121,48 @@ d3.json("./data/dummy/dummy.json", function(timeStamps){
 		.classed("edge", true);
 	edges.enter().append("line")
 		.attr("x1", 90)
-		.attr("y1", function(d:any): any {return 55 + 80 + (d.source*80)})
+		.attr("y1", function(d:any): any {return 55 + 80 + ((d.source-numDrinks)*80)})
 		.attr("x2", function(d:any): any {return 55 + 80 + (d.target*80)})
 		.attr("y2", 90)
 		.style("stroke", "black")
 		.style("stroke-width", function(d:any): any { return d.preference});
 });
 
-function mouseClickedEvent(timeStamps: any)
+function mouseClickedEvent(d:any) //switch edge and node info on click
 {
-	console.log("click");
 	stamp++;
-	if(stamp == timeStamps.length-1)
+	if(stamp == d.length)
 	{
 		stamp = 0;
+		if(showConsumption == false)
+		{
+			showConsumption = true;
+		}
+		else showConsumption = false;
 	}
-	timeStamp = timeStamps[stamp];
-	nodeList = timeStamp.nodes;
-	edgeList = timeStamp.edges;
-	d3.selectAll("text.attribute").transition().text(function(d: any): string {
+	timeStamp = d[stamp];
+	let nodeList = timeStamp.nodes;
+	let edgeList = timeStamp.edges;
+//	let newNodes = d3.selectAll("text.attribute").data(nodeList);
+//	let newEdges = d3.selectAll("line").data(edgeList);
+	
+	d3.selectAll("text.attribute").data(nodeList).transition().text(function(d: any): string {
 		if(d.type == "person")
 		{
-			return d.role;
+			let n:Person = d as Person;
+			return n.role + "";
 		}
-		return d.price;
+		let n:Drink = d as Drink;
+		return n.price + "";
 	})
-	d3.selectAll("line").transition().style("stroke-width", function(d:any): any  { 
-		return d.preference})
-}
+	d3.selectAll("line").data(edgeList).transition().style("stroke-width", function(d:any): any { 
+		if(showConsumption == true)
+		{
+			return d.consumption;
+		}
+		return d.preference;
+	})
+};
 
 function getChartDimensions(d:any)
 {
