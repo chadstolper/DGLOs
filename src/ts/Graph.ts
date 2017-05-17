@@ -62,3 +62,15 @@ export class Graph {
 }
 
 
+export class DynamicGraph {
+	private _timesteps: Array<Graph>;
+
+	constructor(timesteps: Array<Graph>) {
+		this._timesteps = timesteps;
+	}
+
+	get timesteps(): Array<Graph> {
+		return this._timesteps;
+	}
+}
+
