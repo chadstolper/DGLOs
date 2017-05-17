@@ -21,6 +21,7 @@ export class Edge {
 	private _id: number;
 	private _source: Node;
 	private _target: Node;
+	private _weight: number;
 
 	constructor(id: number, source: Node, target: Node) {
 		this._id = id;
@@ -39,6 +40,10 @@ export class Edge {
 	get target(): Node {
 		return this._target;
 	}
+
+	get weight(): number {
+		return this._weight;
+	}
 }
 
 /**
@@ -47,7 +52,6 @@ export class Edge {
 export class Graph {
 	private _nodes: Array<Node>;
 	private _edges: Array<Edge>;
-	private _weight: number;
 
 	constructor(nodes: Array<Node>, edges: Array<Edge>) {
 		this._nodes = nodes;
@@ -60,10 +64,6 @@ export class Graph {
 
 	get edges(): Array<Edge> {
 		return this._edges;
-	}
-
-	get weight(): number {
-		return this._weight;
 	}
 }
 
