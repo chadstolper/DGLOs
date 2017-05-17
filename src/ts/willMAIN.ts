@@ -23,10 +23,10 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let numPeople = 0;
 	let numDrinks = 0;
 
-	function assignAxis() {
-		xAxis = prompt("enter the xAxis", "enter a number");
-		yAxis = prompt("enter the yAxis", "enter a number");
-	}
+	// function assignAxis() {
+	// 	xAxis: string = prompt("enter the xAxis", "enter a number");
+	// 	yAxis: string = prompt("enter the yAxis", "enter a number");
+	// }
 
 	//a loop to count the number of drinks and the number of people.
 	//these numbers are neccessary to calculate the spacing of nodes
