@@ -19,8 +19,8 @@ d3json("data/dummy/dummy.json", function (response:any){
 	let curGraph = graph.timesteps[0];
 	let width = 700;
 	let height = 700;
-	let me make an erro;
-
+	
+	
 	//TSLINT IS NOT WORKING CORRECTLY
 
 	var svg = d3.selectAll("body").append("svg")
