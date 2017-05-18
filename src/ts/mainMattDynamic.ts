@@ -21,7 +21,6 @@ let linksG: Selection<any, {}, any, {}>, nodesG: Selection<any, {}, any, {}>; //
 
 json("./data/dummy/dummy.json", function (response) {
 
-	// simulation.on("tick", ticked);
 	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
 	initSVG();
 	draw(dGraph.timesteps[time]);
@@ -51,7 +50,7 @@ json("./data/dummy/dummy.json", function (response) {
 	}
 
 	function ticked() {
-		//console.log("ticking...");
+		console.log("ticking...");
 		if (linkGlyphs !== undefined) {
 			//console.log(linkGlyphs);
 			linkGlyphs //as in the lines representing links
@@ -66,7 +65,7 @@ json("./data/dummy/dummy.json", function (response) {
 			//console.log(nodeGlyphs);
 			nodeGlyphs
 				.attr("cx", function (d: Node) {
-					//console.log(new Array<any>(d, d.x));
+					console.log(d);
 					return d.x;
 				})
 				.attr("cy", function (d: Node) { return d.y; });
@@ -76,13 +75,15 @@ json("./data/dummy/dummy.json", function (response) {
 	}
 
 	function draw(graph: Graph): void {
+
+
+		drawLinks(graph.edges);
+		drawNodes(graph.nodes);
+
 		if (simulation !== undefined) {
 			simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 		}
-
-		drawLinks(graph.edges);
-		drawNodes(graph.nodes);
 
 
 	}
@@ -110,8 +111,7 @@ json("./data/dummy/dummy.json", function (response) {
 	function drawLinks(edges: Edge[]) {
 		linkGlyphs = linksG.selectAll("line")
 			.data(edges, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
-		let linkEnter = linkGlyphs
-			.enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
+		let linkEnter = linkGlyphs.enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
 		linkGlyphs.merge(linkEnter).transition()
 			.attr("stroke", "black")
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
@@ -120,8 +120,7 @@ json("./data/dummy/dummy.json", function (response) {
 	function drawNodes(nodes: Node[]) {
 		nodeGlyphs = nodesG.selectAll("circle")
 			.data(nodes, function (d: Node): string { return "" + d.id });
-		let nodeEnter = nodeGlyphs
-			.enter().append("circle");
+		let nodeEnter = nodeGlyphs.enter().append("circle");
 		nodeGlyphs.merge(nodeEnter)
 			.attr("r", 10)
 			.attr("fill", function (d: Node): string { return color(d.id); });
