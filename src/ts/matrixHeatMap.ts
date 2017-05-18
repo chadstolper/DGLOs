@@ -20,7 +20,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let width = 750;
 	let height = 750;
 
-	matrixTimeline();
+	animatedHeatMap(curGraph, width, height);
 
 	function timeStepForward() {
 		curTimeStep = (curTimeStep + 1) % numTimeSteps;
@@ -30,6 +30,14 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function timeStepBackward() {
 		curTimeStep = (curTimeStep - 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
+	}
+
+
+
+	function mouseClicked() {
+		console.log("click");
+		timeStepForward();
+		animatedHeatMap(curGraph, width, height);
 	}
 
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
@@ -53,8 +61,8 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			.attr("y", function (d) {
 				return (+d.target.id / graph.nodes.length) * 100 + "%";
 			})
-			.attr("width", _width / arraySize + "%")
-			.attr("height", _height / arraySize * 100 + "%")
+			.attr("width", _width / arraySize)
+			.attr("height", _height / arraySize)
 			.attr("fill", function (d) {
 				console.log(d.weight, d, colorMap(d.weight));
 				return colorMap(d.weight);
@@ -62,6 +70,9 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			.attr("stroke", "black")
 			.attr("id", function (d) {
 				return d.id;
+			})
+			.on("click", function (d, i) {
+				mouseClicked();
 			});
 
 	}
@@ -70,11 +81,8 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	//------------------------ Helper Functions----------------------------------------------------------
 	//---------------------------------------------------------------------------------------------------
 
-	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number, _color: string) {
-		console.log("you called this function");
-		graphUpdate(curGraph, width, height);
-		setTimeout(timeStepForward(), 4000);
-
+	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number) {
+		graphUpdate(graph, _width, _height);
 	}
 
 	function generateRandomColor(): string {
