@@ -6,7 +6,7 @@
 */
 
 import * as d3 from "d3-selection";
-import {scaleOrdinal, schemeCategory20} /* as d3Scale*/ from "d3-scale";
+import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 import { json as d3json } from "d3-request";
 import { Graph, Node, Edge } from "./Graph";
@@ -23,7 +23,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	matrixTimeline();
 
 	function timeStepForward() {
-		if (curTimeStep + 1 == numTimeSteps)/*replace with mod*/ {
+		if (curTimeStep + 1 === numTimeSteps)/*replace with mod*/ {
 			//You have reached the last timeStep, so loop back to the first
 			curGraph = graph.timesteps[0];
 			console.log(curTimeStep);
@@ -35,7 +35,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	}
 
 	function timeStepBackward() {
-		if (curTimeStep - 1 == 0) {
+		if (curTimeStep - 1 === 0) {
 			//You are at the first timeStep, so loop to the last
 			curGraph = graph.timesteps[numTimeSteps - 1];
 			console.log(curTimeStep);
@@ -71,6 +71,109 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		}
 	}
 
+	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number, _color: string)/*:return type*/ {
+
+		let arraySize = graph.nodes.length;
+		let colorDomain = getColorDomain(graph.edges);
+		let defaultColorRange = ["white", "red"];
+		console.log(colorDomain);
+
+		let colorMap = d3Scale.scaleLinear<string>()
+			.domain(colorDomain)
+			.range(defaultColorRange);
+
+		var svg = d3.selectAll("body").append("svg")
+			.attr("width", _width)
+			.attr("height", _height)
+
+		svg.append("rect")
+			.attr("class", "backgorund")
+			.attr("width", _width)
+			.attr("height", _height)
+
+		for (var i = 0; i < arraySize; i++) {
+			//i represents the yAxis, j represents the xAxis
+			for (var j = 0; j < arraySize; j++) {
+				svg.append("g")
+					// .attr("width", _width / arraySize)
+					// .attr("height", _height / arraySize)
+					.data(graph.edges)
+					.append("rect").enter()
+					.attr("fill", _color)
+					.attr("width", arraySize / _width)
+					.attr("height", arraySize / _height)
+					.attr("x", function (d) {
+						//plus is the convert string to int command, we know that node
+						//ids can be converted to ints
+						return ((+d.source.id) / arraySize) * 100 + "%";
+					})
+					.attr("y", function (d) {
+						//plus is the convert string to int command, we know that node
+						//ids can be converted to ints
+						return ((+d.target.id) / arraySize) * 100 + "%";
+					});
+
+				svg.selectAll("g")
+					.data(graph.edges)
+					.append("text")
+					.text(function (d) {
+						return d.weight;
+					})
+					.attr("fill", "white");
+
+			}
+			// svg.enter().append("text")
+			// 	.attr("x", (j / (arraySize)) * 100 + "%")
+			// 	.attr("y", (i / (arraySize)) * 100 + "%")
+			// 	.text("HI")
+			// 	.attr("fill", "black");
+		}
+	}
+
+	// 			.selectAll("g").enter().append("rect")
+	// 			.data(graph.nodes)
+	// 		.attr("x", function(d){
+	// 			//plus is the convert string to int command, we know that node
+	// 			//ids can be converted to ints
+	// 			return ((+d.id)/arraySize)*100 + "%";
+	// 		})
+	// 		.attr("y", function(d){
+	// 			//plus is the convert string to int command, we know that node
+	// 			//ids can be converted to ints
+	// 			return ((+d.id)/arraySize)*100 + "%";
+	// 		})
+	// 		.attr("width", _width/arraySize)
+	// 		.attr("heigt", _height/arraySize);
+	// }
+
+
+	// 	for (var i = 0; i < arraySize; i++) {
+	// 		//i represents the yAxis, j represents the xAxis
+	// 		for (var j = 0; j < arraySize; j++) {
+	// 			svg.append("rect")
+	// 				.attr("width", _width / arraySize)
+	// 				.attr("height", _height / arraySize)
+	// 				.attr("fill", _color)
+	// 				.attr("x", (j / (arraySize)) * 100 + "%")
+	// 				.attr("y", (i / (arraySize)) * 100 + "%")
+	// 				.attr("stroke", "black");
+	// 		}
+	// 		svg.enter().append("text")
+	// 			.attr("x", (j / (arraySize)) * 100 + "%")
+	// 			.attr("y", (i / (arraySize)) * 100 + "%")
+	// 			.text(function (d) {
+	// 				console.log(d);
+	// 				return d.source.id + "";
+	// 			})
+	// 			.attr("fill", "black");
+	// 	}
+	// }
+
+
+	//---------------------------------------------------------------------------------------------------
+	//------------------------ Helper Functions----------------------------------------------------------
+	//---------------------------------------------------------------------------------------------------
+
 	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number, _color: string) {
 		console.log("you called this function");
 		graphUpdate(curGraph, width, height, generateRandomColor());
@@ -85,50 +188,5 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function generateRandomColor(): string {
 		return "hsl(" + Math.random() + ", " + Math.random() * 100 + "% , " + Math.random() * 100 + "% )";
 	}
-
-	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number, _color: string)/*:return type*/ {
-
-		let arraySize = graph.nodes.length;
-		let colorDomain = getColorDomain(graph.edges);
-		console.log(colorDomain);
-
-		let colorMap = scaleOrdinal(schemeCategory20);
-
-
-		var svg = d3.selectAll("body").append("svg")
-			.attr("width", _width)
-			.attr("height", _height)
-			.data(graph.edges);
-
-		svg.append("rect")
-			.attr("class", "backgorund")
-			.attr("width", _width)
-			.attr("height", _height);
-
-
-		for (var i = 0; i < arraySize; i++) {
-			//i represents the yAxis, j represents the xAxis
-			for (var j = 0; j < arraySize; j++) {
-				svg.append("rect")
-					.attr("width", _width / arraySize)
-					.attr("height", _height / arraySize)
-					.attr("fill", _color)
-					.attr("x", (j / (arraySize)) * 100 + "%")
-					.attr("y", (i / (arraySize)) * 100 + "%")
-					.attr("stroke", "black");
-			}
-			svg.enter().append("text")
-			.attr("x", (j / (arraySize)) * 100 + "%")
-			.attr("y", (i / (arraySize)) * 100 + "%")
-			.text(function (d) {
-				console.log(d);
-				return d.source.id + "";
-			})
-			.attr("fill", "black");	
-		}
-
-		
-	}
-
 
 });
