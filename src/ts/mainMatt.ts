@@ -130,7 +130,7 @@ function mouseClickedEvent(d: any) //switch edge and node info on click
 		if (showConsumption === false) {
 			showConsumption = true;
 		}
-		else showConsumption = false;
+		else { showConsumption = false; }
 	}
 	timeStamp = d[stamp];
 	let nodeList = timeStamp.nodes;
