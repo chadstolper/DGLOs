@@ -15,8 +15,8 @@ let simulation = d3.forceSimulation() //init sim for chart?
     .force("center", d3.forceCenter(width / 2, height / 2)); //define center
 let color = d3.scaleOrdinal(d3.schemeCategory20); //random color picker.exe
 var chart: Selection<any, {}, any, {}>;
-var link: Selection<any, {}, any, {}>, node: Selection<any, {}, any, {}>;
-var links: Selection<any, {}, any, {}>;
+var link: Selection<any, {}, any, {}>, node: Selection<any, {}, any, {}>; //groups for "specific"
+var links: Selection<any, {}, any, {}>, nodes: Selection<any, {}, any, {}>; //groups for all
 
 d3.json("./data/dummy/dummy.json", function(response) {
     let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
@@ -36,20 +36,15 @@ d3.json("./data/dummy/dummy.json", function(response) {
     console.log("got past lines");
 
     //CREATE NODE CIRCLES
-    let node = chart.append("g")
-        .classed("node", true)
-        .selectAll("circle")
-        .data(nodeList)
-        .enter().append("circle")
-        .attr("r", 10)
-        .attr("fill", function(d) { return color("" + d.id); });
-
+    nodes = chart.append("g")
+        .classed("node", true);
+    drawNodes(nodeList);
     console.log("got past nodes");
 
     simulation.nodes(nodeList) //call for sim tick (and apply force to nodes?)
         .on("tick", ticked);
 
-    let lforce: d3.ForceLink<Node, DrinkEdge> = simulation.force("link") as d3.ForceLink<Node, DrinkEdge>;
+    let lforce: d3.ForceLink<Node, DrinkEdge> = simulation.force("link") as d3.ForceLink<Node, DrinkEdge>; //bug fix
     lforce.links(edgeList); //begin force application to lines?
 
     function ticked() {
@@ -60,7 +55,7 @@ d3.json("./data/dummy/dummy.json", function(response) {
             .attr("x2", function(d: DrinkEdge) { return d.target.x; })
             .attr("y2", function(d: DrinkEdge) { return d.target.y; });
         node
-            .attr("cx", function(d: Node) { return d.x; })
+            .attr("cx", function(d: Node) { console.log("Coordinates= ", d.x, ":", d.y); return d.x; })
             .attr("cy", function(d: Node) { return d.y; });
     }
 
@@ -70,21 +65,34 @@ d3.json("./data/dummy/dummy.json", function(response) {
         console.log("current timestamp = " + time);
         let newTimeStamp = dGraph.timesteps[time];
         let newEdges: DrinkEdge[] = newTimeStamp.edges as DrinkEdge[]; //brand new pack of razers
+        let newNodes: Node[] = newTimeStamp.nodes as Node[];
         drawLinks(newEdges);
+        drawNodes(newNodes)
         ticked();
-
-        //code for making things new...yeah...stuff
     }
 
-    function drawLinks(edges: DrinkEdge[]) {
+    function drawLinks(d: DrinkEdge[]) {
         console.log("drawing Links");
         link = links.selectAll("line")
-            .data(edges, function(d: DrinkEdge): any { return "" + d.id; }); //animate existing, dont create new line
+            .data(d, function(d: DrinkEdge): any { return "" + d.id; }); //animate existing, dont create new line
         let linkEnter = link
             .enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
         console.log(linkEnter);
         link.merge(linkEnter).transition()
             .attr("stroke", "black")
             .attr("stroke-width", function(d: DrinkEdge): string { return "" + d.preference; });
+    }
+
+    function drawNodes(d: Node[]) {
+        console.log("drawing nodes");
+        node = nodes.selectAll("circle")
+            .data(d, function(d: Node): any { return "" + d.id });
+        let nodeEnter = node
+            .enter().append("circle");
+        console.log(nodeEnter);
+        node.merge(nodeEnter).transition()
+            .attr("r", 10)
+            .attr("fill", function(d: Node): any { return color("" + d.id); });
+
     }
 });
