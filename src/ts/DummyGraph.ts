@@ -3,7 +3,7 @@ import { Graph, DynamicGraph, Node, Edge } from "./Graph";
 export class Person extends Node {
 	private _name: string;
 	private _role: string;
-	constructor(id: number, name: string, role: string) {
+	constructor(id: number | string, name: string, role: string) {
 		super(id, "Person");
 		this._name = name;
 		this._role = role;
@@ -25,7 +25,7 @@ export class Person extends Node {
 export class Drink extends Node {
 	private _name: string;
 	private _price: number;
-	constructor(id: number, name: string, price: number) {
+	constructor(id: number | string, name: string, price: number) {
 		super(id, "Drink");
 		this._name = name;
 		this._price = price;
@@ -49,7 +49,7 @@ export class Drink extends Node {
 export class DrinkEdge extends Edge {
 	private _consumption: number;
 	private _preference: number;
-	constructor(id: number, source: Node, target: Node,
+	constructor(id: number | string, source: Node, target: Node,
 		consumption: number, preference: number) {
 		super(id, source, target);
 		this._consumption = consumption;
@@ -96,10 +96,10 @@ export class StaticDrinkGraph extends Graph {
 		let edgeData = new Array<Edge>();
 
 		for (let n of rawNodeData) {
-			if (n.type == "person") {
+			if (n.type === "person") {
 				let p = new Person(n.id, n.name, n.role);
 				nodeData.push(p);
-			} else if (n.type == "drink") {
+			} else if (n.type === "drink") {
 				let d = new Drink(n.id, n.name, n.price);
 				nodeData.push(d);
 			}
@@ -108,14 +108,16 @@ export class StaticDrinkGraph extends Graph {
 		for (let e of rawEdgeData) {
 
 			let source: Node = nodeData.find(function (n: Node): boolean {
-				return n.id == e.source;
+				return n.id === e.source;
 			});
 
 			let target: Node = nodeData.find(function (n: Node): boolean {
-				return n.id == e.target;
+				return n.id === e.target;
 			});
 
-			let de: DrinkEdge = new DrinkEdge(e.id, source, target, e.consumption, e.preference);
+			let id: string = ""+source.id+":"+target.id;
+
+			let de: DrinkEdge = new DrinkEdge(id, source, target, e.consumption, e.preference);
 			edgeData.push(de);
 		}
 
