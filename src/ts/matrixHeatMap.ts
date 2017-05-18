@@ -16,30 +16,47 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let graph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
 	let curTimeStep = 0;
 	let numTimeSteps = graph.timesteps.length;
+	//the current graph i.e. a static graph at a given timeStep
 	let curGraph = graph.timesteps[0];
+	//width and height of the SVG element that will become the matrix heatmap
 	let width = 750;
 	let height = 750;
 
-	animatedHeatMap(curGraph, width, height);
+	//this draws the first graph, serves as an initialization function.
+	graphUpdate(curGraph, width, height);
 
+	/*using the mod operator, this function moves the current timestep 
+	forward by one. If the current timeStep is at the end of the timeStep array,
+	this function sets the current timeStep to timesteps[0].*/
 	function timeStepForward() {
 		curTimeStep = (curTimeStep + 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
 	}
 
+	//A function similar to timeStep forward, except it moves the timeStep backward. 
+	//It uses the mod operator to cycle through the loop in the same way as timeStepForward.
 	function timeStepBackward() {
 		curTimeStep = (curTimeStep - 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
 	}
 
-
-
+	//this function moves the program forward timeStep and calls
+	//animatedHeatMap with curGraph, width, and height
 	function mouseClicked() {
-		console.log("click");
 		timeStepForward();
-		animatedHeatMap(curGraph, width, height);
+		graphUpdate(curGraph, width, height);
 	}
 
+	/* takes a list of edges.
+	returns a 2-element array with the lightest edge weight as the first element
+	and the heaviest edge weight as the second element.*/
+	function getColorDomain(edges: Array<Edge>) {
+		return d3Array.extent(edges, function (d: Edge): number {
+			return d.weight;
+		});
+	}
+
+	/*this function draws one timeStep from the data set as a matrix.*/
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
 
 		let arraySize = graph.nodes.length;
@@ -48,6 +65,10 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			.attr("width", _width)
 			.attr("height", _height)
 
+		/* this color scale determines the coloring of the matrix heatmap.
+		The domain is from the lightest edge in the set of edges to the
+		heaviest edge in the set of edges. The range is defaultColorDomain,
+		which can be changed */
 		let colorMap = d3Scale.scaleLinear<string>()
 			.domain(getColorDomain(graph.edges))
 			.range(defaultColorDomain);
@@ -77,93 +98,5 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	}
 
-	//---------------------------------------------------------------------------------------------------
-	//------------------------ Helper Functions----------------------------------------------------------
-	//---------------------------------------------------------------------------------------------------
-
-	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number) {
-		graphUpdate(graph, _width, _height);
-	}
-
-	function generateRandomColor(): string {
-		return "hsl(" + ((Math.random() * 330) + 20) + ", " + ((Math.random() * 90) + 9) + "%, " + ((Math.random() * 90) + 9) + ")";
-	}
-
-
-	function matrixTimeline() {
-		for (var i = 0; i < numTimeSteps; i++) {
-			console.log("printing timeStep: " + curTimeStep);
-			graphUpdate(curGraph, width, height);
-			console.log("calling timeStepForward");
-			timeStepForward();
-
-		}
-	}
-
-	/*
-	takes a list of edges
-	returns a 2-element array with the minimum edge weight as the first element
-	and the maximum edge weight as the second element.
-	*/
-	function getColorDomain(edges: Array<Edge>) {
-		return d3Array.extent(edges, function (d: Edge): number {
-			return d.weight;
-		});
-	}
-
 });
 
-
-
-
-
-
-/*                     DEAD CODE
-
-
-
-			// svg.enter().append("text")
-			// 	.attr("x", (j / (arraySize)) * 100 + "%")
-			// 	.attr("y", (i / (arraySize)) * 100 + "%")
-			// 	.text("HI")
-			// 	.attr("fill", "black");
-
-				// 			.selectAll("g").enter().append("rect")
-	// 			.data(graph.nodes)
-	// 		.attr("x", function(d){
-	// 			//plus is the convert string to int command, we know that node
-	// 			//ids can be converted to ints
-	// 			return ((+d.id)/arraySize)*100 + "%";
-	// 		})
-	// 		.attr("y", function(d){
-	// 			//plus is the convert string to int command, we know that node
-	// 			//ids can be converted to ints
-	// 			return ((+d.id)/arraySize)*100 + "%";
-	// 		})
-	// 		.attr("width", _width/arraySize)
-	// 		.attr("heigt", _height/arraySize);
-	// }
-
-
-	// 	for (var i = 0; i < arraySize; i++) {
-	// 		//i represents the yAxis, j represents the xAxis
-	// 		for (var j = 0; j < arraySize; j++) {
-	// 			svg.append("rect")
-	// 				.attr("width", _width / arraySize)
-	// 				.attr("height", _height / arraySize)
-	// 				.attr("fill", _color)
-	// 				.attr("x", (j / (arraySize)) * 100 + "%")
-	// 				.attr("y", (i / (arraySize)) * 100 + "%")
-	// 				.attr("stroke", "black");
-	// 		}
-	// 		svg.enter().append("text")
-	// 			.attr("x", (j / (arraySize)) * 100 + "%")
-	// 			.attr("y", (i / (arraySize)) * 100 + "%")
-	// 			.text(function (d) {
-	// 				console.log(d);
-	// 				return d.source.id + "";
-	// 			})
-	// 			.attr("fill", "black");
-	// 	}
-	// }
-	*/
