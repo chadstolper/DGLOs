@@ -53,9 +53,10 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			.attr("y", function (d) {
 				return (+d.target.id / graph.nodes.length) * 100 + "%";
 			})
-			.attr("width", arraySize / _width * 100 + "%")
-			.attr("height", arraySize / _height * 100 + "%")
+			.attr("width", _width / arraySize + "%")
+			.attr("height", _height / arraySize * 100 + "%")
 			.attr("fill", function (d) {
+				console.log(d.weight, d, colorMap(d.weight));
 				return colorMap(d.weight);
 			})
 			.attr("stroke", "black")
@@ -63,53 +64,6 @@ d3json("data/dummy/dummy.json", function (response: any) {
 				return d.id;
 			});
 
-
-		// svg.selectAll("g")
-		// 	.data(graph.edges).enter()
-		// 	.append("rect")
-		// 	.attr("width", arraySize / _width)
-		// 	.attr("height", arraySize / _height)
-		// 	.attr("x", function (d) {
-		// 		return (+d.source.id * 100) + "%";
-		// 	})
-		// 	.attr("y", function (d) {
-		// 		return (+d.target.id * 100) + "%";
-		// 	})
-		// 	.attr("fill", "red")
-		// 	.attr("stroke", "black");
-
-
-
-		// for (var i = 0; i < arraySize; i++) {
-		// 	//i represents the yAxis, j represents the xAxis
-		// 	for (var j = 0; j < arraySize; j++) {
-		// 		svg.append("g")
-		// 			// .attr("width", _width / arraySize)
-		// 			// .attr("height", _height / arraySize)
-		// 			.data(graph.edges)
-		// 			.append("rect").enter()
-		// 			.attr("fill", "red")
-		// 			.attr("width", arraySize / _width)
-		// 			.attr("height", arraySize / _height)
-		// 			.attr("x", function (d) {
-		// 				//plus is the convert string to int command, we know that node
-		// 				//ids can be converted to ints
-		// 				console.log(d.id);
-		// 				return ((+d.source.id) / arraySize) * 100 + "%";
-		// 			})
-		// 			.attr("y", function (d) {
-		// 				//plus is the convert string to int command, we know that node
-		// 				//ids can be converted to ints
-
-		// 				return ((+d.target.id) / arraySize) * 100 + "%";
-		// 			})
-		// 			.append("text").enter()
-		// 			.text(function (d) {
-		// 				return d.weight;
-		// 			})
-
-		// 	}
-		// }
 	}
 
 	//---------------------------------------------------------------------------------------------------

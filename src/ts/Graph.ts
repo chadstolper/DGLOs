@@ -1,6 +1,6 @@
-import {SimulationNodeDatum} from "d3-force";
+import { SimulationNodeDatum } from "d3-force";
 
-export class Node implements SimulationNodeDatum{
+export class Node implements SimulationNodeDatum {
 	private _id: string | number;
 	private _type: string;
 	public x: number;
@@ -25,10 +25,11 @@ export class Edge {
 	private _target: Node;
 	private _weight: number;
 
-	constructor(id: number | string, source: Node, target: Node) {
+	constructor(id: number | string, source: Node, target: Node, weight: number) {
 		this._id = id;
 		this._source = source;
 		this._target = target;
+		this._weight = weight;
 	}
 
 	get id(): number | string {

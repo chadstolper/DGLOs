@@ -51,7 +51,7 @@ export class DrinkEdge extends Edge {
 	private _preference: number;
 	constructor(id: number | string, source: Node, target: Node,
 		consumption: number, preference: number) {
-		super(id, source, target);
+		super(id, source, target, preference);
 		this._consumption = consumption;
 		this._preference = preference;
 	}
@@ -115,7 +115,7 @@ export class StaticDrinkGraph extends Graph {
 				return n.id === e.target;
 			});
 
-			let id: string = ""+source.id+":"+target.id;
+			let id: string = "" + source.id + ":" + target.id;
 
 			let de: DrinkEdge = new DrinkEdge(id, source, target, e.consumption, e.preference);
 			edgeData.push(de);
