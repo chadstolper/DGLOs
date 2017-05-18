@@ -35,9 +35,14 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
 
 		let arraySize = graph.nodes.length;
+		let defaultColorDomain = ["white", "gold"];
 		var svg = d3.selectAll("body").append("svg")
 			.attr("width", _width)
 			.attr("height", _height)
+
+		let colorMap = d3Scale.scaleLinear<string>()
+			.domain(getColorDomain(graph.edges))
+			.range(defaultColorDomain);
 
 		let slots = svg.selectAll("g")
 			.data(graph.edges).enter()
@@ -50,7 +55,9 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			})
 			.attr("width", arraySize / _width * 100 + "%")
 			.attr("height", arraySize / _height * 100 + "%")
-			.attr("fill", "red")
+			.attr("fill", function (d) {
+				return colorMap(d.weight);
+			})
 			.attr("stroke", "black")
 			.attr("id", function (d) {
 				return d.id;
@@ -136,11 +143,11 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	returns a 2-element array with the minimum edge weight as the first element
 	and the maximum edge weight as the second element.
 	*/
-	// function getColorDomain(edges: Array<Edge>) {
-	// 	return d3Array.extent(edges, function (d: Edge): number {
-	// 		return d.weight;
-	// 	});
-	// }
+	function getColorDomain(edges: Array<Edge>) {
+		return d3Array.extent(edges, function (d: Edge): number {
+			return d.weight;
+		});
+	}
 
 });
 
