@@ -23,83 +23,86 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	matrixTimeline();
 
 	function timeStepForward() {
-		// if (curTimeStep + 1 === numTimeSteps)/*replace with mod*/ {
-		// 	//You have reached the last timeStep, so loop back to the first
-		// 	curGraph = graph.timesteps[0];
-		// 	console.log(curTimeStep);
-		// } else {
-		// 	//Move to the next timeStep
-		// 	curGraph = graph.timesteps[curTimeStep + 1];
-		// 	curTimeStep += 1;
-		// 	console.log(curTimeStep);
-		// }
-		curTimeStep = (curTimeStep + 1 % numTimeSteps);
+		curTimeStep = (curTimeStep + 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
 	}
 
 	function timeStepBackward() {
-		// if (curTimeStep - 1 === 0) {
-		// 	//You are at the first timeStep, so loop to the last
-		// 	curGraph = graph.timesteps[numTimeSteps - 1];
-		// 	console.log(curTimeStep);
-		// } else {
-		// 	//move to the previous timeStep
-		// 	curGraph = graph.timesteps[curTimeStep - 1];
-		// 	console.log(curTimeStep);
-		// }
-		curTimeStep = (curTimeStep - 1 % numTimeSteps);
+		curTimeStep = (curTimeStep - 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
 	}
 
-	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number, _color: string)/*:return type*/ {
+	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
 
 		let arraySize = graph.nodes.length;
-		let colorDomain = getColorDomain(graph.edges);
-		let defaultColorRange = ["white", "red"];
-
-		let colorMap = d3Scale.scaleLinear<string>()
-			.domain(colorDomain)
-			.range(defaultColorRange);
-
 		var svg = d3.selectAll("body").append("svg")
 			.attr("width", _width)
 			.attr("height", _height)
 
-		svg.append("rect")
-			.attr("class", "backgorund")
-			.attr("width", _width)
-			.attr("height", _height)
+		let slots = svg.selectAll("g")
+			.data(graph.edges).enter()
+			.append("rect")
+			.attr("x", function (d) {
+				return (+d.source.id / graph.nodes.length) * 100 + "%";
+			})
+			.attr("y", function (d) {
+				return (+d.target.id / graph.nodes.length) * 100 + "%";
+			})
+			.attr("width", arraySize / _width * 100 + "%")
+			.attr("height", arraySize / _height * 100 + "%")
+			.attr("fill", "red")
+			.attr("stroke", "black")
+			.attr("id", function (d) {
+				return d.id;
+			});
 
-		for (var i = 0; i < arraySize; i++) {
-			//i represents the yAxis, j represents the xAxis
-			for (var j = 0; j < arraySize; j++) {
-				svg.append("g")
-					// .attr("width", _width / arraySize)
-					// .attr("height", _height / arraySize)
-					.data(graph.edges)
-					.append("rect").enter()
-					.attr("fill", _color)
-					.attr("width", arraySize / _width)
-					.attr("height", arraySize / _height)
-					.attr("x", function (d) {
-						//plus is the convert string to int command, we know that node
-						//ids can be converted to ints
-						console.log(d.id);
-						return ((+d.source.id) / arraySize) * 100 + "%";
-					})
-					.attr("y", function (d) {
-						//plus is the convert string to int command, we know that node
-						//ids can be converted to ints
 
-						return ((+d.target.id) / arraySize) * 100 + "%";
-					})
-					.append("text").enter()
-					.text(function (d) {
-						return d.weight;
-					})
+		// svg.selectAll("g")
+		// 	.data(graph.edges).enter()
+		// 	.append("rect")
+		// 	.attr("width", arraySize / _width)
+		// 	.attr("height", arraySize / _height)
+		// 	.attr("x", function (d) {
+		// 		return (+d.source.id * 100) + "%";
+		// 	})
+		// 	.attr("y", function (d) {
+		// 		return (+d.target.id * 100) + "%";
+		// 	})
+		// 	.attr("fill", "red")
+		// 	.attr("stroke", "black");
 
-			}
-		}
+
+
+		// for (var i = 0; i < arraySize; i++) {
+		// 	//i represents the yAxis, j represents the xAxis
+		// 	for (var j = 0; j < arraySize; j++) {
+		// 		svg.append("g")
+		// 			// .attr("width", _width / arraySize)
+		// 			// .attr("height", _height / arraySize)
+		// 			.data(graph.edges)
+		// 			.append("rect").enter()
+		// 			.attr("fill", "red")
+		// 			.attr("width", arraySize / _width)
+		// 			.attr("height", arraySize / _height)
+		// 			.attr("x", function (d) {
+		// 				//plus is the convert string to int command, we know that node
+		// 				//ids can be converted to ints
+		// 				console.log(d.id);
+		// 				return ((+d.source.id) / arraySize) * 100 + "%";
+		// 			})
+		// 			.attr("y", function (d) {
+		// 				//plus is the convert string to int command, we know that node
+		// 				//ids can be converted to ints
+
+		// 				return ((+d.target.id) / arraySize) * 100 + "%";
+		// 			})
+		// 			.append("text").enter()
+		// 			.text(function (d) {
+		// 				return d.weight;
+		// 			})
+
+		// 	}
+		// }
 	}
 
 	//---------------------------------------------------------------------------------------------------
@@ -108,12 +111,8 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number, _color: string) {
 		console.log("you called this function");
-		graphUpdate(curGraph, width, height, generateRandomColor());
+		graphUpdate(curGraph, width, height);
 		setTimeout(timeStepForward(), 4000);
-
-	}
-
-	function doNothing() {
 
 	}
 
@@ -124,9 +123,9 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	function matrixTimeline() {
 		for (var i = 0; i < numTimeSteps; i++) {
-			console.log("printing" + curTimeStep);
-			graphUpdate(curGraph, width * numTimeSteps, height, generateRandomColor());
-			console.log("callin timeStepForward");
+			console.log("printing timeStep: " + curTimeStep);
+			graphUpdate(curGraph, width, height);
+			console.log("calling timeStepForward");
 			timeStepForward();
 
 		}
@@ -137,11 +136,11 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	returns a 2-element array with the minimum edge weight as the first element
 	and the maximum edge weight as the second element.
 	*/
-	function getColorDomain(edges: Array<Edge>) {
-		return d3Array.extent(edges, function (d: Edge): number {
-			return d.weight;
-		});
-	}
+	// function getColorDomain(edges: Array<Edge>) {
+	// 	return d3Array.extent(edges, function (d: Edge): number {
+	// 		return d.weight;
+	// 	});
+	// }
 
 });
 
