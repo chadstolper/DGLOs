@@ -13,7 +13,7 @@
 				"$lessCompile",
 				"$tsc",
 				"$jshint",
-				"$tslint5"
+				"$tslint4"
 			]
 		}
 	]

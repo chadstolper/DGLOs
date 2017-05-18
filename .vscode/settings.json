@@ -2,13 +2,14 @@
 {
 	// Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
 	"editor.insertSpaces": false,
-
 	// Specifies the folder path containing the tsserver and lib*.d.ts files to use.
-	"typescript.tsdk": "node_modules/typescript/lib"
-
+	"typescript.tsdk": "node_modules/typescript/lib",
 	// Enable/disable references CodeLens. Requires TypeScript >= 2.0.6.
-  //"typescript.referencesCodeLens.enabled": true,
-
+	//"typescript.referencesCodeLens.enabled": true,
 	// Enable/disable implementations CodeLens. Requires TypeScript >= 2.2.0.
-	//"typescript.implementationsCodeLens.enabled": true
+	//"typescript.implementationsCodeLens.enabled": true,
+	// Controls if the editor should automatically format the pasted content. A formatter must be available and the formatter should be able to format a range in a document.
+	"editor.formatOnPaste": true,
+	// Format a file on save. A formatter must be available, the file must not be auto-saved, and editor must not be shutting down.
+	"editor.formatOnSave": true
 }

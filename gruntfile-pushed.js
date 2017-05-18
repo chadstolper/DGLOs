@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-rollup');
 	var nodeResolve = require("rollup-plugin-node-resolve")
- 
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 				cache: 'js/bundle.js',
 				format: 'umd',
 				moduleName: 'dglos',
-				plugins: function(){
+				plugins: function () {
 					return [
 						nodeResolve({ jsnext: true, main: true })
 					]
@@ -47,17 +47,17 @@ module.exports = function (grunt) {
 		tslint: {
 			options: {
 				configuration: "tslint.json",
-				force: false
+				force: true
 			},
 			files: {
 				src: "src/ts/**/*.ts"
 			}
-			
+
 		},
 		watch: {
 			typescript: {
 				files: 'src/**/*.ts',
-				tasks: ['tslint','ts','rollup']
+				tasks: ['tslint', 'ts', 'rollup']
 			}
 		},
 		open: {
@@ -66,8 +66,8 @@ module.exports = function (grunt) {
 			}
 		}
 	});
-	
-	grunt.registerTask('compile', ['ts','rollup']);
+
+	grunt.registerTask('compile', ['ts', 'rollup']);
 	grunt.registerTask('default', ['connect', 'open', 'watch']);
 	// grunt.registerTask('default', 'compile');
 };
