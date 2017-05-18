@@ -46,37 +46,11 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		}
 	}
 
-
-	/*
-	takes a list of edges
-	returns a 2-element array with the minimum edge weight as the first element
-	and the maximum edge weight as the second element.
-	*/
-	function getColorDomain(edges: Array<Edge>) {
-		return d3Array.extent(edges, function (d: Edge): number {
-			return d.weight;
-		});
-	}
-
-	function setColorRange(colorArray: Array<string>) {
-		for (var i = 0; i < colorArray.length; i++) {
-
-		}
-	}
-
-	function matrixTimeline() {
-		for (var i = 0; i < numTimeSteps; i++) {
-			graphUpdate(curGraph, width * numTimeSteps, height, generateRandomColor());
-			timeStepForward();
-		}
-	}
-
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number, _color: string)/*:return type*/ {
 
 		let arraySize = graph.nodes.length;
 		let colorDomain = getColorDomain(graph.edges);
 		let defaultColorRange = ["white", "red"];
-		console.log(colorDomain);
 
 		let colorMap = d3Scale.scaleLinear<string>()
 			.domain(colorDomain)
@@ -115,22 +89,72 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 				svg.selectAll("g")
 					.data(graph.edges)
-					.append("text")
+					.enter().append("text")
 					.text(function (d) {
 						return d.weight;
 					})
 					.attr("fill", "white");
 
 			}
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------
+	//------------------------ Helper Functions----------------------------------------------------------
+	//---------------------------------------------------------------------------------------------------
+
+	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number, _color: string) {
+		console.log("you called this function");
+		graphUpdate(curGraph, width, height, generateRandomColor());
+		setTimeout(timeStepForward(), 4000);
+
+	}
+
+	function doNothing() {
+
+	}
+
+	function generateRandomColor(): string {
+		return "hsl(" + ((Math.random() * 330) + 20) + ", " + ((Math.random() * 90) + 9) + "%, " + ((Math.random() * 90) + 9) + ")";
+	}
+
+
+	function matrixTimeline() {
+		for (var i = 0; i < numTimeSteps; i++) {
+			graphUpdate(curGraph, width * numTimeSteps, height, generateRandomColor());
+			timeStepForward();
+		}
+	}
+
+	/*
+	takes a list of edges
+	returns a 2-element array with the minimum edge weight as the first element
+	and the maximum edge weight as the second element.
+	*/
+	function getColorDomain(edges: Array<Edge>) {
+		return d3Array.extent(edges, function (d: Edge): number {
+			return d.weight;
+		});
+	}
+
+});
+
+
+
+
+
+
+/*                     DEAD CODE
+
+
+
 			// svg.enter().append("text")
 			// 	.attr("x", (j / (arraySize)) * 100 + "%")
 			// 	.attr("y", (i / (arraySize)) * 100 + "%")
 			// 	.text("HI")
 			// 	.attr("fill", "black");
-		}
-	}
 
-	// 			.selectAll("g").enter().append("rect")
+				// 			.selectAll("g").enter().append("rect")
 	// 			.data(graph.nodes)
 	// 		.attr("x", function(d){
 	// 			//plus is the convert string to int command, we know that node
@@ -168,25 +192,4 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	// 			.attr("fill", "black");
 	// 	}
 	// }
-
-
-	//---------------------------------------------------------------------------------------------------
-	//------------------------ Helper Functions----------------------------------------------------------
-	//---------------------------------------------------------------------------------------------------
-
-	function animatedHeatMap(graph: StaticDrinkGraph, _width: number, _height: number, _color: string) {
-		console.log("you called this function");
-		graphUpdate(curGraph, width, height, generateRandomColor());
-		setTimeout(timeStepForward(), 4000);
-
-	}
-
-	function doNothing() {
-
-	}
-
-	function generateRandomColor(): string {
-		return "hsl(" + Math.random() + ", " + Math.random() * 100 + "% , " + Math.random() * 100 + "% )";
-	}
-
-});
+	*/
