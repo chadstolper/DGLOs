@@ -9,7 +9,7 @@ import { Person, Drink, DrinkEdge, StaticDrinkGraph, DynamicDrinkGraph } from ".
 import "willCSS.css";
 
 d3json("data/dummy/dummy.json", function (response: any) {
-	let graph:StaticDrinkGraph = new DynamicDrinkGraph(response).timesteps[0];
+	let graph: StaticDrinkGraph = new DynamicDrinkGraph(response).timesteps[0];
 	let edgeListLength = graph.edges.length;
 	let nodeListLength = graph.nodes.length;
 
@@ -32,7 +32,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	//these numbers are neccessary to calculate the spacing of nodes
 	//along their respective axis.
 	for (let n of graph.nodes) {
-		if (n.type == "Person") {
+		if (n.type === "Person") {
 			numPeople += 1;
 		} else {
 			numDrinks += 1;
@@ -55,7 +55,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		.data(graph.nodes);
 	nodes.enter().append("circle")
 		.attr("cx", function (d) {
-			if (d.type == "Person") {
+			if (d.type === "Person") {
 				// the objectg is a person, therefore should be evenly
 				// spaced along the xAxis
 				let solution = ((((curPerson) / numPeople) * 100) - 5) + "%";
@@ -68,7 +68,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			}
 		})
 		.attr("cy", function (d) {
-			if (d.type == "Person") {
+			if (d.type === "Person") {
 				//The object is a person, so should have a fixed
 				//y position, namely the xAxis
 				return xAxis
