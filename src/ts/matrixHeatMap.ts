@@ -35,19 +35,20 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		// }
 		curTimeStep = (curTimeStep + 1 % numTimeSteps);
 		curGraph = graph.timesteps[curTimeStep];
-		console.log(curTimeStep);
 	}
 
 	function timeStepBackward() {
-		if (curTimeStep - 1 === 0) {
-			//You are at the first timeStep, so loop to the last
-			curGraph = graph.timesteps[numTimeSteps - 1];
-			console.log(curTimeStep);
-		} else {
-			//move to the previous timeStep
-			curGraph = graph.timesteps[curTimeStep - 1];
-			console.log(curTimeStep);
-		}
+		// if (curTimeStep - 1 === 0) {
+		// 	//You are at the first timeStep, so loop to the last
+		// 	curGraph = graph.timesteps[numTimeSteps - 1];
+		// 	console.log(curTimeStep);
+		// } else {
+		// 	//move to the previous timeStep
+		// 	curGraph = graph.timesteps[curTimeStep - 1];
+		// 	console.log(curTimeStep);
+		// }
+		curTimeStep = (curTimeStep - 1 % numTimeSteps);
+		curGraph = graph.timesteps[curTimeStep];
 	}
 
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number, _color: string)/*:return type*/ {
