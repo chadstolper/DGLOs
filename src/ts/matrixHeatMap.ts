@@ -23,27 +23,32 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	matrixTimeline();
 
 	function timeStepForward() {
-		if (curTimeStep + 1 === numTimeSteps)/*replace with mod*/ {
-			//You have reached the last timeStep, so loop back to the first
-			curGraph = graph.timesteps[0];
-			console.log(curTimeStep);
-		} else {
-			//Move to the next timeStep
-			curGraph = graph.timesteps[curTimeStep + 1];
-			console.log(curTimeStep);
-		}
+		// if (curTimeStep + 1 === numTimeSteps)/*replace with mod*/ {
+		// 	//You have reached the last timeStep, so loop back to the first
+		// 	curGraph = graph.timesteps[0];
+		// 	console.log(curTimeStep);
+		// } else {
+		// 	//Move to the next timeStep
+		// 	curGraph = graph.timesteps[curTimeStep + 1];
+		// 	curTimeStep += 1;
+		// 	console.log(curTimeStep);
+		// }
+		curTimeStep = (curTimeStep + 1 % numTimeSteps);
+		curGraph = graph.timesteps[curTimeStep];
 	}
 
 	function timeStepBackward() {
-		if (curTimeStep - 1 === 0) {
-			//You are at the first timeStep, so loop to the last
-			curGraph = graph.timesteps[numTimeSteps - 1];
-			console.log(curTimeStep);
-		} else {
-			//move to the previous timeStep
-			curGraph = graph.timesteps[curTimeStep - 1];
-			console.log(curTimeStep);
-		}
+		// if (curTimeStep - 1 === 0) {
+		// 	//You are at the first timeStep, so loop to the last
+		// 	curGraph = graph.timesteps[numTimeSteps - 1];
+		// 	console.log(curTimeStep);
+		// } else {
+		// 	//move to the previous timeStep
+		// 	curGraph = graph.timesteps[curTimeStep - 1];
+		// 	console.log(curTimeStep);
+		// }
+		curTimeStep = (curTimeStep - 1 % numTimeSteps);
+		curGraph = graph.timesteps[curTimeStep];
 	}
 
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number, _color: string)/*:return type*/ {
@@ -79,21 +84,19 @@ d3json("data/dummy/dummy.json", function (response: any) {
 					.attr("x", function (d) {
 						//plus is the convert string to int command, we know that node
 						//ids can be converted to ints
+						console.log(d.id);
 						return ((+d.source.id) / arraySize) * 100 + "%";
 					})
 					.attr("y", function (d) {
 						//plus is the convert string to int command, we know that node
 						//ids can be converted to ints
-						return ((+d.target.id) / arraySize) * 100 + "%";
-					});
 
-				svg.selectAll("g")
-					.data(graph.edges)
-					.enter().append("text")
+						return ((+d.target.id) / arraySize) * 100 + "%";
+					})
+					.append("text").enter()
 					.text(function (d) {
 						return d.weight;
 					})
-					.attr("fill", "white");
 
 			}
 		}
@@ -121,8 +124,11 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	function matrixTimeline() {
 		for (var i = 0; i < numTimeSteps; i++) {
+			console.log("printing" + curTimeStep);
 			graphUpdate(curGraph, width * numTimeSteps, height, generateRandomColor());
+			console.log("callin timeStepForward");
 			timeStepForward();
+
 		}
 	}
 
