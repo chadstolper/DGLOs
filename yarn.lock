@@ -2716,9 +2716,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.3.2.tgz#f0f045e196f69a72f06b25fd3bd39d01c3ce9984"
+typescript@^2.4.x:
+  version "2.4.0-dev.20170518"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.0-dev.20170518.tgz#304d0a8209836bd9e6e361ee287c6699ba8fd60f"
 
 uid-number@^0.0.6:
   version "0.0.6"

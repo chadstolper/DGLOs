@@ -16,6 +16,7 @@ module.exports = function (grunt) {
 				// sourceMapRelative: true,
 				cache: 'js/bundle.js',
 				format: 'umd',
+				moduleName: 'dglos',
 				plugins: function(){
 					return [
 						nodeResolve({ jsnext: true, main: true })
@@ -24,7 +25,7 @@ module.exports = function (grunt) {
 			},
 			files: {
 				dest: 'js/bundle.js',
-				src: 'out/src/ts/main.js',
+				src: 'out/src/ts/DummyGraphMain.js', //SET THIS
 			},
 		},
 		connect: {
