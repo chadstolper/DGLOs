@@ -21,6 +21,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	//width and height of the SVG element that will become the matrix heatmap
 	let width = 750;
 	let height = 750;
+	let defaultColorDomain = ["white", "gold"];
 
 	//this draws the entire timeline
 	matrixHeatMapTimeLine();
@@ -53,7 +54,6 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
 
 		let arraySize = graph.nodes.length;
-		let defaultColorDomain = ["white", "gold"];
 		var svg = d3.selectAll("body").append("svg")
 			.attr("width", _width)
 			.attr("height", _height)
@@ -106,6 +106,13 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function setWidth(_width: number) {
 		this.width = _width;
 	}
+	function getDefaultColorDomain(): Array<string> {
+		return defaultColorDomain;
+	}
+	function setDefaultColorDomain(_defaultColorDomain: Array<string>) {
+		this.defaultColorDomain = _defaultColorDomain;
+	}
+
 
 });
 
