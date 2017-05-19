@@ -9,6 +9,12 @@ module.exports = function (grunt) {
 	var nodeResolve = require("rollup-plugin-node-resolve");
 	var rollupSourcemaps = require('rollup-plugin-sourcemaps');
 
+	//////////////////    Main File    /////////////////////////
+	////////////////////////////////////////////////////////////
+	mainfile = 'out/src/ts/matrixHeatmapAnimated.js';
+	////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
@@ -31,7 +37,7 @@ module.exports = function (grunt) {
 			},
 			files: {
 				dest: 'js/bundle.js',
-				src: 'out/src/ts/matrixHeatmapAnimated.js', //SET THIS
+				src: mainfile
 			},
 		},
 		connect: {
