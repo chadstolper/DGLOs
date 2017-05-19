@@ -3,6 +3,7 @@ import { Heatmap } from "./Heatmap"
 import { json as d3json } from "d3-request";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { AnimatedHeatmap } from "./AnimatedHeatmap";
+import { HeatmapTimeline } from "./HeatmapTimeline"
 
 d3json("data/dummy/dummy.json", function (response: any) {
 	let graph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
@@ -16,19 +17,20 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let svg = d3.select("body").append("div").append("svg")
 		.attr("width", width)
 		.attr("height", height);
-	let heatmap: AnimatedHeatmap = new AnimatedHeatmap(width, height, ["white", "gold"], svg, graph);
+	let heatmap: HeatmapTimeline = new HeatmapTimeline(width, height, ["white", "gold"], svg, graph);
 
-	let prevButton = d3.select("body").append("div").append("button")
-		.text("<--")
-		.on("click", function () {
-			heatmap.animateBackward()
-		});
+	//code for an animated heatmap
+	// let prevButton = d3.select("body").append("div").append("button")
+	// 	.text("<--")
+	// 	.on("click", function () {
+	// 		heatmap.animateBackward()
+	// 	});
 
-	let nextButton = d3.select("body").append("div").append("button")
-		.text("-->")
-		.on("click", function () {
-			heatmap.animateForward()
-		});
+	// let nextButton = d3.select("body").append("div").append("button")
+	// 	.text("-->")
+	// 	.on("click", function () {
+	// 		heatmap.animateForward()
+	// 	});
 
-	heatmap.animateCurrent();
+	heatmap.animate();
 });

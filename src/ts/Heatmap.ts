@@ -37,6 +37,9 @@ export class Heatmap {
 	set colorDomain(colorDomain: Array<string>) {
 		this._colorDomain = colorDomain;
 	}
+	get location(): Selection<any, {}, any, {}> {
+		return this._location
+	}
 
 	public draw(graph: Graph) {
 		let arraySize = graph.nodes.length;
