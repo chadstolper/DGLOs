@@ -77,7 +77,6 @@ json("./data/dummy/dummy.json", function (response) {
 			(simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 		}
 
-
 		drawLinks(graph.edges);
 		drawNodes(graph.nodes);
 
@@ -109,20 +108,20 @@ json("./data/dummy/dummy.json", function (response) {
 	function drawLinks(edges: Edge[]) {
 		linkGlyphs = linksG.selectAll("line")
 			.data(edges, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
-		let linkEnter = linkGlyphs.enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
+		let linkEnter = linkGlyphs.enter().append("line") //create a new line for each edge in edgelist (subdivs defined)
+			.attr("stroke", "black");
 		linkGlyphs = linkGlyphs.merge(linkEnter)
 		linkGlyphs.transition()
-			.attr("stroke", "black")
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
 
 	function drawNodes(nodes: Node[]) {
 		nodeGlyphs = nodesG.selectAll("circle")
 			.data(nodes, function (d: Node): string { return "" + d.id });
-		let nodeEnter = nodeGlyphs.enter().append("circle");
-		nodeGlyphs = nodeGlyphs.merge(nodeEnter)
+		let nodeEnter = nodeGlyphs.enter().append("circle")
+			.attr("id", function (d: any): string | number { return d.name; });
+		nodeGlyphs = nodeGlyphs.merge(nodeEnter);
 		nodeGlyphs
-			.attr("id", function (d: any): string | number { return d.name; })
 			.attr("r", 10)
 			.attr("fill", function (d: Node): string { return color(d.id); });
 	}
