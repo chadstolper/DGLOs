@@ -8,7 +8,7 @@ export class Node implements SimulationNodeDatum {
 	public vx?: number;
 	public vy?: number;
 
-	constructor(id: number | string, type: string) {
+	public constructor(id: number | string, type: string) {
 		this._id = id;
 		this._type = type;
 	}
@@ -28,7 +28,7 @@ export class Edge {
 	private _target: Node;
 	private _weight: number;
 
-	constructor(id: number | string, source: Node, target: Node, weight: number) {
+	public constructor(id: number | string, source: Node, target: Node, weight: number) {
 		this._id = id;
 		this._source = source;
 		this._target = target;
@@ -59,7 +59,7 @@ export class Graph {
 	private _nodes: Array<Node>;
 	private _edges: Array<Edge>;
 
-	constructor(nodes: Array<Node>, edges: Array<Edge>) {
+	public constructor(nodes: Array<Node>, edges: Array<Edge>) {
 		this._nodes = nodes;
 		this._edges = edges;
 	}
@@ -77,7 +77,7 @@ export class Graph {
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
 
-	constructor(timesteps: Array<Graph>) {
+	public constructor(timesteps: Array<Graph>) {
 		this._timesteps = timesteps;
 	}
 
