@@ -61,6 +61,7 @@ export class Heatmap {
 			});
 
 		slots = slots.merge(slotsEnter)
+		slots //TODO: transition slots
 			.attr("x", function (d) {
 				return (+d.source.id / graph.nodes.length) * 100 + "%";
 			})
