@@ -28,10 +28,13 @@ export class ForceDirectedGraph {
 		this.draw(graph.timesteps[this.time]);
 	}
 
+
+
 	private initSimulation() { //begin simulation of the graphics
 		this.simulation = d3force.forceSimulation() //init sim for chart?
 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
-			.force("charge", d3force.forceManyBody().strength(-10)) //push applied to all things from center
+			//.force("charge", d3force.forceManyBody().strength(-10)) //push applied to all things from center
+			.force("charge", d3force.forceManyBody()) //push applied to all things from center
 			.force("center", d3force.forceCenter(this.width / 2, this.height / 2)) //define center
 			.on("tick", this.ticked);
 
@@ -50,7 +53,8 @@ export class ForceDirectedGraph {
 
 	private ticked() { //tock
 		console.log("tocking...");
-		return () => {//wrapped for d3
+		console.log("tock this", this);
+		return (function (): void {//wrapped for d3
 			console.log("ticking...");
 			console.log("ticking this", this);
 			if (this.linkGlyphs !== undefined) {
@@ -71,7 +75,7 @@ export class ForceDirectedGraph {
 			} else {
 				console.log("No nodes!");
 			}
-		};
+		});
 	}
 
 	public draw(graph: Graph): void { //draw call for graphics, and check for simulation running
@@ -89,8 +93,8 @@ export class ForceDirectedGraph {
 		if (this.simulation !== undefined) {
 			console.log("there is a simulation")
 			this.simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
-			(this.simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges)
-				.strength(function (d: Edge): number { return d.weight * -.01 });
+			(this.simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
+			//	.strength(function (d: Edge): number { return d.weight * -.01 });
 		}
 	}
 
