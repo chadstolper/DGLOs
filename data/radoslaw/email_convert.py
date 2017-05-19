@@ -1,6 +1,7 @@
 from collections import defaultdict as dd
 import csv
 import json
+from sys import stderr as err
 
 emails = dd(list) #timestep to list
 
@@ -9,13 +10,17 @@ mintime = False
 maxtime = False
 
 # window_size = 1000
-window_size = 100
+timestep_size	= 10000
+window_size 	= 100000
+window_shifted = window_size/timestep_size
 
-with open('email_sample.tsv','r') as email_file:
+
+with open('emails.tsv','r') as email_file:
 	reader = csv.DictReader(email_file, delimiter='\t')
 	for line in reader:
-		nodes.add(line['to'])
-		nodes.add(line['from'])
+		# nodes.add(line['to'])
+		# nodes.add(line['from'])
+		line['timestamp'] = int(line['timestamp'])//timestep_size
 		emails[line['timestamp']].append(line)
 		if mintime==False:
 			mintime = int(line['timestamp'])
@@ -23,18 +28,18 @@ with open('email_sample.tsv','r') as email_file:
 		mintime = min(mintime,int(line['timestamp']))
 		maxtime = max(maxtime,int(line['timestamp']))
 
-print (mintime,maxtime)
+
+err.write (str((mintime,maxtime,maxtime-mintime))+"\n")
 
 timesteps = []
 nodes = sorted(nodes)
 
-for middle_shifted in xrange(mintime/window_size,(maxtime/window_size)+1):
+for start in xrange(mintime,maxtime+1):
 	timestep = {}
-	# timestep["nodes"] = tnodes = nodes
 	timestep["edges"] = tedges = []
-	start = 
-	timestep['timestamp'] = timestamp_start*window_size #shift
-	for t in xrange(timestamp_start*window_size,timestamp_start*window_size+window_size):
+	trail_start = start-window_shifted
+	timestep['timestamp'] = start
+	for t in xrange(trail_start,start+1):
 		if t in emails:
 			for edge in emails[t]:
 				tedges.append(edge)
