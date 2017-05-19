@@ -5,6 +5,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-open');
 	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-rollup');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	var nodeResolve = require("rollup-plugin-node-resolve");
 	var rollupSourcemaps = require('rollup-plugin-sourcemaps');
 
@@ -20,14 +21,17 @@ module.exports = function (grunt) {
 				moduleName: 'dglos',
 				plugins: function () {
 					return [
-						nodeResolve({ jsnext: true, main: true }),
+						nodeResolve({
+							jsnext: true,
+							main: true
+						}),
 						rollupSourcemaps()
 					]
 				}
 			},
 			files: {
 				dest: 'js/bundle.js',
-				src: 'out/src/ts/DummyGraphMain.js', //SET THIS
+				src: 'out/src/ts/matrixHeatmapAnimated.js', //SET THIS
 			},
 		},
 		connect: {
@@ -40,10 +44,11 @@ module.exports = function (grunt) {
 		},
 		ts: {
 			default: {
-				tsconfig: true,
+				tsconfig: true
 			},
 			options: {
-				//fast: "never"
+				fast: "always",
+				target: 'es6'
 			}
 		},
 		tslint: {
@@ -59,17 +64,21 @@ module.exports = function (grunt) {
 		watch: {
 			typescript: {
 				files: 'src/**/*.ts',
-				tasks: ['tslint', 'ts', 'rollup']
+				tasks: ['compile']
 			}
 		},
 		open: {
 			dev: {
 				path: 'http://localhost:8080/index.html'
 			}
+		},
+		clean: {
+			tscommands: "tscommand-*"
+
 		}
 	});
 
-	grunt.registerTask('compile', ['ts', 'rollup']);
+	grunt.registerTask('compile', ['tslint', 'ts', 'clean', 'rollup']);
 	grunt.registerTask('default', ['connect', 'open', 'watch']);
 	// grunt.registerTask('default', 'compile');
 };
