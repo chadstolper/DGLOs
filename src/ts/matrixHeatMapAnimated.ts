@@ -21,10 +21,9 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	//width and height of the SVG element that will become the matrix heatmap
 	let width = 750;
 	let height = 750;
-
+	let defaultColorDomain = ["white", "gold"];
 
 	let arraySize = curGraph.nodes.length;
-	let defaultColorDomain = ["white", "gold"];
 	var svg = d3.selectAll("body").append("svg")
 		.attr("width", width)
 		.attr("height", height)
@@ -55,10 +54,6 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			animateGraph(curGraph, width, height);
 		});
 
-
-	// //this draws the first graph, serves as an initialization function.
-	// graphUpdate(curGraph, width, height);
-
 	/*using the mod operator, this function moves the current timestep 
 	forward by one. If the current timeStep is at the end of the timeStep array,
 	this function sets the current timeStep to timesteps[0].*/
@@ -79,6 +74,11 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function animateGraph(graph: StaticDrinkGraph, _width: number, _height: number) {
 		timeStepForward();
 		console.log(curTimeStep);
+
+		let colorMap = d3Scale.scaleLinear<string>()
+			.domain(getColorDomain(graph.edges))
+			.range(defaultColorDomain);
+
 		let rects = svg.selectAll("rect")
 			.data(graph.edges).enter()
 			.attr("fill", function (d) {
@@ -95,11 +95,6 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		});
 	}
 
-	/* this color scale determines the coloring of the matrix heatmap.
-The domain is from the lightest edge in the set of edges to the
-heaviest edge in the set of edges. The range is defaultColorDomain,
-which can be changed */
-
 	function getHeight(): number {
 		return height;
 	}
@@ -111,6 +106,12 @@ which can be changed */
 	}
 	function setWidth(_width: number) {
 		this.width = _width;
+	}
+	function getDefaultColorDomain(): Array<string> {
+		return defaultColorDomain;
+	}
+	function setDefaultColorDomain(_defaultColorDomain: Array<string>) {
+		this.defaultColorDomain = _defaultColorDomain;
 	}
 
 });
