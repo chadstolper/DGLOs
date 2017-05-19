@@ -28,31 +28,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		.attr("width", width)
 		.attr("height", height)
 
-	let colorMap = d3Scale.scaleLinear<string>()
-		.domain(getColorDomain(curGraph.edges))
-		.range(defaultColorDomain);
-
-	let slots = svg.selectAll("g")
-		.data(curGraph.edges).enter()
-		.append("rect")
-		.attr("x", function (d) {
-			return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-		})
-		.attr("y", function (d) {
-			return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-		})
-		.attr("width", width / arraySize)
-		.attr("height", height / arraySize)
-		.attr("fill", function (d) {
-			return colorMap(d.weight);
-		})
-		.attr("stroke", "black")
-		.attr("id", function (d) {
-			return d.id;
-		})
-		.on("click", function (d, i) {
-			animateGraph(curGraph, width, height);
-		});
+	animateGraph();
 
 	/*using the mod operator, this function moves the current timestep 
 	forward by one. If the current timeStep is at the end of the timeStep array,
@@ -71,18 +47,34 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	//this function moves the program forward timeStep and calls
 	//animatedHeatMap with curGraph, width, and height
-	function animateGraph(graph: StaticDrinkGraph, _width: number, _height: number) {
+	function animateGraph(/*graph: StaticDrinkGraph, _width: number, _height: number*/) {
 		timeStepForward();
 		console.log(curTimeStep);
 
 		let colorMap = d3Scale.scaleLinear<string>()
-			.domain(getColorDomain(graph.edges))
+			.domain(getColorDomain(curGraph.edges))
 			.range(defaultColorDomain);
 
-		let rects = svg.selectAll("rect")
-			.data(graph.edges).enter()
+		let slots = svg.selectAll("g")
+			.data(curGraph.edges).enter()
+			.append("rect")
+			.attr("x", function (d) {
+				return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+			})
+			.attr("y", function (d) {
+				return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+			})
+			.attr("width", width / arraySize)
+			.attr("height", height / arraySize)
 			.attr("fill", function (d) {
 				return colorMap(d.weight);
+			})
+			.attr("stroke", "black")
+			.attr("id", function (d) {
+				return d.id;
+			})
+			.on("click", function (d, i) {
+				animateGraph();
 			});
 	}
 
