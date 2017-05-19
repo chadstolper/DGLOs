@@ -6,9 +6,9 @@ import { AnimatedHeatmap } from "./AnimatedHeatmap";
 
 d3json("data/dummy/dummy.json", function (response: any) {
 	let graph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
-	let curTimeStep = 0;
-	let curGraph = graph.timesteps[0];
-	let numTimeSteps = graph.timesteps.length;
+	//let curTimeStep = 0;
+	//let curGraph = graph.timesteps[curTimeStep];
+	//let numTimeSteps = graph.timesteps.length;
 
 	let width = 750;
 	let height = 750;
@@ -30,5 +30,5 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			heatmap.animateForward()
 		});
 
-	heatmap.animateCurrent();
+	//heatmap.animateCurrent();
 });

@@ -13,8 +13,10 @@ export class AnimatedHeatmap extends Heatmap {
 		dynamicGraph: DynamicGraph) {
 		super(width, height, colorDomain, location);
 		this._dynamicGraph = dynamicGraph;
-		this._curGraph = dynamicGraph.timesteps[0];
-		this._numTimeSteps = dynamicGraph.timesteps.length;
+		this._curTimeStep = 0;
+		this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
+		this._numTimeSteps = this._dynamicGraph.timesteps.length;
+		this.init();
 	}
 
 	//this function will move the _curGraph forward through the _dynamicGraph.timesteps array,
@@ -27,22 +29,19 @@ export class AnimatedHeatmap extends Heatmap {
 	//this function is similar to timeStepForward(), except it moves _curGraph backwards
 	//through the _dynamicGraph.timestamps array.
 	private timeStepBackward() {
-		this._curTimeStep = (this._curTimeStep - 1) % this._numTimeSteps;
+		this._curTimeStep = (this._curTimeStep + this._numTimeSteps - 1) % this._numTimeSteps;
 		this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
 	}
 
 	public animateForward() {
-		console.log(this._curGraph.nodes);
 		this.timeStepForward();
 		super.draw(this._curGraph);
 	}
 	public animateBackward() {
-		console.log(this._curGraph.nodes);
 		this.timeStepBackward();
 		super.draw(this._curGraph);
 	}
-	public animateCurrent() {
-		console.log(this._curGraph.nodes);
+	private init() {
 		super.draw(this._curGraph);
 	}
 
