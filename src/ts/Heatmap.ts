@@ -1,8 +1,8 @@
 import * as d3 from "d3-selection";
+import { Selection } from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 import { Graph, Node, Edge } from "./Graph";
-import { Person, Drink, DrinkEdge, StaticDrinkGraph, DynamicDrinkGraph } from "./DummyGraph";
 
 
 export class Heatmap {
@@ -10,11 +10,13 @@ export class Heatmap {
 	private _width: number;
 	private _height: number;
 	private _colorDomain: Array<string>;
+	private _location: Selection<any, {}, any, {}>;
 
-	constructor(width: number, height: number, colorDomain: Array<string>) {
+	constructor(width: number, height: number, colorDomain: Array<string>, location: Selection<any, {}, any, {}>) {
 		this._width = width;
 		this._height = height;
 		this._colorDomain = colorDomain;
+		this._location = location;
 	}
 
 	get height(): number {
@@ -36,11 +38,9 @@ export class Heatmap {
 		this._colorDomain = colorDomain;
 	}
 
-	public draw(graph: StaticDrinkGraph) {
+	public draw(graph: Graph) {
 		let arraySize = graph.nodes.length;
-		var svg = d3.selectAll("body").append("svg")
-			.attr("width", this._width)
-			.attr("height", this._height);
+
 
 		/* this color scale determines the coloring of the matrix heatmap.
 		The domain is from the lightest edge in the set of edges to the
@@ -50,7 +50,7 @@ export class Heatmap {
 			.domain(this.createColorDomain(graph.edges))
 			.range(this._colorDomain);
 
-		let slots = svg.selectAll("g")
+		let slots = this._location.selectAll("rect")
 			.data(graph.edges).enter()
 			.append("rect")
 			.attr("x", function (d) {

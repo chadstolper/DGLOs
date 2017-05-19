@@ -1,3 +1,4 @@
+import * as d3 from "d3-selection";
 import { Heatmap } from "./Heatmap"
 import { json as d3json } from "d3-request";
 import { DynamicDrinkGraph } from "./DummyGraph";
@@ -7,7 +8,14 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let curTimeStep = 0;
 	let curGraph = graph.timesteps[0];
 	let numTimeSteps = graph.timesteps.length;
-	let heatmap: Heatmap = new Heatmap(750, 750, ["white", "gold"]);
+
+	let width = 750;
+	let height = 750;
+	let svg = d3.selectAll("body").append("svg")
+		.attr("width", width)
+		.attr("height", height);
+
+	let heatmap: Heatmap = new Heatmap(width, height, ["white", "gold"], svg);
 
 	/*using the mod operator, this function moves the current timestep 
 	forward by one. If the current timeStep is at the end of the timeStep array,
