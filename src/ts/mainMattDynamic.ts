@@ -24,7 +24,7 @@ json("./data/dummy/dummy.json", function (response) {
 	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
 	initSVG();
 	draw(dGraph.timesteps[time]);
-	initSimulation();
+	//initSimulation();
 
 
 
@@ -40,7 +40,7 @@ json("./data/dummy/dummy.json", function (response) {
 		chart = d3.select("#chart").append("svg")
 			.attr("width", width)
 			.attr("height", height)
-			.on("click", function (d, i) { mouseClicked() });
+			.on("click", mouseClicked);
 
 		linksG = chart.append("g")
 			.classed("links", true);
@@ -52,40 +52,38 @@ json("./data/dummy/dummy.json", function (response) {
 	function ticked() {
 		console.log("ticking...");
 		if (linkGlyphs !== undefined) {
-			//console.log(linkGlyphs);
 			linkGlyphs //as in the lines representing links
 				.attr("x1", function (d: Edge) { return d.source.x; })
 				.attr("y1", function (d: Edge) { return d.source.y; })
 				.attr("x2", function (d: Edge) { return d.target.x; })
 				.attr("y2", function (d: Edge) { return d.target.y; });
 		} else {
-			console.log("No links!")
+			console.log("No links!");
 		}
 		if (nodeGlyphs !== undefined) {
-			//console.log(nodeGlyphs);
 			nodeGlyphs
 				.attr("cx", function (d: Node) {
-					console.log(d);
 					return d.x;
 				})
 				.attr("cy", function (d: Node) { return d.y; });
 		} else {
-			console.log("No nodes!")
+			console.log("No nodes!");
 		}
 	}
 
 	function draw(graph: Graph): void {
-
-
-		drawLinks(graph.edges);
-		drawNodes(graph.nodes);
-
 		if (simulation !== undefined) {
 			simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 		}
 
 
+		drawLinks(graph.edges);
+		drawNodes(graph.nodes);
+
+		if (simulation === undefined) {
+			initSimulation();
+		}
 	}
 
 	function mouseClicked() {
@@ -100,7 +98,7 @@ json("./data/dummy/dummy.json", function (response) {
 
 	function communicateNodePositions(from: Graph, to: Graph) {
 		for (let n of from.nodes) {
-			let n_prime: Node = to.nodes.find(function (d) { return d.id === n.id; });
+			let n_prime: Node = to.nodes.find(function (d: Node) { return d.id === n.id; });
 			n_prime.x = n.x;
 			n_prime.y = n.y;
 			n_prime.vx = n.vx;
@@ -112,7 +110,8 @@ json("./data/dummy/dummy.json", function (response) {
 		linkGlyphs = linksG.selectAll("line")
 			.data(edges, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
 		let linkEnter = linkGlyphs.enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
-		linkGlyphs.merge(linkEnter).transition()
+		linkGlyphs = linkGlyphs.merge(linkEnter)
+		linkGlyphs.transition()
 			.attr("stroke", "black")
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
@@ -121,7 +120,9 @@ json("./data/dummy/dummy.json", function (response) {
 		nodeGlyphs = nodesG.selectAll("circle")
 			.data(nodes, function (d: Node): string { return "" + d.id });
 		let nodeEnter = nodeGlyphs.enter().append("circle");
-		nodeGlyphs.merge(nodeEnter)
+		nodeGlyphs = nodeGlyphs.merge(nodeEnter)
+		nodeGlyphs
+			.attr("id", function (d: any): string | number { return d.name; })
 			.attr("r", 10)
 			.attr("fill", function (d: Node): string { return color(d.id); });
 	}
