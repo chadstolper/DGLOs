@@ -17,7 +17,6 @@ export class AnimatedHeatmap extends Heatmap {
 		this._numTimeSteps = dynamicGraph.timesteps.length;
 	}
 
-
 	//this function will move the _curGraph forward through the _dynamicGraph.timesteps array,
 	//looping back to the start from the finish. 
 	private timeStepForward() {
