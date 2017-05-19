@@ -11,9 +11,15 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	let width = 750;
 	let height = 750;
-	let svg = d3.selectAll("body").append("svg")
+
+	let nextButton = d3.select("body").append("div").append("button")
+		.text("-->")
+		.on("click", timeStepForward);
+
+	let svg = d3.select("body").append("div").append("svg")
 		.attr("width", width)
 		.attr("height", height);
+
 
 	let heatmap: Heatmap = new Heatmap(width, height, ["white", "gold"], svg);
 
@@ -23,6 +29,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function timeStepForward() {
 		curTimeStep = (curTimeStep + 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
+		heatmap.draw(curGraph);
 	}
 
 	//A function similar to timeStep forward, except it moves the timeStep backward. 
@@ -30,14 +37,8 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	function timeStepBackward() {
 		curTimeStep = (curTimeStep - 1) % numTimeSteps;
 		curGraph = graph.timesteps[curTimeStep];
+		heatmap.draw(curGraph);
 	}
 
-	matrixHeatMapTimeLine();
-
-	function matrixHeatMapTimeLine() {
-		for (var i = 0; i < numTimeSteps; i++) {
-			heatmap.draw(curGraph);
-			timeStepForward();
-		}
-	}
+	heatmap.draw(graph.timesteps[curTimeStep]);
 });

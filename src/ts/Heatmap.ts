@@ -51,8 +51,15 @@ export class Heatmap {
 			.range(this._colorDomain);
 
 		let slots = this._location.selectAll("rect")
-			.data(graph.edges).enter()
+			.data(graph.edges, function (d: Edge): string { return "" + d.id; })
+		let slotsEnter = slots.enter()
 			.append("rect")
+			.attr("stroke", "black")
+			.attr("id", function (d) {
+				return "heatmap-" + d.id;
+			});
+
+		slots = slots.merge(slotsEnter)
 			.attr("x", function (d) {
 				return (+d.source.id / graph.nodes.length) * 100 + "%";
 			})
@@ -64,10 +71,7 @@ export class Heatmap {
 			.attr("fill", function (d) {
 				return colorMap(d.weight);
 			})
-			.attr("stroke", "black")
-			.attr("id", function (d) {
-				return d.id;
-			})
+
 	}
 
 	/* takes a list of edges.
