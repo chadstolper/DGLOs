@@ -85,8 +85,6 @@ json("./data/dummy/dummy.json", function(response) {
             (simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges)
                 .strength(function(d: Edge): number { return d.weight * -.01 });
         }
-
-
     }
 
     function mouseClicked() {
@@ -96,7 +94,6 @@ json("./data/dummy/dummy.json", function(response) {
 
         communicateNodePositions(curGraph, newGraph);
         draw(newGraph);
-        simulation.alphaTarget(0.3).restart();
     }
 
     function communicateNodePositions(from: Graph, to: Graph) {
