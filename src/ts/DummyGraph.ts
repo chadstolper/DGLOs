@@ -3,7 +3,7 @@ import { Graph, DynamicGraph, Node, Edge } from "./Graph";
 export class Person extends Node {
 	private _name: string;
 	private _role: string;
-	constructor(id: number | string, name: string, role: string) {
+	public constructor(id: number | string, name: string, role: string) {
 		super(id, "Person");
 		this._name = name;
 		this._role = role;
@@ -25,7 +25,7 @@ export class Person extends Node {
 export class Drink extends Node {
 	private _name: string;
 	private _price: number;
-	constructor(id: number | string, name: string, price: number) {
+	public constructor(id: number | string, name: string, price: number) {
 		super(id, "Drink");
 		this._name = name;
 		this._price = price;
@@ -49,7 +49,7 @@ export class Drink extends Node {
 export class DrinkEdge extends Edge {
 	private _consumption: number;
 	private _preference: number;
-	constructor(id: number | string, source: Node, target: Node,
+	public constructor(id: number | string, source: Node, target: Node,
 		consumption: number, preference: number) {
 		super(id, source, target, preference);
 		this._consumption = consumption;
@@ -75,7 +75,7 @@ export class DrinkEdge extends Edge {
 
 export class DynamicDrinkGraph extends DynamicGraph {
 
-	constructor(response: Array<any>) {
+	public constructor(response: Array<any>) {
 		let graphs: Array<StaticDrinkGraph> = new Array<StaticDrinkGraph>();
 
 		for (let timestep of response) {
@@ -91,7 +91,7 @@ export class DynamicDrinkGraph extends DynamicGraph {
 
 export class StaticDrinkGraph extends Graph {
 
-	constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>) {
+	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
 
