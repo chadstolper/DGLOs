@@ -1,8 +1,11 @@
 import * as d3 from "d3";
+import * as d3force from "d3-force";
+import { Simulation } from "d3-force";
 import { Selection } from "d3-selection";
+// import * as d3transition from "d3-transition";
 //import {ForceLink} from "d3-force";
-import { scaleOrdinal, scaleLinear, schemeCategory10 } from "d3-scale";
-import { json as d3json } from "d3-request";
+import { json } from "d3-request";
+import { scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { Graph, Node, Edge } from "./Graph";
 import { DynamicDrinkGraph } from "./DummyGraph";
 
@@ -10,15 +13,14 @@ let time = 0;
 let width = 500;
 let height = 500;
 
-let simulation: d3.Simulation<{}, undefined>;
-let color = d3.scaleOrdinal(d3.schemeCategory20); //random color picker.exe
+let simulation: Simulation<{}, undefined>;
+let color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 let chart: Selection<any, {}, any, {}>;
-let link: Selection<any, {}, any, {}>, node: Selection<any, {}, any, {}>; //groups for "specific"
-let links: Selection<any, {}, any, {}>, nodes: Selection<any, {}, any, {}>; //groups for all
+let linkGlyphs: Selection<any, {}, any, {}>, nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
+let linksG: Selection<any, {}, any, {}>, nodesG: Selection<any, {}, any, {}>; //groups for all
 
-d3.json("./data/dummy/dummy.json", function (response) {
+json("./data/dummy/dummy.json", function (response) {
 
-	// simulation.on("tick", ticked);
 	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
 	initSVG();
 	draw(dGraph.timesteps[time]);
@@ -27,10 +29,10 @@ d3.json("./data/dummy/dummy.json", function (response) {
 
 
 	function initSimulation() {
-		simulation = d3.forceSimulation() //init sim for chart?
-			.force("link", d3.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
-			.force("charge", d3.forceManyBody()) //push applied to all things from center
-			.force("center", d3.forceCenter(width / 2, height / 2)) //define center
+		simulation = d3force.forceSimulation() //init sim for chart?
+			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
+			.force("charge", d3force.forceManyBody()) //push applied to all things from center
+			.force("center", d3force.forceCenter(width / 2, height / 2)) //define center
 			.on("tick", ticked);
 	}
 
@@ -40,18 +42,18 @@ d3.json("./data/dummy/dummy.json", function (response) {
 			.attr("height", height)
 			.on("click", function (d, i) { mouseClicked() });
 
-		links = chart.append("g")
+		linksG = chart.append("g")
 			.classed("links", true);
 
-		nodes = chart.append("g")
+		nodesG = chart.append("g")
 			.classed("node", true);
 	}
 
 	function ticked() {
 		console.log("ticking...");
-		if (link !== undefined) {
-			console.log(link);
-			link //as in the lines representing links
+		if (linkGlyphs !== undefined) {
+			//console.log(linkGlyphs);
+			linkGlyphs //as in the lines representing links
 				.attr("x1", function (d: Edge) { return d.source.x; })
 				.attr("y1", function (d: Edge) { return d.source.y; })
 				.attr("x2", function (d: Edge) { return d.target.x; })
@@ -59,10 +61,13 @@ d3.json("./data/dummy/dummy.json", function (response) {
 		} else {
 			console.log("No links!")
 		}
-		if (node !== undefined) {
-			console.log(node);
-			node
-				.attr("cx", function (d: Node) { console.log(new Array<any>(d, d.x)); return d.x; })
+		if (nodeGlyphs !== undefined) {
+			//console.log(nodeGlyphs);
+			nodeGlyphs
+				.attr("cx", function (d: Node) {
+					console.log(d);
+					return d.x;
+				})
 				.attr("cy", function (d: Node) { return d.y; });
 		} else {
 			console.log("No nodes!")
@@ -70,48 +75,54 @@ d3.json("./data/dummy/dummy.json", function (response) {
 	}
 
 	function draw(graph: Graph): void {
-		if (simulation !== undefined) {
-			simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
-			(simulation.force("link") as d3.ForceLink<Node, Edge>).links(graph.edges);
-		}
+
 
 		drawLinks(graph.edges);
 		drawNodes(graph.nodes);
+
+		if (simulation !== undefined) {
+			simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
+			(simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
+		}
 
 
 	}
 
 	function mouseClicked() {
+		let curGraph: Graph = dGraph.timesteps[time];
 		time = (time + 1) % 3;
-		let newTimeStamp = dGraph.timesteps[time];
-		// let newEdges: Edge[] = newTimeStamp.edges as Edge[]; //brand new pack of razers
-		// let newNodes: Node[] = newTimeStamp.nodes as Node[];
+		let newGraph: Graph = dGraph.timesteps[time];
 
-		draw(newTimeStamp);
-		// ticked();
+		communicateNodePositions(curGraph, newGraph);
+
+		draw(newGraph);
 	}
 
-	function drawLinks(d: Edge[]) {
-		link = links.selectAll("line")
-			.data(d, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
-		let linkEnter = link
-			.enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
-		link.merge(linkEnter).transition()
+	function communicateNodePositions(from: Graph, to: Graph) {
+		for (let n of from.nodes) {
+			let n_prime: Node = to.nodes.find(function (d) { return d.id === n.id; });
+			n_prime.x = n.x;
+			n_prime.y = n.y;
+			n_prime.vx = n.vx;
+			n_prime.vy = n.vy;
+		}
+	}
+
+	function drawLinks(edges: Edge[]) {
+		linkGlyphs = linksG.selectAll("line")
+			.data(edges, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
+		let linkEnter = linkGlyphs.enter().append("line"); //create a new line for each edge in edgelist (subdivs defined)
+		linkGlyphs.merge(linkEnter).transition()
 			.attr("stroke", "black")
-			.attr("stroke-width", function (d: Edge): string { return "" + d.weight; });
-
-		//ticked();
+			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
 
-	function drawNodes(d: Node[]) {
-		node = nodes.selectAll("circle")
-			.data(d, function (d: Node): string { return "" + d.id });
-		let nodeEnter = node
-			.enter().append("circle");
-		node.merge(nodeEnter)
+	function drawNodes(nodes: Node[]) {
+		nodeGlyphs = nodesG.selectAll("circle")
+			.data(nodes, function (d: Node): string { return "" + d.id });
+		let nodeEnter = nodeGlyphs.enter().append("circle");
+		nodeGlyphs.merge(nodeEnter)
 			.attr("r", 10)
-			.attr("fill", function (d: Node): string { return color("" + d.id); });
-
-		//ticked();
+			.attr("fill", function (d: Node): string { return color(d.id); });
 	}
 });

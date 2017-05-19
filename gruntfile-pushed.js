@@ -5,7 +5,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-open');
 	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-rollup');
-	var nodeResolve = require("rollup-plugin-node-resolve")
+	var nodeResolve = require("rollup-plugin-node-resolve");
+	var rollupSourcemaps = require('rollup-plugin-sourcemaps');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -19,7 +20,8 @@ module.exports = function (grunt) {
 				moduleName: 'dglos',
 				plugins: function () {
 					return [
-						nodeResolve({ jsnext: true, main: true })
+						nodeResolve({ jsnext: true, main: true }),
+						rollupSourcemaps()
 					]
 				}
 			},
