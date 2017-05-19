@@ -71,17 +71,17 @@ json("./data/dummy/dummy.json", function (response) {
 	}
 
 	function draw(graph: Graph): void {
-		if (simulation !== undefined) {
-			simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
-			(simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges)
-				.strength(function (d: Edge): number { return d.weight * -.01 });
-		}
-
 		drawLinks(graph.edges);
 		drawNodes(graph.nodes);
 
 		if (simulation === undefined) {
 			initSimulation();
+		}
+
+		if (simulation !== undefined) {
+			simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
+			(simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges)
+				.strength(function (d: Edge): number { return d.weight * -.01 });
 		}
 	}
 
