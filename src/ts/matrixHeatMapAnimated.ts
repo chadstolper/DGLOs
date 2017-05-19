@@ -22,8 +22,42 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let width = 750;
 	let height = 750;
 
-	//this draws the first graph, serves as an initialization function.
-	graphUpdate(curGraph, width, height);
+
+	let arraySize = curGraph.nodes.length;
+	let defaultColorDomain = ["white", "gold"];
+	var svg = d3.selectAll("body").append("svg")
+		.attr("width", width)
+		.attr("height", height)
+
+	let colorMap = d3Scale.scaleLinear<string>()
+		.domain(getColorDomain(curGraph.edges))
+		.range(defaultColorDomain);
+
+	let slots = svg.selectAll("g")
+		.data(curGraph.edges).enter()
+		.append("rect")
+		.attr("x", function (d) {
+			return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+		})
+		.attr("y", function (d) {
+			return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+		})
+		.attr("width", width / arraySize)
+		.attr("height", height / arraySize)
+		.attr("fill", function (d) {
+			return colorMap(d.weight);
+		})
+		.attr("stroke", "black")
+		.attr("id", function (d) {
+			return d.id;
+		})
+		.on("click", function (d, i) {
+			animateGraph(curGraph, width, height);
+		});
+
+
+	// //this draws the first graph, serves as an initialization function.
+	// graphUpdate(curGraph, width, height);
 
 	/*using the mod operator, this function moves the current timestep 
 	forward by one. If the current timeStep is at the end of the timeStep array,
@@ -42,9 +76,14 @@ d3json("data/dummy/dummy.json", function (response: any) {
 
 	//this function moves the program forward timeStep and calls
 	//animatedHeatMap with curGraph, width, and height
-	function mouseClicked() {
+	function animateGraph(graph: StaticDrinkGraph, _width: number, _height: number) {
 		timeStepForward();
-		graphUpdate(curGraph, width, height);
+		console.log(curTimeStep);
+		let rects = svg.selectAll("rect")
+			.data(graph.edges).enter()
+			.attr("fill", function (d) {
+				return colorMap(d.weight);
+			});
 	}
 
 	/* takes a list of edges.
@@ -56,46 +95,22 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		});
 	}
 
-	/*this function draws one timeStep from the data set as a matrix.*/
-	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
+	/* this color scale determines the coloring of the matrix heatmap.
+The domain is from the lightest edge in the set of edges to the
+heaviest edge in the set of edges. The range is defaultColorDomain,
+which can be changed */
 
-		let arraySize = graph.nodes.length;
-		let defaultColorDomain = ["white", "gold"];
-		var svg = d3.selectAll("body").append("svg")
-			.attr("width", _width)
-			.attr("height", _height)
-
-		/* this color scale determines the coloring of the matrix heatmap.
-		The domain is from the lightest edge in the set of edges to the
-		heaviest edge in the set of edges. The range is defaultColorDomain,
-		which can be changed */
-		let colorMap = d3Scale.scaleLinear<string>()
-			.domain(getColorDomain(graph.edges))
-			.range(defaultColorDomain);
-
-		let slots = svg.selectAll("g")
-			.data(graph.edges).enter()
-			.append("rect")
-			.attr("x", function (d) {
-				return (+d.source.id / graph.nodes.length) * 100 + "%";
-			})
-			.attr("y", function (d) {
-				return (+d.target.id / graph.nodes.length) * 100 + "%";
-			})
-			.attr("width", _width / arraySize)
-			.attr("height", _height / arraySize)
-			.attr("fill", function (d) {
-				console.log(d.weight, d, colorMap(d.weight));
-				return colorMap(d.weight);
-			})
-			.attr("stroke", "black")
-			.attr("id", function (d) {
-				return d.id;
-			})
-			.on("click", function (d, i) {
-				mouseClicked();
-			});
-
+	function getHeight(): number {
+		return height;
+	}
+	function setHeight(_height: number) {
+		this.height = _height;
+	}
+	function getWidth(): number {
+		return width;
+	}
+	function setWidth(_width: number) {
+		this.width = _width;
 	}
 
 });

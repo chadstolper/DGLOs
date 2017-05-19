@@ -78,7 +78,6 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			.attr("width", _width / arraySize)
 			.attr("height", _height / arraySize)
 			.attr("fill", function (d) {
-				console.log(d.weight, d, colorMap(d.weight));
 				return colorMap(d.weight);
 			})
 			.attr("stroke", "black")
@@ -93,6 +92,19 @@ d3json("data/dummy/dummy.json", function (response: any) {
 			graphUpdate(curGraph, width, height);
 			timeStepForward();
 		}
+	}
+
+	function getHeight(): number {
+		return height;
+	}
+	function setHeight(_height: number) {
+		this.height = _height;
+	}
+	function getWidth(): number {
+		return width;
+	}
+	function setWidth(_width: number) {
+		this.width = _width;
 	}
 
 });
