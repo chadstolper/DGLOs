@@ -2,7 +2,7 @@ import { Heatmap } from "./Heatmap"
 import { DynamicGraph, Graph } from "./Graph";
 import { Selection } from "d3-selection";
 
-class AnimatedHeatmap extends Heatmap {
+export class AnimatedHeatmap extends Heatmap {
 
 	private _dynamicGraph: DynamicGraph;
 	private _curGraph: Graph;
@@ -17,6 +17,7 @@ class AnimatedHeatmap extends Heatmap {
 		this._numTimeSteps = dynamicGraph.timesteps.length;
 	}
 
+
 	//this function will move the _curGraph forward through the _dynamicGraph.timesteps array,
 	//looping back to the start from the finish. 
 	private timeStepForward() {
@@ -29,6 +30,21 @@ class AnimatedHeatmap extends Heatmap {
 	private timeStepBackward() {
 		this._curTimeStep = (this._curTimeStep - 1) % this._numTimeSteps;
 		this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
+	}
+
+	public animateForward() {
+		console.log(this._curGraph.nodes);
+		this.timeStepForward();
+		super.draw(this._curGraph);
+	}
+	public animateBackward() {
+		console.log(this._curGraph.nodes);
+		this.timeStepBackward();
+		super.draw(this._curGraph);
+	}
+	public animateCurrent() {
+		console.log(this._curGraph.nodes);
+		super.draw(this._curGraph);
 	}
 
 }

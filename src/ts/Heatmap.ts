@@ -40,8 +40,6 @@ export class Heatmap {
 
 	public draw(graph: Graph) {
 		let arraySize = graph.nodes.length;
-
-
 		/* this color scale determines the coloring of the matrix heatmap.
 		The domain is from the lightest edge in the set of edges to the
 		heaviest edge in the set of edges. The range is defaultColorDomain,
