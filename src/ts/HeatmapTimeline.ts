@@ -9,14 +9,16 @@ export class HeatmapTimeline extends Heatmap {
 	private _curGraph: Graph;
 	private _numTimeSteps: number;
 	private _graphArray: Array<Graph>;
+	private _svg: Selection<any, {}, any, {}>;
+
 
 	constructor(width: number, height: number, colorDomain: Array<string>, location: Selection<any, {}, any, {}>,
 		dynamicGraph: DynamicGraph) {
 		super(width, height, colorDomain, location);
 		this._dynamicGraph = dynamicGraph;
 		this._numTimeSteps = dynamicGraph.timesteps.length;
-		this._graphArray = [];
-		this.init();
+		this._svg = location;
+		this.init(colorDomain);
 
 	}
 
@@ -35,18 +37,19 @@ export class HeatmapTimeline extends Heatmap {
 	// 	this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
 	// }
 
-	public animate() {
-		for (let i = 0; i < this._graphArray.length; i++) {
-			console.log("Printed one");
-			super.draw(this._graphArray[i]);
-		}
-	}
-
-	private init() {
+	private init(colorDomain: Array<string>) {
 		for (let i = 0; i < this._dynamicGraph.timesteps.length; i++) {
-			console.log("THESE ARE THE TIMESTAMPS: " + this._dynamicGraph.timesteps[i]);
-			this._graphArray[i] = this._dynamicGraph.timesteps[i];
-			console.log("THEIS IS THE GRAPH ARRAY: " + this._graphArray[i]);
+			// let svg = d3.select("body").append("div")
+			// 	.attr("width", width)
+			// 	.attr("height", height);
+			// let heatmapI = new Heatmap(width, height, colorDomain, svg);
+			// heatmapI.draw(this._dynamicGraph.timesteps[i]);
+			// let newGraph = this._svg.append("div");
+			// let heatmapI = new Heatmap(super.width, super.height, colorDomain, newGraph);
+			// heatmapI.draw(this._dynamicGraph.timesteps[i]);
+
+			//WORK IN PROGRESS
+
 		}
 	}
 

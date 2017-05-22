@@ -32,9 +32,4 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	// 		heatmap.animateForward()
 	// 	});
 
-<<<<<<< HEAD
-	heatmap.animate();
-=======
-	//heatmap.animateCurrent();
->>>>>>> 66cbce8c4adb67c1ebe4b590787404b927c1804d
 });
