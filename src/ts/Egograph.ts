@@ -15,15 +15,46 @@ export class Egograph {
 		this._dynamicGraph = dynamicGraph;
 		this._curTimeStep = timestep;
 		this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
-		this._incidentEdges = this.getIncidentEdges();
-		this._neighboringNodes = this.getNeighboringNodes();
+		this._incidentEdges = [] //this.getIncidentEdges();
+		this._neighboringNodes = []//this.getNeighboringNodes();
+		this.init();
+	}
+	get incidentEdges() {
+		return this._incidentEdges;
+	}
+	get neighboringNodes() {
+		return this._neighboringNodes;
 	}
 
-	private getIncidentEdges(): Array<Edge> {
-		return null;
+	private setCentralNode(node: Node) {
+		this._centralNode = node;
 	}
-	private getNeighboringNodes(): Array<Node> {
-		return null;
+	private getIncidentEdges() {
+		for (let n of this._curGraph.edges) {
+			if (n.target.id === this._centralNode.id || n.source.id === this._centralNode.id) {
+				this._incidentEdges.push(n);
+			}
+		}
+	}
+	private getNeighboringNodes() {
+		for (let n of this._incidentEdges) {
+			for (let m of this._curGraph.nodes) {
+				if (m !== this._centralNode && (n.source.id === m.id || n.target.id === m.id)) {
+					this._neighboringNodes.push(m);
+				}
+			}
+		}
+	}
+	public init() {
+		this.getIncidentEdges();
+		this.getNeighboringNodes();
+		this.draw();
+	}
+	public draw() {
+
+	}
+	public click() {
+
 	}
 
 }
