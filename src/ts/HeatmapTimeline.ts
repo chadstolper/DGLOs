@@ -39,17 +39,7 @@ export class HeatmapTimeline extends Heatmap {
 
 	private init(colorDomain: Array<string>) {
 		for (let i = 0; i < this._dynamicGraph.timesteps.length; i++) {
-			// let svg = d3.select("body").append("div")
-			// 	.attr("width", width)
-			// 	.attr("height", height);
-			// let heatmapI = new Heatmap(width, height, colorDomain, svg);
-			// heatmapI.draw(this._dynamicGraph.timesteps[i]);
-			// let newGraph = this._svg.append("div");
-			// let heatmapI = new Heatmap(super.width, super.height, colorDomain, newGraph);
-			// heatmapI.draw(this._dynamicGraph.timesteps[i]);
-
-			//WORK IN PROGRESS
-
+			super.draw(this._dynamicGraph.timesteps[i]);
 		}
 	}
 
