@@ -1,52 +1,51 @@
 import * as d3 from "d3-selection";
-import * as d3Scale from "d3-scale";
-import * as d3Array from "d3-array";
-import { json as d3json } from "d3-request";
-import { Graph, Node, Edge } from "./Graph";
+import { scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { Selection } from "d3-selection";
+import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { Person, Drink, DrinkEdge, StaticDrinkGraph, DynamicDrinkGraph } from "./DummyGraph";
 
-d3json("data/dummy/dummy.json", function (response: any) {
-	let graph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
-	let curTimeStep = 0;
-	let numTimeSteps = graph.timesteps.length;
-	let curGraph = graph.timesteps[0];
-	let width = 750;
-	let height = 750;
+export class GesaltStaticGraph {
+	private timeStamps: number;
+	private width = 500;
+	private height = 500;
+	private graph: DynamicGraph;
+	private divChart: Selection<any, {}, any, {}>;
+	private color = scaleOrdinal<string | number, string>(schemeCategory20);
 
-	function graphUpdate(graph: StaticDrinkGraph, _width: number, _height: number) {
-
-		let arraySize = graph.nodes.length;
-		let defaultColorDomain = ["white", "gold"];
-		var svg = d3.selectAll("body").append("svg")
-			.attr("width", _width)
-			.attr("height", _height)
-
-		let slots = svg.selectAll("g")
-			.data(graph.edges).enter()
-			.append("rect")
-			.attr("x", function (d) {
-				return (+d.source.id / graph.nodes.length) * 100 + "%";
-			})
-			.attr("y", function (d) {
-				return (+d.target.id / graph.nodes.length) * 100 + "%";
-			})
-			.attr("width", _width / arraySize)
-			.attr("height", _height / arraySize)
-			.attr("fill", function (d) {
-				return "red";
-				/*
-				Here, you must create a function that returns the Gestalt Glyph for 
-				the given edge.
-
-				its should return some sort of image that can fit into the rect.
-
-				???
-				*/
-			})
-			.attr("stroke", "black")
-			.attr("id", function (d) {
-				return d.id;
-			});
+	public constructor(graph: DynamicGraph, divChart: Selection<any, {}, any, {}>) {
+		this.timeStamps = graph.timesteps.length; //-1 for elements
+		this.graph = graph;
+		this.divChart = divChart;
+		for (let i = 0; i < this.timeStamps; i++) {
+			this.initGraph(i);
+		}
 	}
 
-});
+	private initGraph(newStamp: number) {
+		let svg = this.divChart.append("svg")
+			.attr("width", this.width)
+			.attr("height", this.height);
+
+		let nodes = this.graph.timesteps[newStamp].nodes;
+		let glyphs = svg.append("g")
+			.classed("glyphs" + newStamp, true)
+			.data(nodes);
+		glyphs.enter().append("circle")
+			.classed("node", true)
+			.attr("cx", 25)
+			.attr("cy", 25)
+			.attr("r", 5)
+			.attr("fill", "blue");
+		//	this.drawNodes(newStamp);
+	}
+
+	private drawNodes(curGroup: number) {
+		let nodes = this.graph.timesteps[curGroup].nodes;
+		let glyphy = this.divChart.select("glyphs" + curGroup);
+		glyphy.append("circle")
+			.attr("cx", 25)
+			.attr("cy", 25)
+			.attr("r", 5)
+			.attr("fill", "blue");
+	}
+}
