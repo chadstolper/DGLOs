@@ -33,6 +33,13 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		}
 	}
 
+	function getIncidentEdges() {
+
+	}
+	function getNeighborNodes() {
+
+	}
+
 	init(20);
 	console.log(centralNode);
 
