@@ -8,10 +8,12 @@ import { HeatmapTimeline } from "./HeatmapTimeline"
 
 d3json("data/dummy/dummy.json", function (response: any) {
 
-	let graph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
+	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
+	let curGraph = dGraph.timesteps[0];
+	let curTimeStep = 0;
 	let width = 750;
 	let height = 750;
-	let centralNode = graph.timesteps[0].nodes[0];
+	let centralNode = curGraph.nodes[0];
 	let incidentEdges: Array<Edge> = [];
 	let neighborNodes: Array<Node> = [];
 	let svg = d3.selectAll("body").append("svg")
@@ -32,28 +34,26 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	init(10);
 
 	//sets the central node
-	function initCentralNode(nodeID: number) {
-		for (let i = 0; i < graph.timesteps[0].nodes.length; i++) {
-			if (nodeID === graph.timesteps[0].nodes[i].id) {
-				return graph.timesteps[0].nodes[i];
+	function initCentralNode(nodeID: number): Node {
+		for (let n of curGraph.nodes) {
+			if (n.id == nodeID) {
+				return n;
 			}
 		}
 		return null;
 	}
 	//gets edges incident to a node for a given timestep
 	function getIncidentEdges(timestep: number) {
-		for (let i = 0; i < graph.timesteps[timestep].edges.length; i++) {
-			if (
-				(graph.timesteps[timestep].edges[i].source.id === centralNode.id) ||
-				(graph.timesteps[timestep].edges[i].target.id === centralNode.id)) {
-				incidentEdges.push(graph.timesteps[timestep].edges[i]);
+		for (let n of curGraph.edges) {
+			if (n.target.id === centralNode.id || n.source.id == centralNode.id) {
+				incidentEdges.push(n);
 			}
 		}
 	}
 	//gets the neighboring nodes to the central node
 	function getNeighborNodes(timestep: number) {
 		for (let n of incidentEdges) {
-			for (let m of graph.timesteps[timestep].nodes) {
+			for (let m of curGraph.nodes) {
 				if (m !== centralNode && (n.source.id === m.id || n.target.id === m.id)) {
 					neighborNodes.push(m);
 				}
