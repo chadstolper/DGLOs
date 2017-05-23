@@ -10,8 +10,9 @@ mintime = False
 maxtime = False
 
 # window_size = 1000
-timestep_size	= 10000
-window_size 	= 100000
+timestep_size	= 100000
+window_size 	= 1000000
+steps_per_timestep = 10
 window_shifted = window_size/timestep_size
 
 
@@ -34,7 +35,7 @@ err.write (str((mintime,maxtime,maxtime-mintime))+"\n")
 timesteps = []
 nodes = sorted(nodes)
 
-for start in xrange(mintime,maxtime+1):
+for start in xrange(mintime,maxtime+steps_per_timestep,steps_per_timestep):
 	timestep = {}
 	timestep["edges"] = tedges = []
 	trail_start = start-window_shifted
