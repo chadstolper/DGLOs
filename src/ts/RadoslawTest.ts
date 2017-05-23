@@ -3,10 +3,12 @@ import { DynamicGraph } from "./Graph";
 import { DynamicRadoslawGraph } from "./EmailGraph";
 import { AnimatedForceDirectedGraph } from "./AnimatedForceDirectedGraph";
 import { ForceDirectedGraph } from "./ForceDirectedGraph";
+import { AnimatedHeatmap } from "./AnimatedHeatmap";
 import { json } from "d3-request";
 
-let g: DynamicGraph;
-let fdg: ForceDirectedGraph;
+var g: DynamicGraph;
+// let fdg: ForceDirectedGraph;
+var ahm: AnimatedHeatmap;
 // json("data/radoslaw/out2.json", function (response: any) {
 json("data/radoslaw/out.json", function (response: any) {
 
@@ -16,8 +18,9 @@ json("data/radoslaw/out.json", function (response: any) {
 		.attr("width", width)
 		.attr("height", height);
 	g = new DynamicRadoslawGraph(response);
-	fdg = new AnimatedForceDirectedGraph(g, svg, width, height);
-	fdg.draw(g.timesteps[0]);
+	// fdg = new AnimatedForceDirectedGraph(g, svg, width, height);
+	// fdg.draw(g.timesteps[0]);
+	ahm = new AnimatedHeatmap(width, height, ["white", "purple"], svg, g);
 })
 
 

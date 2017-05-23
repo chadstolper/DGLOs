@@ -30,9 +30,12 @@ export class StaticRadoslawGraph extends Graph {
 			});
 			let id: string = "" + source.id + ":" + target.id;
 
-			let edge = new RadoslawEmail(e.id, source, target, e.weight);
+			let edge = new RadoslawEmail(id, source, target, e.weight);
 			edgeData.push(edge);
 		}
+		nodeData.sort(function (a: Node, b: Node): number {
+			return +a.id - +b.id;
+		})
 		super(nodeData, edgeData);
 	}
 }

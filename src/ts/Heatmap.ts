@@ -3,6 +3,8 @@ import { Selection } from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 import { Graph, Node, Edge } from "./Graph";
+import { select } from 'd3-selection';
+import 'd3-transition';
 
 
 export class Heatmap {
@@ -56,15 +58,19 @@ export class Heatmap {
 
 		let slots = this._location.selectAll("rect")
 			.data(graph.edges, function (d: Edge): string { return "" + d.id; })
+
+		slots.exit().remove();
+
 		let slotsEnter = slots.enter()
 			.append("rect")
 			.attr("stroke", "black")
 			.attr("id", function (d) {
 				return "heatmap-" + d.id;
-			});
+			})
+		//.attr("id", function (d: Edge) { return d.id });
 
 		slots = slots.merge(slotsEnter)
-		slots //TODO: transition slots
+		slots.transition() //TODO: transition slots
 			.attr("x", function (d) {
 				return (+d.source.id / graph.nodes.length) * 100 + "%";
 			})
