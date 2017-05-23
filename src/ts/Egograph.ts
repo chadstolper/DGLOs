@@ -1,20 +1,23 @@
 import { Node, Edge, Graph, DynamicGraph } from "./Graph"
 import { ForceDirectedGraph } from "./ForceDirectedGraph"
+import { Selection } from "d3-selection";
+import * as d3 from "d3-selection";
+import { transition } from "d3-transition";
 
-export class Egograph {
+export class Egograph extends ForceDirectedGraph {
 
 	private _centralNode: Node;
 	private _dynamicGraph: DynamicGraph;
 	private _curGraph: Graph;
 	private _incidentEdges: Array<Edge>;
 	private _neighboringNodes: Array<Node>;
-	private _curTimeStep: number;
 
-	constructor(centralNode: Node, timestep: number, dynamicGraph: DynamicGraph) {
+	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
+		width: number, height: number) {
+		super(dynamicGraph, location, width, height);
 		this._centralNode = centralNode;
 		this._dynamicGraph = dynamicGraph;
-		this._curTimeStep = timestep;
-		this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
+		this._curGraph = this._dynamicGraph.timesteps[0];
 		this._incidentEdges = [] //this.getIncidentEdges();
 		this._neighboringNodes = []//this.getNeighboringNodes();
 		this.init();
@@ -48,17 +51,7 @@ export class Egograph {
 	public init() {
 		this.getIncidentEdges();
 		this.getNeighboringNodes();
-		this.draw();
-	}
-	public draw() {
-		// let svg = d3.selectAll("body").append("div").append("svg")
-		// 		.data(this._neighboringNodes).enter()
-		// 		.append("circle")
-		// 		.attr("r", 10)
-
-	}
-	public click() {
-
+		super.draw(this._curGraph);
 	}
 
 }
