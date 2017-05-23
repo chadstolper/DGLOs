@@ -11,7 +11,7 @@ export class AnimatedForceDirectedGraph extends ForceDirectedGraph {
 
 	protected initSVG() {
 		super.initSVG();
-		console.log("calling subclass");
+		//console.log("calling subclass");
 		this.chart.on("click", this.mouseClicked(this));
 	}
 
