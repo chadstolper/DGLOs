@@ -1,10 +1,10 @@
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
-import { select, selectAll, Selection } from "d3-selection";
+import { Selection } from "d3-selection";
 import { scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
-import { Transition, transition } from "d3-transition";
+import { transition } from "d3-transition";
 
 export class ForceDirectedGraph {
 	private time = 0;
@@ -128,8 +128,6 @@ export class ForceDirectedGraph {
 		let linkEnter = this.linkGlyphs.enter().append("line") //create a new line for each edge in edgelist (subdivs defined)
 			.attr("stroke", "black");
 		this.linkGlyphs = this.linkGlyphs.merge(linkEnter)
-		console.log(this);
-		console.log(this.linkGlyphs);
 		this.linkGlyphs.transition()
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
