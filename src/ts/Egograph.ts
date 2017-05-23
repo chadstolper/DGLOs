@@ -2,12 +2,11 @@ import { Node, Edge, Graph, DynamicGraph } from "./Graph"
 import { ForceDirectedGraph } from "./ForceDirectedGraph"
 import { Selection } from "d3-selection";
 import * as d3 from "d3-selection";
-import { transition } from "d3-transition";
+//import { transition } from "d3-transition";
 
 export class Egograph extends ForceDirectedGraph {
 
 	private _centralNode: Node;
-	private _dynamicGraph: DynamicGraph;
 	private _curGraph: Graph;
 	private _incidentEdges: Array<Edge>;
 	private _neighboringNodes: Array<Node>;
@@ -16,8 +15,7 @@ export class Egograph extends ForceDirectedGraph {
 		width: number, height: number) {
 		super(dynamicGraph, location, width, height);
 		this._centralNode = centralNode;
-		this._dynamicGraph = dynamicGraph;
-		this._curGraph = this._dynamicGraph.timesteps[0];
+		this._curGraph = this.graph.timesteps[0];
 		this._incidentEdges = [] //this.getIncidentEdges();
 		this._neighboringNodes = []//this.getNeighboringNodes();
 		this.init();

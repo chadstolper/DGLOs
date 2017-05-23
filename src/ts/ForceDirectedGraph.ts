@@ -1,16 +1,16 @@
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
-import { Selection } from "d3-selection";
+import { select, selectAll, Selection } from "d3-selection";
 import { scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
-import { transition } from "d3-transition";
+import { Transition, transition } from "d3-transition";
 
 export class ForceDirectedGraph {
 	private time = 0;
 	private width: number;
 	private height: number;
-	private graph: DynamicGraph;
+	private _graph: DynamicGraph;
 	private simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 	private chart: Selection<any, {}, any, {}>;
@@ -24,9 +24,13 @@ export class ForceDirectedGraph {
 		this.height = height;
 		this.time = 0;
 		this.chart = chart;
-		this.graph = graph;
+		this._graph = graph;
 		this.initSVG();
 		this.draw(graph.timesteps[this.time]);
+	}
+
+	get graph() {
+		return this._graph;
 	}
 
 
@@ -124,7 +128,9 @@ export class ForceDirectedGraph {
 		let linkEnter = this.linkGlyphs.enter().append("line") //create a new line for each edge in edgelist (subdivs defined)
 			.attr("stroke", "black");
 		this.linkGlyphs = this.linkGlyphs.merge(linkEnter)
-		this.linkGlyphs//.transition()
+		console.log(this);
+		console.log(this.linkGlyphs);
+		this.linkGlyphs.transition()
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
 

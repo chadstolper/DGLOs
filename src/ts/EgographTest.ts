@@ -21,7 +21,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 		.attr("height", height);
 
 	let ego: Egograph = new Egograph(centralNode, dGraph, svg, width, height);
-	ego.init();
+	//ego.init(); //already called in constructor
 
 
 
