@@ -53,7 +53,7 @@ export class Egograph extends ForceDirectedGraph {
 		//and neighboring nodes
 		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges);
 		console.log(g);
-		//super.draw(g);
+		super.draw(g);
 	}
 
 }
