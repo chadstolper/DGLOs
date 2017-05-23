@@ -7,8 +7,8 @@ import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { transition } from "d3-transition";
 
 export class ForceDirectedGraph {
-	private width: number;
-	private height: number;
+	private width = 500;
+	private height = 500;
 	private _graph: DynamicGraph;
 	private simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
@@ -18,9 +18,7 @@ export class ForceDirectedGraph {
 	private linksG: Selection<any, {}, any, {}>;
 	private nodesG: Selection<any, {}, any, {}>; //groups for all
 
-	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>, width: number, height: number) {
-		this.width = width;
-		this.height = height;
+	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		this._chart = chart;
 		this._graph = graph;
 		this.initSVG();

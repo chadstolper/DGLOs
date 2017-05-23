@@ -32,8 +32,6 @@ export class Drink extends Node {
 	}
 }
 
-
-
 export class DrinkEdge extends Edge {
 	private _consumption: number;
 	private _preference: number;
@@ -60,25 +58,7 @@ export class DrinkEdge extends Edge {
 	}
 }
 
-
-export class DynamicDrinkGraph extends DynamicGraph {
-
-	public constructor(response: Array<any>) {
-		let graphs: Array<StaticDrinkGraph> = new Array<StaticDrinkGraph>();
-
-		for (let timestep of response) {
-			let rawNodeData: Array<any> = timestep.nodes;
-			let rawEdgeData: Array<any> = timestep.edges;
-			let g: StaticDrinkGraph = new StaticDrinkGraph(rawNodeData, rawEdgeData);
-			graphs.push(g);
-		}
-
-		super(graphs);
-	}
-}
-
 export class StaticDrinkGraph extends Graph {
-
 	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
@@ -110,7 +90,21 @@ export class StaticDrinkGraph extends Graph {
 		}
 
 		super(nodeData, edgeData);
-
 	}
+}
 
+
+export class DynamicDrinkGraph extends DynamicGraph {
+	public constructor(response: Array<any>) {
+		let graphs: Array<StaticDrinkGraph> = new Array<StaticDrinkGraph>();
+
+		for (let timestep of response) {
+			let rawNodeData: Array<any> = timestep.nodes;
+			let rawEdgeData: Array<any> = timestep.edges;
+			let g: StaticDrinkGraph = new StaticDrinkGraph(rawNodeData, rawEdgeData);
+			graphs.push(g);
+		}
+
+		super(graphs);
+	}
 }
