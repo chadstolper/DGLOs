@@ -11,7 +11,7 @@ const glyphWidth = 50;
 const glyphHeight = 30;
 
 export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
-	private _timeStamps: number;
+	private _curTimeStamp: number;
 	private _width = xPadding; //used to start, not final dimension
 	private _height = yPadding; //used to start, not final dimension
 	private _graph: DynamicGraph;
@@ -19,15 +19,13 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 	private _color = scaleOrdinal<string | number, string>(schemeCategory20);
 
 	public constructor(graph: DynamicGraph, divChart: Selection<any, {}, any, {}>) {
-		this._timeStamps = graph.timesteps.length;
 		this._graph = graph;
 		this._divChart = divChart;
-		this.initDimensions();
 		this.init();
 	}
 
-	get timeStamps(): number {
-		return this._timeStamps;
+	get curTimeStamp(): number {
+		return this._curTimeStamp;
 	}
 
 	get width(): number | string {
@@ -44,7 +42,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 		return this._height;
 	}
 
-	get graph(): DynamicDrinkGraph {
+	get graph(): DynamicGraph {
 		return this._graph;
 	}
 
@@ -53,25 +51,28 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 	}
 
 	private init() {
-		let SVG = this._divChart.append("svg")
+		this.initDimensions(); //must go before SVG is appended
+		this._divChart = this._divChart.append("svg")
 			.attr("width", this._width)
 			.attr("height", this._height);
 		for (let i = 0; i < this._graph.timesteps.length; i++) {
-			this.draw(i, SVG);
+			this._curTimeStamp = i;
+			this.draw(this._graph.timesteps[i]);
 		}
-		this.drawLabels(SVG);
+		this.drawLabels(this._divChart);
 	}
 
-	private draw(newStamp: number, newSvg: Selection<any, {}, any, {}>) {
-		this.drawEdges(newStamp, newSvg);
-		this.drawNodes(newStamp, newSvg);
+	public draw(graph: Graph) {
+		this.drawEdges(graph, this._divChart);
+		this.drawNodes(graph, this._divChart);
 	}
 
-	private drawNodes(curStamp: number, svg: Selection<any, {}, any, {}>) {
+	private drawNodes(graph: Graph, svg: Selection<any, {}, any, {}>) {
 		let color = this._color; //because d3 is messing with this again
-		let nodes = this._graph.timesteps[curStamp].edges; //use source and target to set x,y
+		let timeStamp = this._curTimeStamp; //same as last note
+		let nodes = graph.edges; //use source and target to set x,y
 		let glyphs = svg.append("g") //create a new group
-			.classed("glyphs" + curStamp, true) //group named glyph with current timestamp
+			.classed("glyphs" + timeStamp, true) //group named glyph with current timestamp
 			.selectAll("circle")// create nebulous circles
 			.data(nodes) //with this data
 			.enter() //and enter each data point in data with a circle
@@ -81,18 +82,19 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 				return (xPadding + (glyphWidth / 2)) + ((glyphWidth + xPadding) * (d.source.id as number - 5)); //75 + (125*id)
 			})
 			.attr("cy", function (d: Edge): number {
-				return (curStamp * yPadding) + (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //35 + (50 * id)
+				return (timeStamp * yPadding) + (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //35 + (50 * id)
 			})
 			.attr("r", 3)
 			.attr("fill", function (d: Edge): string | number { return color(d.source.id) });
 	}
 
-	private drawEdges(curStamp: number, svg: Selection<any, {}, any, {}>) {
-		let edges = this._graph.timesteps[curStamp].edges; //use source and target for x,y
+	private drawEdges(graph: Graph, svg: Selection<any, {}, any, {}>) {
+		let edges = graph.edges; //use source and target for x,y
+		let timestamp = this._curTimeStamp;
 
 		//Create right side of edges per node: preference
 		let runes1 = svg.append("g") //runescape anyone?
-			.classed("runesR" + curStamp, true)
+			.classed("runesR" + timestamp, true)
 			.selectAll("line")
 			.data(edges)
 			.enter() //see last for notes
@@ -102,7 +104,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 				return (xPadding + (glyphWidth / 2)) + ((glyphWidth + xPadding) * (d.source.id as number - 5)); //75 + (125*id)
 			})
 			.attr("y1", function (d: Edge): number {
-				return (curStamp * yPadding) + (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //30 + (40 * id)
+				return (timestamp * yPadding) + (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //30 + (40 * id)
 			})
 			.attr("x2", function (d: Edge): number {
 				let origin = (xPadding + (glyphWidth / 2)) + ((glyphWidth + xPadding) * (d.source.id as number - 5)); //75 + (125*id)
@@ -110,7 +112,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 			})
 			.attr("y2", function (d: any): number {
 				let origin = (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //30 + (40 * id)
-				origin = (curStamp * yPadding) + (origin + d.preference * -10); //change angle from origin
+				origin = (timestamp * yPadding) + (origin + d.preference * -10); //change angle from origin
 				return origin;
 			})
 			.style("stroke", "black")
@@ -119,7 +121,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 
 		//create left side of edges per node : consumption
 		let runes2 = svg.append("g") //runescape anyone?
-			.classed("runesL" + curStamp, true)
+			.classed("runesL" + timestamp, true)
 			.selectAll("line")
 			.data(edges)
 			.enter() //see last for notes
@@ -129,7 +131,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 				return (xPadding + (glyphWidth / 2)) + ((glyphWidth + xPadding) * (d.source.id as number - 5)); //75 + (125*id)
 			})
 			.attr("y1", function (d: Edge): number {
-				return (curStamp * yPadding) + (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //30 + (40 * id)
+				return (timestamp * yPadding) + (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //30 + (40 * id)
 			})
 			.attr("x2", function (d: Edge): number {
 				let origin = (xPadding + (glyphWidth / 2)) + ((glyphWidth + xPadding) * (d.source.id as number - 5)); //75 + (125*id)
@@ -137,7 +139,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 			})
 			.attr("y2", function (d: any): number {
 				let origin = (yPadding + (glyphHeight / 2)) + ((glyphHeight + yPadding) * (d.target.id as number)); //30 + (40 * id)
-				origin = (curStamp * yPadding) + (origin + d.consumption * -1); //change angle from origin
+				origin = (timestamp * yPadding) + (origin + d.consumption * -1); //change angle from origin
 				return origin;
 			})
 			.style("stroke", "black")
