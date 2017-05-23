@@ -1,6 +1,7 @@
 import { Heatmap } from "./Heatmap"
 import { DynamicGraph, Graph } from "./Graph";
 import { Selection } from "d3-selection";
+import * as d3 from "d3-selection";
 
 export class AnimatedHeatmap extends Heatmap {
 
@@ -42,6 +43,21 @@ export class AnimatedHeatmap extends Heatmap {
 		super.draw(this._curGraph);
 	}
 	private init() {
+
+		let self = this;
+
+		let prevButton = d3.select("body").append("div").append("button")
+			.text("<--")
+			.on("click", function () {
+				self.animateBackward()
+			});
+
+		let nextButton = d3.select("body").append("div").append("button")
+			.text("-->")
+			.on("click", function () {
+				self.animateForward()
+			});
+
 		super.draw(this._curGraph);
 	}
 
