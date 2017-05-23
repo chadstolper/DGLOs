@@ -51,7 +51,11 @@ export class Egograph extends ForceDirectedGraph {
 	public init() {
 		this.getIncidentEdges();
 		this.getNeighboringNodes();
-		super.draw(this._curGraph);
+		//just pass the super class the graph that I want it to draw: i.e., a list of incident edges
+		//and neighboring nodes
+		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges);
+		console.log(g);
+		//super.draw(g);
 	}
 
 }

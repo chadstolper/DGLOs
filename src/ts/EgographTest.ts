@@ -15,7 +15,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let curTimeStep = 0;
 	let width = 750;
 	let height = 750;
-	let centralNode = curGraph.nodes[0];
+	let centralNode = curGraph.nodes[5];
 	let svg = d3.selectAll("body").append("svg")
 		.attr("width", width)
 		.attr("height", height);
