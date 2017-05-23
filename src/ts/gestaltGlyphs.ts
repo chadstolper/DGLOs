@@ -6,6 +6,7 @@ import { Person, Drink, DrinkEdge, StaticDrinkGraph, DynamicDrinkGraph } from ".
 
 const xPadding = 25; //particulars about individual Glyphs and SVG formatting
 const yPadding = 10;
+const textWidth = 50; //"50"
 const glyphWidth = 50;
 const glyphHeight = 30;
 
@@ -32,12 +33,12 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 		for (let i = 0; i < this._graph.timesteps.length; i++) {
 			this.draw(i, SVG);
 		}
+		this.drawLabels(SVG);
 	}
 
 	private draw(newStamp: number, newSvg: Selection<any, {}, any, {}>) {
 		this.drawEdges(newStamp, newSvg);
 		this.drawNodes(newStamp, newSvg);
-		// this.drawLabels()
 	}
 
 	private drawNodes(curStamp: number, svg: Selection<any, {}, any, {}>) {
@@ -118,6 +119,34 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 			.style("stroke-linecap", "round");
 	}
 
+	private drawLabels(svg: Selection<any, {}, any, {}>) {
+		let labels = svg.append("g")
+			.classed("labels", true)
+			.selectAll("text")
+			.data(this._graph.timesteps[0].nodes)
+			.enter()
+			.append("text")
+			.classed("label", true)
+			.attr("x", function (d: Node): number {
+				if (d.type === "Person") {
+					return xPadding + ((xPadding + textWidth) * (d.id as number - 5)) //25 + 75*id
+				}
+				else {
+					return null;
+				}
+			})
+			.attr("y", this._height - 10)
+			.text(function (d: any): string {
+				return d.name;
+			})
+			.style("font-size", function (d: Node): string {
+				if (d.type === "Person") {
+					return "10px";
+				}
+				return "0px";
+			});
+	}
+
 	private initDimensions() {
 		let data = this._graph.timesteps[0].nodes;
 		for (let i = 0; i < data.length; i++) {
@@ -130,7 +159,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 				this._height += glyphHeight + yPadding;
 			}
 		}
-		this._height += 100;
+		this._height += 25;
 		// console.log("Dimensions set to: " + this.width + ", " + this.height);
 	}
 }
