@@ -10,7 +10,7 @@ export class ForceDirectedGraph {
 	private time = 0;
 	private width: number;
 	private height: number;
-	private graph: DynamicGraph;
+	private _graph: DynamicGraph;
 	private simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 	private chart: Selection<any, {}, any, {}>;
@@ -24,9 +24,13 @@ export class ForceDirectedGraph {
 		this.height = height;
 		this.time = 0;
 		this.chart = chart;
-		this.graph = graph;
+		this._graph = graph;
 		this.initSVG();
 		this.draw(graph.timesteps[this.time]);
+	}
+
+	get graph() {
+		return this._graph;
 	}
 
 

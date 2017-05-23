@@ -6,6 +6,7 @@ import { DynamicDrinkGraph } from "./DummyGraph";
 import { AnimatedHeatmap } from "./AnimatedHeatmap";
 import { HeatmapTimeline } from "./HeatmapTimeline"
 import { Egograph } from "./Egograph"
+import { transition } from "d3-transition"
 
 d3json("data/dummy/dummy.json", function (response: any) {
 
@@ -14,15 +15,13 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let curTimeStep = 0;
 	let width = 750;
 	let height = 750;
-	let centralNode = curGraph.nodes[0];
-	// let svg = d3.selectAll("body").append("svg")
-	// 	.attr("width", width)
-	// 	.attr("height", height);
+	let centralNode = curGraph.nodes[5];
+	let svg = d3.selectAll("body").append("svg")
+		.attr("width", width)
+		.attr("height", height);
 
-	let ego: Egograph = new Egograph(centralNode, 0, dGraph);
-	ego.init();
-	console.log(ego.incidentEdges);
-	console.log(ego.neighboringNodes);
+	let ego: Egograph = new Egograph(centralNode, dGraph, svg, width, height);
+	//ego.init(); //already called in constructor
 
 
 
