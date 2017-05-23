@@ -30,10 +30,12 @@ export class AnimatedForceDirectedGraph extends ForceDirectedGraph {
 	private communicateNodePositions(from: Graph, to: Graph) { //pass previous node positions to next generation
 		for (let n of from.nodes) {
 			let n_prime: Node = to.nodes.find(function (d: Node) { return d.id === n.id; });
-			n_prime.x = n.x;
-			n_prime.y = n.y;
-			n_prime.vx = n.vx;
-			n_prime.vy = n.vy;
+			if (n_prime !== undefined) {
+				n_prime.x = n.x;
+				n_prime.y = n.y;
+				n_prime.vx = n.vx;
+				n_prime.vy = n.vy;
+			}
 		}
 	}
 }
