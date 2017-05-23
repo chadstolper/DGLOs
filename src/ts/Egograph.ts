@@ -9,9 +9,8 @@ export class Egograph extends ForceDirectedGraph {
 	private _centralNode: Node;
 	private _curGraph: Graph;
 	private _curTimestep: number;
-	private _neighboringNodes: Array<Node>;
+	private _neighboringNodes: Set<Node>;
 	private _incidentEdges: Array<Edge>;
-
 
 	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
 		width: number, height: number) {
@@ -20,9 +19,9 @@ export class Egograph extends ForceDirectedGraph {
 		this._curTimestep = 0;
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 		this._incidentEdges = [];
-		this._neighboringNodes = [];
+		this._neighboringNodes = new Set();
+		this.init();
 	}
-
 
 	private getIncidentEdges() {
 		for (let n of this._curGraph.edges) {
@@ -32,43 +31,42 @@ export class Egograph extends ForceDirectedGraph {
 		}
 	}
 	private getNeighboringNodes() {
-		for (let n of this._incidentEdges) {
-			for (let m of this._curGraph.nodes) {
-				if (m !== this._centralNode && (n.source.id === m.id || n.target.id === m.id)) {
-					this._neighboringNodes.push(m);
+		//if a node ever is connected to the centralNode, add it to the neighboring nodes. However,
+		//there should be no duplicates
+		for (let n of this._curGraph.nodes) {
+			for (let m of this._incidentEdges) {
+				if (n !== this._centralNode && (m.source.id === n.id || m.target.id === n.id)) {
+					this._neighboringNodes.add(n);
 				}
 			}
 		}
-		this._neighboringNodes.push(this._centralNode);
+		this._neighboringNodes.add(this._centralNode);
 	}
 
+	// private nodeLoop() {
+	// 	this.getIncidentEdges();
+	// 	let steps = super.graph.timesteps;
+	// 	for (let n of steps) {
+	// 		this.getNeighboringNodes()
+	// 	}
+	// 	console.log(this._neighboringNodes);
+	// 	console.log(this._incidentEdges);
+	// }
 
+	public init() {
+		let steps = super.graph.timesteps;
+		this.getIncidentEdges();
+		this.getNeighboringNodes();
+		for (let n of steps) {
+			this.getIncidentEdges();
+			this.timeStepForward();
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
+		console.log(g);
+		super.draw(g);
+		//console.log(this._neighboringNodes);
+	}
 
 	get incidentEdges() {
 		return this._incidentEdges;
