@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { ForceDirectedGraph } from "./ForceDirectedGraph";
+import { AnimatedForceDirectedGraph } from "./AnimatedForceDirectedGraph";
 import { json } from "d3-request";
 import { DynamicDrinkGraph } from "./DummyGraph";
 
@@ -11,5 +11,7 @@ let svg = d3.select("#chart").append("svg")
 
 json("./data/dummy/dummy.json", function (response) {
 	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
-	let FDGraph: ForceDirectedGraph = new ForceDirectedGraph(dGraph, svg, width, height);
+	let FDGraph: AnimatedForceDirectedGraph = new AnimatedForceDirectedGraph(dGraph, svg, width, height);
+	FDGraph.draw(dGraph.timesteps[0]);
+
 });
