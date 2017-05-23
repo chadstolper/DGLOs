@@ -8,28 +8,22 @@ export class Egograph extends ForceDirectedGraph {
 
 	private _centralNode: Node;
 	private _curGraph: Graph;
-	private _incidentEdges: Array<Edge>;
+	private _curTimestep: number;
 	private _neighboringNodes: Array<Node>;
+	private _incidentEdges: Array<Edge>;
+
 
 	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
 		width: number, height: number) {
 		super(dynamicGraph, location, width, height);
 		this._centralNode = centralNode;
-		this._curGraph = this.graph.timesteps[0];
-		this._incidentEdges = [] //this.getIncidentEdges();
-		this._neighboringNodes = []//this.getNeighboringNodes();
-		this.init();
-	}
-	get incidentEdges() {
-		return this._incidentEdges;
-	}
-	get neighboringNodes() {
-		return this._neighboringNodes;
+		this._curTimestep = 0;
+		this._curGraph = super.graph.timesteps[this._curTimestep];
+		this._incidentEdges = [];
+		this._neighboringNodes = [];
 	}
 
-	private setCentralNode(node: Node) {
-		this._centralNode = node;
-	}
+
 	private getIncidentEdges() {
 		for (let n of this._curGraph.edges) {
 			if (n.target.id === this._centralNode.id || n.source.id === this._centralNode.id) {
@@ -47,17 +41,57 @@ export class Egograph extends ForceDirectedGraph {
 		}
 		this._neighboringNodes.push(this._centralNode);
 	}
-	public init() {
-		this.getIncidentEdges();
-		this.getNeighboringNodes();
-		//just pass the super class the graph that I want it to draw: i.e., a list of incident edges
-		//and neighboring nodes
-		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges);
-		console.log(g);
-		super.draw(g);
-	}
-	// private createDynamicGraph() {
-	// 	let dGraph = new DynamicGraph()
-	// }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	get incidentEdges() {
+		return this._incidentEdges;
+	}
+	get neighboringNodes() {
+		return this._neighboringNodes;
+	}
+
+	private setCentralNode(node: Node) {
+		this._centralNode = node;
+	}
+
+	// this function will move the _curGraph forward through the _dynamicGraph.timesteps array,
+	//looping back to the start from the finish. 
+	private timeStepForward() {
+		this._curTimestep = (this._curTimestep + 1) % super.graph.timesteps.length;
+		this._curGraph = super.graph.timesteps[this._curTimestep];
+	}
+
+	//this function is similar to timeStepForward(), except it moves _curGraph backwards
+	//through the _dynamicGraph.timestamps array.
+	private timeStepBackward() {
+		this._curTimestep = (this._curTimestep + super.graph.timesteps.length - 1) % super.graph.timesteps.length;
+		this._curGraph = super.graph.timesteps[this._curTimestep];
+	}
 }
