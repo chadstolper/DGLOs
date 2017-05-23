@@ -36,7 +36,7 @@ export class ForceDirectedGraph {
 			//.force("charge", d3force.forceManyBody().strength(-10)) //push applied to all things from center
 			.force("charge", d3force.forceManyBody()) //push applied to all things from center
 			.force("center", d3force.forceCenter(this.width / 2, this.height / 2)) //define center
-			.on("tick", this.ticked);
+			.on("tick", this.ticked(this));
 
 		console.log("sim started")
 	}
@@ -51,15 +51,10 @@ export class ForceDirectedGraph {
 			.classed("node", true);
 	}
 
-	private ticked() { //tock
-		let self = this;
-		console.log("tocking...");
-		console.log("tock this", this);
+	private ticked(self: ForceDirectedGraph) { //tock
 		return (function (): void {//wrapped for d3
-			console.log("ticking...");
-			console.log("ticking this", this);
-			if (this.linkGlyphs !== undefined) {
-				this.linkGlyphs //as in the lines representing links
+			if (self.linkGlyphs !== undefined) {
+				self.linkGlyphs //as in the lines representing links
 					.attr("x1", function (d: Edge) { return d.source.x; })
 					.attr("y1", function (d: Edge) { return d.source.y; })
 					.attr("x2", function (d: Edge) { return d.target.x; })
@@ -67,8 +62,8 @@ export class ForceDirectedGraph {
 			} else {
 				console.log("No links!");
 			}
-			if (this.nodeGlyphs !== undefined) {
-				this.nodeGlyphs
+			if (self.nodeGlyphs !== undefined) {
+				self.nodeGlyphs
 					.attr("cx", function (d: Node) {
 						return d.x;
 					})
