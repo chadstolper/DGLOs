@@ -124,7 +124,7 @@ export class ForceDirectedGraph {
 		let linkEnter = this.linkGlyphs.enter().append("line") //create a new line for each edge in edgelist (subdivs defined)
 			.attr("stroke", "black");
 		this.linkGlyphs = this.linkGlyphs.merge(linkEnter)
-		this.linkGlyphs.transition()
+		this.linkGlyphs//.transition()
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
 
