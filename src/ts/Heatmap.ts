@@ -10,7 +10,7 @@ export class Heatmap {
 	private _width: number;
 	private _height: number;
 	private _colorDomain: Array<string>;
-	private _location: Selection<any, {}, any, {}>;
+	public _location: Selection<any, {}, any, {}>;
 
 	constructor(width: number, height: number, colorDomain: Array<string>, location: Selection<any, {}, any, {}>) {
 		this._width = width;
@@ -26,10 +26,10 @@ export class Heatmap {
 		this._height = height;
 	}
 	get width(): number {
-		return this.width;
+		return this._width;
 	}
-	set width(_width: number) {
-		this.width = _width;
+	set width(width: number) {
+		this._width = width;
 	}
 	get colorDomain(): Array<string> {
 		return this._colorDomain;
@@ -39,6 +39,9 @@ export class Heatmap {
 	}
 	get location(): Selection<any, {}, any, {}> {
 		return this._location
+	}
+	set location(location: Selection<any, {}, any, {}>) {
+		this._location = location;
 	}
 
 	public draw(graph: Graph) {
