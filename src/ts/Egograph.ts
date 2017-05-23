@@ -51,6 +51,10 @@ export class Egograph {
 		this.draw();
 	}
 	public draw() {
+		// let svg = d3.selectAll("body").append("div").append("svg")
+		// 		.data(this._neighboringNodes).enter()
+		// 		.append("circle")
+		// 		.attr("r", 10)
 
 	}
 	public click() {

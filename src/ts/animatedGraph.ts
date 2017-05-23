@@ -13,19 +13,19 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let svg = d3.select("body").append("div").append("svg")
 		.attr("width", width)
 		.attr("height", height);
-	let heatmap: AnimatedHeatmap = new AnimatedHeatmap(width, height, ["white", "blue"], svg, graph);
+	let heatmap: HeatmapTimeline = new HeatmapTimeline(width, height, ["white", "blue"], svg, graph);
 
-	//code for an animated heatmap
-	let prevButton = d3.select("body").append("div").append("button")
-		.text("<--")
-		.on("click", function () {
-			heatmap.animateBackward()
-		});
+	// //code for an animated heatmap
+	// let prevButton = d3.select("body").append("div").append("button")
+	// 	.text("<--")
+	// 	.on("click", function () {
+	// 		heatmap.animateBackward()
+	// 	});
 
-	let nextButton = d3.select("body").append("div").append("button")
-		.text("-->")
-		.on("click", function () {
-			heatmap.animateForward()
-		});
+	// let nextButton = d3.select("body").append("div").append("button")
+	// 	.text("-->")
+	// 	.on("click", function () {
+	// 		heatmap.animateForward()
+	// 	});
 
 });
