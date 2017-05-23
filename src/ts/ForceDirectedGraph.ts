@@ -4,6 +4,7 @@ import { Selection } from "d3-selection";
 import { scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
+import { transition } from "d3-transition";
 
 export class ForceDirectedGraph {
 	private time = 0;
@@ -39,7 +40,7 @@ export class ForceDirectedGraph {
 			.on("tick", this.ticked(this));
 
 		(this.simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
-		
+
 		//console.log("sim started")
 	}
 
