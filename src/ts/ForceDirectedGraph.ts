@@ -38,11 +38,11 @@ export class ForceDirectedGraph {
 			.force("center", d3force.forceCenter(this.width / 2, this.height / 2)) //define center
 			.on("tick", this.ticked(this));
 
-		console.log("sim started")
+		//console.log("sim started")
 	}
 
 	private initSVG() { //manipulate a passed svg to assign groups for nodes and edges
-		this.chart.on("click", this.mouseClicked);
+		this.chart.on("click", this.mouseClicked(this));
 
 		this.linksG = this.chart.append("g")
 			.classed("links", true);
@@ -60,7 +60,7 @@ export class ForceDirectedGraph {
 					.attr("x2", function (d: Edge) { return d.target.x; })
 					.attr("y2", function (d: Edge) { return d.target.y; });
 			} else {
-				console.log("No links!");
+				//console.log("No links!");
 			}
 			if (self.nodeGlyphs !== undefined) {
 				self.nodeGlyphs
@@ -69,7 +69,7 @@ export class ForceDirectedGraph {
 					})
 					.attr("cy", function (d: Node) { return d.y; });
 			} else {
-				console.log("No nodes!");
+				//console.log("No nodes!");
 			}
 		});
 	}
@@ -82,28 +82,25 @@ export class ForceDirectedGraph {
 		//console.log(this.nodeGlyphs);
 
 		if (this.simulation === undefined) {
-			console.log("no simulation")
 			this.initSimulation();
 		}
 
 		if (this.simulation !== undefined) {
-			console.log("there is a simulation")
 			this.simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(this.simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 			//	.strength(function (d: Edge): number { return d.weight * -.01 });
 		}
 	}
 
-	private mouseClicked() { //mouselistener, update timestep of graph
+	private mouseClicked(self: ForceDirectedGraph) { //mouselistener, update timestep of graph
 		return function (d: any, i: any): void {//wrapped for d3
-			// console.log(this.graph.timesteps[this.time]);
-			let curGraph: Graph = this.graph.timesteps[this.time];
-			this.time = (this.time + 1) % this.graph.timesteps.length;
-			let newGraph: Graph = this.graph.timesteps[this.time];
+			let curGraph: Graph = self.graph.timesteps[self.time];
+			self.time = (self.time + 1) % self.graph.timesteps.length;
+			let newGraph: Graph = self.graph.timesteps[self.time];
 
-			this.communicateNodePositions(curGraph, newGraph);
+			self.communicateNodePositions(curGraph, newGraph);
 
-			this.draw(newGraph);
+			self.draw(newGraph);
 		}
 	}
 

@@ -1,5 +1,5 @@
 import { Node, Edge, Graph, DynamicGraph } from "./Graph"
-import { ForceDirectedGraph } from "./forceDirectedGraph"
+import { ForceDirectedGraph } from "./ForceDirectedGraph"
 
 export class Egograph {
 
