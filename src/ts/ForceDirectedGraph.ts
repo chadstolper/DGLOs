@@ -14,7 +14,7 @@ export class ForceDirectedGraph {
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 	private _chart: Selection<any, {}, any, {}>;
 	private linkGlyphs: Selection<any, {}, any, {}>;
-	private nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
+	private _nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
 	private linksG: Selection<any, {}, any, {}>;
 	private nodesG: Selection<any, {}, any, {}>; //groups for all
 
@@ -32,6 +32,10 @@ export class ForceDirectedGraph {
 
 	get chart() {
 		return this._chart;
+	}
+
+	protected get nodeGlyphs() {
+		return this._nodeGlyphs;
 	}
 
 
@@ -116,12 +120,12 @@ export class ForceDirectedGraph {
 	}
 
 	private drawNodes(nodes: Node[]) { //does what it says on the tin
-		this.nodeGlyphs = this.nodesG.selectAll("circle")
+		this._nodeGlyphs = this.nodesG.selectAll("circle")
 			.data(nodes, function (d: Node): string { return "" + d.id });
 		this.nodeGlyphs.exit().remove();
 		let nodeEnter = this.nodeGlyphs.enter().append("circle")
 			.attr("id", function (d: any): string | number { return d.name; });
-		this.nodeGlyphs = this.nodeGlyphs.merge(nodeEnter);
+		this._nodeGlyphs = this.nodeGlyphs.merge(nodeEnter);
 		this.nodeGlyphs
 			.attr("r", 10)
 			.attr("fill", (d: Node) => {

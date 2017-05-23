@@ -21,6 +21,7 @@ export class Egograph extends ForceDirectedGraph {
 		this._incidentEdges = [];
 		this._neighboringNodes = new Set();
 		this.init();
+		//this.clickTransition();
 	}
 
 	private getIncidentEdges() {
@@ -43,30 +44,27 @@ export class Egograph extends ForceDirectedGraph {
 		this._neighboringNodes.add(this._centralNode);
 	}
 
-	// private nodeLoop() {
-	// 	this.getIncidentEdges();
-	// 	let steps = super.graph.timesteps;
-	// 	for (let n of steps) {
-	// 		this.getNeighboringNodes()
-	// 	}
-	// 	console.log(this._neighboringNodes);
-	// 	console.log(this._incidentEdges);
-	// }
-
 	public init() {
 		let steps = super.graph.timesteps;
-		this.getIncidentEdges();
-		this.getNeighboringNodes();
 		for (let n of steps) {
 			this.getIncidentEdges();
 			this.timeStepForward();
 		}
-
 		let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
 		console.log(g);
 		super.draw(g);
-		//console.log(this._neighboringNodes);
+		// this.nodeGlyphs.on("click", this.clickTransition(this));
 	}
+	// public update() {
+	// 	let steps = super.graph.timesteps;
+	// 	for (let n of steps) {
+	// 		this.getIncidentEdges();
+	// 		this.timeStepForward();
+	// 	}
+	// 	let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
+	// 	console.log(g);
+	// 	super.draw(g);
+	// }
 
 	get incidentEdges() {
 		return this._incidentEdges;
@@ -92,4 +90,11 @@ export class Egograph extends ForceDirectedGraph {
 		this._curTimestep = (this._curTimestep + super.graph.timesteps.length - 1) % super.graph.timesteps.length;
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 	}
+
+	// private clickTransition(self: Egograph) {
+	// 	return function (d: Node, i: number) {
+	// 		this._centralNode = d;
+	// 		this.update();
+	// 	}
+	// }
 }
