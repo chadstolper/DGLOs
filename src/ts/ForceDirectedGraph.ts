@@ -125,6 +125,7 @@ export class ForceDirectedGraph {
 	private drawLinks(edges: Edge[]) { //does what it says on the tin
 		this.linkGlyphs = this.linksG.selectAll("line")
 			.data(edges, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
+		this.linkGlyphs.exit().remove();
 		let linkEnter = this.linkGlyphs.enter().append("line") //create a new line for each edge in edgelist (subdivs defined)
 			.attr("stroke", "black");
 		this.linkGlyphs = this.linkGlyphs.merge(linkEnter)
@@ -135,6 +136,7 @@ export class ForceDirectedGraph {
 	private drawNodes(nodes: Node[]) { //does what it says on the tin
 		this.nodeGlyphs = this.nodesG.selectAll("circle")
 			.data(nodes, function (d: Node): string { return "" + d.id });
+		this.nodeGlyphs.exit().remove();
 		let nodeEnter = this.nodeGlyphs.enter().append("circle")
 			.attr("id", function (d: any): string | number { return d.name; });
 		this.nodeGlyphs = this.nodeGlyphs.merge(nodeEnter);
