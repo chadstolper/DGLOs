@@ -5,8 +5,8 @@ import { Selection } from "d3-selection";
 export class AnimatedForceDirectedGraph extends ForceDirectedGraph {
 	private time = 0;
 
-	constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>, width: number, height: number) {
-		super(graph, chart, width, height);
+	constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
+		super(graph, chart);
 	}
 
 	protected initSVG() {
