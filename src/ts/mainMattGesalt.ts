@@ -9,3 +9,6 @@ json("./data/dummy/dummy.json", function (response) {
 	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
 	let GGraph: GesaltStaticGraph = new GesaltStaticGraph(dGraph, chartDiv);
 });
+
+//ps. order of operations =
+//var.append().selectall(new thing).data(d).enter().append(new thing).attr()...
