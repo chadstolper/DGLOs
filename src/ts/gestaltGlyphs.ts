@@ -14,16 +14,42 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 	private _timeStamps: number;
 	private _width = xPadding; //used to start, not final dimension
 	private _height = yPadding; //used to start, not final dimension
-	private _graph: DynamicDrinkGraph;
+	private _graph: DynamicGraph;
 	private _divChart: Selection<any, {}, any, {}>;
 	private _color = scaleOrdinal<string | number, string>(schemeCategory20);
 
-	public constructor(graph: DynamicDrinkGraph, divChart: Selection<any, {}, any, {}>) {
+	public constructor(graph: DynamicGraph, divChart: Selection<any, {}, any, {}>) {
 		this._timeStamps = graph.timesteps.length;
 		this._graph = graph;
 		this._divChart = divChart;
 		this.initDimensions();
 		this.init();
+	}
+
+	get timeStamps(): number {
+		return this._timeStamps;
+	}
+
+	get width(): number | string {
+		if (this._width === xPadding) {
+			return "Defaulted to " + xPadding;
+		}
+		return this._width;
+	}
+
+	get height(): number | string {
+		if (this._height === yPadding) {
+			return "Defaulted to " + yPadding;
+		}
+		return this._height;
+	}
+
+	get graph(): DynamicDrinkGraph {
+		return this._graph;
+	}
+
+	get sourceDiv(): Selection<any, {}, any, {}> {
+		return this._divChart;
 	}
 
 	private init() {
@@ -137,7 +163,7 @@ export class GestaltStaticGraph { //A2 over 2B, but 9S is pure
 			})
 			.attr("y", this._height - 10)
 			.text(function (d: any): string {
-				return d.name;
+				return d.label;
 			})
 			.style("font-size", function (d: Node): string {
 				if (d.type === "Person") {

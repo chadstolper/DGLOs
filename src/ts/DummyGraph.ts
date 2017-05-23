@@ -1,16 +1,10 @@
 import { Graph, DynamicGraph, Node, Edge } from "./Graph";
 
 export class Person extends Node {
-	private _name: string;
 	private _role: string;
 	public constructor(id: number | string, name: string, role: string) {
-		super(id, "Person");
-		this._name = name;
+		super(id, "Person", name);
 		this._role = role;
-	}
-
-	get name(): string {
-		return this._name;
 	}
 
 	get role(): string {
@@ -23,16 +17,10 @@ export class Person extends Node {
 }
 
 export class Drink extends Node {
-	private _name: string;
 	private _price: number;
 	public constructor(id: number | string, name: string, price: number) {
-		super(id, "Drink");
-		this._name = name;
+		super(id, "Drink", name);
 		this._price = price;
-	}
-
-	get name(): string {
-		return this._name;
 	}
 
 	get price(): number {
