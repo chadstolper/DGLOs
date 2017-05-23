@@ -7,13 +7,12 @@ import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { transition } from "d3-transition";
 
 export class ForceDirectedGraph {
-	private time = 0;
 	private width: number;
 	private height: number;
 	private _graph: DynamicGraph;
 	private simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
-	private chart: Selection<any, {}, any, {}>;
+	private _chart: Selection<any, {}, any, {}>;
 	private linkGlyphs: Selection<any, {}, any, {}>;
 	private nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
 	private linksG: Selection<any, {}, any, {}>;
@@ -22,15 +21,17 @@ export class ForceDirectedGraph {
 	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>, width: number, height: number) {
 		this.width = width;
 		this.height = height;
-		this.time = 0;
-		this.chart = chart;
+		this._chart = chart;
 		this._graph = graph;
 		this.initSVG();
-		this.draw(graph.timesteps[this.time]);
 	}
 
 	get graph() {
 		return this._graph;
+	}
+
+	get chart() {
+		return this._chart;
 	}
 
 
@@ -48,13 +49,12 @@ export class ForceDirectedGraph {
 		//console.log("sim started")
 	}
 
-	private initSVG() { //manipulate a passed svg to assign groups for nodes and edges
-		this.chart.on("click", this.mouseClicked(this));
+	protected initSVG() { //manipulate a passed svg to assign groups for nodes and edges
 
-		this.linksG = this.chart.append("g")
+		this.linksG = this._chart.append("g")
 			.classed("links", true);
 
-		this.nodesG = this.chart.append("g")
+		this.nodesG = this._chart.append("g")
 			.classed("node", true);
 	}
 
@@ -100,27 +100,9 @@ export class ForceDirectedGraph {
 		}
 	}
 
-	private mouseClicked(self: ForceDirectedGraph) { //mouselistener, update timestep of graph
-		return function (d: any, i: any): void {//wrapped for d3
-			let curGraph: Graph = self.graph.timesteps[self.time];
-			self.time = (self.time + 1) % self.graph.timesteps.length;
-			let newGraph: Graph = self.graph.timesteps[self.time];
 
-			self.communicateNodePositions(curGraph, newGraph);
 
-			self.draw(newGraph);
-		}
-	}
 
-	private communicateNodePositions(from: Graph, to: Graph) { //pass previous node positions to next generation
-		for (let n of from.nodes) {
-			let n_prime: Node = to.nodes.find(function (d: Node) { return d.id === n.id; });
-			n_prime.x = n.x;
-			n_prime.y = n.y;
-			n_prime.vx = n.vx;
-			n_prime.vy = n.vy;
-		}
-	}
 
 	private drawLinks(edges: Edge[]) { //does what it says on the tin
 		this.linkGlyphs = this.linksG.selectAll("line")
