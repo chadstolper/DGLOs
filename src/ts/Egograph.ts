@@ -45,6 +45,7 @@ export class Egograph extends ForceDirectedGraph {
 				}
 			}
 		}
+		this._neighboringNodes.push(this._centralNode);
 	}
 	public init() {
 		this.getIncidentEdges();
@@ -55,5 +56,8 @@ export class Egograph extends ForceDirectedGraph {
 		console.log(g);
 		super.draw(g);
 	}
+	// private createDynamicGraph() {
+	// 	let dGraph = new DynamicGraph()
+	// }
 
 }
