@@ -49,7 +49,7 @@ export class Egograph extends ForceDirectedGraph {
 				}
 			}
 		}
-		this._centralNodeArray.push(this._centralNode);
+		//this._centralNodeArray.push(this._centralNode);
 		this.edgeMapToEdgeArray();
 		this.nodeMapToNodeArray();
 		this.getCentralNodes();
