@@ -56,6 +56,13 @@ export class Edge {
 	get weight(): number {
 		return this._weight;
 	}
+
+	set source(source: Node) {
+		this._source = source;
+	}
+	set target(target: Node) {
+		this._target = target;
+	}
 }
 
 /**
