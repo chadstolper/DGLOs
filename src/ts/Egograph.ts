@@ -12,6 +12,7 @@ export class Egograph extends ForceDirectedGraph {
 	private _neighboringNodesMap: Map<number, Node>;
 	private _incidentEdgesMap: Map<number, Edge>;
 	private _neighboringNodes: Array<Node>;
+	private _centralNodeArray: Array<Node>;
 	private _incidentEdges: Array<Edge>;
 
 	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
@@ -19,6 +20,7 @@ export class Egograph extends ForceDirectedGraph {
 		super(dynamicGraph, location);
 		this._centralNode = centralNode;
 		this._curTimestep = 0;
+		this._centralNodeArray = [];
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 		this._incidentEdges = [];
 		this._neighboringNodes = [];
@@ -56,10 +58,22 @@ export class Egograph extends ForceDirectedGraph {
 					}
 				}
 			}
-			this._neighboringNodesMap.set(this._centralNode.id as number, this._centralNode);
 		}
 		this.nodeMapToNodeArray();
+		this.getCentralNodes();
+		this.mergeNodeLists();
 		console.log(this._neighboringNodes);
+	}
+
+	private getCentralNodes() {
+		let steps = super.graph.timesteps;
+		for (let n of steps) {
+			for (let m of n.nodes) {
+				if ((m.id as number) === this._centralNode.id) {
+					this._centralNodeArray.push(m);
+				}
+			}
+		}
 	}
 
 
@@ -109,6 +123,7 @@ export class Egograph extends ForceDirectedGraph {
 	}
 	//Clears the incidentEdges, neighboringNodes, and centralNode arrays
 	private emptyArray() {
+		this._centralNodeArray = [];
 		this._incidentEdges = [];
 		this._neighboringNodes = [];
 	}
@@ -132,7 +147,11 @@ export class Egograph extends ForceDirectedGraph {
 		});
 	}
 
-
+	private mergeNodeLists() {
+		for (let n of this._centralNodeArray) {
+			this._neighboringNodes.push(n);
+		}
+	}
 	get incidentEdges() {
 		return this._incidentEdges;
 	}
