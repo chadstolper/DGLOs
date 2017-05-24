@@ -9,7 +9,8 @@ export class Egograph extends ForceDirectedGraph {
 	private _centralNode: Node;
 	private _curGraph: Graph;
 	private _curTimestep: number;
-	private _neighboringNodes: Set<Node>;
+	private _neighboringNodesMap: Map<number, Node>;
+	private _neighboringNodes: Array<Node>;
 	private _incidentEdges: Array<Edge>;
 
 	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
@@ -19,9 +20,9 @@ export class Egograph extends ForceDirectedGraph {
 		this._curTimestep = 0;
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 		this._incidentEdges = [];
-		this._neighboringNodes = new Set();
+		this._neighboringNodes = [];
+		this._neighboringNodesMap = new Map();
 		this.init();
-		//this.clickTransition();
 	}
 
 	private getIncidentEdges() {
@@ -34,25 +35,38 @@ export class Egograph extends ForceDirectedGraph {
 	private getNeighboringNodes() {
 		//if a node ever is connected to the centralNode, add it to the neighboring nodes. However,
 		//there should be no duplicates
-		for (let n of this._curGraph.nodes) {
-			for (let m of this._incidentEdges) {
-				if (n !== this._centralNode && (m.source.id === n.id || m.target.id === n.id)) {
-					this._neighboringNodes.add(n);
+		let steps = super.graph.timesteps;
+		for (let k of steps) {
+			for (let n of this._curGraph.nodes) {
+				for (let m of this._incidentEdges) {
+					if (n.id !== this._centralNode.id && (m.source.id === n.id || m.target.id === n.id)) {
+						this._neighboringNodesMap.set(n.id as number, n);
+					}
 				}
 			}
+			this.timeStepForward();
 		}
-		this._neighboringNodes.add(this._centralNode);
+		this._neighboringNodesMap.set(this._centralNode.id as number, this._centralNode);
 	}
 
 	public init() {
 		let steps = super.graph.timesteps;
+		this.getIncidentEdges();
+		this.getNeighboringNodes();
 		for (let n of steps) {
 			this.getIncidentEdges();
 			this.timeStepForward();
 		}
-		let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
-		console.log(g);
-		super.draw(g);
+
+		console.log(this._neighboringNodesMap.keys(), this._neighboringNodesMap.get(9));
+
+		for (let key in this._neighboringNodes.keys()) {
+			// this._neighboringNodes.push(this._neighboringNodesMap.get(key));
+			console.log(key)//, this._neighboringNodesMap.get(key));
+		}
+		// let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
+		// console.log(g);
+		//super.draw(g);
 		// this.nodeGlyphs.on("click", this.clickTransition(this));
 	}
 	// public update() {
