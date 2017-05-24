@@ -13,7 +13,7 @@ d3json("data/dummy/dummy.json", function (response: any) {
 	let svg = d3.select("body").append("div").append("svg")
 		.attr("width", width)
 		.attr("height", height);
-	let heatmap: HeatmapTimeline = new HeatmapTimeline(width, height, ["white", "blue"], svg, graph);
+	let heatmap: HeatmapTimeline = new HeatmapTimeline(graph, svg, ["white", "blue"]);
 
 	// //code for an animated heatmap
 	// let prevButton = d3.select("body").append("div").append("button")

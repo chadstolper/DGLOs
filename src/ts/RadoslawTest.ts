@@ -18,11 +18,17 @@ json("data/radoslaw/out.json", function (response: any) {
 		.attr("width", width)
 		.attr("height", height);
 	g = new DynamicRadoslawGraph(response);
+<<<<<<< HEAD
 
 	// fdg = new AnimatedForceDirectedGraph(g, svg, width, height);
 	// fdg.draw(g.timesteps[0]);
 	ahm = new AnimatedHeatmap(width, height, ["white", "purple"], svg, g);
 
+=======
+	// fdg = new AnimatedForceDirectedGraph(g, svg, width, height);
+	// fdg.draw(g.timesteps[0]);
+	ahm = new AnimatedHeatmap(width, height, ["white", "purple"], svg, g);
+>>>>>>> ecdc735d783bce27e174b5d0eac7156e6f0eff9c
 })
 
 

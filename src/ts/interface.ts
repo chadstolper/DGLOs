@@ -11,7 +11,7 @@ interface Visualization {
 
 	draw(graph: Graph): void;
 
-	constructor(graph: DynamicGraph, div: Selection<any, {}, any, {}>): Visualization;
+	constructor(graph: DynamicGraph | Graph, div: Selection<any, {}, any, {}>): Visualization;
 	//common varibles
 	//a dgraph
 	//a ? sgraph
