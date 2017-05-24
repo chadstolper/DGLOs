@@ -23,8 +23,12 @@ export class Egograph extends ForceDirectedGraph {
 		this._neighboringNodes = [];
 		this._neighboringNodesMap = new Map();
 		this.init();
+		this.clickTransition(this);
 	}
 
+
+	//this function fills the _incidentEdge array with all of the edges that touch the central node
+	//through every timestep. It must be called before calling getNeighboringNodes.
 	private getIncidentEdges() {
 		let steps = super.graph.timesteps;
 		for (let k of steps) {
@@ -37,6 +41,10 @@ export class Egograph extends ForceDirectedGraph {
 		}
 		this.timeStepForward();
 	}
+
+	//this function creates a mapping of every node that ever shares an edge with the central
+	//node. The function must be called after calling getIncidentEdges(), as this function
+	//relies on having a list of edges to determine which nodes touch the central node.
 	private getNeighboringNodes() {
 		//if a node ever is connected to the centralNode, add it to the neighboring nodes. However,
 		//there should be no duplicates
@@ -53,28 +61,30 @@ export class Egograph extends ForceDirectedGraph {
 		}
 		this._neighboringNodesMap.set(this._centralNode.id as number, this._centralNode);
 		this.timeStepForward();
+		this.putMapInArray();
 	}
 
 	public init() {
 		this.getIncidentEdges();
 		this.getNeighboringNodes();
-		for (let key of this._neighboringNodesMap.keys()) {
-			this._neighboringNodes.push(this._neighboringNodesMap.get(key));
-		}
 		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges);
 		super.draw(g);
+		console.log(this._incidentEdges);
+		console.log(this._neighboringNodes);
+		this.clickListen();
 	}
 
-	public update() {
-		let steps = super.graph.timesteps;
-		for (let n of steps) {
-			this.getIncidentEdges();
-			this.timeStepForward();
+	private clickTransition(self: Egograph) {
+		return function (d: Node, i: number) {
+			this._centralNode = d;
+			this.init();
 		}
-		let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
-		console.log(g);
-		super.draw(g);
 	}
+
+	protected clickListen() {
+		this.nodeGlyphs.on("click", this.clickTransition(this));
+	}
+
 
 	get incidentEdges() {
 		return this._incidentEdges;
@@ -101,10 +111,19 @@ export class Egograph extends ForceDirectedGraph {
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 	}
 
-	// private clickTransition(self: Egograph) {
-	// 	return function (d: Node, i: number) {
-	// 		this._centralNode = d;
-	// 		this.update();
+	// private clearMap(){
+	// 	for(let key in this._neighboringNodesMap.keys()){
+	// 		this._neighboringNodesMap.delete(key as number);
 	// 	}
 	// }
+
+	private putMapInArray() {
+		for (let key of this._neighboringNodesMap.keys()) {
+			this._neighboringNodes.push(this._neighboringNodesMap.get(key));
+		}
+	}
+	private emptyArray() {
+		this._incidentEdges = [];
+		this._neighboringNodes = [];
+	}
 }
