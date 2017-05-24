@@ -18,7 +18,9 @@ export class Heatmap implements Visualization {
 
 
 	constructor(graph: Graph, div: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
-		this._colorDomain = colorDomain;
+		if (colorDomain !== undefined) {
+			this._colorDomain = colorDomain;
+		}
 		this._selection = div;
 		this._graph = graph;
 		this.draw(this._graph);

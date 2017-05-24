@@ -3,14 +3,14 @@ import { Selection } from "d3-selection";
 import { DynamicGraph, Graph } from "./graph";
 
 export interface Visualization {
-	readonly _dynamicGraph: DynamicGraph;
-	_selection: Selection<any, {}, any, {}>;
-	_width?: number;
-	_height?: number;
+	readonly dynamicGraph: DynamicGraph;
+	selection: Selection<any, {}, any, {}>;
+	width?: number;
+	height?: number;
 
 	draw(graph: Graph): void;
 
-	constructor(dgraph: DynamicGraph, div: Selection<any, {}, any, {}>): Visualization;
+	//constructor(dgraph: DynamicGraph, div: Selection<any, {}, any, {}>): Visualization;
 	//common varibles
 	//a dgraph
 	//a ? sgraph
