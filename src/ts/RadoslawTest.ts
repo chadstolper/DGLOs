@@ -16,7 +16,7 @@ json("data/radoslaw/out.json", function (response: any) {
 		.attr("width", width)
 		.attr("height", height);
 	g = new DynamicRadoslawGraph(response);
-	fdg = new AnimatedForceDirectedGraph(g, svg, width, height);
+	fdg = new AnimatedForceDirectedGraph(g, svg);
 	fdg.draw(g.timesteps[0]);
 })
 

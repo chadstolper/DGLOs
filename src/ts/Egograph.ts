@@ -14,7 +14,7 @@ export class Egograph extends ForceDirectedGraph {
 
 	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
 		width: number, height: number) {
-		super(dynamicGraph, location, width, height);
+		super(dynamicGraph, location);
 		this._centralNode = centralNode;
 		this._curTimestep = 0;
 		this._curGraph = super.graph.timesteps[this._curTimestep];
