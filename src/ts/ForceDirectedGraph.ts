@@ -13,7 +13,7 @@ export class ForceDirectedGraph {
 	private simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 	private _chart: Selection<any, {}, any, {}>;
-	private linkGlyphs: Selection<any, {}, any, {}>;
+	private _linkGlyphs: Selection<any, {}, any, {}>;
 	private _nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
 	private linksG: Selection<any, {}, any, {}>;
 	private nodesG: Selection<any, {}, any, {}>; //groups for all
@@ -34,6 +34,9 @@ export class ForceDirectedGraph {
 
 	protected get nodeGlyphs() {
 		return this._nodeGlyphs;
+	}
+	protected get linkGlyphs() {
+		return this._linkGlyphs;
 	}
 
 
@@ -106,18 +109,18 @@ export class ForceDirectedGraph {
 
 
 
-	private drawLinks(edges: Edge[]) { //does what it says on the tin
-		this.linkGlyphs = this.linksG.selectAll("line")
+	protected drawLinks(edges: Edge[]) { //does what it says on the tin
+		this._linkGlyphs = this.linksG.selectAll("line")
 			.data(edges, function (d: Edge): string { return "" + d.id; }); //animate existing, dont create new line
 		this.linkGlyphs.exit().remove();
 		let linkEnter = this.linkGlyphs.enter().append("line") //create a new line for each edge in edgelist (subdivs defined)
 			.attr("stroke", "black");
-		this.linkGlyphs = this.linkGlyphs.merge(linkEnter)
+		this._linkGlyphs = this.linkGlyphs.merge(linkEnter)
 		this.linkGlyphs//.transition()
 			.attr("stroke-width", function (d: Edge): number { return d.weight; });
 	}
 
-	private drawNodes(nodes: Node[]) { //does what it says on the tin
+	protected drawNodes(nodes: Node[]) { //does what it says on the tin
 		this._nodeGlyphs = this.nodesG.selectAll("circle")
 			.data(nodes, function (d: Node): string { return "" + d.id });
 		this.nodeGlyphs.exit().remove();
