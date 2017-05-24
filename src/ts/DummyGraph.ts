@@ -101,7 +101,7 @@ export class DynamicDrinkGraph extends DynamicGraph {
 		for (let timestep of response) {
 			let rawNodeData: Array<any> = timestep.nodes;
 			let rawEdgeData: Array<any> = timestep.edges;
-			let timestamp: number = timestep.timestep;
+			let timestamp: number = timestep.timestamp;
 			let g: StaticDrinkGraph = new StaticDrinkGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}
