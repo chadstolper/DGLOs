@@ -5,16 +5,17 @@ import * as d3 from "d3-selection";
 
 export class AnimatedHeatmap extends Heatmap {
 
+	//TODO: BREAK ALL THE THINGS!!!
+	//sorry Will
+
 	private _dynamicGraph: DynamicGraph;
 	private _curGraph: Graph;
-	private _curTimeStep: number;
+	private _curTimeStep = 0;
 	private _numTimeSteps: number;
 
-	constructor(width: number, height: number, colorDomain: Array<string>, location: Selection<any, {}, any, {}>,
-		dynamicGraph: DynamicGraph) {
-		super(width, height, colorDomain, location);
+	constructor(dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
+		super(dynamicGraph.timesteps[0], location, colorDomain);
 		this._dynamicGraph = dynamicGraph;
-		this._curTimeStep = 0;
 		this._curGraph = this._dynamicGraph.timesteps[this._curTimeStep];
 		this._numTimeSteps = this._dynamicGraph.timesteps.length;
 		this.init();

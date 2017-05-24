@@ -9,16 +9,17 @@ import 'd3-transition';
 
 export class Heatmap {
 
-	private _width: number;
-	private _height: number;
+	private _width = 750;
+	private _height = 750;
+	private _graph: Graph;
 	private _colorDomain: Array<string>;
 	public _location: Selection<any, {}, any, {}>;
 
-	constructor(width: number, height: number, colorDomain: Array<string>, location: Selection<any, {}, any, {}>) {
-		this._width = width;
-		this._height = height;
+	constructor(graph: Graph, location: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
 		this._colorDomain = colorDomain;
 		this._location = location;
+		this._graph = graph;
+		this.draw(this._graph);
 	}
 
 	get height(): number {
