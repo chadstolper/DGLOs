@@ -23,7 +23,6 @@ export class Egograph extends ForceDirectedGraph {
 		this._neighboringNodes = [];
 		this._neighboringNodesMap = new Map();
 		this.init();
-		this.clickTransition(this);
 	}
 
 
@@ -57,11 +56,26 @@ export class Egograph extends ForceDirectedGraph {
 					}
 				}
 			}
+			this._neighboringNodesMap.set(this._centralNode.id as number, this._centralNode);
 			this.timeStepForward();
 		}
-		this._neighboringNodesMap.set(this._centralNode.id as number, this._centralNode);
+
 		this.timeStepForward();
 		this.putMapInArray();
+	}
+
+	private clickTransition(self: Egograph) {
+		let graph = this;
+		return function (d: Node, i: number) {
+			graph.emptyArray();
+			graph.clearMap();
+			this._centralNode = d;
+			graph.init();
+		}
+	}
+
+	protected clickListen() {
+		this.nodeGlyphs.on("click", this.clickTransition(this));
 	}
 
 	public init() {
@@ -72,17 +86,6 @@ export class Egograph extends ForceDirectedGraph {
 		console.log(this._incidentEdges);
 		console.log(this._neighboringNodes);
 		this.clickListen();
-	}
-
-	private clickTransition(self: Egograph) {
-		return function (d: Node, i: number) {
-			this._centralNode = d;
-			this.init();
-		}
-	}
-
-	protected clickListen() {
-		this.nodeGlyphs.on("click", this.clickTransition(this));
 	}
 
 
@@ -111,11 +114,9 @@ export class Egograph extends ForceDirectedGraph {
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 	}
 
-	// private clearMap(){
-	// 	for(let key in this._neighboringNodesMap.keys()){
-	// 		this._neighboringNodesMap.delete(key as number);
-	// 	}
-	// }
+	private clearMap() {
+		this._neighboringNodesMap.clear();
+	}
 
 	private putMapInArray() {
 		for (let key of this._neighboringNodesMap.keys()) {
