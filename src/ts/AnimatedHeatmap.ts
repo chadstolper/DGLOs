@@ -2,8 +2,9 @@ import { Heatmap } from "./Heatmap"
 import { DynamicGraph, Graph } from "./Graph";
 import { Selection } from "d3-selection";
 import * as d3 from "d3-selection";
+import { Visualization } from "./interfaceDynamicVisualization";
 
-export class AnimatedHeatmap extends Heatmap {
+export class AnimatedHeatmap extends Heatmap implements Visualization {
 
 	//TODO: BREAK ALL THE THINGS!!!
 	//sorry Will
@@ -12,6 +13,10 @@ export class AnimatedHeatmap extends Heatmap {
 	private _curGraph: Graph;
 	private _curTimeStep = 0;
 	private _numTimeSteps: number;
+
+	get dynamicGraph() {
+		return this._dynamicGraph;
+	}
 
 	constructor(dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
 		super(dynamicGraph.timesteps[0], location, colorDomain);
@@ -59,7 +64,7 @@ export class AnimatedHeatmap extends Heatmap {
 				self.animateForward()
 			});
 
-		super.draw(this._curGraph);
+		//super.draw(this._curGraph);
 	}
 
 }

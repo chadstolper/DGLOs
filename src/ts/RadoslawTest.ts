@@ -5,12 +5,14 @@ import { AnimatedForceDirectedGraph } from "./AnimatedForceDirectedGraph";
 import { ForceDirectedGraph } from "./ForceDirectedGraph";
 import { AnimatedHeatmap } from "./AnimatedHeatmap";
 import { json } from "d3-request";
+import { Visualization } from "./interfaceDynamicVisualization";
 
 var g: DynamicGraph;
 // let fdg: ForceDirectedGraph;
-var ahm: AnimatedHeatmap;
-// json("data/radoslaw/out2.json", function (response: any) {
-json("data/radoslaw/out.json", function (response: any) {
+// var ahm: AnimatedHeatmap;
+let vis: Visualization;
+// json("data/radoslaw/emails_sample.json", function (response: any) {
+json("data/radoslaw/emails.json", function (response: any) {
 
 	let width: number;
 	let height: number = width = 2000;
@@ -21,7 +23,8 @@ json("data/radoslaw/out.json", function (response: any) {
 
 	// fdg = new AnimatedForceDirectedGraph(g, svg, width, height);
 	// fdg.draw(g.timesteps[0]);
-	ahm = new AnimatedHeatmap(g, svg);
+	vis = new AnimatedHeatmap(g, svg);
+	vis.draw(g.timesteps[0]);
 
 })
 

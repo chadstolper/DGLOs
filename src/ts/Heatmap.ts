@@ -5,19 +5,23 @@ import * as d3Array from "d3-array";
 import { Graph, Node, Edge } from "./Graph";
 import { select } from 'd3-selection';
 import 'd3-transition';
+import { Visualization } from "./interfaceStaticVisualization";
 
 
-export class Heatmap {
+export class Heatmap implements Visualization {
 
-	private _width = 750;
-	private _height = 750;
-	private _graph: Graph;
-	private _colorDomain: Array<string>;
-	public _location: Selection<any, {}, any, {}>;
+	protected _width = 750;
+	protected _height = 750;
+	protected _graph: Graph;
+	private _colorDomain = ["white", "black"];
+	protected _selection: Selection<any, {}, any, {}>;
 
-	constructor(graph: Graph, location: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
-		this._colorDomain = colorDomain;
-		this._location = location;
+
+	constructor(graph: Graph, div: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
+		if (colorDomain !== undefined) {
+			this._colorDomain = colorDomain;
+		}
+		this._selection = div;
 		this._graph = graph;
 		this.draw(this._graph);
 	}
@@ -40,11 +44,14 @@ export class Heatmap {
 	set colorDomain(colorDomain: Array<string>) {
 		this._colorDomain = colorDomain;
 	}
-	get location(): Selection<any, {}, any, {}> {
-		return this._location
+	get selection(): Selection<any, {}, any, {}> {
+		return this._selection
 	}
-	set location(location: Selection<any, {}, any, {}>) {
-		this._location = location;
+	set selection(location: Selection<any, {}, any, {}>) {
+		this._selection = location;
+	}
+	get graph(): Graph {
+		return this._graph;
 	}
 
 	public draw(graph: Graph) {
@@ -57,7 +64,7 @@ export class Heatmap {
 			.domain(this.createColorDomain(graph.edges))
 			.range(this._colorDomain);
 
-		let slots = this._location.selectAll("rect")
+		let slots = this._selection.selectAll("rect")
 			.data(graph.edges, function (d: Edge): string { return "" + d.id; })
 
 		slots.exit().remove();
