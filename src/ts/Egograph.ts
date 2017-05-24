@@ -26,11 +26,16 @@ export class Egograph extends ForceDirectedGraph {
 	}
 
 	private getIncidentEdges() {
-		for (let n of this._curGraph.edges) {
-			if (n.target.id === this._centralNode.id || n.source.id === this._centralNode.id) {
-				this._incidentEdges.push(n);
+		let steps = super.graph.timesteps;
+		for (let k of steps) {
+			for (let n of this._curGraph.edges) {
+				if (n.target.id === this._centralNode.id || n.source.id === this._centralNode.id) {
+					this._incidentEdges.push(n);
+				}
 			}
+			this.timeStepForward();
 		}
+		this.timeStepForward();
 	}
 	private getNeighboringNodes() {
 		//if a node ever is connected to the centralNode, add it to the neighboring nodes. However,
@@ -47,38 +52,29 @@ export class Egograph extends ForceDirectedGraph {
 			this.timeStepForward();
 		}
 		this._neighboringNodesMap.set(this._centralNode.id as number, this._centralNode);
+		this.timeStepForward();
 	}
 
 	public init() {
-		let steps = super.graph.timesteps;
 		this.getIncidentEdges();
 		this.getNeighboringNodes();
+		for (let key of this._neighboringNodesMap.keys()) {
+			this._neighboringNodes.push(this._neighboringNodesMap.get(key));
+		}
+		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges);
+		super.draw(g);
+	}
+
+	public update() {
+		let steps = super.graph.timesteps;
 		for (let n of steps) {
 			this.getIncidentEdges();
 			this.timeStepForward();
 		}
-
-		console.log(this._neighboringNodesMap.keys(), this._neighboringNodesMap.get(9));
-
-		for (let key in this._neighboringNodes.keys()) {
-			// this._neighboringNodes.push(this._neighboringNodesMap.get(key));
-			console.log(key)//, this._neighboringNodesMap.get(key));
-		}
-		// let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
-		// console.log(g);
-		//super.draw(g);
-		// this.nodeGlyphs.on("click", this.clickTransition(this));
+		let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
+		console.log(g);
+		super.draw(g);
 	}
-	// public update() {
-	// 	let steps = super.graph.timesteps;
-	// 	for (let n of steps) {
-	// 		this.getIncidentEdges();
-	// 		this.timeStepForward();
-	// 	}
-	// 	let g: Graph = new Graph(Array.from(this._neighboringNodes), this._incidentEdges);
-	// 	console.log(g);
-	// 	super.draw(g);
-	// }
 
 	get incidentEdges() {
 		return this._incidentEdges;
