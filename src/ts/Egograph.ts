@@ -69,7 +69,9 @@ export class Egograph extends ForceDirectedGraph {
 		return function (d: Node, i: number) {
 			graph.emptyArray();
 			graph.clearMap();
-			this._centralNode = d;
+			console.log(graph._centralNode);
+			graph._centralNode = d;
+			console.log(d, graph._centralNode);
 			graph.init();
 		}
 	}
