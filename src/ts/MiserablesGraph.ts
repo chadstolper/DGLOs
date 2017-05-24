@@ -13,7 +13,7 @@ export class Cooccurence extends Edge {
 }
 
 export class LesMiserablesGraph extends Graph {
-	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>) {
+	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestamp: number) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
 		for (let n of rawNodeData) {
@@ -36,7 +36,7 @@ export class LesMiserablesGraph extends Graph {
 		nodeData.sort(function (a: Node, b: Node): number {
 			return +a.type - +b.type;
 		})
-		super(nodeData, edgeData);
+		super(nodeData, edgeData, timestamp);
 	}
 }
 
@@ -47,7 +47,8 @@ export class DynamicLesMiserablesGraph extends DynamicGraph {
 
 		let rawNodeData: Array<any> = response.nodes;
 		let rawEdgeData: Array<any> = response.links;
-		let g: LesMiserablesGraph = new LesMiserablesGraph(rawNodeData, rawEdgeData);
+		let timestep: number = response.timestep;
+		let g: LesMiserablesGraph = new LesMiserablesGraph(rawNodeData, rawEdgeData, timestep);
 		graphs.push(g);
 
 		super(graphs);

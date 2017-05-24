@@ -10,7 +10,7 @@ export class Egograph extends ForceDirectedGraph {
 	private _curGraph: Graph;
 	private _curTimestep: number;
 	private _neighboringNodesMap: Map<number, Node>;
-	private _incidentEdgesMap: Map<number, Edge>;
+	private _incidentEdgesMap: Map<Array<number>, Edge>;
 	private _neighboringNodes: Array<Node>;
 	private _centralNodeArray: Array<Node>;
 	private _incidentEdges: Array<Edge>;
@@ -37,7 +37,7 @@ export class Egograph extends ForceDirectedGraph {
 		for (let k of steps) {
 			for (let n of k.edges) {
 				if (n.target.id === this._centralNode.id || n.source.id === this._centralNode.id) {
-					this._incidentEdgesMap.set(n.id as number, n);
+					this._incidentEdgesMap.set([n.id as number, this._curTimestep], n);
 				}
 			}
 		}
@@ -94,7 +94,7 @@ export class Egograph extends ForceDirectedGraph {
 	public init() {
 		this.getIncidentEdges();
 		this.getNeighboringNodes();
-		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges);
+		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges, this._curTimestep);
 		super.draw(g);
 		this.clickListen();
 	}

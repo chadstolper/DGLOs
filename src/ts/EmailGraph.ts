@@ -13,7 +13,7 @@ export class RadoslawEmail extends Edge {
 }
 
 export class StaticRadoslawGraph extends Graph {
-	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>) {
+	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestep: number) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
 		for (let n of rawNodeData) {
@@ -36,7 +36,7 @@ export class StaticRadoslawGraph extends Graph {
 		nodeData.sort(function (a: Node, b: Node): number {
 			return +a.id - +b.id;
 		})
-		super(nodeData, edgeData);
+		super(nodeData, edgeData, timestep);
 	}
 }
 
@@ -46,7 +46,8 @@ export class DynamicRadoslawGraph extends DynamicGraph {
 		for (let timestep of response) {
 			let rawNodeData: Array<any> = timestep.nodes;
 			let rawEdgeData: Array<any> = timestep.edges;
-			let g: StaticRadoslawGraph = new StaticRadoslawGraph(rawNodeData, rawEdgeData);
+			let timestamp: number = timestep.timestep;
+			let g: StaticRadoslawGraph = new StaticRadoslawGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}
 		super(graphs);
