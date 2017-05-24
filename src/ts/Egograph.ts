@@ -32,38 +32,50 @@ export class Egograph extends ForceDirectedGraph {
 
 	//this function fills the _incidentEdge array with all of the edges that touch the central node
 	//through every timestep. It must be called before calling getNeighboringNodes.
-	private getIncidentEdges() {
+	private processNodesAndEdges() {
 		let steps = super.graph.timesteps;
-		for (let k of steps) {
-			for (let n of k.edges) {
-				if (n.target.id === this._centralNode.id || n.source.id === this._centralNode.id) {
-					this._incidentEdgesMap.set([n.id as number, this._curTimestep], n);
+		for (let step of steps) {
+			for (let edge of step.edges) {
+				if (edge.target.id === this._centralNode.id || edge.source.id === this._centralNode.id) {
+					this._incidentEdgesMap.set([edge.id as number, step.timestep], edge);
+					if (edge.target === this._centralNode) {
+						this._neighboringNodesMap.set(edge.source.id as number, edge.source);
+						edge.source = this._neighboringNodesMap.get(edge.source.id as number);
+					}
+					if (edge.source === this._centralNode) {
+						this._neighboringNodesMap.set(edge.target.id as number, edge.target);
+						edge.target = this._neighboringNodesMap.get(edge.target.id as number);
+					}
 				}
 			}
 		}
+		this._centralNodeArray.push(this._centralNode);
 		this.edgeMapToEdgeArray();
+		this.nodeMapToNodeArray();
+		this.getCentralNodes();
+		this.mergeNodeLists();
 		console.log(this._incidentEdges);
 	}
 
 	//this function creates a mapping of every node that ever shares an edge with the central
 	//node. The function must be called after calling getIncidentEdges(), as this function
 	//relies on having a list of edges to determine which nodes touch the central node.
-	private getNeighboringNodes() {
-		let steps = super.graph.timesteps;
-		for (let k of steps) {
-			for (let n of k.nodes) {
-				for (let m of this._incidentEdges) {
-					if (n.id !== this._centralNode.id && (m.source.id === n.id || m.target.id === n.id)) {
-						this._neighboringNodesMap.set(n.id as number, n);
-					}
-				}
-			}
-		}
-		this.nodeMapToNodeArray();
-		this.getCentralNodes();
-		this.mergeNodeLists();
-		console.log(this._neighboringNodes);
-	}
+	// private getNeighboringNodes() {
+	// 	let steps = super.graph.timesteps;
+	// 	for (let k of steps) {
+	// 		for (let n of k.nodes) {
+	// 			for (let m of this._incidentEdges) {
+	// 				if (n.id !== this._centralNode.id && (m.source.id === n.id || m.target.id === n.id)) {
+	// 					this._neighboringNodesMap.set(n.id as number, n);
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	this.nodeMapToNodeArray();
+	// 	this.getCentralNodes();
+	// 	this.mergeNodeLists();
+	// 	console.log(this._neighboringNodes);
+	// }
 
 	private getCentralNodes() {
 		let steps = super.graph.timesteps;
@@ -92,8 +104,8 @@ export class Egograph extends ForceDirectedGraph {
 	}
 
 	public init() {
-		this.getIncidentEdges();
-		this.getNeighboringNodes();
+		this.processNodesAndEdges();
+		//this.getNeighboringNodes();
 		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges, this._curTimestep);
 		super.draw(g);
 		this.clickListen();
