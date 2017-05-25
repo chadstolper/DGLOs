@@ -31,13 +31,20 @@ export class Egograph extends ForceDirectedGraph {
 		this.init();
 	}
 
+
+	//this function fills the _incidentEdge array with all of the edges that touch the central node
+	//through every timestep. It must be called before calling getNeighboringNodes.
 	private processNodesAndEdges() {
 		this.getCentralNodes();
 		let steps = super.graph.timesteps;
 		for (let step of steps) {
 			for (let edge of step.edges) {
+				//edge.target.id === this._centralNode.id || edge.source.id === this._centralNode.id
 				if (this._centralNodeArray.includes(edge.target) || this._centralNodeArray.includes(edge.source)) {
 					this._incidentEdgesMap.set([edge.id as number, step.timestep], edge);
+					console.log("The edge: " + edge + "  :  id " + edge.id);
+					console.log("The source: " + edge.source + " : id  " + edge.source.id);
+					console.log("The target: " + edge.target + " : id  " + edge.target.id);
 					if (this._centralNodeArray.includes(edge.target)) {
 						if (this._neighboringNodesMap.has(edge.source.id as number)) {
 							edge.source = this._neighboringNodesMap.get(edge.source.id as number)
@@ -57,9 +64,13 @@ export class Egograph extends ForceDirectedGraph {
 				}
 			}
 		}
+
+		console.log(" ----------------------------  \n");
 		this.edgeMapToEdgeArray();
 		this.nodeMapToNodeArray();
 		this.mergeNodeLists();
+		// console.log(this._incidentEdges);
+		// console.log(this._neighboringNodes);
 	}
 
 	private getCentralNodes() {
