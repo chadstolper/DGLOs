@@ -10,7 +10,7 @@ export class ForceDirectedGraph {
 	private width = 500;
 	private height = 500;
 	private _graph: DynamicGraph;
-	private simulation: Simulation<{}, undefined>;
+	private _simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 	private _chart: Selection<any, {}, any, {}>;
 	private _linkGlyphs: Selection<any, {}, any, {}>;
@@ -32,6 +32,10 @@ export class ForceDirectedGraph {
 		return this._chart;
 	}
 
+	protected get simulation() {
+		return this._simulation;
+	}
+
 	protected get nodeGlyphs() {
 		return this._nodeGlyphs;
 	}
@@ -42,14 +46,14 @@ export class ForceDirectedGraph {
 
 
 	private initSimulation() { //begin simulation of the graphics
-		this.simulation = d3force.forceSimulation() //init sim for chart?
+		this._simulation = d3force.forceSimulation() //init sim for chart?
 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
 			.force("charge", d3force.forceManyBody().strength(-50)) //push applied to all things from center
 			//.force("charge", d3force.forceManyBody()) //push applied to all things from center
 			.force("center", d3force.forceCenter(this.width / 2, this.height / 2)) //define center
 			.on("tick", this.ticked(this));
 
-		(this.simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
+		(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
 
 		//console.log("sim started")
 	}
@@ -93,15 +97,15 @@ export class ForceDirectedGraph {
 		//console.log(this.linkGlyphs);
 		//console.log(this.nodeGlyphs);
 
-		if (this.simulation === undefined) {
+		if (this._simulation === undefined) {
 			this.initSimulation();
 		}
 
-		if (this.simulation !== undefined) {
-			this.simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
-			(this.simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
+		if (this._simulation !== undefined) {
+			this._simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
+			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 
-			this.simulation.alpha(.3).restart();
+			this._simulation.alpha(.3).restart();
 		}
 	}
 
