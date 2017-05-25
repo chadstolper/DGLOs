@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { polygonHull } from "d3-polygon"
 import { ForceDirectedGraph } from "./ForceDirectedGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { Selection } from "d3-selection";
@@ -8,53 +9,40 @@ import { Coordinate, CoordinateGroup } from "./CoordinateGroup";
 const color = scaleOrdinal<string | number, string>(schemeCategory20);
 
 export class ForceDirectedMapGraph extends ForceDirectedGraph {
-	//note to self, stop deleting so much stuff
-	private pointList: number[][];
+	//NOTE TO SELF, AGAIN: STOP DELETING SO MUCH STUFF!!!
+	private _pointList: number[][];
+	private _hull: Selection<any, {}, any, {}>;
 
 	constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		super(graph, chart);
-
-		super.draw(graph.timesteps[0]); //draw graph
-
-		this.pointList = graph.timesteps[0].nodes.map(function (d: Node) { return [d.x, d.y]; })
-		let hull = chart.append("path")
-			.classed("hull", true)
-			.datum(d3.polygonHull(this.pointList as [number, number][]))
-			.attr("d", function (d: any): any {
-				return "M" + d.join("L") + "Z";
-			})
-
-
-
-
-
-
-
-
-
-
-
-		// let pathData: number[][] = [this.graph.timesteps[0].nodes.length][this.graph.timesteps[0].nodes.length]; //array of x,ycoordinates
-		// for (let i = 0; i < graph.timesteps[0].nodes.length; i++) {
-		// 	// let hold = new Coordinate(graph.timesteps[0].nodes[i].x, graph.timesteps[0].nodes[i].y)
-		// 	pathData[i][0] = this.graph.timesteps[0].nodes[i].x;
-		// 	pathData[i][1] = this.graph.timesteps[0].nodes[i].y;
-		// }
-		// console.log(pathData)
-
-		// let path = d3.path();
-
-		// let thing = d3.polygonHull(pathData)
-
-
-
-
-
+		// super.draw(graph.timesteps[0]);
 	}
 
 	protected initSVG() {
 		super.initSVG();
-
+		this.chart.on("tick", this.ticked(this));
 	}
 
+	protected ticked(self: ForceDirectedMapGraph) {
+		return function (): void {
+			console.log("hull tick")
+			self._pointList = self.graph.timesteps[0].nodes.map(function (d: Node) { return [d.x, d.y]; });
+			self._hull = self.chart.selectAll("path")
+				.datum(this._pointList);
+			self._hull.exit().remove();
+			let hullIn = self._hull
+				.enter().insert("path", "circle") //insert or append?
+			self._hull.merge(hullIn);
+			self._hull
+				.style("stroke", "yellow") //TODO: make into function, color by group, once groups are a thing...
+				.style("fill", "yellow")
+				.style("stroke-width", 40)
+				.style("stroke-linejoin", "round")
+				.style("opacity", .2)
+				.attr("d", function (d: any) {
+					return "M" + polygonHull(d.values.map(function (i: any) { return [i.x, i.y]; }))
+						.join("L") + "Z";
+				});
+		}
+	}
 }
