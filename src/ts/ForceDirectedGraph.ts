@@ -64,36 +64,49 @@ export class ForceDirectedGraph {
 		//console.log("sim started")
 	}
 
-	protected initSVG() { //manipulate a passed svg to assign groups for nodes and edges
+	protected ticked(self: ForceDirectedGraph) { //tock
+		return () => this.tickInternal();
+	}
 
+	protected tickInternal() { //tick
+		//console.log("tick", this);
+		if (this.linkGlyphs !== undefined) {
+			this.linkGlyphs //as in the lines representing links
+				.attr("x1", function (d: Edge) { return d.source.x; })
+				.attr("y1", function (d: Edge) { return d.source.y; })
+				.attr("x2", function (d: Edge) { return d.target.x; })
+				.attr("y2", function (d: Edge) { return d.target.y; });
+		} else {
+			console.log("No links!");
+		}
+		if (this.nodeGlyphs !== undefined) {
+			this.nodeGlyphs
+				.attr("cx", function (d: Node) {
+					return d.x;
+				})
+				.attr("cy", function (d: Node) { return d.y; });
+		} else {
+			console.log("No nodes!");
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	protected initSVG() { //manipulate a passed svg to assign groups for nodes and edges
 		this.linksG = this._chart.append("g")
 			.classed("links", true);
 
 		this.nodesG = this._chart.append("g")
 			.classed("node", true);
-	}
-
-	private ticked(self: ForceDirectedGraph) { //tock
-		return (function (): void {//wrapped for d3
-			if (self.linkGlyphs !== undefined) {
-				self.linkGlyphs //as in the lines representing links
-					.attr("x1", function (d: Edge) { return d.source.x; })
-					.attr("y1", function (d: Edge) { return d.source.y; })
-					.attr("x2", function (d: Edge) { return d.target.x; })
-					.attr("y2", function (d: Edge) { return d.target.y; });
-			} else {
-				//console.log("No links!");
-			}
-			if (self.nodeGlyphs !== undefined) {
-				self.nodeGlyphs
-					.attr("cx", function (d: Node) {
-						return d.x;
-					})
-					.attr("cy", function (d: Node) { return d.y; });
-			} else {
-				//console.log("No nodes!");
-			}
-		});
 	}
 
 	public draw(graph: Graph): void { //draw call for graphics, and check for simulation running
