@@ -20,29 +20,30 @@ export class ForceDirectedMapGraph extends ForceDirectedGraph {
 
 	protected initSVG() {
 		super.initSVG();
-		this.chart.on("tick", this.ticked(this));
+		this._hull = this.chart.append("path")
 	}
 
-	protected ticked(self: ForceDirectedMapGraph) {
-		return function (): void {
-			console.log("hull tick")
-			self._pointList = self.graph.timesteps[0].nodes.map(function (d: Node) { return [d.x, d.y]; });
-			self._hull = self.chart.selectAll("path")
-				.datum(this._pointList);
-			self._hull.exit().remove();
-			let hullIn = self._hull
-				.enter().insert("path", "circle") //insert or append?
-			self._hull.merge(hullIn);
-			self._hull
-				.style("stroke", "yellow") //TODO: make into function, color by group, once groups are a thing...
-				.style("fill", "yellow")
-				.style("stroke-width", 40)
-				.style("stroke-linejoin", "round")
-				.style("opacity", .2)
-				.attr("d", function (d: any) {
-					return "M" + polygonHull(d.values.map(function (i: any) { return [i.x, i.y]; }))
-						.join("L") + "Z";
-				});
-		}
+
+	protected tickInternal() {
+		super.tickInternal();
+		//console.log("tock", this);
+		this._pointList = this.graph.timesteps[0].nodes.map(function (d: Node) { return [d.x, d.y]; });
+		this._hull = this._hull//this.chart.selectAll("path")
+			.datum(polygonHull(this._pointList as [number, number][]));
+		//console.log(this._pointList);
+		//this._hull.exit().remove();
+		// let hullIn = this._hull
+		// 	.enter().insert("path") //insert or append?
+		// this._hull.merge(hullIn);
+		this._hull
+			.style("stroke", "yellow") //TODO: make into function, color by group, once groups are a thing...
+			.style("fill", "yellow")
+			.style("stroke-width", 40)
+			.style("stroke-linejoin", "round")
+			.style("opacity", .2)
+			.attr("d", function (d: any) {
+				return "M" + d.join("L") + "Z";
+			});
+
 	}
 }

@@ -50,30 +50,21 @@ export class ForceDirectedGraph {
 			.force("charge", d3force.forceManyBody().strength(-50)) //push applied to all things from center
 			//.force("charge", d3force.forceManyBody()) //push applied to all things from center
 			.force("center", d3force.forceCenter(this.width / 2, this.height / 2)) //define center
-			.on("tick", this.ticked);
+			.on("tick", this.ticked(this));
 
 		(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
 
 		//console.log("sim started")
 	}
 
-	protected initSVG() { //manipulate a passed svg to assign groups for nodes and edges
-
-		this.linksG = this._chart.append("g")
-			.classed("links", true);
-
-		this.nodesG = this._chart.append("g")
-			.classed("node", true);
+	protected ticked(self: ForceDirectedGraph) { //tock
+		return () => this.tickInternal();
 	}
 
-	protected ticked() { //tock
-		console.log("tock", this)
-		return this.tickInternal(this);
-	}
-	protected tickInternal(self: ForceDirectedGraph) { //tick
-		console.log("tick", this)
-		if (self.linkGlyphs !== undefined) {
-			self.linkGlyphs //as in the lines representing links
+	protected tickInternal() { //tick
+		//console.log("tick", this);
+		if (this.linkGlyphs !== undefined) {
+			this.linkGlyphs //as in the lines representing links
 				.attr("x1", function (d: Edge) { return d.source.x; })
 				.attr("y1", function (d: Edge) { return d.source.y; })
 				.attr("x2", function (d: Edge) { return d.target.x; })
@@ -81,8 +72,8 @@ export class ForceDirectedGraph {
 		} else {
 			console.log("No links!");
 		}
-		if (self.nodeGlyphs !== undefined) {
-			self.nodeGlyphs
+		if (this.nodeGlyphs !== undefined) {
+			this.nodeGlyphs
 				.attr("cx", function (d: Node) {
 					return d.x;
 				})
@@ -91,6 +82,26 @@ export class ForceDirectedGraph {
 			console.log("No nodes!");
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+	protected initSVG() { //manipulate a passed svg to assign groups for nodes and edges
+		this.linksG = this._chart.append("g")
+			.classed("links", true);
+
+		this.nodesG = this._chart.append("g")
+			.classed("node", true);
+	}
+
 	public draw(graph: Graph): void { //draw call for graphics, and check for simulation running
 		this.drawLinks(graph.edges);
 		this.drawNodes(graph.nodes);

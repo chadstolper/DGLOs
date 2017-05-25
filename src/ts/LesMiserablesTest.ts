@@ -18,7 +18,7 @@ json("data/miserables/miserables.json", function (response: any) {
 		.attr("width", width)
 		.attr("height", height);
 	g = new DynamicLesMiserablesGraph(response);
-	fdmg = new ForceDirectedMapGraph(g, svg);
+	fdmg = new ForceDirectedGraph(g, svg);
 	fdmg.draw(g.timesteps[0]);
 	// ahm = new AnimatedHeatmap(width, height, ["white", "purple"], svg, g);
 })
