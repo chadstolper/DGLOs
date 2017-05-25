@@ -124,7 +124,7 @@ export class ForceDirectedGraph {
 			this._simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 
-			this._simulation.alpha(.03).restart();
+			this._simulation.alpha(.3).restart();
 		}
 	}
 
