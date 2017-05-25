@@ -1,7 +1,7 @@
 import { select } from "d3-selection";
 import { DynamicGraph } from "./Graph";
 import { DynamicLesMiserablesGraph } from "./MiserablesGraph";
-import { ForceDirectedMapGraph } from "./ForceDirectedMapGraph";
+import { ForceDirectedMapGraph } from "./ForceDirectedHullGraph";
 import { ForceDirectedGraph } from "./ForceDirectedGraph";
 import { AnimatedHeatmap } from "./AnimatedHeatmap";
 import { json } from "d3-request";

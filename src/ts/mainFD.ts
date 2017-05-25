@@ -4,7 +4,7 @@ import { AnimatedForceDirectedGraph } from "./AnimatedForceDirectedGraph";
 import { json } from "d3-request";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph } from "./Graph";
-import { ForceDirectedMapGraph } from "./ForceDirectedMapGraph";
+import { ForceDirectedMapGraph } from "./ForceDirectedHullGraph";
 
 let height = 500;
 let width = 500
