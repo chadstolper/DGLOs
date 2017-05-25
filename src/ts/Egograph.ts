@@ -1,6 +1,7 @@
 import { Node, Edge, Graph, DynamicGraph } from "./Graph"
 import { ForceDirectedGraph } from "./ForceDirectedGraph"
 import { Selection } from "d3-selection";
+import { DrawableEdge } from "./DrawableEdge";
 import * as d3Scale from "d3-scale";
 import * as d3 from "d3-selection";
 import * as d3force from "d3-force";
@@ -12,10 +13,14 @@ export class Egograph extends ForceDirectedGraph {
 	private _curGraph: Graph;
 	private _curTimestep: number;
 	private _neighboringNodesMap: Map<number, Node>;
-	private _incidentEdgesMap: Map<Array<number>, Edge>;
+	private _incidentEdgesMap: Map<[number | string, number], Edge>;
 	private _neighboringNodes: Array<Node>;
 	private _centralNodeArray: Array<Node>;
 	private _incidentEdges: Array<Edge>;
+
+	set centralNode(n: Node) {
+		this._centralNode = n;
+	}
 
 	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
 		width: number, height: number) {
@@ -26,46 +31,55 @@ export class Egograph extends ForceDirectedGraph {
 		this._curGraph = super.graph.timesteps[this._curTimestep];
 		this._incidentEdges = [];
 		this._neighboringNodes = [];
-		this._incidentEdgesMap = new Map();
+		this._incidentEdgesMap = new Map<[number | string, number], Edge>();
 		this._neighboringNodesMap = new Map();
+		this.realInit();
 		this.init();
+	}
+
+	private realInit() {
+		console.log("realinit");
+		this.graph.timesteps.forEach(function (step: Graph) {
+			step.edges.forEach(function (e: DrawableEdge) {
+				e.origSource = e.source;
+				e.origTarget = e.target;
+			})
+		})
 	}
 
 
 	//this function fills the _incidentEdge array with all of the edges that touch the central node
 	//through every timestep. It must be called before calling getNeighboringNodes.
 	private processNodesAndEdges() {
+		console.log("processing");
 		this.getCentralNodes();
 		let steps = super.graph.timesteps;
 		for (let step of steps) {
-			for (let edge of step.edges) {
+			for (let edge of step.edges as DrawableEdge[]) {
 				//edge.target.id === this._centralNode.id || edge.source.id === this._centralNode.id
-				if (this._centralNodeArray.includes(edge.target) || this._centralNodeArray.includes(edge.source)) {
-					this._incidentEdgesMap.set([edge.id as number, step.timestep], edge);
-					console.log("The edge: " + edge + "  :  id " + edge.id);
-					console.log("The source: " + edge.source + " : id  " + edge.source.id);
-					console.log("The target: " + edge.target + " : id  " + edge.target.id);
-					if (this._centralNodeArray.includes(edge.target)) {
-						if (this._neighboringNodesMap.has(edge.source.id as number)) {
-							edge.source = this._neighboringNodesMap.get(edge.source.id as number)
+				if (this._centralNodeArray.includes(edge.origTarget) || this._centralNodeArray.includes(edge.origSource)) {
+
+					if (this._centralNodeArray.includes(edge.origTarget)) {
+						if (this._neighboringNodesMap.has(edge.origSource.id as number)) {
+							edge.source = this._neighboringNodesMap.get(edge.origSource.id as number)
 						} else {
-							this._neighboringNodesMap.set(edge.source.id as number, edge.source);
-							edge.source = this._neighboringNodesMap.get(edge.source.id as number);
+							this._neighboringNodesMap.set(edge.origSource.id as number, edge.origSource);
+							edge.source = this._neighboringNodesMap.get(edge.origSource.id as number);
 						}
 					}
-					if (this._centralNodeArray.includes(edge.source)) {
-						if (this._neighboringNodesMap.has(edge.target.id as number)) {
-							edge.target = this._neighboringNodesMap.get(edge.target.id as number);
+					if (this._centralNodeArray.includes(edge.origSource)) {
+						if (this._neighboringNodesMap.has(edge.origTarget.id as number)) {
+							edge.target = this._neighboringNodesMap.get(edge.origTarget.id as number);
 						} else {
-							this._neighboringNodesMap.set(edge.target.id as number, edge.target);
-							edge.target = this._neighboringNodesMap.get(edge.target.id as number);
+							this._neighboringNodesMap.set(edge.origTarget.id as number, edge.origTarget);
+							edge.target = this._neighboringNodesMap.get(edge.origTarget.id as number);
 						}
 					}
+					this._incidentEdgesMap.set([edge.id as number | string, step.timestep], edge);
 				}
 			}
 		}
 
-		console.log(" ----------------------------  \n");
 		this.edgeMapToEdgeArray();
 		this.nodeMapToNodeArray();
 		this.mergeNodeLists();
@@ -86,12 +100,12 @@ export class Egograph extends ForceDirectedGraph {
 
 
 	private clickTransition(self: Egograph) {
-		let graph = this;
+		let ego = this;
 		return function (d: Node, i: number) {
-			graph.emptyArray();
-			graph.clearMap();
-			graph._centralNode = d;
-			graph.init();
+			ego.emptyArray();
+			ego.clearMap();
+			ego._centralNode = d;
+			ego.init();
 		}
 	}
 
@@ -105,11 +119,7 @@ export class Egograph extends ForceDirectedGraph {
 		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges, this._curTimestep);
 		this.initSimulation();
 		super.draw(g);
-		this.clickListen();
-	}
-
-	private setCentralNode(node: Node) {
-		this._centralNode = node;
+		this.clickListen(); //should only need to happen once
 	}
 
 	private mergeNodeLists() {
