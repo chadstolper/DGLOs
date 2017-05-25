@@ -7,7 +7,7 @@
 
 svg circle:hover{
 	opacity: 0.8;
-	fill: goldenrod;
+	stroke: goldenrod;
 }
 
 svg line:hover{

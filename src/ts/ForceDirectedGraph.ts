@@ -45,7 +45,7 @@ export class ForceDirectedGraph {
 
 
 
-	private initSimulation() { //begin simulation of the graphics
+	protected initSimulation() { //begin simulation of the graphics
 		this._simulation = d3force.forceSimulation() //init sim for chart?
 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
 			.force("charge", d3force.forceManyBody().strength(-50)) //push applied to all things from center
@@ -105,7 +105,7 @@ export class ForceDirectedGraph {
 			this._simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 
-			this._simulation.alpha(.3).restart();
+			this._simulation.alpha(.03).restart();
 		}
 	}
 
