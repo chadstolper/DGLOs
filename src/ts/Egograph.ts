@@ -1,7 +1,9 @@
 import { Node, Edge, Graph, DynamicGraph } from "./Graph"
 import { ForceDirectedGraph } from "./ForceDirectedGraph"
 import { Selection } from "d3-selection";
+import * as d3Scale from "d3-scale";
 import * as d3 from "d3-selection";
+import * as d3force from "d3-force";
 //import { transition } from "d3-transition";
 
 export class Egograph extends ForceDirectedGraph {
@@ -71,26 +73,6 @@ export class Egograph extends ForceDirectedGraph {
 		// console.log(this._neighboringNodes);
 	}
 
-	//this function creates a mapping of every node that ever shares an edge with the central
-	//node. The function must be called after calling getIncidentEdges(), as this function
-	//relies on having a list of edges to determine which nodes touch the central node.
-	// private getNeighboringNodes() {
-	// 	let steps = super.graph.timesteps;
-	// 	for (let k of steps) {
-	// 		for (let n of k.nodes) {
-	// 			for (let m of this._incidentEdges) {
-	// 				if (n.id !== this._centralNode.id && (m.source.id === n.id || m.target.id === n.id)) {
-	// 					this._neighboringNodesMap.set(n.id as number, n);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	this.nodeMapToNodeArray();
-	// 	this.getCentralNodes();
-	// 	this.mergeNodeLists();
-	// 	console.log(this._neighboringNodes);
-	// }
-
 	private getCentralNodes() {
 		let steps = super.graph.timesteps;
 		for (let n of steps) {
@@ -121,6 +103,7 @@ export class Egograph extends ForceDirectedGraph {
 		this.processNodesAndEdges();
 		//this.getNeighboringNodes();
 		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges, this._curTimestep);
+		this.initSimulation();
 		super.draw(g);
 		this.clickListen();
 	}
@@ -129,6 +112,17 @@ export class Egograph extends ForceDirectedGraph {
 		this._centralNode = node;
 	}
 
+	private mergeNodeLists() {
+		for (let n of this._centralNodeArray) {
+			this._neighboringNodes.push(n);
+		}
+	}
+	get incidentEdges() {
+		return this._incidentEdges;
+	}
+	get neighboringNodes() {
+		return this._neighboringNodes;
+	}
 
 	private edgeMapToEdgeArray() {
 		for (let key of this._incidentEdgesMap.keys()) {
@@ -173,15 +167,29 @@ export class Egograph extends ForceDirectedGraph {
 		});
 	}
 
-	private mergeNodeLists() {
-		for (let n of this._centralNodeArray) {
-			this._neighboringNodes.push(n);
-		}
+	protected initSimulation() {
+		let yScale = d3Scale.scaleLinear()
+			.domain([0, super.graph.timesteps.length])
+			.range([0 + (super._height * .25), super._height - (super.height * 0.25)]);
+		let centralNodes = this._centralNodeArray;
+		let ego = this;
+		super.initSimulation();
+		this.simulation
+			.force("alignCentralNodesY", d3force.forceY(function (d: Node) {
+				if (centralNodes.includes(d)) {
+					return 1;
+				}
+				return 0.5;
+			}).strength(function (d: Node) {
+				if (centralNodes.includes(d)) {
+					return 0.5
+				}
+				return 0;
+			})
+			)
 	}
-	get incidentEdges() {
-		return this._incidentEdges;
-	}
-	get neighboringNodes() {
-		return this._neighboringNodes;
-	}
+
 }
+
+
+
