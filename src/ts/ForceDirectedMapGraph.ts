@@ -9,7 +9,7 @@ const color = scaleOrdinal<string | number, string>(schemeCategory20);
 
 export class ForceDirectedMapGraph extends ForceDirectedGraph {
 	//note to self, stop deleting so much stuff
-	private pointList: [][];
+	private pointList: number[][];
 
 	constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		super(graph, chart);
@@ -19,7 +19,7 @@ export class ForceDirectedMapGraph extends ForceDirectedGraph {
 		this.pointList = graph.timesteps[0].nodes.map(function (d: Node) { return [d.x, d.y]; })
 		let hull = chart.append("path")
 			.classed("hull", true)
-			.datum(d3.polygonHull(this.pointList))
+			.datum(d3.polygonHull(this.pointList as [number, number][]))
 			.attr("d", function (d: any): any {
 				return "M" + d.join("L") + "Z";
 			})
