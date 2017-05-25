@@ -3,14 +3,17 @@
         "module": "es2015",
         "target": "es2016",
         "sourceMap": true,
-		//"sourceMapRelative": true,
+        //"sourceMapRelative": true,
         "declaration": true,
         "removeComments": false,
         "noImplicitAny": true,
         "rootDir": ".",
         "version": true,
-        "outDir": "out"
-					
+        "outDir": "out",
+        "lib": [
+            "es7",
+            "dom"
+        ]
     },
     "include": [
         "src/ts/*"
