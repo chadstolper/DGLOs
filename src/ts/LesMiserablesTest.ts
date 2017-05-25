@@ -1,8 +1,9 @@
 import { select } from "d3-selection";
 import { DynamicGraph } from "./Graph";
 import { DynamicLesMiserablesGraph } from "./MiserablesGraph";
-import { ForceDirectedMapGraph } from "./ForceDirectedMapGraph";
+import { ForceDirectedMapGraph } from "./ForceDirectedHullGraph";
 import { ForceDirectedGraph } from "./ForceDirectedGraph";
+import { VoronoiDiagram } from "./VoronoiDiagram";
 import { AnimatedHeatmap } from "./AnimatedHeatmap";
 import { json } from "d3-request";
 
@@ -18,7 +19,7 @@ json("data/miserables/miserables.json", function (response: any) {
 		.attr("width", width)
 		.attr("height", height);
 	g = new DynamicLesMiserablesGraph(response);
-	fdmg = new ForceDirectedGraph(g, svg);
+	fdmg = new VoronoiDiagram(g, svg);
 	fdmg.draw(g.timesteps[0]);
 	// ahm = new AnimatedHeatmap(width, height, ["white", "purple"], svg, g);
 })
