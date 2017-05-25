@@ -8,7 +8,7 @@ import { HeatmapTimeline } from "./HeatmapTimeline"
 import { Egograph } from "./Egograph"
 import { transition } from "d3-transition"
 
-d3json("data/dummy/dummy.json", function (response: any) {
+d3json("data/dummy/dummy2.json", function (response: any) {
 
 	let dGraph: DynamicDrinkGraph = new DynamicDrinkGraph(response);
 	let curGraph = dGraph.timesteps[0];
