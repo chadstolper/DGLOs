@@ -18,6 +18,7 @@ export class ForceDirectedGraph {
 	private linksG: Selection<any, {}, any, {}>;
 	private nodesG: Selection<any, {}, any, {}>; //groups for all
 	private _alpha = .3;
+	private _radiusCircle = 10;
 
 	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		this._chart = chart;
@@ -152,7 +153,7 @@ export class ForceDirectedGraph {
 			.attr("id", function (d: any): string | number { return d.name; });
 		this._nodeGlyphs = this.nodeGlyphs.merge(nodeEnter);
 		this.nodeGlyphs
-			.attr("r", 10)
+			.attr("r", this._radiusCircle)
 			.attr("fill", (d: Node) => {
 				return this.color(d.id);
 			});
