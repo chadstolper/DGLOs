@@ -17,6 +17,7 @@ export class ForceDirectedGraph {
 	private _nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
 	private linksG: Selection<any, {}, any, {}>;
 	private nodesG: Selection<any, {}, any, {}>; //groups for all
+	private _alpha = .3;
 
 	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		this._chart = chart;
@@ -124,7 +125,7 @@ export class ForceDirectedGraph {
 			this._simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 
-			this._simulation.alpha(.3).restart();
+			this._simulation.alpha(this._alpha).restart();
 		}
 	}
 
