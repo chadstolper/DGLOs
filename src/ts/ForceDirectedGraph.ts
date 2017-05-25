@@ -7,8 +7,8 @@ import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { transition } from "d3-transition";
 
 export class ForceDirectedGraph {
-	private width = 500;
-	private height = 500;
+	protected _width = 500;
+	protected _height = 500;
 	private _graph: DynamicGraph;
 	private _simulation: Simulation<{}, undefined>;
 	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
@@ -42,6 +42,12 @@ export class ForceDirectedGraph {
 	protected get linkGlyphs() {
 		return this._linkGlyphs;
 	}
+	protected get width() {
+		return this._width;
+	}
+	protected get height() {
+		return this._height;
+	}
 
 
 
@@ -50,7 +56,7 @@ export class ForceDirectedGraph {
 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
 			.force("charge", d3force.forceManyBody().strength(-50)) //push applied to all things from center
 			//.force("charge", d3force.forceManyBody()) //push applied to all things from center
-			.force("center", d3force.forceCenter(this.width / 2, this.height / 2)) //define center
+			.force("center", d3force.forceCenter(this._width / 2, this._height / 2)) //define center
 			.on("tick", this.ticked(this));
 
 		(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
