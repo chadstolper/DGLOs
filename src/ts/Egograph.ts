@@ -33,28 +33,42 @@ export class Egograph extends ForceDirectedGraph {
 	//this function fills the _incidentEdge array with all of the edges that touch the central node
 	//through every timestep. It must be called before calling getNeighboringNodes.
 	private processNodesAndEdges() {
+		this.getCentralNodes();
 		let steps = super.graph.timesteps;
 		for (let step of steps) {
 			for (let edge of step.edges) {
-				if (edge.target.id === this._centralNode.id || edge.source.id === this._centralNode.id) {
+				//edge.target.id === this._centralNode.id || edge.source.id === this._centralNode.id
+				if (this._centralNodeArray.includes(edge.target) || this._centralNodeArray.includes(edge.source)) {
 					this._incidentEdgesMap.set([edge.id as number, step.timestep], edge);
-					if (edge.target === this._centralNode) {
-						this._neighboringNodesMap.set(edge.source.id as number, edge.source);
-						edge.source = this._neighboringNodesMap.get(edge.source.id as number);
+					console.log("The edge: " + edge + "  :  id " + edge.id);
+					console.log("The source: " + edge.source + " : id  " + edge.source.id);
+					console.log("The target: " + edge.target + " : id  " + edge.target.id);
+					if (this._centralNodeArray.includes(edge.target)) {
+						if (this._neighboringNodesMap.has(edge.source.id as number)) {
+							edge.source = this._neighboringNodesMap.get(edge.source.id as number)
+						} else {
+							this._neighboringNodesMap.set(edge.source.id as number, edge.source);
+							edge.source = this._neighboringNodesMap.get(edge.source.id as number);
+						}
 					}
-					if (edge.source === this._centralNode) {
-						this._neighboringNodesMap.set(edge.target.id as number, edge.target);
-						edge.target = this._neighboringNodesMap.get(edge.target.id as number);
+					if (this._centralNodeArray.includes(edge.source)) {
+						if (this._neighboringNodesMap.has(edge.target.id as number)) {
+							edge.target = this._neighboringNodesMap.get(edge.target.id as number);
+						} else {
+							this._neighboringNodesMap.set(edge.target.id as number, edge.target);
+							edge.target = this._neighboringNodesMap.get(edge.target.id as number);
+						}
 					}
 				}
 			}
 		}
-		//this._centralNodeArray.push(this._centralNode);
+
+		console.log(" ----------------------------  \n");
 		this.edgeMapToEdgeArray();
 		this.nodeMapToNodeArray();
-		this.getCentralNodes();
 		this.mergeNodeLists();
-		console.log(this._incidentEdges);
+		// console.log(this._incidentEdges);
+		// console.log(this._neighboringNodes);
 	}
 
 	//this function creates a mapping of every node that ever shares an edge with the central
