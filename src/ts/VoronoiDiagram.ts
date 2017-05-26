@@ -27,18 +27,24 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 			.selectAll("path");
 	}
 
+	protected fillInternal() {
+		return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].id);
+	}
+
 	protected tickInternal() {
 		super.tickInternal();
 
+		console.log(this._voronoi.polygons(
+			this.graph.timesteps[0].nodes
+		))
 		this._polygons = this._polygons
-			.data(this._voronoi.polygons(
-				this.graph.timesteps[0].nodes
-			))
-		// this._polygons.exit().remove();
-		this._polygons.enter().append("path")
-			// this._polygons.merge(newPoly)
+			.data(this._voronoi.polygons(this.graph.timesteps[0].nodes))
+
+		this._polygons.exit().remove();
+		let newPoly = this._polygons.enter().append("path")
+		this._polygons = this._polygons.merge(newPoly)
 			.style("stroke", "black")
-			.style("fill", "none")
+			.style("fill", this.fillInternal())
 			.style("stroke-width", "0.5px")
 			.attr("d", function (d: any) {
 				return d ? "M" + d.join("L") + "Z" : null;
