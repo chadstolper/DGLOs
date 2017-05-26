@@ -14,6 +14,7 @@ export class Egograph extends ForceDirectedGraph {
 	private _nbrEdges: Array<Edge>;
 	private _centralNodeArray: Array<Node>;
 	private _centerNode: Node;
+	private _graphToDraw: Graph;
 
 	constructor(centralNode: Node, dGraph: DynamicGraph, location: Selection<any, {}, any, {}>) {
 		super(dGraph, location);
@@ -22,8 +23,16 @@ export class Egograph extends ForceDirectedGraph {
 		this._nbrNodes = [];
 		this._centralNodeArray = [];
 		this._nbrNodesMap = new Map();
+		this._graphToDraw = new Graph([], [], 0);
 		this.init();
 		this.paint();
+	}
+
+	protected get centerNode() {
+		return this._centerNode;
+	}
+	protected set centerNode(node: Node) {
+		this._centerNode = node;
 	}
 
 	private init() {
@@ -37,8 +46,9 @@ export class Egograph extends ForceDirectedGraph {
 
 	private paint() {
 		this.readyNodesAndEdges();
-		let g: Graph = new Graph(this._nbrNodes, this._nbrEdges, 0);
-		super.draw(g);
+		this._graphToDraw = new Graph(this._nbrNodes, this._nbrEdges as Array<DrawableEdge>, 0);
+		super.draw(this._graphToDraw);
+		this.clickListen();
 	}
 
 	private readyNodesAndEdges() {
@@ -86,21 +96,17 @@ export class Egograph extends ForceDirectedGraph {
 		}
 
 		for (let edge of this._nbrEdges as Array<DrawableEdge>) {
-			if (this._nbrNodesMap.has(edge.source.id as number)) {
-				edge.source = this._nbrNodesMap.get(edge.source.id as number);
+			if (this._nbrNodesMap.has(edge.origSource.id as number)) {
+				edge.source = this._nbrNodesMap.get(edge.origSource.id as number);
 			}
-			if (this._nbrNodesMap.has(edge.target.id as number)) {
-				edge.target = this._nbrNodesMap.get(edge.target.id as number);
+			if (this._nbrNodesMap.has(edge.origTarget.id as number)) {
+				edge.target = this._nbrNodesMap.get(edge.origTarget.id as number);
 			}
-
 		}
-
 		//convert the map to an array
 		for (let key of this._nbrNodesMap.keys()) {
-			console.log(this._nbrNodesMap.get(key));
 			this._nbrNodes.push(this._nbrNodesMap.get(key));
 		}
-
 	}
 	private mergeNodeLists() {
 		for (let node of this._centralNodeArray) {
@@ -108,6 +114,25 @@ export class Egograph extends ForceDirectedGraph {
 		}
 	}
 
+	private clickTransition(self: Egograph) {
+		let ego = this;
+		return function (d: Node, i: number) {
+			ego.emptyArrays();
+			ego._centerNode = d;
+			ego.paint();
+		}
+	}
+
+	protected clickListen() {
+		this.nodeGlyphs.on("click", this.clickTransition(this));
+	}
+
+	private emptyArrays() {
+		this._nbrNodesMap.clear();
+		this._centralNodeArray = [];
+		this._nbrEdges = [];
+		this._nbrNodes = [];
+	}
 }
 
 
