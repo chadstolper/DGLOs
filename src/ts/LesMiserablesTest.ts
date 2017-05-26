@@ -21,6 +21,7 @@ json("data/miserables/miserables.json", function (response: any) {
 	g = new DynamicLesMiserablesGraph(response);
 	fdmg = new VoronoiDiagram(g, svg);
 	fdmg.alpha = .5;
+	fdmg.radius = 1;
 	fdmg.draw(g.timesteps[0]);
 	// ahm = new AnimatedHeatmap(width, height, ["white", "purple"], svg, g);
 })
