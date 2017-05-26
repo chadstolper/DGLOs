@@ -55,6 +55,9 @@ export class ForceDirectedGraph {
 	public set alpha(alpha: number) {
 		this._alpha = alpha;
 	}
+	public set radius(newRad: number) {
+		this._radiusCircle = newRad;
+	}
 
 
 	protected initSimulation() { //begin simulation of the graphics

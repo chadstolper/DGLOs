@@ -3,10 +3,10 @@ import { polygonHull } from "d3-polygon"
 import { ForceDirectedGraph } from "./ForceDirectedGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { Selection } from "d3-selection";
-import { scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { scaleOrdinal, schemeCategory20b } from "d3-scale";
 import { VoronoiLayout } from "d3-voronoi";
 
-const color = scaleOrdinal<string | number, string>(schemeCategory20);
+const color = scaleOrdinal<string | number, string>(schemeCategory20b);
 
 //cousin to chef boyardee
 export class VoronoiDiagram extends ForceDirectedGraph {
@@ -22,17 +22,24 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 
 	protected initSVG() {
 		super.initSVG();
-		this._polygons = this.chart.append("g")
+		this._polygons = this.chart.insert("g", ":first-child")
 			.classed("voronoi", true)
 			.selectAll("path");
 	}
 
 	protected fillInternal() {
-		return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].id);
+		return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].type);
 	}
 
 	protected tickInternal() {
 		super.tickInternal();
+
+		this.nodeGlyphs.attr("stroke", "black")
+			.attr("stroke-width", "0.5px")
+			.attr("fill", this.fillInternal())
+
+		this.linkGlyphs.attr("stroke", "grey")
+			.attr("stroke-width", "0.25px")
 
 		this._polygons = this._polygons
 			.data(this._voronoi.polygons(this.graph.timesteps[0].nodes))
@@ -40,7 +47,7 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		this._polygons.exit().remove();
 		let newPoly = this._polygons.enter().append("path")
 		this._polygons = this._polygons.merge(newPoly)
-			//.style("stroke", "black")
+			.style("stroke", this.fillInternal())
 			.style("fill", this.fillInternal())
 			//.style("stroke-width", "0.5px")
 			.attr("d", function (d: any) {

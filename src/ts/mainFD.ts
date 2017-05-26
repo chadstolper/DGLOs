@@ -19,6 +19,7 @@ json("./data/dummy/dummy.json", function (response) {
 	// let FDGraph: ForceDirectedMapGraph = new ForceDirectedMapGraph(dGraph, svg);//, width, height);
 	// let FDGraph: ForceDirectedGraph = new ForceDirectedGraph(dGraph, svg, width, height);
 	let FDGraph: VoronoiDiagram = new VoronoiDiagram(dGraph, svg);
+	FDGraph.radius = 1;
 	FDGraph.draw(dGraph.timesteps[0]);
 
 });
