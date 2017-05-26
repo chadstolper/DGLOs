@@ -9,195 +9,83 @@ import * as d3force from "d3-force";
 
 export class Egograph extends ForceDirectedGraph {
 
-	private _centralNode: Node;
-	private _curGraph: Graph;
-	private _curTimestep: number;
-	private _neighboringNodesMap: Map<number, Node>;
-	private _incidentEdgesMap: Map<[number | string, number], Edge>;
-	private _neighboringNodes: Array<Node>;
+	private _nbrNodes: Array<Node>;
+	private _nbrNodesMap: Map<number, Node>
+	private _nbrEdges: Array<Edge>;
 	private _centralNodeArray: Array<Node>;
-	private _incidentEdges: Array<Edge>;
+	private _centerNode: Node;
 
-	set centralNode(n: Node) {
-		this._centralNode = n;
-	}
-
-	constructor(centralNode: Node, dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>,
-		width: number, height: number) {
-		super(dynamicGraph, location);
-		this._centralNode = centralNode;
-		this._curTimestep = 0;
+	constructor(centralNode: Node, dGraph: DynamicGraph, location: Selection<any, {}, any, {}>) {
+		super(dGraph, location);
+		this._centerNode = centralNode;
+		this._nbrEdges = [];
+		this._nbrEdges = [];
 		this._centralNodeArray = [];
-		this._curGraph = super.graph.timesteps[this._curTimestep];
-		this._incidentEdges = [];
-		this._neighboringNodes = [];
-		this._incidentEdgesMap = new Map<[number | string, number], Edge>();
-		this._neighboringNodesMap = new Map();
-		this.realInit();
-		this.init();
+		this._nbrNodesMap = new Map();
+		this.paint();
 	}
 
-	private realInit() {
-		console.log("realinit");
-		this.graph.timesteps.forEach(function (step: Graph) {
-			step.edges.forEach(function (e: DrawableEdge) {
-				e.origSource = e.source;
-				e.origTarget = e.target;
-			})
-		})
+	private paint() {
+		this.readyNodesAndEdges();
+		// let g: Graph = new Graph(this._nbrNodes, this._nbrEdges, 0);
+		// super.draw(g);
 	}
 
-
-	//this function fills the _incidentEdge array with all of the edges that touch the central node
-	//through every timestep. It must be called before calling getNeighboringNodes.
-	private processNodesAndEdges() {
-		console.log("processing");
+	private readyNodesAndEdges() {
 		this.getCentralNodes();
-		let steps = super.graph.timesteps;
-		for (let step of steps) {
-			for (let edge of step.edges as DrawableEdge[]) {
-				//edge.target.id === this._centralNode.id || edge.source.id === this._centralNode.id
-				if (this._centralNodeArray.includes(edge.origTarget) || this._centralNodeArray.includes(edge.origSource)) {
-
-					if (this._centralNodeArray.includes(edge.origTarget)) {
-						if (this._neighboringNodesMap.has(edge.origSource.id as number)) {
-							edge.source = this._neighboringNodesMap.get(edge.origSource.id as number)
-						} else {
-							this._neighboringNodesMap.set(edge.origSource.id as number, edge.origSource);
-							edge.source = this._neighboringNodesMap.get(edge.origSource.id as number);
-						}
-					}
-					if (this._centralNodeArray.includes(edge.origSource)) {
-						if (this._neighboringNodesMap.has(edge.origTarget.id as number)) {
-							edge.target = this._neighboringNodesMap.get(edge.origTarget.id as number);
-						} else {
-							this._neighboringNodesMap.set(edge.origTarget.id as number, edge.origTarget);
-							edge.target = this._neighboringNodesMap.get(edge.origTarget.id as number);
-						}
-					}
-					this._incidentEdgesMap.set([edge.id as number | string, step.timestep], edge);
-				}
-			}
-		}
-
-		this.edgeMapToEdgeArray();
-		this.nodeMapToNodeArray();
-		this.mergeNodeLists();
-		// console.log(this._incidentEdges);
-		// console.log(this._neighboringNodes);
+		this.getEdges();
+		this.getNodes();
+		console.log(this._nbrNodes);
+		// this.mergeNodeLists();
 	}
+
 
 	private getCentralNodes() {
-		let steps = super.graph.timesteps;
-		for (let n of steps) {
-			for (let m of n.nodes) {
-				if ((m.id as number) === this._centralNode.id) {
-					this._centralNodeArray.push(m);
+		let dGraph = super.graph;
+		for (let step of dGraph.timesteps) {
+			for (let node of step.nodes) {
+				if (node.id === this._centerNode.id) {
+					this._centralNodeArray.push(node);
 				}
 			}
 		}
 	}
 
+	private getEdges() {
+		let dGraph = super.graph;
+		for (let step of dGraph.timesteps) {
+			for (let edge of step.edges) {
+				if (this._centralNodeArray.includes(edge.source)
+					|| this._centralNodeArray.includes(edge.target)) {
+					this._nbrEdges.push(edge);
+				}
 
-	private clickTransition(self: Egograph) {
-		let ego = this;
-		return function (d: Node, i: number) {
-			ego.emptyArray();
-			ego.clearMap();
-			ego._centralNode = d;
-			ego.init();
+			}
 		}
 	}
 
-	protected clickListen() {
-		this.nodeGlyphs.on("click", this.clickTransition(this));
-	}
+	private getNodes() {
+		let dGraph = super.graph;
+		for (let step of dGraph.timesteps) {
+			for (let edge of this._nbrEdges) {
+				this._nbrNodesMap.set(edge.source.id as number, edge.source);
+				this._nbrNodesMap.set(edge.target.id as number, edge.target);
+			}
+		}
 
-	public init() {
-		this.processNodesAndEdges();
-		//this.getNeighboringNodes();
-		let g: Graph = new Graph(this._neighboringNodes, this._incidentEdges, this._curTimestep);
-		this.initSimulation();
-		super.draw(g);
-		this.clickListen(); //should only need to happen once
-	}
+		//convert the map to an array
+		for (let key of this._nbrNodesMap.keys()) {
+			console.log(this._nbrNodesMap.get(key));
+			this._nbrNodes.push(this._nbrNodesMap.get(key));
+		}
 
+	}
 	private mergeNodeLists() {
-		for (let n of this._centralNodeArray) {
-			this._neighboringNodes.push(n);
-		}
-	}
-	get incidentEdges() {
-		return this._incidentEdges;
-	}
-	get neighboringNodes() {
-		return this._neighboringNodes;
-	}
-
-	private edgeMapToEdgeArray() {
-		for (let key of this._incidentEdgesMap.keys()) {
-			this._incidentEdges.push(this._incidentEdgesMap.get(key));
-		}
-	}
-	private nodeMapToNodeArray() {
-		for (let key of this._neighboringNodesMap.keys()) {
-			this._neighboringNodes.push(this._neighboringNodesMap.get(key));
+		for (let node of this._centralNodeArray) {
+			this._nbrNodes.push(node);
 		}
 	}
 
-
-	//Clears both the neihboringNodesMap and the incidentEdgesMap
-	private clearMap() {
-		this._neighboringNodesMap.clear();
-		this._incidentEdgesMap.clear();
-	}
-	//Clears the incidentEdges, neighboringNodes, and centralNode arrays
-	private emptyArray() {
-		this._centralNodeArray = [];
-		this._incidentEdges = [];
-		this._neighboringNodes = [];
-	}
-
-	// 					WORKS
-
-	protected drawLinks(edges: Edge[]) { //does what it says on the tin
-		super.drawLinks(edges);
-		this.linkGlyphs.attr("source", function (d: Edge) {
-			return d.source.id;
-		})
-		this.linkGlyphs.attr("target", function (d: Edge) {
-			return d.target.id;
-		})
-	}
-
-	protected drawNodes(nodes: Node[]) { //does what it says on the tin
-		super.drawNodes(nodes);
-		this.nodeGlyphs.attr("id", function (d: Node) {
-			return d.id;
-		});
-	}
-
-	protected initSimulation() {
-		let yScale = d3Scale.scaleLinear()
-			.domain([0, super.graph.timesteps.length])
-			.range([0 + (super._height * .25), super._height - (super.height * 0.25)]);
-		let centralNodes = this._centralNodeArray;
-		let ego = this;
-		super.initSimulation();
-		this.simulation
-			.force("alignCentralNodesY", d3force.forceY(function (d: Node) {
-				if (centralNodes.includes(d)) {
-					return 1;
-				}
-				return 0.5;
-			}).strength(function (d: Node) {
-				if (centralNodes.includes(d)) {
-					return 0.5
-				}
-				return 0;
-			})
-			)
-	}
 
 }
 

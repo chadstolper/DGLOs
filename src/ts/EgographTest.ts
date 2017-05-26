@@ -15,11 +15,11 @@ d3json("data/dummy/dummy2.json", function (response: any) {
 	let curTimeStep = 0;
 	let width = 750;
 	let height = 750;
-	let centralNode = curGraph.nodes[2];
+	let centralNode = curGraph.nodes[4];
 	let svg = d3.selectAll("body").append("svg")
 		.attr("width", width)
 		.attr("height", height);
 
-	let ego: Egograph = new Egograph(centralNode, dGraph, svg, width, height);
+	let ego: Egograph = new Egograph(centralNode, dGraph, svg);
 
 });

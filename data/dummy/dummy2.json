@@ -6,83 +6,83 @@
 				"consumption": "4",
 				"preference": "0.5",
 				"source": 5,
-				"source_name": "Ghengis Khan",
+				"source_name": "person-a",
 				"target": 0,
-				"target_name": "Tea"
+				"target_name": "Lemons"
 			},
 			{
 				"consumption": "3",
 				"preference": "0.5",
 				"source": 5,
-				"source_name": "Ghengis Khan",
+				"source_name": "person-a",
 				"target": 1,
-				"target_name": "Coffee"
+				"target_name": "Apples"
 			},
 			{
 				"consumption": "2",
 				"preference": "0.5",
 				"source": 5,
-				"source_name": "Ghengis Khan",
+				"source_name": "person-a",
 				"target": 2,
-				"target_name": "Vodka"
+				"target_name": "Grapes"
 			},
 			{
 				"consumption": "5",
 				"preference": "0.5",
 				"source": 6,
-				"source_name": "Oda Nobunaga",
+				"source_name": "person-b",
 				"target": 0,
-				"target_name": "Tea"
+				"target_name": "Lemons"
 			},
 			{
 				"consumption": "4",
 				"preference": "0.5",
 				"source": 6,
-				"source_name": "Oda Nobunaga",
+				"source_name": "person-b",
 				"target": 1,
-				"target_name": "Coffee"
+				"target_name": "Apples"
 			},
 			{
 				"consumption": "6",
 				"preference": "0.5",
 				"source": 6,
-				"source_name": "Oda Nobunaga",
+				"source_name": "person-b",
 				"target": 2,
-				"target_name": "Vodka"
+				"target_name": "Grapes"
 			}
 		],
 		"nodes": [
 			{
 				"id": 0,
-				"name": "Tea",
+				"name": "Lemons",
 				"price": "2.00",
 				"role": null,
 				"type": "drink"
 			},
 			{
 				"id": 1,
-				"name": "Coffee",
+				"name": "Apples",
 				"price": "3.50",
 				"role": null,
 				"type": "drink"
 			},
 			{
 				"id": 2,
-				"name": "Vodka",
+				"name": "Grapes",
 				"price": "4.00",
 				"role": null,
 				"type": "drink"
 			},
 			{
 				"id": 5,
-				"name": "Ghengis Khan",
+				"name": "person-a",
 				"price": null,
 				"role": "Great Khan",
 				"type": "person"
 			},
 			{
 				"id": 6,
-				"name": "Oda Nobunaga",
+				"name": "person-b",
 				"price": null,
 				"role": "Betrayed",
 				"type": "person"
@@ -96,85 +96,85 @@
 				"consumption": "4",
 				"preference": ".8",
 				"source": 5,
-				"source_name": "Ghengis Khan",
+				"source_name": "PERSON-A!",
 				"target": 0,
-				"target_name": "Tea"
+				"target_name": "Lemonade"
 			},
 			{
 				"consumption": "3",
 				"preference": "0.8",
 				"source": 5,
-				"source_name": "Ghengis Khan",
+				"source_name": "PERSON-A!",
 				"target": 1,
-				"target_name": "Coffee"
+				"target_name": "Apple juice"
 			},
 			{
 				"consumption": "2",
 				"preference": "0.8",
 				"source": 5,
-				"source_name": "Ghengis Khan",
+				"source_name": "PERSON-A!",
 				"target": 2,
-				"target_name": "Vodka"
+				"target_name": "Wine"
 			},
 			{
 				"consumption": "5",
 				"preference": "0.8",
 				"source": 6,
-				"source_name": "Oda Nobunaga",
+				"source_name": "PERSON-B!",
 				"target": 0,
-				"target_name": "Tea"
+				"target_name": "Lemonade"
 			},
 			{
 				"consumption": "4",
 				"preference": "0.8",
 				"source": 6,
-				"source_name": "Oda Nobunaga",
+				"source_name": "PERSON-B!",
 				"target": 1,
-				"target_name": "Coffee"
+				"target_name": "Apple juice"
 			},
 			{
 				"consumption": "6",
 				"preference": "0.8",
 				"source": 6,
-				"source_name": "Oda Nobunaga",
+				"source_name": "PERSON-B!",
 				"target": 2,
-				"target_name": "Vodka"
+				"target_name": "Wine"
 			}
 		],
 		"nodes": [
 			{
 				"id": 0,
-				"name": "Tea",
+				"name": "Lemonade",
 				"price": "2.00",
 				"role": null,
 				"type": "drink"
 			},
 			{
 				"id": 1,
-				"name": "Coffee",
+				"name": "Apple juice",
 				"price": "3.50",
 				"role": null,
 				"type": "drink"
 			},
 			{
 				"id": 2,
-				"name": "Vodka",
+				"name": "Wine",
 				"price": "4.00",
 				"role": null,
 				"type": "drink"
 			},
 			{
 				"id": 5,
-				"name": "Ghengis Khan",
+				"name": "PERSON-A!",
 				"price": null,
-				"role": "Great Khan",
+				"role": "Shorter than expected",
 				"type": "person"
 			},
 			{
 				"id": 6,
-				"name": "Oda Nobunaga",
+				"name": "PERSON-B!",
 				"price": null,
-				"role": "Betrayed",
+				"role": "Smells fishy",
 				"type": "person"
 			}
 		]
