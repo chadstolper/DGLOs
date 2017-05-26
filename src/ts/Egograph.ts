@@ -22,7 +22,17 @@ export class Egograph extends ForceDirectedGraph {
 		this._nbrNodes = [];
 		this._centralNodeArray = [];
 		this._nbrNodesMap = new Map();
+		this.init();
 		this.paint();
+	}
+
+	private init() {
+		this.graph.timesteps.forEach(function (step: Graph) {
+			step.edges.forEach(function (e: DrawableEdge) {
+				e.origSource = e.source;
+				e.origTarget = e.target;
+			})
+		})
 	}
 
 	private paint() {
@@ -66,9 +76,23 @@ export class Egograph extends ForceDirectedGraph {
 		let dGraph = super.graph;
 		for (let step of dGraph.timesteps) {
 			for (let edge of this._nbrEdges) {
-				this._nbrNodesMap.set(edge.source.id as number, edge.source);
-				this._nbrNodesMap.set(edge.target.id as number, edge.target);
+				if (this._centralNodeArray.includes(edge.target)) {
+					this._nbrNodesMap.set(edge.source.id as number, edge.source);
+				}
+				if (this._centralNodeArray.includes(edge.source)) {
+					this._nbrNodesMap.set(edge.target.id as number, edge.target);
+				}
 			}
+		}
+
+		for (let edge of this._nbrEdges as Array<DrawableEdge>) {
+			if (this._nbrNodesMap.has(edge.source.id as number)) {
+				edge.source = this._nbrNodesMap.get(edge.source.id as number);
+			}
+			if (this._nbrNodesMap.has(edge.target.id as number)) {
+				edge.target = this._nbrNodesMap.get(edge.target.id as number);
+			}
+
 		}
 
 		//convert the map to an array
