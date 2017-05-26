@@ -27,8 +27,8 @@ export class Egograph extends ForceDirectedGraph {
 
 	private paint() {
 		this.readyNodesAndEdges();
-		// let g: Graph = new Graph(this._nbrNodes, this._nbrEdges, 0);
-		// super.draw(g);
+		let g: Graph = new Graph(this._nbrNodes, this._nbrEdges, 0);
+		super.draw(g);
 	}
 
 	private readyNodesAndEdges() {
@@ -36,7 +36,6 @@ export class Egograph extends ForceDirectedGraph {
 		this.getEdges();
 		this.getNodes();
 		this.mergeNodeLists();
-		console.log(this._nbrNodes);
 	}
 
 
@@ -59,7 +58,6 @@ export class Egograph extends ForceDirectedGraph {
 					|| this._centralNodeArray.includes(edge.target)) {
 					this._nbrEdges.push(edge);
 				}
-
 			}
 		}
 	}
@@ -85,7 +83,6 @@ export class Egograph extends ForceDirectedGraph {
 			this._nbrNodes.push(node);
 		}
 	}
-
 
 }
 
