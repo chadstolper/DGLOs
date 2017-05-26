@@ -19,7 +19,7 @@ export class Egograph extends ForceDirectedGraph {
 		super(dGraph, location);
 		this._centerNode = centralNode;
 		this._nbrEdges = [];
-		this._nbrEdges = [];
+		this._nbrNodes = [];
 		this._centralNodeArray = [];
 		this._nbrNodesMap = new Map();
 		this.paint();
@@ -35,8 +35,8 @@ export class Egograph extends ForceDirectedGraph {
 		this.getCentralNodes();
 		this.getEdges();
 		this.getNodes();
+		this.mergeNodeLists();
 		console.log(this._nbrNodes);
-		// this.mergeNodeLists();
 	}
 
 
