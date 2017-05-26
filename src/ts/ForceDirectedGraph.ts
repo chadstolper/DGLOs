@@ -52,7 +52,6 @@ export class ForceDirectedGraph {
 	}
 
 
-
 	protected initSimulation() { //begin simulation of the graphics
 		this._simulation = d3force.forceSimulation() //init sim for chart?
 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths

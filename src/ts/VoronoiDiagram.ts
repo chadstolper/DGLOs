@@ -4,12 +4,15 @@ import { ForceDirectedGraph } from "./ForceDirectedGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { Selection } from "d3-selection";
 import { scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { VoronoiLayout } from "d3-voronoi";
 
 const color = scaleOrdinal<string | number, string>(schemeCategory20);
 
 //cousin to chef boyardee
 export class VoronoiDiagram extends ForceDirectedGraph {
-	private _voronoi = d3.voronoi().extent([[-1, -1], [this.width + 1, this.height + 1]]); //set dimensions of voronoi
+	private _voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1, -1], [this.width + 1, this.height + 1]]) //set dimensions of voronoi
+		.x(function (d: Node) { return d.x; })
+		.y(function (d: Node) { return d.y; });
 	private _polygons: Selection<any, {}, any, {}>;
 
 	constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
@@ -20,23 +23,39 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 	protected initSVG() {
 		super.initSVG();
 		this._polygons = this.chart.append("g")
-			.classed("path", true);
+			.classed("voronoi", true)
+			.selectAll("path");
 	}
 
 	protected tickInternal() {
 		super.tickInternal();
 
-		this._polygons = this._polygons.selectAll("path")
+		this._polygons = this._polygons
 			.data(this._voronoi.polygons(
-				this.graph.timesteps[0].nodes.map(function (d: Node) { return [d.x, d.y]; }) as [number, number][]
+				this.graph.timesteps[0].nodes
 			))
-			.enter().append("path")
-			.attr("d", function (d) {
-				return d ? "M" + d.join("L") + "Z" : null; //copied, i half-understand it...
-			})
+		// this._polygons.exit().remove();
+		this._polygons.enter().append("path")
+			// this._polygons.merge(newPoly)
 			.style("stroke", "black")
 			.style("fill", "none")
-			.style("stroke-width", "1px");
+			.style("stroke-width", "0.5px")
+			.attr("d", function (d: any) {
+				return d ? "M" + d.join("L") + "Z" : null;
+			});;
+
+
+		//////////PLAN B//////////
+		// this._polygons.remove();
+		// this._polygons = this._polygons
+		// 	.data(this._voronoi.polygons(this.graph.timesteps[0].nodes));
+		// this._polygons.enter().append("path")
+		// 	.style("stroke", "black")
+		// 	.style("fill", "none")
+		// 	.style("stroke-width", "0.5px")
+		// 	.attr("d", function (d: any) {
+		// 		return d ? "M" + d.join("L") + "Z" : null;
+		// 	});;
 
 	}
 }
