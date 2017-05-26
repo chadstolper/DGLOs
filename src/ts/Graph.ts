@@ -28,6 +28,9 @@ export class Node implements SimulationNodeDatum {
 	get id(): number | string {
 		return this._id;
 	}
+	set id(id: string | number) {
+		this._id = id;
+	}
 	set fx(num: number) {
 		this._fx = num;
 	}

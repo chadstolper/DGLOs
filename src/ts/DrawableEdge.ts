@@ -1,23 +1,52 @@
 
 import { Node, Edge } from "./Graph";
 
-export class DrawableEdge extends Edge {
-	protected _origSource: Node;
-	protected _origTarget: Node;
+export class DrawableNode extends Node {
+	protected _origID: string | number;
 
-	get origSource(): Node {
+	get origID(): string | number {
+		return this._origID;
+	}
+
+	set origID(id: string | number) {
+		this._origID = id;
+	}
+}
+
+export class DrawableEdge extends Edge {
+	protected _origSource: DrawableNode;
+	protected _origTarget: DrawableNode;
+
+	get origSource(): DrawableNode {
 		return this._origSource;
 	}
 
-	set origSource(n: Node) {
+	set origSource(n: DrawableNode) {
 		this._origSource = n;
 	}
 
-	get origTarget(): Node {
+	get origTarget(): DrawableNode {
 		return this._origTarget;
 	}
 
-	set origTarget(n: Node) {
+	set origTarget(n: DrawableNode) {
 		this._origTarget = n;
 	}
+
+	get source(): DrawableNode {
+		return super.source as DrawableNode;
+	}
+
+	set source(s: DrawableNode) {
+		super.source = s;
+	}
+
+	get target(): DrawableNode {
+		return super.target as DrawableNode;
+	}
+	set target(t: DrawableNode) {
+		super.target = t;
+	}
+
+
 }
