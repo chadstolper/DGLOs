@@ -34,18 +34,15 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 	protected tickInternal() {
 		super.tickInternal();
 
-		console.log(this._voronoi.polygons(
-			this.graph.timesteps[0].nodes
-		))
 		this._polygons = this._polygons
 			.data(this._voronoi.polygons(this.graph.timesteps[0].nodes))
 
 		this._polygons.exit().remove();
 		let newPoly = this._polygons.enter().append("path")
 		this._polygons = this._polygons.merge(newPoly)
-			.style("stroke", "black")
+			//.style("stroke", "black")
 			.style("fill", this.fillInternal())
-			.style("stroke-width", "0.5px")
+			//.style("stroke-width", "0.5px")
 			.attr("d", function (d: any) {
 				return d ? "M" + d.join("L") + "Z" : null;
 			});;
