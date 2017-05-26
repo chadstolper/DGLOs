@@ -23,6 +23,8 @@ export class ForceDirectedGraph {
 	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		this._chart = chart;
 		this._graph = graph;
+		this._width = +chart.attr("width");
+		this._height = +chart.attr("height");
 		this.initSVG();
 	}
 
@@ -50,6 +52,9 @@ export class ForceDirectedGraph {
 	protected get height() {
 		return this._height;
 	}
+	public set alpha(alpha: number) {
+		this._alpha = alpha;
+	}
 
 
 	protected initSimulation() { //begin simulation of the graphics
@@ -60,7 +65,7 @@ export class ForceDirectedGraph {
 			.force("center", d3force.forceCenter(this._width / 2, this._height / 2)) //define center
 			.on("tick", this.ticked(this));
 
-		(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
+		// (this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
 
 		//console.log("sim started")
 	}
