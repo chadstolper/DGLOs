@@ -15,9 +15,11 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		.y(function (d: Node) { return d.y; });
 	private _polygons: Selection<any, {}, any, {}>;
 
+
 	//ugliness
 	private _noisePoints: Node[];
 	private _cardinalPoints: [number, number][];
+	private _allPoints: Node[];
 
 	constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		super(graph, chart);
@@ -41,23 +43,24 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 
 	protected fillInternal() {
 		// return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].type);
-		let hold = this.graph;
-		return function (d: any, i: number): string {
-			console.log(d.type);
-			if (hold.timesteps[0].nodes[i].type === "noise") {
-				console.log("noise objerct")
+		let self = this;
+		return function (d: [number, number], i: number): string {
+			let n = self._allPoints[i];
+
+			if (n.type === "noise") {
 				return "black";
 			}
-			return color(hold.timesteps[0].nodes[i].type);
+			return color(n.type);
+
 		}
 	}
 
 	protected tickInternal() {
 		super.tickInternal();
-		let forTest = this.graph.timesteps[0].nodes.concat(this._noisePoints)
+		this._allPoints = this.graph.timesteps[0].nodes.concat(this._noisePoints)
 		this._polygons = this._polygons
 			.data(this._voronoi.polygons(
-				(forTest)
+				(this._allPoints)
 			));
 
 		// for (let str of forTest) {
@@ -68,7 +71,7 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		this._polygons.exit().remove();
 		let newPoly = this._polygons.enter().append("path")
 		this._polygons = this._polygons.merge(newPoly)
-			.style("stroke", this.fillInternal())
+			//.style("stroke", this.fillInternal())
 			.style("fill", this.fillInternal())
 			//.style("stroke-width", "0.5px")
 			.attr("d", function (d: any) {
@@ -78,7 +81,7 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		//alter FD attr of graphics
 		this.nodeGlyphs.attr("stroke", "black")
 			.attr("stroke-width", "0.5px")
-			.attr("fill", this.fillInternal())
+		//.attr("fill", this.fillInternal())
 		this.linkGlyphs.attr("stroke", "grey")
 			.attr("stroke-width", "0.25px")
 
