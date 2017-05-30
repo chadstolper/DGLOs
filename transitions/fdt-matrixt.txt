@@ -1,1 +1,7 @@
-todo
+For each force directed graph in the timeline:
+Remove edges
+Pick axes for the matrix
+Slide nodes to their respective axis
+Postion nodes along their axis
+Draw gridlines for the matrix
+Fill cells based on some property

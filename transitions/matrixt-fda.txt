@@ -1,1 +1,8 @@
-todo
+Pick one of the matrices in the timeline
+Remove everything else but this element
+For each row and each column, create a node
+Color/Size the node based on some property
+Remove all martix vis
+Reposition nodes based force simulation
+Draw edges
+Thicken/Color edges based on some property
