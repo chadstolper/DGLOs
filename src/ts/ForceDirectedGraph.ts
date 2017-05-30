@@ -1,7 +1,7 @@
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { Selection } from "d3-selection";
-import { scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 import { transition } from "d3-transition";
@@ -11,7 +11,7 @@ export class ForceDirectedGraph {
 	protected _height = 500;
 	private _graph: DynamicGraph;
 	private _simulation: Simulation<{}, undefined>;
-	private color = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
+	protected color: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20); //random color picker.exe
 	private _chart: Selection<any, {}, any, {}>;
 	private _linkGlyphs: Selection<any, {}, any, {}>;
 	private _nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"

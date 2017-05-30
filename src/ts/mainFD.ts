@@ -7,6 +7,7 @@ import { DynamicGraph } from "./Graph";
 import { ForceDirectedMapGraph } from "./ForceDirectedHullGraph";
 import { VoronoiDiagram } from "./VoronoiDiagram";
 
+
 let height = 500;
 let width = 500
 let svg = d3.select("body").append("svg")

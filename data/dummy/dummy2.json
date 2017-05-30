@@ -1,305 +1,181 @@
 [
 	{
+		"timestamp": 0,
 		"edges": [
 			{
-				"consumption": "6",
-				"preference": "10",
-				"source": 1,
-				"target": 10,
-				"name": "one"
-			},
-			{
-				"consumption": "5",
-				"preference": "1",
-				"source": 2,
-				"target": 11,
-				"name": "one"
-			},
-			{
-				"consumption": "8",
-				"preference": "1",
-				"source": 3,
-				"target": 12,
-				"name": "one"
-			},
-			{
-				"consumption": "3",
-				"preference": "8",
-				"source": 4,
-				"target": 13,
-				"name": "one"
-			},
-			{
-				"consumption": "5",
-				"preference": "7",
+				"consumption": "4",
+				"preference": "0.5",
 				"source": 5,
-				"target": 14,
-				"name": "one"
+				"source_name": "person-a",
+				"target": 0,
+				"target_name": "Lemons"
+			},
+			{
+				"consumption": "3",
+				"preference": "0.5",
+				"source": 5,
+				"source_name": "person-a",
+				"target": 1,
+				"target_name": "Apples"
+			},
+			{
+				"consumption": "2",
+				"preference": "0.5",
+				"source": 5,
+				"source_name": "person-a",
+				"target": 2,
+				"target_name": "Grapes"
+			},
+			{
+				"consumption": "5",
+				"preference": "0.5",
+				"source": 6,
+				"source_name": "person-b",
+				"target": 0,
+				"target_name": "Lemons"
+			},
+			{
+				"consumption": "4",
+				"preference": "0.5",
+				"source": 6,
+				"source_name": "person-b",
+				"target": 1,
+				"target_name": "Apples"
 			},
 			{
 				"consumption": "6",
-				"preference": "10",
+				"preference": "0.5",
 				"source": 6,
-				"target": 15,
-				"name": "one"
-			},
-			{
-				"consumption": "10",
-				"preference": "6",
-				"source": 7,
-				"target": 16,
-				"name": "one"
-			},
-			{
-				"consumption": "3",
-				"preference": "3",
-				"source": 8,
-				"target": 17,
-				"name": "one"
-			},
-			{
-				"consumption": "1",
-				"preference": "1",
-				"source": 9,
-				"target": 18,
-				"name": "one"
-			},
-			{
-				"consumption": "3",
-				"preference": "1",
-				"source": 10,
-				"target": 19,
-				"name": "one"
+				"source_name": "person-b",
+				"target": 2,
+				"target_name": "Grapes"
 			}
 		],
 		"nodes": [
 			{
+				"id": 0,
+				"name": "Lemons",
+				"price": "2.00",
+				"role": null,
+				"type": "drink"
+			},
+			{
 				"id": 1,
-				"type": "???"
+				"name": "Apples",
+				"price": "3.50",
+				"role": null,
+				"type": "drink"
 			},
 			{
 				"id": 2,
-				"type": "???"
-			},
-			{
-				"id": 3,
-				"type": "???"
-			},
-			{
-				"id": 4,
-				"type": "???"
+				"name": "Grapes",
+				"price": "4.00",
+				"role": null,
+				"type": "drink"
 			},
 			{
 				"id": 5,
-				"type": "???"
+				"name": "person-a",
+				"price": null,
+				"role": "Great Khan",
+				"type": "person"
 			},
 			{
 				"id": 6,
-				"type": "???"
-			},
-			{
-				"id": 7,
-				"type": "???"
-			},
-			{
-				"id": 8,
-				"type": "???"
-			},
-			{
-				"id": 9,
-				"type": "???"
-			},
-			{
-				"id": 10,
-				"type": "???"
-			},
-			{
-				"id": 11,
-				"type": "???"
-			},
-			{
-				"id": 12,
-				"type": "???"
-			},
-			{
-				"id": 13,
-				"type": "???"
-			},
-			{
-				"id": 14,
-				"type": "???"
-			},
-			{
-				"id": 15,
-				"type": "???"
-			},
-			{
-				"id": 16,
-				"type": "???"
-			},
-			{
-				"id": 17,
-				"type": "???"
-			},
-			{
-				"id": 18,
-				"type": "???"
-			},
-			{
-				"id": 19,
-				"type": "???"
+				"name": "person-b",
+				"price": null,
+				"role": "Betrayed",
+				"type": "person"
 			}
 		]
 	},
 	{
+		"timestamp": 1,
 		"edges": [
 			{
-				"consumption": "6",
-				"preference": "10",
-				"source": 1,
-				"target": 10,
-				"name": "one"
-			},
-			{
-				"consumption": "5",
-				"preference": "1",
-				"source": 2,
-				"target": 11,
-				"name": "one"
-			},
-			{
-				"consumption": "8",
-				"preference": "1",
-				"source": 3,
-				"target": 12,
-				"name": "one"
-			},
-			{
-				"consumption": "3",
-				"preference": "8",
-				"source": 4,
-				"target": 13,
-				"name": "one"
-			},
-			{
-				"consumption": "5",
-				"preference": "7",
+				"consumption": "4",
+				"preference": ".8",
 				"source": 5,
-				"target": 14,
-				"name": "one"
+				"source_name": "PERSON-A!",
+				"target": 0,
+				"target_name": "Lemonade"
+			},
+			{
+				"consumption": "3",
+				"preference": "0.8",
+				"source": 5,
+				"source_name": "PERSON-A!",
+				"target": 1,
+				"target_name": "Apple juice"
+			},
+			{
+				"consumption": "2",
+				"preference": "0.8",
+				"source": 5,
+				"source_name": "PERSON-A!",
+				"target": 2,
+				"target_name": "Wine"
+			},
+			{
+				"consumption": "5",
+				"preference": "0.8",
+				"source": 6,
+				"source_name": "PERSON-B!",
+				"target": 0,
+				"target_name": "Lemonade"
+			},
+			{
+				"consumption": "4",
+				"preference": "0.8",
+				"source": 6,
+				"source_name": "PERSON-B!",
+				"target": 1,
+				"target_name": "Apple juice"
 			},
 			{
 				"consumption": "6",
-				"preference": "10",
+				"preference": "0.8",
 				"source": 6,
-				"target": 15,
-				"name": "one"
-			},
-			{
-				"consumption": "10",
-				"preference": "6",
-				"source": 7,
-				"target": 16,
-				"name": "one"
-			},
-			{
-				"consumption": "3",
-				"preference": "3",
-				"source": 8,
-				"target": 17,
-				"name": "one"
-			},
-			{
-				"consumption": "1",
-				"preference": "1",
-				"source": 9,
-				"target": 18,
-				"name": "one"
-			},
-			{
-				"consumption": "3",
-				"preference": "1",
-				"source": 10,
-				"target": 19,
-				"name": "one"
+				"source_name": "PERSON-B!",
+				"target": 2,
+				"target_name": "Wine"
 			}
 		],
 		"nodes": [
 			{
+				"id": 0,
+				"name": "Lemonade",
+				"price": "2.00",
+				"role": null,
+				"type": "drink"
+			},
+			{
 				"id": 1,
-				"type": "???"
+				"name": "Apple juice",
+				"price": "3.50",
+				"role": null,
+				"type": "drink"
 			},
 			{
 				"id": 2,
-				"type": "???"
-			},
-			{
-				"id": 3,
-				"type": "???"
-			},
-			{
-				"id": 4,
-				"type": "???"
+				"name": "Wine",
+				"price": "4.00",
+				"role": null,
+				"type": "drink"
 			},
 			{
 				"id": 5,
-				"type": "???"
+				"name": "PERSON-A!",
+				"price": null,
+				"role": "Shorter than expected",
+				"type": "person"
 			},
 			{
 				"id": 6,
-				"type": "???"
-			},
-			{
-				"id": 7,
-				"type": "???"
-			},
-			{
-				"id": 8,
-				"type": "???"
-			},
-			{
-				"id": 9,
-				"type": "???"
-			},
-			{
-				"id": 10,
-				"type": "???"
-			},
-			{
-				"id": 11,
-				"type": "???"
-			},
-			{
-				"id": 12,
-				"type": "???"
-			},
-			{
-				"id": 13,
-				"type": "???"
-			},
-			{
-				"id": 14,
-				"type": "???"
-			},
-			{
-				"id": 15,
-				"type": "???"
-			},
-			{
-				"id": 16,
-				"type": "???"
-			},
-			{
-				"id": 17,
-				"type": "???"
-			},
-			{
-				"id": 18,
-				"type": "???"
-			},
-			{
-				"id": 19,
-				"type": "???"
+				"name": "PERSON-B!",
+				"price": null,
+				"role": "Smells fishy",
+				"type": "person"
 			}
 		]
 	}

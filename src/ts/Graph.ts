@@ -8,6 +8,8 @@ export class Node implements SimulationNodeDatum {
 	public y?: number;
 	public vx?: number;
 	public vy?: number;
+	public _fx?: number;
+	public _fy?: number;
 
 	public constructor(id: number | string, type: string, label: string) {
 		this._id = id;
@@ -25,6 +27,15 @@ export class Node implements SimulationNodeDatum {
 
 	get id(): number | string {
 		return this._id;
+	}
+	set id(id: string | number) {
+		this._id = id;
+	}
+	set fx(num: number) {
+		this._fx = num;
+	}
+	set fy(num: number) {
+		this._fy = num;
 	}
 }
 
