@@ -1,13 +1,13 @@
-pick a specific row or column to be the central node
-For each matrix in the timeline:
-If the row/column is in the matrix, create a node for it
+Set {row / column} as central node
+For matrix in timeline:
+If the row/column is in the matrix, draw nodeGlyph
 	for each cell in the row or column
 		If the row/coulmn it represents has a node
-			draw an edge between it and this timesteps central node
-			thicken/color node
+			Draw edge
+			Thicken edges by {attr}
 		else if the row/column doesn't have a node
-		 	draw a new node
-			color/size based on data
-			use force simulation to position the node
-			draw an edge between this central node and the new node
-			thicken/color edge based on data 
+		 	Draw nodeGlyph
+			Color nodeGlyph by {attr}
+			Reposition nodeGlyphs with {force simulation}
+			Draw edges
+			Thicken edges by {attr}

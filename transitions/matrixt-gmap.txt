@@ -1,14 +1,25 @@
-merge or remove other timesteps
-Pick one of the matrices in the timeline
-Remove everything else but this element
-For each row and each column, create a node
-Color/Size the node based on some property
-Remove all martix vis
-Reposition nodes based force simulation
+#merge or remove other timesteps
+#Pick one of the matrices in the timeline
+#Remove everything else but this element
+#For each row and each column, create a node
+#Color/Size the node based on some property
+*Remove all martix vis
+#Reposition nodes based force simulation
+#Draw edges
+#Thicken/Color edges based on some property
+#add noise nodes
+#draw regions (fade? expand? restart sim? george lucas?)
+#reduce node radius
+#change color of edges
+#change color of nodes to regions(shouldnt be needed)
+
+Pick matrix in timeline
+Remove not selected
+For each row, draw nodeGlyph
+For each column, draw nodeGlyph
+Color nodeGlyphs by {attr}
+Remove matrix
+Reposition nodeGlyphs with {force simulation}
 Draw edges
-Thicken/Color edges based on some property
-add noise nodes
-draw regions (fade? expand? restart sim? george lucas?)
-reduce node radius
-change color of edges
-change color of nodes to regions(shouldnt be needed)
+Thicken edges by {attr}
+Draw regions

@@ -1,7 +1,8 @@
-For each timestep/matrix:
-Create a node for every row and every column
-Color/size the node based on some property
-Remove all matrix viz
-Space nodes based on force simulation
-Draw edge between nodes
-Thicken or color based on some property
+For each row, draw nodeGlyph
+For each column, draw nodeGlyph
+Color nodeGlyphs by {attr}
+Remove all matrix vis
+Reposition nodeGlyphs with {force simulation}
+Draw edges
+Thicken edges by {attr}
+Add mechanism to move through timesteps

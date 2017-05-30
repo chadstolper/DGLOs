@@ -21,4 +21,4 @@ Position nodeGlyphs along {y-axis}
 Draw gridlines for the matrix
 For each timestep:
 Create a copy of the above skeleton matrix
-Fill in each cell based on some property of that edges
+Fill in each cell based on some property of the edges
