@@ -1,6 +1,6 @@
-Pick one of the martices in the timeline
-Remove all the rest
+Pick matrix in timeline
+Remove not selected
 Add a mechanism to transition between the timelines
 On transition:
-Resize matrix to only contain nodes used in the matrix
-Recolor cells
+Draw rectangles
+Color rectangles by {attr} 

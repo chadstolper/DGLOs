@@ -1,4 +1,4 @@
-remove unneeded cells
+Remove not selected
+Draw gridlines for the matrix
 make cells nodes
-reposition
-draw new edges
+Fill in each cell based on some property of the edges

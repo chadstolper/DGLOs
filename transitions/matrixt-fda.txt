@@ -1,8 +1,11 @@
-Pick one of the matrices in the timeline
-Remove everything else but this element
-For each row and each column, create a node
-Color/Size the node based on some property
-Remove all martix vis
-Reposition nodes based force simulation
+
+For each row, draw nodeGlyph
+For each column, draw nodeGlyph
+For timesteps:
+Create nodeGlyphs for all nodes
+Color nodeGlyphs by {attr}
+Remove all matrix vis
+Reposition nodeGlyphs with {force simulation}
 Draw edges
-Thicken/Color edges based on some property
+Thicken edges by {attr}
+

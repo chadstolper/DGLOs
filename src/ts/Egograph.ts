@@ -107,10 +107,17 @@ export class Egograph extends ForceDirectedGraph {
 		}
 	}
 	private mergeNodeLists() {
-		console.log(this._centralNodeArray)
 		for (let node of this._centralNodeArray) {
 			this._nbrNodes.push(node);
 		}
+		let self = this
+		this._nbrNodes.forEach(function (d: DrawableNode) {
+			if (self._centralNodeArray.includes(d)) {
+				d.fx = self.width / 2;
+				return;
+			}
+			d.fx = null;
+		})
 	}
 
 	private clickTransition(self: Egograph) {
@@ -146,7 +153,7 @@ export class Egograph extends ForceDirectedGraph {
 		let yScale = d3Scale.scaleLinear()
 			// .domain([0, this.graph.timesteps.length])
 			.domain(extent(this.graph.timesteps, function (d: Graph) { return d.timestamp; }))
-			.range([0 + (super.height * .25), super.height - (super.height * 0.25)]);
+			.range([0 + (super.height * .15), super.height - (super.height * 0.15)]);
 		let centralNodes = this._centralNodeArray;
 		let superWidth = super.width;
 
@@ -154,8 +161,10 @@ export class Egograph extends ForceDirectedGraph {
 		this.simulation
 			.force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
 				if (centralNodes.includes(d)) {
+					//d.fx = superWidth / 2;
 					return superWidth / 2;
 				}
+				//d.fx = null;
 				return 0;
 			}).strength(function (d: DrawableNode) {
 				if (centralNodes.includes(d)) {

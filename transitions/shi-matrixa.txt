@@ -1,6 +1,8 @@
-Pick axes for the matrix
-Slide nodes to their respective axis
-Postion nodes along their axis
-Draw gridlines for the matrix
-Fill in individual cells by some edge property
+Remove repeated nodes
+Remove edges
+Draw all nodes not present
+Position nodeGlyphs along {x-axis}
+Position nodeGlyphs along {y-axis}
+Draw rectangles 
+Color rectangles by {attr}
 Draw mechanism allowing the user to move through timesteps
