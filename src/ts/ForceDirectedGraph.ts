@@ -17,10 +17,14 @@ export class ForceDirectedGraph {
 	private _nodeGlyphs: Selection<any, {}, any, {}>; //groups for "specific"
 	private linksG: Selection<any, {}, any, {}>;
 	private nodesG: Selection<any, {}, any, {}>; //groups for all
+	private _alpha = .3;
+	private _radiusCircle = 10;
 
 	public constructor(graph: DynamicGraph, chart: Selection<any, {}, any, {}>) {
 		this._chart = chart;
 		this._graph = graph;
+		this._width = +chart.attr("width");
+		this._height = +chart.attr("height");
 		this.initSVG();
 	}
 
@@ -48,7 +52,12 @@ export class ForceDirectedGraph {
 	protected get height() {
 		return this._height;
 	}
-
+	public set alpha(alpha: number) {
+		this._alpha = alpha;
+	}
+	public set radius(newRad: number) {
+		this._radiusCircle = newRad;
+	}
 
 
 	protected initSimulation() { //begin simulation of the graphics
@@ -59,7 +68,7 @@ export class ForceDirectedGraph {
 			.force("center", d3force.forceCenter(this._width / 2, this._height / 2)) //define center
 			.on("tick", this.ticked(this));
 
-		(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
+		// (this._simulation.force("link") as d3force.ForceLink<Node, Edge>).strength(function (d: Edge): number { return d.weight * +.05 });
 
 		//console.log("sim started")
 	}
@@ -124,7 +133,7 @@ export class ForceDirectedGraph {
 			this._simulation.nodes(graph.nodes); //call for sim tick (and apply force to nodes?)
 			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(graph.edges);
 
-			this._simulation.alpha(.3).restart();
+			this._simulation.alpha(this._alpha).restart();
 		}
 	}
 
@@ -151,7 +160,7 @@ export class ForceDirectedGraph {
 			.attr("id", function (d: any): string | number { return d.name; });
 		this._nodeGlyphs = this.nodeGlyphs.merge(nodeEnter);
 		this.nodeGlyphs
-			.attr("r", 10)
+			.attr("r", this._radiusCircle)
 			.attr("fill", (d: Node) => {
 				return this.color(d.id);
 			});

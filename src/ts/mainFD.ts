@@ -5,6 +5,10 @@ import { json } from "d3-request";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph } from "./Graph";
 import { ForceDirectedMapGraph } from "./ForceDirectedHullGraph";
+<<<<<<< HEAD
+=======
+import { VoronoiDiagram } from "./VoronoiDiagram";
+>>>>>>> refs/remotes/origin/master
 
 let height = 500;
 let width = 500
@@ -15,8 +19,10 @@ let svg = d3.select("body").append("svg")
 json("./data/dummy/dummy.json", function (response) {
 	let dGraph: DynamicGraph = new DynamicDrinkGraph(response);
 	// let FDGraph: AnimatedForceDirectedGraph = new AnimatedForceDirectedGraph(dGraph, svg);//, width, height);
-	let FDGraph: ForceDirectedMapGraph = new ForceDirectedMapGraph(dGraph, svg);//, width, height);
+	// let FDGraph: ForceDirectedMapGraph = new ForceDirectedMapGraph(dGraph, svg);//, width, height);
 	// let FDGraph: ForceDirectedGraph = new ForceDirectedGraph(dGraph, svg, width, height);
+	let FDGraph: VoronoiDiagram = new VoronoiDiagram(dGraph, svg);
+	FDGraph.radius = 1;
 	FDGraph.draw(dGraph.timesteps[0]);
 
 });
