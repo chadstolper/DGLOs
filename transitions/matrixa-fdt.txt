@@ -1,1 +1,5 @@
-todo
+For each timestep in animated matrix:
+Create a node for every row and column
+Space nodes based of force simulation
+Create edges between rows and columns
+Adjust edge thickness/color

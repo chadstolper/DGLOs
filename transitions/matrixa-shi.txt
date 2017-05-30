@@ -1,1 +1,12 @@
-todo
+Pick a row or coulmn to be the central node
+Create an edge from the central node to a new node for every cell in the row/column
+For the rest of the timesteps:
+If the row/column is in the timestep, create a node for it
+	for all the cells in the row/column
+		if there is a node already drawn representing that cells row/column
+			create an edge between this central node and that node
+			adjust its thickness/color based on data
+		else
+			create an edge to a new node from this central node
+			color/size the node the node based on data
+			color/size the edge based on data

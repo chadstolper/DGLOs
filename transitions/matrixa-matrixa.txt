@@ -1,1 +1,2 @@
-todo
+Create columns and rows as necessary for changing data
+Color cells based on data

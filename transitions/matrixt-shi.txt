@@ -1,1 +1,8 @@
-todo
+Pick a specific edge or column as the central node
+Draw a node for everytime that edge or column appears
+For each drawn node:
+Look at the graph representing its timestep
+For every cell in that edge or column, create an edge
+Attach edges to their central node
+
+Create a node for the edges
