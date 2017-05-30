@@ -16,7 +16,7 @@ json("data/radoslaw/emails_sample.json", function (response: any) {
 	// json("data/radoslaw/emails.json", function (response: any) {
 
 	let width: number;
-	let height: number = width = 2000;
+	let height: number = width = 500;
 	let svg = select("body").append("svg")
 		.attr("width", width)
 		.attr("height", height);
