@@ -1,2 +1,6 @@
-reverse fda-matrixa?
-restart sim?
+remove cells
+morph axis into nodes
+reposition nodes
+draw new nodes
+draw new edges
+(re)start simulation
