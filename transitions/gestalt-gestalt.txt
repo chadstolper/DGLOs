@@ -1,1 +1,5 @@
-todo
+remove edges
+remove unneeded nodes
+reposition nodes
+add new nodes
+draw new edges

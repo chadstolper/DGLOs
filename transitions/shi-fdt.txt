@@ -1,1 +1,8 @@
-todo
+Create SVG elements (arbitrary elements) for each timestep to be displayed
+Slide each central node into its respective timestep
+Bring attached edges and copies of nodes along with it
+Resize and Recolor nodes based on some property
+For each timestep:
+Draw nodes in graph that haven't been yet displayed
+Reposition nodes based on force simulation
+Draw edges between nodes based on some property

@@ -1,1 +1,3 @@
-todo
+remove regions
+remove noise nodes
+same as fda-matrixt

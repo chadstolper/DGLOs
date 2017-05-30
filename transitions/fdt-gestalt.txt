@@ -1,1 +1,3 @@
-todo
+remove edges
+move nodes to position (single svg or many?)
+draw new edges

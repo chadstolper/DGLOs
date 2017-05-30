@@ -1,1 +1,9 @@
-todo
+remove edges
+remove extra nodes
+repostion nodes
+draw edges
+add noise nodes
+draw regions
+recolor
+re-radius
+re-stroke

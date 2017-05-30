@@ -1,1 +1,5 @@
-todo
+Pick a new central node
+Reposition nodes that are in both graphs
+Draw nodes neighboring cental node
+Draw incident edges 
+Color nodes by property

@@ -1,1 +1,3 @@
-todo
+remove regions
+remove noisenodes
+same as fda-matrixa

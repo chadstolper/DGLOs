@@ -1,1 +1,5 @@
-todo
+remove edges
+reposition nodes
+morph into axis
+create grid
+color in boxes
