@@ -1,8 +1,13 @@
-Pick a specific edge or column as the central node
-Draw a node for everytime that edge or column appears
-For each drawn node:
-Look at the graph representing its timestep
-For every cell in that edge or column, create an edge
-Attach edges to their central node
-
-Create a node for the edges
+pick a specific row or column to be the central node
+For each matrix in the timeline:
+If the row/column is in the matrix, create a node for it
+	for each cell in the row or column
+		If the row/coulmn it represents has a node
+			draw an edge between it and this timesteps central node
+			thicken/color node
+		else if the row/column doesn't have a node
+		 	draw a new node
+			color/size based on data
+			use force simulation to position the node
+			draw an edge between this central node and the new node
+			thicken/color edge based on data 
