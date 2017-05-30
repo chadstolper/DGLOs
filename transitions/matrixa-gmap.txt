@@ -1,1 +1,15 @@
-todo
+v1
+remove cells
+morph axis into nodes
+reposition nodes
+draw edges
+draw regions
+start simulation?
+
+v2
+all cells become nodes
+implode
+add egdes
+reformat
+draw regions and explode
+it would look really good

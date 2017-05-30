@@ -1,1 +1,4 @@
-todo
+remove unneeded cells
+make cells nodes
+reposition
+draw new edges
