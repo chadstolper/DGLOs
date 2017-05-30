@@ -1,1 +1,6 @@
-todo
+remove regions
+remove noise nodes
+remove edges
+position nodes
+draw new nodes for timesteps
+draw new edges

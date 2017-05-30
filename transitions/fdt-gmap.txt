@@ -1,1 +1,7 @@
-todo
+v1
+remove timesteps, keep [0]
+fda-gmap()
+
+v2
+combine/morph/merge timesteps into one
+fda-gmap()

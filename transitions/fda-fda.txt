@@ -1,1 +1,4 @@
-todo
+load new data
+assign new attributes to nodeglyphs (radius, color)
+assign new attributes tp edgeglyphs (width, color?)
+restart simmulation

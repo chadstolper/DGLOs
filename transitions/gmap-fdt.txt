@@ -1,1 +1,7 @@
-todo
+remove regions
+remove noise nodes
+duplicate nodes per timestep
+repostion
+recolor
+re-radius
+re-stroke

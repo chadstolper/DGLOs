@@ -1,1 +1,6 @@
-todo
+remove regions
+remove noise nodes
+recolor
+re-radius
+re-stroke
+restart simulation?

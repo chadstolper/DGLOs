@@ -1,1 +1,5 @@
-todo
+add noise nodes
+draw regions (fade? expand? restart sim? george lucas?)
+reduce node radius
+change color of edges
+change color of nodes to regions(shouldnt be needed)
