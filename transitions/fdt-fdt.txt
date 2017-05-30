@@ -1,3 +1,5 @@
-load new data
-remove nodes and edges
-draw new nodes and edges
+draw new nodes
+draw new edges
+remove exit nodes
+remove exit edges
+restart simulation

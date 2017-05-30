@@ -1,8 +1,7 @@
 stop simulation
 remove regions
-remove noise nodes
 remove edges
-move nodes to axis
-morph into axis
+postion nodes to axis
+morph nodes into axis
 draw cells
 color cells

@@ -1,7 +1,10 @@
 remove regions
-remove noise nodes
-duplicate nodes per timestep
-repostion
-recolor
-re-radius
-re-stroke
+copy graph per timestep
+draw new nodes
+draw new edges
+remove exit nodes
+remove exit edges
+set node color {attr}
+set edge stroke {attr}
+set edge stroke-width {attr}
+restart simulation

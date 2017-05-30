@@ -1,16 +1,7 @@
-v1
 stop simulation
 remove edges
-duplicate nodes
-reposition as timeline
-reposition nodes on axis
-morph nodes
-draw cells and color
-
-v2
-stop simulation
-remove edges
-TODO: morph into matrix
-duplicate matrix
-repostion as timeline
-update cells
+postion nodes to axis
+morph nodes into axis
+draw cells
+copy cells per timestep
+set cell color {attr}

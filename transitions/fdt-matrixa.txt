@@ -1,6 +1,6 @@
-remove other timesteps (therefore leave and start from [0])
+remove timesteps
 remove edges
 postion nodes on axis
-morph into axis
+morph nodes into axis
 draw cells
-color
+set cell color {attr}

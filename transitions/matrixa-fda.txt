@@ -3,4 +3,8 @@ morph axis into nodes
 reposition nodes
 draw new nodes
 draw new edges
+set node radius {attr}
+set node color {attr}
+set edge stroke {attr}
+set edge stroke-width {attr}
 (re)start simulation

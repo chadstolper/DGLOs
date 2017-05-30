@@ -1,5 +1,5 @@
 remove edges
-remove unneeded nodes
+remove exit nodes
 reposition nodes
-add new nodes
+draw new nodes
 draw new edges

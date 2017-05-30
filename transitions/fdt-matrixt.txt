@@ -1,7 +1,6 @@
-For each force directed graph in the timeline:
+for each graph
 Remove edges
-Pick axes for the matrix
-Slide nodes to their respective axis
-Postion nodes along their axis
-Draw gridlines for the matrix
-Fill cells based on some property
+position nodes on axis
+morph nodes to axis
+draw cells
+set cell color {attr}

@@ -1,6 +1,7 @@
 remove regions
-remove noise nodes
 remove edges
 position nodes
 draw new nodes for timesteps
 draw new edges
+set node radius {attr}
+set edge stroke-width {attr}

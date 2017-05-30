@@ -1,5 +1,8 @@
-load new data
-assign new attributes to nodeglyphs (radius, color)
-assign new attributes to edgeglyphs (width, color?)
-update regions in tick
+draw new nodeglyphs
+draw new edgeglyphs
+remove exit nodeglyphs
+remove exit edgeglyphs
+set radius of node glyphs by {attr}
+set color of node glyphs by {attr}
+set edge width {attr}
 restart simmulation

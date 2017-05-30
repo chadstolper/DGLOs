@@ -1,3 +1,7 @@
 remove edges
 move nodes to position
+draw missing nodes
 draw edges
+set node radius {attr}
+set edge width {attr}
+restart simulation

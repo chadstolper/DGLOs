@@ -1,6 +1,5 @@
 remove regions
-remove noise nodes
-recolor
-re-radius
-re-stroke
-restart simulation?
+set node color {attr}
+set edge stroke {attr}
+set edge stroke-width {attr}
+restart simulation

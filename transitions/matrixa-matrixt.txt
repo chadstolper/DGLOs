@@ -1,5 +1,4 @@
-For each step in the animated matrix:
-Create a new SVG/Arbitrary graphic element
-Move the current staet of the animated matrix into the new element
-
-Remove the animated matrix
+copy matrix per timestamp
+remove exit cells
+draw new cells
+set cell color {attr}

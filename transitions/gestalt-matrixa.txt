@@ -1,5 +1,6 @@
 remove edges
-remove extra timestep nodes
+remove timestep nodes
 postion nodes along axis
-morph into grid/fade in grid?
-color boxes
+morph nodes into axis
+draw cells
+set cell color {attr}

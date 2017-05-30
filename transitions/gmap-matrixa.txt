@@ -1,3 +1,7 @@
+stop simulation
 remove regions
-remove noisenodes
-same as fda-matrixa
+remove edges
+postion nodes to axis
+morph nodes into axis
+draw cells
+color cells
