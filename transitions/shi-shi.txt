@@ -1,5 +1,7 @@
-Pick a new central node
-Reposition nodes that are in both graphs
-Draw nodes neighboring cental node
+Pick central node
+Remove nodes not incident to central node
+Remove edges not incident to central node
+Draw node neighboring central
 Draw incident edges 
-Color nodes by property
+Color nodes by {attr}
+Thicken edges by {attr}

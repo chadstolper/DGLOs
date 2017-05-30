@@ -1,10 +1,8 @@
 Remove edges
-Draw nodes that arent in the ego graph
-Remove nodes that appear more than once
-Pick axes for the matrix
-Slide nodes to their respective axis
-Postion nodes along their axis
-Draw gridlines for the matrix
-For each timestep:
-Create a copy of the above skeleton matrix
-Fill in each cell based on some property of that edges
+Create nodeGlyphs for all nodes
+Remove repeating nodeGlyphs
+Position nodeGlyphs along {x-axis}
+Position nodeGlyphs along {y-axis}
+For timesteps:
+Draw matrix rectangles for timestep with {attr}
+
