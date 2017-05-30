@@ -1,3 +1,8 @@
+stop simulation
 remove regions
 remove noise nodes
-same as fda-matrixt
+remove edges
+move nodes to axis
+morph into axis
+draw cells
+color cells

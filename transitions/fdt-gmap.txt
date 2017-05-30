@@ -1,7 +1,15 @@
 v1
 remove timesteps, keep [0]
-fda-gmap()
+add noise nodes
+draw regions (fade? expand? restart sim? george lucas?)
+reduce node radius
+change color of edges
+change color of nodes to regions(shouldnt be needed)
 
 v2
 combine/morph/merge timesteps into one
-fda-gmap()
+add noise nodes
+draw regions (fade? expand? restart sim? george lucas?)
+reduce node radius
+change color of edges
+change color of nodes to regions(shouldnt be needed)

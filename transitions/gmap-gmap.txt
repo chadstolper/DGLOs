@@ -1,1 +1,5 @@
-same as fda-fda, but with region update
+load new data
+assign new attributes to nodeglyphs (radius, color)
+assign new attributes to edgeglyphs (width, color?)
+update regions in tick
+restart simmulation
