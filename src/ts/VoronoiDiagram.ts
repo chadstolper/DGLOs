@@ -30,7 +30,7 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 			.selectAll("path");
 
 		this._cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
-		this._noisePoints = [new Node("0", "noise", ""), new Node("1", "noise", ""), new Node("2", "noise", ""), new Node("3", "noise", ""), new Node("4", "noise", ""), new Node("5", "noise", ""), new Node("6", "noise", ""), new Node("7", "noise", "")];
+		this._noisePoints = [new Node("noise0", "noise", ""), new Node("noise1", "noise", ""), new Node("noise2", "noise", ""), new Node("noise3", "noise", ""), new Node("noise4", "noise", ""), new Node("noise5", "noise", ""), new Node("noise6", "noise", ""), new Node("noise7", "noise", "")];
 
 		for (let i = 0; i < this._cardinalPoints.length; i++) //give noise nodes x,y of cardinals
 		{
@@ -40,16 +40,31 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 	}
 
 	protected fillInternal() {
-		return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].type);
+		// return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].type);
+		let hold = this.graph;
+		return function (d: any, i: number): string {
+			console.log(d.type);
+			if (hold.timesteps[0].nodes[i].type === "noise") {
+				console.log("noise objerct")
+				return "black";
+			}
+			return color(hold.timesteps[0].nodes[i].type);
+		}
 	}
 
 	protected tickInternal() {
 		super.tickInternal();
-
+		let forTest = this.graph.timesteps[0].nodes.concat(this._noisePoints)
 		this._polygons = this._polygons
 			.data(this._voronoi.polygons(
-				(this.graph.timesteps[0].nodes.concat(this._noisePoints))
+				(forTest)
 			));
+
+		// for (let str of forTest) {
+		// 	console.log(str);
+		// }
+		// console.log(this.graph.timesteps[0].nodes.concat(this._noisePoints))
+
 		this._polygons.exit().remove();
 		let newPoly = this._polygons.enter().append("path")
 		this._polygons = this._polygons.merge(newPoly)
