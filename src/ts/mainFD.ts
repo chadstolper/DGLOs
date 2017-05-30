@@ -5,10 +5,8 @@ import { json } from "d3-request";
 import { DynamicDrinkGraph } from "./DummyGraph";
 import { DynamicGraph } from "./Graph";
 import { ForceDirectedMapGraph } from "./ForceDirectedHullGraph";
-<<<<<<< HEAD
-=======
 import { VoronoiDiagram } from "./VoronoiDiagram";
->>>>>>> refs/remotes/origin/master
+
 
 let height = 500;
 let width = 500

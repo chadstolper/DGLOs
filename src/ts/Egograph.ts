@@ -140,19 +140,17 @@ export class Egograph extends ForceDirectedGraph {
 	}
 
 	protected initSimulation() {
-		console.log(super.height, super.width);
-		let Height = 750;
-		let WIDTH = 750;
 		let yScale = d3Scale.scaleLinear()
 			.domain([0, this.graph.timesteps.length])
-			.range([0 + (Height * .25), Height - (Height * 0.25)]);
+			.range([0 + (super.height * .25), super.height - (super.height * 0.25)]);
 		let centralNodes = this._centralNodeArray;
-		let ego = this;
+		let superWidth = super.width;
+
 		super.initSimulation();
 		this.simulation
 			.force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
 				if (centralNodes.includes(d)) {
-					return WIDTH / 2;
+					return superWidth / 2;
 				}
 				return 0;
 			}).strength(function (d: DrawableNode) {
