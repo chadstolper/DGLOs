@@ -28,13 +28,6 @@ export class Egograph extends ForceDirectedGraph {
 		this.paint();
 	}
 
-	// protected get centerNode() {
-	// 	return this._centerNode;
-	// }
-	// protected set centerNode(node: Node) {
-	// 	this._centerNode = node;
-	// }
-
 	private init() {
 		this.graph.timesteps.forEach(function (step: Graph) {
 			step.edges.forEach(function (e: DrawableEdge) {
@@ -147,6 +140,7 @@ export class Egograph extends ForceDirectedGraph {
 	}
 
 	protected initSimulation() {
+		console.log(super.height, super.width);
 		let Height = 750;
 		let WIDTH = 750;
 		let yScale = d3Scale.scaleLinear()
