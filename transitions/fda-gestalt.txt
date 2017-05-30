@@ -1,6 +1,6 @@
 stop simulation
 erase edges
-unneeded nodes (drinks in this case)
-get unique nodes and move to position
+move nodes to top
+distribute nodes along {y axis}
 duplicate unique nodes by #of timesteps
 add new edges

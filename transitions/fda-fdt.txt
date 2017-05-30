@@ -1,4 +1,3 @@
-For each timestep in the graph:
-Create an SVG element (arbitray element)
-Use the fda drawing mechanism to draw this timestep in the new SVG element
-remove the animated force directed graph
+Create grouping element for each timestep
+Copy nodes to each group
+restart simulation for each group

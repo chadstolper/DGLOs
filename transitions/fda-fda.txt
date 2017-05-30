@@ -1,4 +1,4 @@
-load new data
-assign new attributes to nodeglyphs (radius, color)
+set radius of node glyphs by {attr}
+set color of node glyphs by {attr}
 assign new attributes tp edgeglyphs (width, color?)
 restart simmulation
