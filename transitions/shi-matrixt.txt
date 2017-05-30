@@ -4,5 +4,5 @@ Remove repeating nodeGlyphs
 Position nodeGlyphs along {x-axis}
 Position nodeGlyphs along {y-axis}
 For timesteps:
-Draw matrix rectangles for timestep with {attr}
+Draw rectangles for timestep with {attr}
 
