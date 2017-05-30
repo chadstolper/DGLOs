@@ -1,1 +1,3 @@
-todo
+load new data
+remove nodes and edges
+draw new nodes and edges

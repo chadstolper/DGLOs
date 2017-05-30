@@ -1,1 +1,6 @@
-todo
+remove other timesteps (therefore leave and start from [0])
+remove edges
+postion nodes on axis
+morph into axis
+draw cells
+color

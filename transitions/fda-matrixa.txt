@@ -1,1 +1,6 @@
-todo
+stop simulation
+remove edges
+move nodes to axis
+morph into axis
+draw cells
+color cells
