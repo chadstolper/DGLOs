@@ -14,9 +14,6 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
 	private _polygons: Selection<any, {}, any, {}>;
-
-
-	//ugliness
 	private _noisePoints: Node[];
 	private _cardinalPoints: [number, number][];
 	private _allPoints: Node[];
@@ -46,13 +43,15 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		let self = this;
 		return function (d: [number, number], i: number): string {
 			let n = self._allPoints[i];
-
 			if (n.type === "noise") {
-				return "black";
+				return "white";
 			}
-			return color(n.type);
-
+			return self.fillInternal2()(n, i);
 		}
+	}
+
+	private fillInternal2() {
+		return (d: any, i: number) => color(this.graph.timesteps[0].nodes[i].type);
 	}
 
 	protected tickInternal() {
@@ -62,18 +61,12 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 			.data(this._voronoi.polygons(
 				(this._allPoints)
 			));
-
-		// for (let str of forTest) {
-		// 	console.log(str);
-		// }
-		// console.log(this.graph.timesteps[0].nodes.concat(this._noisePoints))
-
 		this._polygons.exit().remove();
 		let newPoly = this._polygons.enter().append("path")
 		this._polygons = this._polygons.merge(newPoly)
-			//.style("stroke", this.fillInternal())
+			.style("stroke", this.fillInternal())
 			.style("fill", this.fillInternal())
-			//.style("stroke-width", "0.5px")
+			// .style("stroke-width", "0.5px")
 			.attr("d", function (d: any) {
 				return d ? "M" + d.join("L") + "Z" : null;
 			});
@@ -81,22 +74,8 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 		//alter FD attr of graphics
 		this.nodeGlyphs.attr("stroke", "black")
 			.attr("stroke-width", "0.5px")
-		//.attr("fill", this.fillInternal())
+			.attr("fill", this.fillInternal2())
 		this.linkGlyphs.attr("stroke", "grey")
-			.attr("stroke-width", "0.25px")
-
-
-		//////////PLAN B//////////
-		// this._polygons.remove();
-		// this._polygons = this._polygons
-		// 	.data(this._voronoi.polygons(this.graph.timesteps[0].nodes));
-		// this._polygons.enter().append("path")
-		// 	.style("stroke", "black")
-		// 	.style("fill", "none")
-		// 	.style("stroke-width", "0.5px")
-		// 	.attr("d", function (d: any) {
-		// 		return d ? "M" + d.join("L") + "Z" : null;
-		// 	});;
-
+			.attr("stroke-width", "0.25px");
 	}
 }

@@ -42,7 +42,7 @@ export class LesMiserablesGraph extends Graph {
 
 export class DynamicLesMiserablesGraph extends DynamicGraph {
 	public constructor(response: any) {
-		console.log(response);
+		// console.log(response);
 		let graphs: Array<LesMiserablesGraph> = new Array<LesMiserablesGraph>();
 
 		let rawNodeData: Array<any> = response.nodes;
