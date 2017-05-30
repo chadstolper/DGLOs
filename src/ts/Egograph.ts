@@ -5,6 +5,7 @@ import { DrawableEdge, DrawableNode } from "./DrawableEdge";
 import * as d3Scale from "d3-scale";
 import * as d3 from "d3-selection";
 import * as d3force from "d3-force";
+import { extent } from "d3-array";
 //import { transition } from "d3-transition";
 
 export class Egograph extends ForceDirectedGraph {
@@ -106,6 +107,7 @@ export class Egograph extends ForceDirectedGraph {
 		}
 	}
 	private mergeNodeLists() {
+		console.log(this._centralNodeArray)
 		for (let node of this._centralNodeArray) {
 			this._nbrNodes.push(node);
 		}
@@ -136,12 +138,14 @@ export class Egograph extends ForceDirectedGraph {
 		this.nodeGlyphs
 			.attr("fill", (d: DrawableNode) => {
 				return this.color(d.origID);
-			});
+			})
+			.attr("id", function (d: DrawableNode) { return d.id; });
 	}
 
 	protected initSimulation() {
 		let yScale = d3Scale.scaleLinear()
-			.domain([0, this.graph.timesteps.length])
+			// .domain([0, this.graph.timesteps.length])
+			.domain(extent(this.graph.timesteps, function (d: Graph) { return d.timestamp; }))
 			.range([0 + (super.height * .25), super.height - (super.height * 0.25)]);
 		let centralNodes = this._centralNodeArray;
 		let superWidth = super.width;
