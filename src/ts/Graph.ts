@@ -34,8 +34,14 @@ export class Node implements SimulationNodeDatum {
 	set fx(num: number) {
 		this._fx = num;
 	}
+	get fx(): number {
+		return this._fx;
+	}
 	set fy(num: number) {
 		this._fy = num;
+	}
+	get fy(): number {
+		return this._fy;
 	}
 }
 

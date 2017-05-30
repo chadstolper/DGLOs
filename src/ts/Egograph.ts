@@ -111,12 +111,18 @@ export class Egograph extends ForceDirectedGraph {
 			this._nbrNodes.push(node);
 		}
 		let self = this
+		let yScale = d3Scale.scaleLinear()
+			// .domain([0, this.graph.timesteps.length])
+			.domain(extent(this.graph.timesteps, function (d: Graph) { return d.timestamp; }))
+			.range([0 + (super.height * .15), super.height - (super.height * 0.15)]);
 		this._nbrNodes.forEach(function (d: DrawableNode) {
 			if (self._centralNodeArray.includes(d)) {
 				d.fx = self.width / 2;
-				return;
+				d.fy = yScale(d.timestamp);
+			} else {
+				d.fx = null;
+				d.fy = null;
 			}
-			d.fx = null;
 		})
 	}
 
@@ -158,31 +164,29 @@ export class Egograph extends ForceDirectedGraph {
 		let superWidth = super.width;
 
 		super.initSimulation();
-		this.simulation
-			.force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
-				if (centralNodes.includes(d)) {
-					//d.fx = superWidth / 2;
-					return superWidth / 2;
-				}
-				//d.fx = null;
-				return 0;
-			}).strength(function (d: DrawableNode) {
-				if (centralNodes.includes(d)) {
-					return 1;
-				}
-				return 0;
-			}))
-			.force("alignCentralNodesY", d3force.forceY(function (d: DrawableNode) {
-				if (centralNodes.includes(d)) {
-					return yScale(d.timestamp);
-				}
-				return 0;
-			}).strength(function (d) {
-				if (centralNodes.includes(d)) {
-					return 1;
-				}
-				return 0;
-			}));
+		//this.simulation
+		// .force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return superWidth / 2;
+		// 	}
+		// 	return 0;
+		// }).strength(function (d: DrawableNode) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return 1;
+		// 	}
+		// 	return 0;
+		// }))
+		// .force("alignCentralNodesY", d3force.forceY(function (d: DrawableNode) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return yScale(d.timestamp);
+		// 	}
+		// 	return 0;
+		// }).strength(function (d) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return 1;
+		// 	}
+		// 	return 0;
+		// }));
 
 	}
 }
