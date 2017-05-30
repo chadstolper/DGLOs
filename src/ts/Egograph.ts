@@ -44,6 +44,7 @@ export class Egograph extends ForceDirectedGraph {
 			step.nodes.forEach(function (n: DrawableNode) {
 				n.origID = n.id;
 				n.id = n.id + "-" + step.timestep;
+				n.timestep = step.timestep;
 			})
 		})
 
@@ -51,6 +52,7 @@ export class Egograph extends ForceDirectedGraph {
 
 	private paint() {
 		this.readyNodesAndEdges();
+		this.initSimulation();
 		this._graphToDraw = new Graph(this._nbrNodes, this._nbrEdges as Array<DrawableEdge>, 0);
 		super.draw(this._graphToDraw);
 		this.clickListen();
@@ -142,6 +144,42 @@ export class Egograph extends ForceDirectedGraph {
 			.attr("fill", (d: DrawableNode) => {
 				return this.color(d.origID);
 			});
+	}
+
+	protected initSimulation() {
+		let Height = 750;
+		let WIDTH = 750;
+		let yScale = d3Scale.scaleLinear()
+			.domain([0, this.graph.timesteps.length])
+			.range([0 + (Height * .25), Height - (Height * 0.25)]);
+		let centralNodes = this._centralNodeArray;
+		let ego = this;
+		super.initSimulation();
+		this.simulation
+			.force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
+				if (centralNodes.includes(d)) {
+					return WIDTH / 2;
+				}
+				return 0;
+			}).strength(function (d: DrawableNode) {
+				if (centralNodes.includes(d)) {
+					return 1;
+				}
+				return 0;
+			})
+			)
+			.force("alignCentralNodesY", d3force.forceY(function (d: DrawableNode) {
+				if (centralNodes.includes(d)) {
+					return yScale(d.timestep);
+				}
+				return 0;
+			}).strength(function (d) {
+				if (centralNodes.includes(d)) {
+					return 1;
+				}
+				return 0;
+			}));
+
 	}
 }
 
