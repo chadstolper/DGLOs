@@ -1,1 +1,9 @@
-todo
+Pick a central node
+For each timestep:
+Remove all nodes that are more than one node aeay from the central node
+(If the central node isn't present in the timestep, remove it all)
+
+Align central nodes 
+If two or more nodes representing that same datum in different time steps exist:
+Slide them so they are on top of one another
+Bring the edges with them
