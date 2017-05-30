@@ -82,12 +82,12 @@ export class Edge {
 export class Graph {
 	private _nodes: Array<Node>;
 	private _edges: Array<Edge>;
-	private _timestep: number;
+	private _timestamp: number;
 
-	public constructor(nodes: Array<Node>, edges: Array<Edge>, timestep: number) {
+	public constructor(nodes: Array<Node>, edges: Array<Edge>, timestamp: number) {
 		this._nodes = nodes;
 		this._edges = edges;
-		this._timestep = timestep;
+		this._timestamp = timestamp;
 	}
 
 	get nodes(): Array<Node> {
@@ -97,8 +97,8 @@ export class Graph {
 	get edges(): Array<Edge> {
 		return this._edges;
 	}
-	get timestep(): number {
-		return this._timestep;
+	get timestamp(): number {
+		return this._timestamp;
 	}
 }
 

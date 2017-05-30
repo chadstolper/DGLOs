@@ -3,7 +3,7 @@ import { Node, Edge } from "./Graph";
 
 export class DrawableNode extends Node {
 	protected _origID: string | number;
-	protected _timestep: number;
+	protected _timestamp: number;
 
 	get origID(): string | number {
 		return this._origID;
@@ -13,12 +13,12 @@ export class DrawableNode extends Node {
 		this._origID = id;
 	}
 
-	set timestep(timestep: number) {
-		this._timestep = timestep;
+	set timestamp(timestamp: number) {
+		this._timestamp = timestamp;
 	}
 
-	get timestep(): number {
-		return this._timestep;
+	get timestamp(): number {
+		return this._timestamp;
 	}
 }
 

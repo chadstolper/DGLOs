@@ -46,7 +46,7 @@ export class DynamicRadoslawGraph extends DynamicGraph {
 		for (let timestep of response) {
 			let rawNodeData: Array<any> = timestep.nodes;
 			let rawEdgeData: Array<any> = timestep.edges;
-			let timestamp: number = timestep.timestep;
+			let timestamp: number = timestep.timestamp;
 			let g: StaticRadoslawGraph = new StaticRadoslawGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}

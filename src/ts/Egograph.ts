@@ -36,8 +36,8 @@ export class Egograph extends ForceDirectedGraph {
 			})
 			step.nodes.forEach(function (n: DrawableNode) {
 				n.origID = n.id;
-				n.id = n.id + "-" + step.timestep;
-				n.timestep = step.timestep;
+				n.id = n.id + "-" + step.timestamp;
+				n.timestamp = step.timestamp;
 			})
 		})
 
@@ -158,11 +158,10 @@ export class Egograph extends ForceDirectedGraph {
 					return 1;
 				}
 				return 0;
-			})
-			)
+			}))
 			.force("alignCentralNodesY", d3force.forceY(function (d: DrawableNode) {
 				if (centralNodes.includes(d)) {
-					return yScale(d.timestep);
+					return yScale(d.timestamp);
 				}
 				return 0;
 			}).strength(function (d) {
