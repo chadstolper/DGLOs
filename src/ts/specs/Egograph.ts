@@ -1,6 +1,6 @@
 import { Technique } from "./Technique";
 
-export class EgoGraph extends Technique {
+export class Egograph extends Technique {
 	public draw() {
 		this.lib.drawNodeGlyphs();
 		this.lib.drawEdgeGlyphs();

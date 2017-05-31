@@ -1,6 +1,6 @@
 import { Technique } from "./Technique"
 
-export class GraphicMap extends Technique {
+export class GMap extends Technique {
 	public draw() {
 		this.lib.drawNodeGlyphs(); //require data as a graph
 		this.lib.drawEdgeGlyphs();
