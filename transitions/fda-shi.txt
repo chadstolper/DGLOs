@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-RemoveExitNodeGlyphs
-RemoveExitEdgeGlyphs
-DrawNewNodeGlyphs
-DrawNewEdgeGlyphs
-SetNodeGlyphs {attr}
-SetEdgeGlyphs {attr}
-RestartSimulation
-=======
+
 removeExitNodeGlyphs
 removeExitEdgeGlyphs
 drawNewNodeGlyphs
@@ -14,4 +6,3 @@ drawNewEdgeGlyphs
 setNodeGlyphs {attr}
 setEdgeGlyphs {attr}
 restartSimulation
->>>>>>> d211890a2f32baa50ead947fe672192d9cdce4cc
