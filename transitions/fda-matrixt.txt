@@ -1,7 +1,7 @@
-stop simulation
-remove edges
-postion nodes to axis
-morph nodes into axis
-draw cells
-copy cells per timestep
-set cell color {attr}
+stopSimulation
+removeEdgeGlyphs / removeNodeGlyphs
+position NodeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {Rectangles}
+replicate {timesteps}
+setEdgeGlyphs {color}

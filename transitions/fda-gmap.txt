@@ -1,4 +1,4 @@
-draw regions (fade? expand? restart sim? george lucas?)
-set node radius {attr}
-set edge color {attr}
-set node color {attr} to region color {attr}
+drawRegions
+setNodeGlyphs {radius}
+setEdgeGlyphs {color}
+setNodeGlyphs {color} to region color {attr}

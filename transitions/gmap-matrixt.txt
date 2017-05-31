@@ -1,7 +1,8 @@
-stop simulation
-remove regions
-remove edges
-postion nodes to axis
-morph nodes into axis
-draw cells
-color cells
+stopSimulation
+removeRegions
+positionNodeGlyphs
+positionEdgeGlyphs
+replicate {timesteps}
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rectangle}
+setEdgeGlyphs {color}

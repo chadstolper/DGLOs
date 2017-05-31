@@ -1,8 +1,8 @@
-draw new nodeglyphs
-draw new edgeglyphs
-remove exit nodeglyphs
-remove exit edgeglyphs
-set radius of node glyphs by {attr}
-set color of node glyphs by {attr}
-set edge width {attr}
-restart simmulation
+draw newNodeGlyphs
+draw newEdgeGlyphs
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+setNodeGlyphs {radius}
+setNodeGlyphs {color}
+setEdgeGlyphs {width}
+restartSimmulation

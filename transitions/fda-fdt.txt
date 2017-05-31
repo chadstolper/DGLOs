@@ -1,3 +1,4 @@
-Create grouping element for each timestep
-Copy nodes to each group
-restart simulation for each group
+replicate {timesteps}
+drawNodeGlyphs
+drawEdgeGlyphs
+restartSimulation

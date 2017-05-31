@@ -1,9 +1,9 @@
-remove timesteps
-draw regions (fade? expand? restart sim? george lucas?)
-set node radius {attr}
-set edge stroke {attr}
-set edge stroke-width {attr}
-set node color {attr} to region color {attr}
+removeTimesteps
+drawRegions
+setNodeGlyphs {radius}
+setEdgeGlyphs {stroke}
+setEdgeGlyphs {stroke-width}
+setNodeGlyphs {color} to region color {attr}
 
 #v2
 #combine/morph/merge timesteps

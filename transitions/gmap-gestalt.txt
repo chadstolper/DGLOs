@@ -1,7 +1,9 @@
-remove regions
-remove edges
-position nodes
-draw new nodes for timesteps
-draw new edges
-set node radius {attr}
-set edge stroke-width {attr}
+removeRegions
+removeEdgeGlyphs
+positionNodeGlyphs
+replicate {timesteps}
+drawNewNodeGlyphs
+drawEdgeGlyphs
+setNodeGlyphs {radius}
+setEdgeGlyphs {stroke}
+setEdgeGlyphs {stroke-width}

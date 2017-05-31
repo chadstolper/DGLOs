@@ -1,6 +1,6 @@
-stop simulation
-remove edges
-postion nodes to axis
-morph nodes into axis
-draw cells
-color cells
+stopSimulation
+removeEdgeGlyphs / removeNodeGlyphs
+position NodeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {Rectangles}
+setEdgeGlyphs {color}

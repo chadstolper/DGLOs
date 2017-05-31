@@ -1,6 +1,6 @@
-for each graph
-Remove edges
-position nodes on axis
-morph nodes to axis
-draw cells
-set cell color {attr}
+removeNodeGlyphs
+positionEdgeGlyphs
+replicate {timesteps}
+transformEdgeGlyphsTo {rectangle}
+drawNewEdgeGlyphs
+setEdgeGlyphs {color}

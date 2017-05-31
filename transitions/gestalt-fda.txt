@@ -1,7 +1,7 @@
-remove edges
-remove duplicate nodes
-move nodes to position
-draw edges
-set edge width {attr}
-set node radius {attr}
-restart simulation
+removeEdgeGlyphs
+removeExitNodeGlyphs
+postitionNodeGlyphs
+drawEdgeGlyphs
+setEdgeGlyphs [width]
+setNodeGlyphs {radius}
+restartSimulation

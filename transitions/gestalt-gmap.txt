@@ -1,9 +1,9 @@
-remove edges
-remove extra nodes
-repostion nodes
-draw edges
-draw regions
-set node radius {attr}
-set node color {attr} to region color {attr}
-set edge stroke {attr}
-set edge stroke-width {attr}
+removeEdgeGlyphs
+removeExitNodeGlyphs
+positionNodeGlyphs
+drawEdgeGlyphs
+drawRegions
+setNodeGlyphs {radius}
+setNodeGlyphs {color} to region color {attr}
+setEdgeGlyphs {stroke}
+setEdgeGlyphs {stroke-width}

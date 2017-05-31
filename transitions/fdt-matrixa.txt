@@ -1,6 +1,6 @@
-remove timesteps
-remove edges
-postion nodes on axis
-morph nodes into axis
-draw cells
-set cell color {attr}
+removeTimesteps
+removeNodeGlyphs
+postionEdgeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rectangle}
+setEdgeGlyph {color}
