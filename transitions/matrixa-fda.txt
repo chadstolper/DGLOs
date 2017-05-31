@@ -9,11 +9,11 @@
 #set edge stroke-width {attr}
 #(re)start simulation
 
-Remove all
-Restart simulation
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
+removeAll
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
 Advance/Retreat
 
