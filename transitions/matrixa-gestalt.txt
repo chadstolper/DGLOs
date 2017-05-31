@@ -1,13 +1,10 @@
-v1
-remove cells
-morph axis into nodes
-reformat nodes
-reposition
-draw missing nodes
-draw edges
-
-v2
-remove unneeded cells
-reposition
-morph into nodes
-draw edges
+positionEdgeGlyphs
+positionNodeGlyphs
+transfromNodeGlyphsTo {circle}
+replicateTimesteps
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs

@@ -1,3 +1,7 @@
-remove edges
-move nodes to position
-draw edges
+removeEdgeGlyphs
+positionNodeGlyphs
+drawNewNodeGlyphs
+drawEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs
+restartSimulation

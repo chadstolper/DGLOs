@@ -1,5 +1,19 @@
-For each timestep in animated matrix:
-Create a node for every row and column
-Space nodes based of force simulation
-Create edges between rows and columns
-Adjust edge thickness/color
+#remove cells
+#morph axis into nodes
+#reposition nodes
+#copy matrix per timestamp
+#draw new nodes
+#draw new edges
+#set node radius {attr}
+#set node color {attr}
+#set edge stroke {attr}
+#set edge stroke-width {attr}
+#(re)start simulation
+
+transformEdgeGlyphsTo {line}
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+replicateTimesteps

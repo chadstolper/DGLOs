@@ -107,10 +107,23 @@ export class Egograph extends ForceDirectedGraph {
 		}
 	}
 	private mergeNodeLists() {
-		console.log(this._centralNodeArray)
 		for (let node of this._centralNodeArray) {
 			this._nbrNodes.push(node);
 		}
+		let self = this
+		let yScale = d3Scale.scaleLinear()
+			// .domain([0, this.graph.timesteps.length])
+			.domain(extent(this.graph.timesteps, function (d: Graph) { return d.timestamp; }))
+			.range([0 + (super.height * .15), super.height - (super.height * 0.15)]);
+		this._nbrNodes.forEach(function (d: DrawableNode) {
+			if (self._centralNodeArray.includes(d)) {
+				d.fx = self.width / 2;
+				d.fy = yScale(d.timestamp);
+			} else {
+				d.fx = null;
+				d.fy = null;
+			}
+		})
 	}
 
 	private clickTransition(self: Egograph) {
@@ -142,38 +155,47 @@ export class Egograph extends ForceDirectedGraph {
 			.attr("id", function (d: DrawableNode) { return d.id; });
 	}
 
+	protected drawLinks(edges: Edge[]) {
+		super.drawLinks(edges);
+		this.linkGlyphs
+			.style("opacity", .05);
+	}
+
 	protected initSimulation() {
 		let yScale = d3Scale.scaleLinear()
 			// .domain([0, this.graph.timesteps.length])
 			.domain(extent(this.graph.timesteps, function (d: Graph) { return d.timestamp; }))
-			.range([0 + (super.height * .25), super.height - (super.height * 0.25)]);
+			.range([0 + (super.height * .15), super.height - (super.height * 0.15)]);
 		let centralNodes = this._centralNodeArray;
 		let superWidth = super.width;
 
 		super.initSimulation();
-		this.simulation
-			.force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
-				if (centralNodes.includes(d)) {
-					return superWidth / 2;
-				}
-				return 0;
-			}).strength(function (d: DrawableNode) {
-				if (centralNodes.includes(d)) {
-					return 1;
-				}
-				return 0;
-			}))
-			.force("alignCentralNodesY", d3force.forceY(function (d: DrawableNode) {
-				if (centralNodes.includes(d)) {
-					return yScale(d.timestamp);
-				}
-				return 0;
-			}).strength(function (d) {
-				if (centralNodes.includes(d)) {
-					return 1;
-				}
-				return 0;
-			}));
+		this.simulation.force("charge", d3force.forceManyBody().strength(-200))
+		// this.simulation.force("center", null) //define center
+
+		//this.simulation
+		// .force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return superWidth / 2;
+		// 	}
+		// 	return 0;
+		// }).strength(function (d: DrawableNode) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return 1;
+		// 	}
+		// 	return 0;
+		// }))
+		// .force("alignCentralNodesY", d3force.forceY(function (d: DrawableNode) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return yScale(d.timestamp);
+		// 	}
+		// 	return 0;
+		// }).strength(function (d) {
+		// 	if (centralNodes.includes(d)) {
+		// 		return 1;
+		// 	}
+		// 	return 0;
+		// }));
 
 	}
 }

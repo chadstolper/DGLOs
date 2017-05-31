@@ -1,7 +1,9 @@
-remove regions
-remove noise nodes
-duplicate nodes per timestep
-repostion
-recolor
-re-radius
-re-stroke
+removeRegions
+replicateTimesteps
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs
+restartSimulation

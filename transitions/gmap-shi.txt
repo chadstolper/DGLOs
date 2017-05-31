@@ -1,5 +1,6 @@
-remove regions
-remove noise nodes
-remove unueeded nodes and edges
-repostion nodes and edges
-recolor, size, width, etc.
+removeRegions
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+restartSimulation

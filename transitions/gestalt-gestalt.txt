@@ -1,5 +1,6 @@
-remove edges
-remove unneeded nodes
-reposition nodes
-add new nodes
-draw new edges
+removeExitEdgeGlyphs
+removeExitNodeGlyphs
+positionNodeGlyphs
+positionEdgeGlyphs
+drawNewNodeGlyphs
+drawNewEdgeGlyphs

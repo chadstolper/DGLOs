@@ -1,3 +1,7 @@
-remove edges
-move nodes to position (single svg or many?)
-draw new edges
+positionNodeGlyphs
+positionEdgeGlyphs
+replicateTimesteps
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs

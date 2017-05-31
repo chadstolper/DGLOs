@@ -1,7 +1,13 @@
-v1
-remove timesteps, keep [0]
-fda-gmap()
+removeTimesteps
+drawRegions
+setEdgeGlyphsAttrs
+setRegionGlyphsAttrs
+setNodeGlyphsAttrs
 
-v2
-combine/morph/merge timesteps into one
-fda-gmap()
+#v2
+#combine/morph/merge timesteps
+#draw regions (fade? expand? restart sim? george lucas?)
+#set node radius {attr}
+#set edge stroke {attr}
+#set edge stroke-width {attr}
+#set node color {attr} to region color {attr}

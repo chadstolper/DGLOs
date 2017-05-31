@@ -1,16 +1,6 @@
-v1
-stop simulation
-remove edges
-duplicate nodes
-reposition as timeline
-reposition nodes on axis
-morph nodes
-draw cells and color
-
-v2
-stop simulation
-remove edges
-TODO: morph into matrix
-duplicate matrix
-repostion as timeline
-update cells
+stopSimulation
+positionNodeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rect}
+replicateTimesteps
+setEdgeGlyphsAttrs

@@ -1,7 +1,7 @@
-remove edges
-remove duplicate nodes
-move nodes to position
-draw edges
-restart simulation
-
-basically fda-gestalt in reverse
+removeEdgeGlyphs
+removeExitNodeGlyphs
+positionNodeGlyphs
+drawEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs
+restartSimulation

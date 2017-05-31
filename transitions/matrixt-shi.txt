@@ -1,8 +1,22 @@
-Pick a specific edge or column as the central node
-Draw a node for everytime that edge or column appears
-For each drawn node:
-Look at the graph representing its timestep
-For every cell in that edge or column, create an edge
-Attach edges to their central node
+# Set {row / column} as central node
+# For matrix in timeline:
+# If the row/column is in the matrix, draw nodeGlyph
+#	for each cell in the row or column
+#		If the row/coulmn it represents has a node
+#			Draw edge
+#			Thicken edges by {attr}
+#		else if the row/column doesn't have a node
+#		 	Draw nodeGlyph
+#			Color nodeGlyph by {attr}
+#			Reposition nodeGlyphs with {force simulation}
+#			Draw edges
+#			Thicken edges by {attr}
 
-Create a node for the edges
+setCenterNode
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+restartSimulation

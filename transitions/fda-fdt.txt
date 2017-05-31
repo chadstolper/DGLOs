@@ -1,4 +1,4 @@
-For each timestep in the graph:
-Create an SVG element (arbitray element)
-Use the fda drawing mechanism to draw this timestep in the new SVG element
-remove the animated force directed graph
+replicateTimesteps
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+restartSimulation

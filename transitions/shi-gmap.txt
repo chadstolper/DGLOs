@@ -1,2 +1,19 @@
-Shi to force directed
-force directed to map
+#Remove all but one central node representing this timestep
+#Remove Edges associated with other central nodes
+#Draw remaining nodes in graph that were not in the ego graph
+#Reposition nodes based on force simulation
+#Draw edges associated with those nodes
+#Recolor nodes, fatten edge based on some property
+#add noise nodes
+#draw regions (fade? expand? restart sim? george lucas?)
+#reduce node radius
+#change color of edges
+#change color of nodes to regions(shouldnt be needed)
+
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+drawNewNodeGlyphs
+positionNodeGlyphs
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+drawRegions

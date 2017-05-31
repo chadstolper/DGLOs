@@ -1,2 +1,4 @@
-Resize matricies depending on changing data
-Recolor cells depending on changing data 
+removeExitEdgeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

@@ -1,2 +1,7 @@
-shi to matrix timeline
-matrix timeline to gestalt
+positionEdgeGlyphs
+positionNodeGlyphs
+replicateTimesteps
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs

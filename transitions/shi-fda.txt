@@ -1,7 +1,15 @@
-Remove all but one central node representing this timestep
-Remove Edges associated with other central nodes
-Draw remaining nodes in graph that were not in the ego graph
-Reposition nodes based on force simulation
-Draw edges associated with those nodes
-Recolor nodes, fatten edge based on some property
+#Remove all but one central node representing this timestep
+#Remove Edges associated with other central nodes
+#Draw remaining nodes in graph that were not in the ego graph
+#Reposition nodes based on force simulation
+#Draw edges associated with those nodes
+#Recolor nodes, fatten edge based on some property
 
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+enableStepping

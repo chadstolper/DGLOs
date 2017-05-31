@@ -1,3 +1,7 @@
-remove regions
-remove noisenodes
-same as fda-matrixa
+stopSimulation
+removeRegions
+positionNodeGlyphs
+positionEdgeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

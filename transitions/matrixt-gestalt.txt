@@ -1,4 +1,6 @@
-remove unneeded cells
-make cells nodes
-reposition
-draw new edges
+transformNodeGlyphsTo {circle}
+transformEdgeGlyphsTo {line}
+positionNodeGlyphs
+positionEdgeGlyphs
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs

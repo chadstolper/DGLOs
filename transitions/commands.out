@@ -1,0 +1,25 @@
+5	drawEdgeGlyphs
+33	drawNewEdgeGlyphs
+27	drawNewNodeGlyphs
+6	drawRegions
+5	enableStepping
+12	positionEdgeGlyphs
+17	positionNodeGlyphs
+1	postionEdgeGlyphs
+6	removeEdgeGlyphs
+15	removeExitEdgeGlyphs
+18	removeExitNodeGlyphs
+4	removeNodeGlyphs
+6	removeRegions
+10	removeTimesteps
+16	replicateTimesteps
+23	restartSimulation
+2	setCenterNode
+41	setEdgeGlyphsAttrs
+30	setNodeGlyphsAttrs
+4	setRegionGlyphsAttrs
+5	stopSimulation
+8	transformEdgeGlyphsTo {line}
+12	transformEdgeGlyphsTo {rect}
+2	transformNodeGlyphsTo {circle}
+1	transfromNodeGlyphsTo {circle}

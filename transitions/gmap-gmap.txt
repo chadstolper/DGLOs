@@ -1,1 +1,8 @@
-same as fda-fda, but with region update
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+setEdgeGlyphsAttrs
+setRegionGlyphsAttrs
+setNodeGlyphsAttrs
+restartSimulation

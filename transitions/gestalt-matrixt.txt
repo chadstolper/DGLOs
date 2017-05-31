@@ -1,5 +1,7 @@
-remove edges
-reposition nodes
-morph into axis
-create grid
-color in boxes
+removeEdgeGlyphs
+removeTimesteps
+positionNodeGlyphs
+replicateTimesteps
+drawEdgeGlyphs
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

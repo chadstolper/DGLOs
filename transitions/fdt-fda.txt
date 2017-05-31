@@ -1,3 +1,2 @@
-remove timesteps
-position center
-start simulation starting at [0]
+removeTimesteps
+restartSimulation

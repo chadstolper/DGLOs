@@ -1,5 +1,6 @@
-remove edges
-remove extra timestep nodes
-postion nodes along axis
-morph into grid/fade in grid?
-color boxes
+removeEdgeGlyphs
+removeTimesteps
+positionNodeGlyphs
+drawEdgeGlyphs
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

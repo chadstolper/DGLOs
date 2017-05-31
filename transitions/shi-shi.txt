@@ -1,5 +1,11 @@
-Pick a new central node
-Reposition nodes that are in both graphs
-Draw nodes neighboring cental node
-Draw incident edges 
-Color nodes by property
+#Remove exit nodeGlyphs (not incident to central node)
+#Remove exit edgeGlyphs (not incident to central node)
+#Draw nodeGLyphs (neighboring central node
+#set central node
+
+removeExitNodeGlyphs
+removeExitEdgeGlyphs 
+drawNewNodeGlyphs 
+drawNewEdgeGlyphs 
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
