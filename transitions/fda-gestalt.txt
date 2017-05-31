@@ -1,7 +1,6 @@
 stopSimulation
-removeEdgeGlyphs
 positionNodeGlyphs
 drawNewNodeGlyphs
-drawEdgeGlyphs
+postionEdgeGlyphs
 setEdgeGlyphsAttrs
 setNodeGlyphsAttrs

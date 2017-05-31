@@ -1,6 +1,7 @@
-removeEdgeGlyphs
 positionNodeGlyphs
+positionEdgeGlyphs
 replicateTimesteps
+drawNewNodeGlyphs
 drawNewEdgeGlyphs
 setEdgeGlyphsAttrs
 setNodeGlyphsAttrs

@@ -1,8 +1,10 @@
-removeEdgeGlyphs
+positionEdgeGlyphs
 positionNodeGlyphs
-#transfromNodeGlyphsTo {circle}
+transfromNodeGlyphsTo {circle}
 replicateTimesteps
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
 drawNewNodeGlyphs
-drawEdgeGlyphs
+drawNewEdgeGlyphs
 setEdgeGlyphsAttrs
 setNodeGlyphsAttrs

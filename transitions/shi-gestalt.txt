@@ -1,8 +1,7 @@
-removeEdgeGlyphs
-drawNewNodeGlyphs
+positionEdgeGlyphs
 positionNodeGlyphs
 replicateTimesteps
-drawEdgeGlyphs
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
 setEdgeGlyphsAttrs
 setNodeGlyphsAttrs
-#??? maybe?

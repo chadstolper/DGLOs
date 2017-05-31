@@ -1,7 +1,7 @@
 removeRegions
-removeEdgeGlyphs
+positionEdgeGlyphs
 positionNodeGlyphs
 replicateTimesteps
 drawNewNodeGlyphs
-drawEdgeGlyphs
+drawNewEdgeGlyphs
 setEdgeGlyphsAttrs
