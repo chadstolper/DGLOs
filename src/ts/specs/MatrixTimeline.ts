@@ -1,5 +1,5 @@
 import { Technique } from "./Technique"
-export class MatrixT extends Technique {
+export class MatrixTimeline extends Technique {
 	public draw(): void {
 		this.lib.drawNodeGlyphs();
 		this.lib.transformNodeGlyphsTo(/*"label"*/);
