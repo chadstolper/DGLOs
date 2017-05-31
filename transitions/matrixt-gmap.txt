@@ -13,7 +13,9 @@
 #change color of edges
 #change color of nodes to regions(shouldnt be needed)
 
-removeAll
+
+removeTimesteps
+transformEdgeGlyphsTo {line}
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs

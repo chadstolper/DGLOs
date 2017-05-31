@@ -12,7 +12,8 @@
 #			Draw edges
 #			Thicken edges by {attr}
 
-removeAll
+
+transformEdgeGlyphsTo {line}
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs

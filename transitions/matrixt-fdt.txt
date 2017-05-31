@@ -1,4 +1,5 @@
-removeAll
+removeTimesteps
+transformEdgeGlyphsTo {line}
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs

@@ -10,7 +10,7 @@
 #set edge stroke-width {attr}
 #(re)start simulation
 
-removeAll
+transformEdgeGlyphsTo {line}
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
