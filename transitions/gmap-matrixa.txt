@@ -3,5 +3,5 @@ removeRegions
 positionNodeGlyphs
 positionEdgeGlyphs
 drawNewEdgeGlyphs
-transformEdgeGlyphsTo {rectangle}
-setEdgeGlyphs {color}
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

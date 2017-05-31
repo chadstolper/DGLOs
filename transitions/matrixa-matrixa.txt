@@ -1,4 +1,4 @@
 removeExitEdgeGlyphs
-drawnewEdgeGlyphs
-TransformEdgeGlyphsTo {rectangles}
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rect}
 positionEdgeGlyphs

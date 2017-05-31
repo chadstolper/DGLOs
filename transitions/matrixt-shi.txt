@@ -1,6 +1,6 @@
-Set {row / column} as central node
-For matrix in timeline:
-#If the row/column is in the matrix, draw nodeGlyph
+# Set {row / column} as central node
+# For matrix in timeline:
+# If the row/column is in the matrix, draw nodeGlyph
 #	for each cell in the row or column
 #		If the row/coulmn it represents has a node
 #			Draw edge
@@ -12,9 +12,11 @@ For matrix in timeline:
 #			Draw edges
 #			Thicken edges by {attr}
 
-removeAll
+setCenterNode
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
 restartSimulation

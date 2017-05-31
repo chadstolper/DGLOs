@@ -1,9 +1,8 @@
 removeTimesteps
 drawRegions
-setNodeGlyphs {radius}
-setEdgeGlyphs {stroke}
-setEdgeGlyphs {stroke-width}
-setNodeGlyphs {color} to region color {attr}
+setEdgeGlyphsAttrs
+setRegionGlyphsAttrs
+setNodeGlyphsAttrs
 
 #v2
 #combine/morph/merge timesteps

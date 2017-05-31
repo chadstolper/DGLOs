@@ -2,8 +2,7 @@ drawNewNodeGlyphs
 drawNewEdgeGlyphs
 removeExitNodeGlyphs
 removeExitEdgeGlyphs
-setNodeGlyphs {radius}
-setNodeGlyphs {color} to region color {attr}
-setEdgeGlyphs {stroke}
-setEdgeGlyphs {stroke-width}
-restartSimmulation
+setEdgeGlyphsAttrs
+setRegionGlyphsAttrs
+setNodeGlyphsAttrs
+restartSimulation

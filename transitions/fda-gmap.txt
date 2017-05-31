@@ -1,4 +1,4 @@
 drawRegions
-setNodeGlyphs {radius}
-setEdgeGlyphs {color}
-setNodeGlyphs {color} to region color {attr}
+setEdgeGlyphsAttrs
+setRegionGlyphsAttrs
+setNodeGlyphsAttrs

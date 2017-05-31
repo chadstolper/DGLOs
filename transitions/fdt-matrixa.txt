@@ -2,5 +2,5 @@ removeTimesteps
 removeNodeGlyphs
 positionEdgeGlyphs
 drawNewEdgeGlyphs
-transformEdgeGlyphsTo {rectangle}
-setEdgeGlyph {color}
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

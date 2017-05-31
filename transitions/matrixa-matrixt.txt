@@ -3,6 +3,6 @@
 #draw new cells
 #set cell color {attr}
 
-For timesteps:
-Advance/Retreat
-Replicate
+replicateTimesteps
+enableStepping
+replicateTimesteps

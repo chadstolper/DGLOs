@@ -3,6 +3,6 @@ removeExitNodeGlyphs
 removeExitEdgeGlyphs
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
 restartSimulation

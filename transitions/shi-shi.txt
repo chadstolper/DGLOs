@@ -5,7 +5,7 @@
 
 removeExitNodeGlyphs
 removeExitEdgeGlyphs 
-drawNodeGLyphs 
+drawNewNodeGlyphs 
 drawNewEdgeGlyphs 
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs

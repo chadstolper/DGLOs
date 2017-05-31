@@ -1,10 +1,9 @@
 removeRegions
-replicate {timesteps}
+replicateTimesteps
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
 removeExitNodeGlyphs
 removeExitEdgeGlyphs
-setNodeGlyphs {color}
-setEdgeGlyphs {stroke}
-setEdgeGlyphs {stroke-width}
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs
 restartSimulation

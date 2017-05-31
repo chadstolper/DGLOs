@@ -17,11 +17,11 @@
 #draw regions and explode
 #it would look really good
 
-removeAllButEdgeGlyphs
+removeNodeGlyphs
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
-transformEdgeGlyphsTo {lines}
-setEdgeGlyphs {attr}
-setNodeGlyphs {attr}
+transformEdgeGlyphsTo {line}
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs
 drawRegions

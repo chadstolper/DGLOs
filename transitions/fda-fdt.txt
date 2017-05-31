@@ -1,4 +1,4 @@
-replicate {timesteps}
-drawNodeGlyphs
-drawEdgeGlyphs
+replicateTimesteps
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
 restartSimulation

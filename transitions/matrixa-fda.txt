@@ -13,7 +13,7 @@ removeAll
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
-Advance/Retreat
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+enableStepping
 

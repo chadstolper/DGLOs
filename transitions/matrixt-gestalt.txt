@@ -1,7 +1,7 @@
 transformNodeGlyphsTo {circle}
 removeEdgeGlyphs
-postionNodeGlyphs
-replicate {timesteps}
+positionNodeGlyphs
+replicateTimesteps
 drawEdgeGlyphs
-setNodeGlyphs {radius}
-setEdgeGlyphs {width}
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs

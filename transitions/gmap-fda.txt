@@ -1,5 +1,4 @@
 removeRegions
-setNodeGlyphs {color}
-setEdgeGlyphs {stroke}
-setEdgeGlyphs {stroke-width}
+setEdgeGlyphsAttrs
+setNodeGlyphsAttrs
 restartSimulation

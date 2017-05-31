@@ -2,7 +2,7 @@ setCenterNode
 removeExitNodeGlyphs
 removeExitEdgeGlyphs
 drawNewNodeGlyphs
-drawNeEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
+drawNewEdgeGlyphs
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
 restartSimulation

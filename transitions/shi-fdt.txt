@@ -12,6 +12,6 @@ removeExitEdgeGlyphs
 restartSimulation
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
-Replicate
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+replicateTimesteps

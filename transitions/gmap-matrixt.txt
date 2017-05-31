@@ -2,7 +2,7 @@ stopSimulation
 removeRegions
 positionNodeGlyphs
 positionEdgeGlyphs
-replicate {timesteps}
+replicateTimesteps
 drawNewEdgeGlyphs
-transformEdgeGlyphsTo {rectangle}
-setEdgeGlyphs {color}
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

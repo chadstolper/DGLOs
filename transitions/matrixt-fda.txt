@@ -1,11 +1,11 @@
 # we could potentially pick a matrix in the timeline,
 # and redraw the rectangles as lines, and connect them to entering nodes
 
-removeAll
+removeTimesteps
+transformNodeGlyphsTo {circle}
+transformEdgeGlyphsTo {line}
 restartSimulation
-drawNewNodeGlyphs
-drawNewEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
-Advance/Retreat
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
+enableStepping
 

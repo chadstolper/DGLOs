@@ -1,6 +1,6 @@
 stopSimulation
 positionNodeGlyphs
 drawNewEdgeGlyphs
-transformEdgeGlyphsTo {Rectangles}
-replicate {timesteps}
-setEdgeGlyphs {color}
+transformEdgeGlyphsTo {rect}
+replicateTimesteps
+setEdgeGlyphsAttrs

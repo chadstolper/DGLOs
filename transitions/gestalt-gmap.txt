@@ -3,7 +3,6 @@ removeExitNodeGlyphs
 positionNodeGlyphs
 drawEdgeGlyphs
 drawRegions
-setNodeGlyphs {radius}
-setNodeGlyphs {color} to region color {attr}
-setEdgeGlyphs {stroke}
-setEdgeGlyphs {stroke-width}
+setEdgeGlyphsAttrs
+setRegionGlyphsAttrs
+setNodeGlyphsAttrs

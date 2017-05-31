@@ -4,7 +4,7 @@
 
 removeExitEdgeGlyphs
 removeExitNodeGlyphs
-For timesteps:
-transformEdgeGlyphsTo {rectangles}
+replicateTimesteps
+transformEdgeGlyphsTo {rect}
 positionEdgeGlyphs
 

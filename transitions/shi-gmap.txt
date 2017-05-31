@@ -14,6 +14,6 @@ removeExitNodeGlyphs
 removeExitEdgeGlyphs
 drawNewNodeGlyphs
 positionNodeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
 drawRegions

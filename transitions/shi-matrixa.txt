@@ -1,4 +1,4 @@
 removeExitNodeGlyphs
 drawNewEdgeGlyphs
-transformEdgeGlyphsTo {rectangles}
-setEdgeGlyphs {attr}
+transformEdgeGlyphsTo {rect}
+setEdgeGlyphsAttrs

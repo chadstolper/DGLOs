@@ -7,6 +7,6 @@ removeNodeGlyphs
 removeEdgeGlyphs
 drawNewNodeGlyphs
 drawNewEdgeGlyphs
-setNodeGlyphs {attr}
-setEdgeGlyphs {attr}
+setNodeGlyphsAttrs
+setEdgeGlyphsAttrs
 restartSimulation

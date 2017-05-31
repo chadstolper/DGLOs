@@ -5,5 +5,5 @@
 #Draw rectangles
 #Color rectangles by {attr} 
 
-removeExitMatricies
-Advance/Retreat
+removeTimesteps
+enableStepping
