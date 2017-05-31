@@ -1,0 +1,69 @@
+1	*Remove all martix vis
+5	Advance/Retreat
+*2	Draw Regions
+1	Draw edgeGlyphs as {lines}
+*3	Draw matrix
+20	Draw new edgeGlyphs
+15	Draw new nodeGlyphs
+*1	Draw nodeGLyphs
+#?1	Draw nodes that arent in the ego graph
+*1	Draw regions
+*1	DrawEdgeGlyphs
+*1	For matrix in timeline:
+*4	For timesteps:
+5	Position edgeGlyphs
+1	Position nodeGlyphs
+1	Remove Regions
+10	Remove all
+1	Remove all but edgeGlyphs
+1	Remove all but one
+1	Remove edges
+1	Remove exit Matricies
+10	Remove exit edgeGlyphs
+9	Remove exit nodeGlyphs
+1	Remove nodes that appear more than once
+1	Remove repeated nodeGlyphs
+4	Replicate
+14	Restart simulation
+1	Set central node
+18	Set edgeGlyphs {attr}
+16	Set nodeGlyphs {attr}
+1	Set {row / column} as central node
+*3	Transform edgeGlyphs to {gestaltGlyphs}
+4	Transform edgeGlyphs to {rectangles}
+1	draw newEdgeGlyphs
+1	draw newNodeGlyphs
+7	drawEdgeGlyphs
+10	drawNewEdgeGlyphs
+1	drawNewEdgeglyphs
+7	drawNewNodeGlyphs
+1	drawNodeGlyphs
+3	drawRegions
+2	position NodeGlyphs
+4	positionEdgeGlyphs
+8	positionNodeGlyphs
+1	postionEdgeGlyphs
+2	postionNodeGlyphs
+1	postitionNodeGlyphs
+8	removeEdgeGlyphs
+2	removeEdgeGlyphs / removeNodeGlyphs
+4	removeExitEdgeGlyphs
+8	removeExitNodeGlyphs
+2	removeNodeGlyphs
+5	removeRegions
+6	removeTimesteps
+7	replicate {timesteps}
+2	restartSimmulation
+7	restartSimulation
+1	setEdgeGlyph {color}
+1	setEdgeGlyphs [width]
+8	setEdgeGlyphs {color}
+6	setEdgeGlyphs {stroke-width}
+6	setEdgeGlyphs {stroke}
+2	setEdgeGlyphs {width}
+3	setNodeGlyphs {color}
+4	setNodeGlyphs {color} to region color {attr}
+8	setNodeGlyphs {radius}
+5	stopSimulation
+2	transformEdgeGlyphsTo {Rectangles}
+6	transformEdgeGlyphsTo {rectangle}
