@@ -155,6 +155,12 @@ export class Egograph extends ForceDirectedGraph {
 			.attr("id", function (d: DrawableNode) { return d.id; });
 	}
 
+	protected drawLinks(edges: Edge[]) {
+		super.drawLinks(edges);
+		this.linkGlyphs
+			.style("opacity", .05);
+	}
+
 	protected initSimulation() {
 		let yScale = d3Scale.scaleLinear()
 			// .domain([0, this.graph.timesteps.length])
@@ -164,6 +170,9 @@ export class Egograph extends ForceDirectedGraph {
 		let superWidth = super.width;
 
 		super.initSimulation();
+		this.simulation.force("charge", d3force.forceManyBody().strength(-200))
+		// this.simulation.force("center", null) //define center
+
 		//this.simulation
 		// .force("alignCentralNodesX", d3force.forceX(function (d: DrawableNode) {
 		// 	if (centralNodes.includes(d)) {

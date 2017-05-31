@@ -1,8 +1,10 @@
-Remove edges
-Create nodeGlyphs for all nodes
-Remove repeating nodeGlyphs
-Position nodeGlyphs along {x-axis}
-Position nodeGlyphs along {y-axis}
+#Position nodeGlyphs along {x-axis}
+#Position nodeGlyphs along {y-axis}
+#Remove exit nodeGlyphs (those that are repeated)
+
+Remove exit edgeGlyphs
+Remove exit nodeGlyphs
 For timesteps:
-Draw rectangles for timestep with {attr}
+Transform edgeGlyphs to {rectangles}
+Position edgeGlyphs
 

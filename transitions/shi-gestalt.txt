@@ -14,11 +14,19 @@ Remove nodes that appear more than once
 #draw new edges
 
 Remove repeated nodeGlyphs
-Remove edges to nowhere
-Draw all nodeGlyphs not present
-Position nodeGlyphs along {x-axis}
-Position nodeGlyphs along {y-axis}
-Draw gridlines for the matrix
-For each timestep:
-Create a copy of the above skeleton matrix
-Fill in each cell based on some property of the edges
+#Remove edges to nowhere
+#Draw all nodeGlyphs not present
+#Position nodeGlyphs along {x-axis}
+#Position nodeGlyphs along {y-axis}
+#Draw gridlines for the matrix
+#For each timestep:
+#Create a copy of the above skeleton matrix
+#Fill in each cell based on some property of the edges
+
+Remove exit edgeGlyphs
+Remove exit nodeGlyphs
+Draw matrix
+Transform edgeGlyphs to {gestaltGlyphs}
+Position edgeGlyphs
+For timesteps:
+Replicate

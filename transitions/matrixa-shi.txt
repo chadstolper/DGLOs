@@ -1,12 +1,20 @@
-Pick a row or coulmn to be the central node
-Create an edge from the central node to a new node for every cell in the row/column
-For the rest of the timesteps:
-If the row/column is in the timestep, create a node for it
-	for all the cells in the row/column
-		if there is a node already drawn representing that cells row/column
-			create an edge between this central node and that node
-			adjust its thickness/color based on data
-		else
-			create an edge to a new node from this central node
-			color/size the node the node based on data
-			color/size the edge based on data
+#Set {row / column} as central node
+#For matrix in timeline:
+#If the row/column is in the matrix, draw nodeGlyph
+#	for each cell in the row or column
+#		If the row/coulmn it represents has a node
+#			Draw edge
+#			Thicken edges by {attr}
+#		else if the row/column doesn't have a node
+#		 	Draw nodeGlyph
+#			Color nodeGlyph by {attr}
+#			Reposition nodeGlyphs with {force simulation}
+#			Draw edges
+#			Thicken edges by {attr}
+
+Remove all
+Restart simulation
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}

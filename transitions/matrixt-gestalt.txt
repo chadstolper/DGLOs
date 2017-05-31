@@ -1,4 +1,5 @@
-Remove not selected
-Draw gridlines for the matrix
-make cells nodes
-Fill in each cell based on some property of the edges
+Remove all
+Draw matrix
+Draw new edgeGlyphs
+Transform edgeGlyphs to {gestaltGlyphs}
+Position edgeGlyphs

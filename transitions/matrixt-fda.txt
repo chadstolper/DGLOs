@@ -1,11 +1,11 @@
+# we could potentially pick a matrix in the timeline,
+# and redraw the rectangles as lines, and connect them to entering nodes
 
-For each row, draw nodeGlyph
-For each column, draw nodeGlyph
-For timesteps:
-Create nodeGlyphs for all nodes
-Color nodeGlyphs by {attr}
-Remove all matrix vis
-Reposition nodeGlyphs with {force simulation}
-Draw edges
-Thicken edges by {attr}
+Remove all
+Restart simulation
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
+Advance/Retreat
 

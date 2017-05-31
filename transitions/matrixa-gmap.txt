@@ -1,13 +1,13 @@
-remove cells
-morph axis into nodes
-reposition nodes
-draw edges
-draw regions
-set node radius {attr}
-set node color {attr} to region color {attr}
-set edge stroke {attr}
-set edge stroke-width {attr}
-start simulation
+#remove cells
+#morph axis into nodes
+#reposition nodes
+#draw edges
+#draw regions
+#set node radius {attr}
+#set node color {attr} to region color {attr}
+#set edge stroke {attr}
+#set edge stroke-width {attr}
+#start simulation
 
 #v2
 #all cells become nodes
@@ -16,3 +16,12 @@ start simulation
 #reformat
 #draw regions and explode
 #it would look really good
+
+Remove all but edgeGlyphs
+Restart simulation
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Draw edgeGlyphs as {lines}
+Set edgeGlyphs {attr}
+Set nodeGlyphs {attr}
+Draw Regions
