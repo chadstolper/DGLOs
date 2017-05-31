@@ -1,9 +1,13 @@
 import { Technique } from "./Technique"
 export class MatrixA extends Technique {
 	public draw(): void {
-		this.lib.drawNewNodeGlyphs();
+		this.lib.drawNodeGlyphs();
 		this.lib.transformNodeGlyphsTo(/*"label"*/);
-		this.lib.positionNodeGlyphs(/*x-axis*/);
+		this.lib.positionNodeGlyphsMatrix(/*x-axis*/);
+		this.lib.drawEdgeGlyphs();
+		this.lib.transformEdgeGlyphsTo(/*rect*/);
+		this.lib.positionEdgeGlyphsMatrix();
+		this.lib.enableStepping();
 	}
 
 }
