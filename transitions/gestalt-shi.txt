@@ -3,9 +3,10 @@
 #reposition nodes
 #draw new edges
 
-Remove all
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
-Restart simulation
+removeNodeGlyphs
+removeEdgeGlyphs
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
+restartSimulation

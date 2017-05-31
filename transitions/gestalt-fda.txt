@@ -1,6 +1,6 @@
 removeEdgeGlyphs
 removeExitNodeGlyphs
-postitionNodeGlyphs
+positionNodeGlyphs
 drawEdgeGlyphs
 setEdgeGlyphs [width]
 setNodeGlyphs {radius}

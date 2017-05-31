@@ -1,7 +1,7 @@
 removeRegions
 replicate {timesteps}
 drawNewNodeGlyphs
-drawNewEdgeglyphs
+drawNewEdgeGlyphs
 removeExitNodeGlyphs
 removeExitEdgeGlyphs
 setNodeGlyphs {color}

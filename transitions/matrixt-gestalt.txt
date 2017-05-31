@@ -1,5 +1,7 @@
-Remove all
-Draw matrix
-Draw new edgeGlyphs
-Transform edgeGlyphs to {gestaltGlyphs}
-Position edgeGlyphs
+transformNodeGlyphsTo {circle}
+removeEdgeGlyphs
+postionNodeGlyphs
+replicate {timesteps}
+drawEdgeGlyphs
+setNodeGlyphs {radius}
+setEdgeGlyphs {width}

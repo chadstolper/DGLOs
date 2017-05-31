@@ -1,3 +1,7 @@
 removeEdgeGlyphs
 positionNodeGlyphs
+replicate {timesteps}
 drawNewEdgeGlyphs
+setNodeGlyphs {radius}
+setEdgeGlyphs {stroke}
+setEdgeGlyphs {stroke-width}

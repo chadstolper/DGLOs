@@ -1,8 +1,8 @@
-Remove all but one
-Remove exit nodeGlyphs
-Remove exit edgeGlyphs
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
-Restart simulation
+setCenterNode
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+drawNewNodeGlyphs
+drawNeEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
+restartSimulation

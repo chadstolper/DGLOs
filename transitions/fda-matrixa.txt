@@ -1,6 +1,5 @@
 stopSimulation
-removeEdgeGlyphs / removeNodeGlyphs
-position NodeGlyphs
+positionNodeGlyphs
 drawNewEdgeGlyphs
 transformEdgeGlyphsTo {Rectangles}
 setEdgeGlyphs {color}

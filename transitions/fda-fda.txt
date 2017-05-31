@@ -1,8 +1,8 @@
-draw newNodeGlyphs
-draw newEdgeGlyphs
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
 removeExitNodeGlyphs
 removeExitEdgeGlyphs
 setNodeGlyphs {radius}
 setNodeGlyphs {color}
 setEdgeGlyphs {width}
-restartSimmulation
+restartSimulation

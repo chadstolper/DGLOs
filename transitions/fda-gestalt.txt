@@ -3,3 +3,6 @@ removeEdgeGlyphs
 positionNodeGlyphs
 drawNewNodeGlyphs
 DrawEdgeGlyphs
+setNodeGlyphs {radius}
+setEdgeGlyphs {stroke}
+setEdgeGlyphs {stroke-width}
