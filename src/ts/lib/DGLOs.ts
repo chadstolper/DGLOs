@@ -7,10 +7,13 @@ export interface DGLOs {
 	drawNewEdgeGlyphs(): void;
 	drawRegions(): void;
 
-	//TODO: Parameters
+	/*TODO: add a label parameter to transformNodeGlyphsTo()
+	*/
 	transformNodeGlyphsTo(): void;
 	transformEdgeGlyphsTo(): void;
 
+	/*TODO:
+	*/
 	removeNodeGlyphs(): void;
 	removeExitNodeGlyphs(): void;
 	removeEdgeGlyphs(): void;
@@ -18,28 +21,28 @@ export interface DGLOs {
 	removeRegions(): void;
 
 
-
+	/*TODO
+	*/
 	enableStepping(): void;
 	replicateTimesteps(): void;
 	removeTimesteps(): void;
 
+	/*TODO:
+	*/
 	restartSimulation(): void;
 	stopSimulation(): void;
 
 	setCenterNode(center: Node): void;
 
-	//TODO: Parameters
+	/*TODO: Parameters
+	*/
 	positionNodeGlyphs(): void;
 	positionEdgeGlyphs(): void;
 
-	//TODO: Parameters
+	/*TODO: Parameters
+	*/
 	setNodeGlyphAttrs(): void;
 	setEdgeGlyphAttrs(): void;
 	setRegionGlyphAttrs(): void;
-
-
-
-
-
 
 }
