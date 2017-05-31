@@ -7,6 +7,8 @@ export class MatrixT extends Technique {
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformEdgeGlyphsTo(/*rect*/);
 		this.lib.positionEdgeGlyphsMatrix();
+		this.lib.setNodeGlyphAttrs();
+		this.lib.setEdgeGlyphAttrs();
 		this.lib.replicateTimesteps();
 	}
 
