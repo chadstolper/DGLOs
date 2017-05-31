@@ -5,10 +5,10 @@ export class Egograph extends Technique {
 		this.lib.setCenterNode(null);
 		this.lib.drawNodeGlyphs();
 		this.lib.drawEdgeGlyphs();
-		this.lib.transformNodeGlyphsTo(/*circle*/);
-		this.lib.transformEdgeGlyphsTo(/*line*/);
-		this.lib.setNodeGlyphAttrs();
-		this.lib.setEdgeGlyphAttrs();
-		this.lib.restartSimulation();
+		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
+		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
+		this.lib.setNodeGlyphAttrs(this.opts);
+		this.lib.setEdgeGlyphAttrs(this.opts);
+		this.lib.runSimulation();
 	}
 }
