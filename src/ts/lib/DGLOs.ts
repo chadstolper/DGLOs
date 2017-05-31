@@ -1,9 +1,19 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
 import { NodeGlyphShape, EdgeGlyphShape, AttrOpts } from "./LibDependencies";
+import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./TodoClasses";
 
 export interface DGLOs {
 
 	data: DynamicGraph;
+
+	readonly rectShape: RectGlyphShape;
+	readonly circleShape: CircleGlyphShape;
+	readonly labelShape: LabelGlyphShape;
+	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
+	readonly gestaltShape: GestaltGlyphShape;
+
+
+
 
 	drawNodeGlyphs(): void;
 	drawEdgeGlyphs(): void;
