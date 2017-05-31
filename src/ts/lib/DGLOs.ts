@@ -36,7 +36,9 @@ export interface DGLOs {
 
 	/*TODO: Parameters
 	*/
-	positionNodeGlyphs(): void;
+	positionNodeGlyphsMatrix(): void;
+	positionNodeGlyphsCartesian(): void;
+	positionNodeGlyphsPolar(): void;
 	positionEdgeGlyphs(): void;
 
 	/*TODO: Parameters
