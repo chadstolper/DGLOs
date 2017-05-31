@@ -1,4 +1,4 @@
-import { Node } from "./model/DynamicGraph";
+import { Node } from "../model/DynamicGraph";
 
 export interface DGLOs {
 	drawNodeGlyphs(): void;
