@@ -13,13 +13,10 @@
 #change color of edges
 #change color of nodes to regions(shouldnt be needed)
 
-Pick matrix in timeline
-Remove not selected
-For each row, draw nodeGlyph
-For each column, draw nodeGlyph
-Color nodeGlyphs by {attr}
-Remove matrix
-Reposition nodeGlyphs with {force simulation}
-Draw edges
-Thicken edges by {attr}
-Draw regions
+Remove all
+Restart simulation
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
+Draw Regions

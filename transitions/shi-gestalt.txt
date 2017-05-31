@@ -26,7 +26,7 @@ Remove repeated nodeGlyphs
 Remove exit edgeGlyphs
 Remove exit nodeGlyphs
 Draw matrix
-Transform edgeGlyphs to {gestalt glyphs}
+Transform edgeGlyphs to {gestaltGlyphs}
 Position edgeGlyphs
 For timesteps:
 Replicate

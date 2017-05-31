@@ -1,8 +1,7 @@
-For each row, draw nodeGlyph
-For each column, draw nodeGlyph
-Color nodeGlyphs by {attr}
-Remove all matrix vis
-Reposition nodeGlyphs with {force simulation}
-Draw edges
-Thicken edges by {attr}
-Add mechanism to move through timesteps
+Remove all
+Restart simulation
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
+Replicate

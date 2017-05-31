@@ -1,6 +1,9 @@
-Pick matrix in timeline
-Remove not selected
-Add a mechanism to transition between the timelines
-On transition:
-Draw rectangles
-Color rectangles by {attr} 
+#Pick matrix in timeline
+#Remove not selected
+#Add a mechanism to transition between the timelines
+#On transition:
+#Draw rectangles
+#Color rectangles by {attr} 
+
+Remove exit Matricies
+Advance/Retreat
