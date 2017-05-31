@@ -5,10 +5,10 @@ export class GestaltGlyphs extends Technique {
 		this.lib.stopSimulation();
 		this.lib.drawNodeGlyphs();
 		this.lib.drawEdgeGlyphs();
-		this.lib.transformNodeGlyphsTo(/*"label"*/);
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.positionEdgeGlyphsGestalt();
-		this.lib.positionNodeGlyphsGestalt();
-		this.lib.setNodeGlyphAttrs();
-		this.lib.setEdgeGlyphAttrs()
+		this.lib.positionNodeGlyphsMatrix();
+		this.lib.setNodeGlyphAttrs(this.opts);
+		this.lib.setEdgeGlyphAttrs(this.opts);
 	}
 }
