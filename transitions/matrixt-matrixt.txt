@@ -1,4 +1,4 @@
-Remove exit edgeGlyphs
-Draw new edgeGlyphs
-Transform edgeGlyphs to {rectangles}
-Set edgeGlyphs {attr}
+removeExitEdgeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {rectangles}
+setEdgeGlyphs {attr}

@@ -13,10 +13,10 @@
 #change color of edges
 #change color of nodes to regions(shouldnt be needed)
 
-Remove all
-Restart simulation
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
-Draw Regions
+removeAll
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
+drawRegions

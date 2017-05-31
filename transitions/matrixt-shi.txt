@@ -12,9 +12,9 @@ For matrix in timeline:
 #			Draw edges
 #			Thicken edges by {attr}
 
-Remove all
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
-Restart simulation
+removeAll
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
+restartSimulation
