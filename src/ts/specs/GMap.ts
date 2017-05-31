@@ -9,6 +9,7 @@ export class GMap extends Technique {
 		this.lib.drawRegions(); //take color/fill
 		this.lib.setNodeGlyphAttrs(); //radius, color, border
 		this.lib.setEdgeGlyphAttrs(); //stroke, width
+		this.lib.setRegionGlyphAttrs();
 		this.lib.restartSimulation();
 	}
 }
