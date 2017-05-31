@@ -11,7 +11,7 @@ export interface DGLOs {
 	drawEdgeGlyphs(): void;
 	drawNewNodeGlyphs(): void;
 	drawNewEdgeGlyphs(): void;
-	drawRegions(): void;
+	drawRegions(): void; //take an attr for color in draw method
 
 	/*TODO: add a label parameter to transformNodeGlyphsTo()
 	*/
