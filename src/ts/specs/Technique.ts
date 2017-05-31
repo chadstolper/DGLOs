@@ -29,7 +29,7 @@ export abstract class Technique {
 		this.location(location);
 	}
 
-	get lib(): DGLOs {
+	protected get lib(): DGLOs {
 		return this._library;
 	}
 
