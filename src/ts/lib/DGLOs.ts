@@ -1,6 +1,12 @@
 import { Node } from "../model/DynamicGraph";
 
 export interface DGLOs {
+
+	/*TODO:
+		data via graph
+			 via [] of nodes/edges
+			 via visa
+	*/
 	drawNodeGlyphs(): void;
 	drawEdgeGlyphs(): void;
 	drawNewNodeGlyphs(): void;
@@ -13,6 +19,9 @@ export interface DGLOs {
 	transformEdgeGlyphsTo(): void;
 
 	/*TODO:
+		data via graph
+			 via [] of nodes/edges
+			 via visa?
 	*/
 	removeNodeGlyphs(): void;
 	removeExitNodeGlyphs(): void;
@@ -22,6 +31,8 @@ export interface DGLOs {
 
 
 	/*TODO
+		boolean
+		number to pick timestep to keep? default to [0]
 	*/
 	enableStepping(): void;
 	replicateTimesteps(): void;
@@ -41,7 +52,13 @@ export interface DGLOs {
 	positionNodeGlyphsPolar(): void;
 	positionEdgeGlyphs(): void;
 
-	/*TODO: Parameters
+	/*TODO: map of varibles/attrs
+		color
+		fill
+		stroke
+		stroke width
+		radius
+		opacity
 	*/
 	setNodeGlyphAttrs(): void;
 	setEdgeGlyphAttrs(): void;
