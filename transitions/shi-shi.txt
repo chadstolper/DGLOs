@@ -1,11 +1,11 @@
 #Remove exit nodeGlyphs (not incident to central node)
 #Remove exit edgeGlyphs (not incident to central node)
 #Draw nodeGLyphs (neighboring central node
+#set central node
 
-Set central node
-Remove exit nodeGlyphs
-Remove exit edgeGlyphs 
-Draw nodeGLyphs 
-Draw new edgeGlyphs 
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
+removeExitNodeGlyphs
+removeExitEdgeGlyphs 
+drawNodeGLyphs 
+drawNewEdgeGlyphs 
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}

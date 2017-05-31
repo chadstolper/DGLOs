@@ -7,11 +7,11 @@
 #Reposition nodes based on force simulation
 #Draw edges between nodes based on some property
 
-For timesteps:
-Remove exit nodeGlyphs
-Remove exit edgeGlyphs
-Restart simulation
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
+Replicate

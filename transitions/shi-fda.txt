@@ -5,11 +5,11 @@
 #Draw edges associated with those nodes
 #Recolor nodes, fatten edge based on some property
 
-Remove exit nodeGlyphs
-Remove exit edgeGlyphs
-Restart simulation
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Set nodeGlyphs {attr}
-Set edgeGlyphs {attr}
+removeExitNodeGlyphs
+removeExitEdgeGlyphs
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+setNodeGlyphs {attr}
+setEdgeGlyphs {attr}
 Advance/Retreat

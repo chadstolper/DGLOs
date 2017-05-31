@@ -2,9 +2,9 @@
 #Position nodeGlyphs along {y-axis}
 #Remove exit nodeGlyphs (those that are repeated)
 
-Remove exit edgeGlyphs
-Remove exit nodeGlyphs
+removeExitEdgeGlyphs
+removeExitNodeGlyphs
 For timesteps:
-Transform edgeGlyphs to {rectangles}
-Position edgeGlyphs
+transformEdgeGlyphsTo {rectangles}
+positionEdgeGlyphs
 

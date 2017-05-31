@@ -23,8 +23,8 @@ Remove repeated nodeGlyphs
 #Create a copy of the above skeleton matrix
 #Fill in each cell based on some property of the edges
 
-Remove exit edgeGlyphs
-Remove exit nodeGlyphs
+removeExitEdgeGlyphs
+removeExitNodeGlyphs
 Draw matrix
 Transform edgeGlyphs to {gestaltGlyphs}
 Position edgeGlyphs
