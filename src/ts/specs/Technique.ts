@@ -8,25 +8,20 @@ export abstract class Technique {
 	protected _library: DGLOs;
 	protected _options: any;
 
-	data(data: DynamicGraph): Technique { return this; }
-	location(loc: Selection<any, {}, any, {}>): Technique { return this; };
-	options(args: any): Technique { return this; };
-	abstract draw(): Technique;
+	abstract draw(): void;
 
-	get dynamicGraph(): DynamicGraph {
+	constructor(data: DynamicGraph, loc: Selection<any, {}, any, {}>, opts: any) {
+		this._dynamicGraph = data;
+		this._location = loc;
+		this._options = opts;
+	}
+
+	get data(): DynamicGraph {
 		return this._dynamicGraph;
 	}
 
-	set dynamicGraph(dgraph: DynamicGraph) {
-		this.data(dgraph);
-	}
-
-	get loc(): Selection<any, {}, any, {}> {
+	get location(): Selection<any, {}, any, {}> {
 		return this._location;
-	}
-
-	set loc(location: Selection<any, {}, any, {}>) {
-		this.location(location);
 	}
 
 	protected get lib(): DGLOs {
