@@ -1,5 +1,7 @@
-Pick a central node
-Cycle through the fda, drawing only nodes and edges in contact with the central node
-If the central node is not a part of a step in the fda, draw nothing
-Align the central nodes
-slide non-central nodes that appear multiple times one above another
+Remove exit nodeGlyphs
+Remove exit edgeGlyphs
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
+Restart simulation

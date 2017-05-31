@@ -2,3 +2,10 @@
 #remove unneeded nodes
 #reposition nodes
 #draw new edges
+
+Remove all
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
+Restart simulation
