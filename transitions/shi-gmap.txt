@@ -10,12 +10,10 @@
 #change color of edges
 #change color of nodes to regions(shouldnt be needed)
 
-Remove repeated nodes
-Remove edges to nowhere
-Draw all nodes not present
-Reposition nodes with {force simulation}
-Draw edges
-Color nodes by {attr}
-Thicken edges by {attr}
+Remove exit nodeGlyphs
+Remove exit edgeGlyphs
+Draw new nodeGlyphs
+Position nodeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
 Draw regions
-Color region by {attr}

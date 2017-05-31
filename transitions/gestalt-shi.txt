@@ -1,4 +1,4 @@
-remove edges
-remove unneeded nodes
-reposition nodes
-draw new edges
+#remove edges
+#remove unneeded nodes
+#reposition nodes
+#draw new edges

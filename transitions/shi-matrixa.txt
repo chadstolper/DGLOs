@@ -1,8 +1,4 @@
-Remove repeated nodes
-Remove edges
-Draw all nodes not present
-Position nodeGlyphs along {x-axis}
-Position nodeGlyphs along {y-axis}
-Draw rectangles 
-Color rectangles by {attr}
-Draw mechanism allowing the user to move through timesteps
+Remove exit nodeGlyphs
+Draw new edgeGlyphs
+Transform edgeGlyphs to {rectangles}
+Set edgeGlyphs {attr}

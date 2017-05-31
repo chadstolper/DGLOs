@@ -5,10 +5,11 @@
 #Draw edges associated with those nodes
 #Recolor nodes, fatten edge based on some property
 
-Remove repeated nodeGlyphs
-Remove edges to nowhere
-Draw all nodeGlyphs not present
-Reposition nodeGlyphs with {force simulation}
-Draw all edges
-Color nodeGlyphs by {attr}
-Thicken edges by {attr}
+Remove exit nodeGlyphs
+Remove exit edgeGlyphs
+Restart simulation
+Draw new nodeGlyphs
+Draw new edgeGlyphs
+Set nodeGlyphs {attr}
+Set edgeGlyphs {attr}
+Advance/Retreat
