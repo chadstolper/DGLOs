@@ -17,11 +17,11 @@
 #draw regions and explode
 #it would look really good
 
-Remove all but edgeGlyphs
-Restart simulation
-Draw new nodeGlyphs
-Draw new edgeGlyphs
-Draw edgeGlyphs as {lines}
-Set edgeGlyphs {attr}
-Set nodeGlyphs {attr}
-Draw Regions
+removeAllButEdgeGlyphs
+restartSimulation
+drawNewNodeGlyphs
+drawNewEdgeGlyphs
+transformEdgeGlyphsTo {lines}
+setEdgeGlyphs {attr}
+setNodeGlyphs {attr}
+drawRegions
