@@ -10,17 +10,17 @@ export abstract class Technique {
 
 	abstract draw(): void;
 
-	constructor(data: DynamicGraph, loc: Selection<any, {}, any, {}>, opts: any) {
+	public constructor(data: DynamicGraph, loc: Selection<any, {}, any, {}>, opts: any) {
 		this._dynamicGraph = data;
 		this._location = loc;
 		this._options = opts;
 	}
 
-	get data(): DynamicGraph {
+	public get data(): DynamicGraph {
 		return this._dynamicGraph;
 	}
 
-	get location(): Selection<any, {}, any, {}> {
+	public get location(): Selection<any, {}, any, {}> {
 		return this._location;
 	}
 
@@ -28,5 +28,8 @@ export abstract class Technique {
 		return this._library;
 	}
 
+	protected get opts(): any {
+		return this._options;
+	}
 
 }
