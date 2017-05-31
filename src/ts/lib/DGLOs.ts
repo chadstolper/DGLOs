@@ -14,6 +14,7 @@ export interface DGLOs {
 	drawRegions(): void;
 
 	/*TODO: add a label parameter to transformNodeGlyphsTo()
+			add a rect parameter to transdormEdgeGlyphsTo()
 	*/
 	transformNodeGlyphsTo(): void;
 	transformEdgeGlyphsTo(): void;
