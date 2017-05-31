@@ -2,6 +2,7 @@ import { Technique } from "./Technique";
 
 export class Egograph extends Technique {
 	public draw() {
+		this.lib.setCenterNode(null);
 		this.lib.drawNodeGlyphs();
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformNodeGlyphsTo(/*circle*/);
