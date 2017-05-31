@@ -1,4 +1,8 @@
-copy matrix per timestamp
-remove exit cells
-draw new cells
-set cell color {attr}
+#copy matrix per timestamp
+#remove exit cells
+#draw new cells
+#set cell color {attr}
+
+For timesteps:
+Advance/Retreat
+Replicate

@@ -1,3 +1,4 @@
-remove exit cells
-draw new cells
-set cell color {attr}
+Remove exit edgeGlyphs
+Draw new edgeGlyphs
+Transform edgeGlyphs to {rectangles}
+Position edgeGlyphs
