@@ -51,6 +51,7 @@ export interface DGLOs {
 	positionNodeGlyphsCartesian(): void;
 	positionNodeGlyphsPolar(): void;
 	positionEdgeGlyphs(): void;
+	positionEdgeGlyphsMatrix(): void;
 
 	/*TODO: map of varibles/attrs
 		color
