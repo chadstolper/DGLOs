@@ -1,8 +1,15 @@
 import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 
 export class LabelGlyphShape implements NodeGlyphShape {
+	readonly _shapeType = "Label";
+
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
 }
 export class CircleGlyphShape implements NodeGlyphShape {
+	readonly _shapeType = "Circle";
 	private _radius: number;
 	private _fill: string;
 	private _stroke: string;
@@ -46,9 +53,14 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	set stroke_width(stroke_width: number) {
 		this._stroke_width = stroke_width;
 	}
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
 }
 
 export class RectGlyphShape implements EdgeGlyphShape {
+	readonly _shapeType = "Rect";
 	private _width: number;
 	private _height: number;
 	private _fill: string;
@@ -76,6 +88,28 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	set fill(fill: string) {
 		this._fill = fill;
 	}
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
 }
-export class SourceTargetLineGlyphShape implements EdgeGlyphShape { }
-export class GestaltGlyphShape implements EdgeGlyphShape { }
+export class SourceTargetLineGlyphShape implements EdgeGlyphShape {
+	readonly _shapeType = "STLine";
+
+
+
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
+}
+export class GestaltGlyphShape implements EdgeGlyphShape {
+	readonly _shapeType = "Gestalt";
+
+
+
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
+}
