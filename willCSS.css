@@ -1,4 +1,4 @@
-#topBar {
+/*#topBar {
 	background-color: lightgray;
 	font-family: Ubuntu, sans-serif;
 	border: inset;
@@ -13,8 +13,8 @@ svg circle:hover{
 svg line:hover{
 	opacity: 0.5;
 	fill: goldenrod;
-}
+}*/
 
-* {
+/** {
 	background: lightblue;
-}
+}*/
