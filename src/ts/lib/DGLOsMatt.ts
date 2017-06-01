@@ -32,13 +32,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			.attr("r", 5);
 	}
 
-	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
-		console.log("circle")
-	}
+	// public transformNodeGlyphsTo(shape: CircleGlyphShape) {
+	// 	console.log("circle")
+	// }
 
-	public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
-		console.log("line")
-	}
+	// public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
+	// 	console.log("line")
+	// }
 
 	public setNodeGlyphAttrs() {
 
