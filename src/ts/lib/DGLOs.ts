@@ -12,9 +12,6 @@ export interface DGLOs {
 	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
 	readonly gestaltShape: GestaltGlyphShape;
 
-
-
-
 	drawNodeGlyphs(): void;
 	drawEdgeGlyphs(): void;
 	drawNewNodeGlyphs(): void;
