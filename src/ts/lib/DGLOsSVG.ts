@@ -45,6 +45,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			.classed("edges", true);
 
 		this._nodeGlyphs = this._edgeG.selectAll("line")
+<<<<<<< HEAD
 			.data(this.data.timesteps[this._timeStamp].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
 	}
@@ -77,4 +78,22 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			console.log("No nodes!");
 		}
 	}
+=======
+			.data(this._data.timesteps[this._timeStamp].edges, function (d: Edge): string { return d.source + ":" + d.target });
+
+		this._edgeGlyphs.exit().remove();
+
+		let edgeEnter = this._edgeGlyphs.enter().append("line")
+			.attr("id", function (d: Edge): string { return d.source + ":" + d.target })
+			.attr("x1", 0)
+			.attr("x2", 1)
+			.attr("y1", 0)
+			.attr("y2", 1)
+			.attr("Stroke", "white");
+
+		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+	}
+
+
+>>>>>>> 455bc98018d0a2228a424dc4dc655aa365746dc3
 }
