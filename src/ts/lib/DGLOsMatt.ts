@@ -40,7 +40,19 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
-		this.transformNodesFromLabelToCircle();
+		if (shape.radius !== null) {
+			this.transformNodesFromLabelToCircle();
+		}
+		this.transformNodesFromCircleToLabel();
+	}
+
+	private transformNodesFromCircleToLabel() {
+		console.log("be quiet Vegeta");
+		this._nodeCircleGlyphs
+			.style("display", "hidden");
+
+		this._nodeLabelGlyphs
+			.style("display", null);
 	}
 
 	private transformNodesFromLabelToCircle() {
@@ -50,14 +62,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		this._nodeLabelGlyphs
 			.style("display", "hidden");
-	}
-
-	public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
-		this.transformEdgesFromRectToSTLines();
-	}
-
-	private transformEdgesFromRectToSTLines() {
-		console.log("be quiet vegeta")
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
