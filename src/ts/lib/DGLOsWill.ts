@@ -37,9 +37,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 	private transformEdgeGlyphsToRect() {
 		console.log("its a rect");
-		let curGraph = this.data.timesteps[super._timeStampIndex];
-
-
+		let curGraph = this.data.timesteps[this._timeStampIndex];
 		let arraySize = curGraph.nodes.length;
 
 		// let colorMap = d3Scale.scaleLinear<string>()
@@ -65,7 +63,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.attr("id", function (d: Edge) { return d.id });
 
 		cells = cells.merge(cellsEnter)
-		cells.transition()
+			//cells.transition()
 			.attr("x", function (d: Edge) {
 				return (+d.source.id / curGraph.nodes.length) * 100 + "%";
 			})
@@ -80,13 +78,6 @@ export class DGLOsWill extends DGLOsMatt {
 		// 	return colorMap(d.weight);
 		// })
 	}
-
-	private createColorDomain(edges: Array<Edge>) {
-		return d3Array.extent(edges, function (d: Edge): number {
-			return d.weight;
-		});
-	}
-
 
 
 }
