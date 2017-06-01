@@ -48,18 +48,29 @@ export interface DGLOs {
 	//TODO: drop? positionNodeGlyphsGestalt(): void;
 	positionEdgeGlyphsSourceTarget(): void;
 	positionEdgeGlyphsMatrix(): void;
+	/**
+	 * Aligns the current edges in the graph so that they
+	 * are in position to form a Gestalt Graph. 
+	 */
 	positionEdgeGlyphsGestalt(): void; //matrix-y
 
-	/*TODO: map of varibles/attrs
-		fill
-		stroke
-		stroke-width
-		radius
-		opacity
-		width, height
-	*/
+	/**
+	 * Takes a map of variables and applies them to the nodes
+	 * present in the current visualization. Examples include
+	 * color and size.
+	 */
 	setNodeGlyphAttrs(opts: AttrOpts): void;
+	/**
+	 * Takes a map of variables and applies them to the edges
+	 * present in the current visualization. Examples include line-thickness
+	 * and color.
+	 */
 	setEdgeGlyphAttrs(opts: AttrOpts): void;
+	/**
+	 * Takes a map of variables and applies them to the regions 
+	 * present in the current visualization. Color is an example of an
+	 * attribute that can be assigned to regionGlyphs. 
+	 */
 	setRegionGlyphAttrs(opts: AttrOpts): void;
 
 }
