@@ -2,8 +2,8 @@ import { DynamicGraph, Node } from "../model/DynamicGraph";
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
 import { Selection } from "d3-selection";
 
-export interface NodeGlyphShape { shapeType: string; }
-export interface EdgeGlyphShape { shapeType: string; }
+export interface NodeGlyphShape { readonly shapeType: string; }
+export interface EdgeGlyphShape { readonly shapeType: string; }
 
 /**
  * TODO: map of varibles/attrs:
