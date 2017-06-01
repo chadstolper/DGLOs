@@ -18,7 +18,7 @@ export class SVGAttrOpts implements AttrOpts {
 	private _width: number;
 	private _height: number;
 
-	constructor(fill: string, stroke: string, radius: number, stroke_width: number, width: number, height: number, opacity: number) {
+	constructor(fill?: string, stroke?: string, radius?: number, stroke_width?: number, width?: number, height?: number, opacity?: number) {
 		this._fill = fill;
 		this._stroke = stroke;
 		this._radius = radius;

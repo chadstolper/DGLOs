@@ -7,6 +7,7 @@ import { Simulation } from "d3-force";
 import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 import { CircleGlyphShape, SourceTargetLineGlyphShape } from "./shapeClasses";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
+import { SVGAttrOpts } from "./DGLOsSVG";
 import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
@@ -24,24 +25,31 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		this._nodeGlyphs = this._nodeGlyphs.merge(nodeEnter);
 
-		//here for debugging
-		this._nodeGlyphs
-			.attr("fill", "purple")
-			.attr("stroke", "grey")
-			.attr("stroke-width", 1)
-			.attr("r", 5);
+		// //here for debugging
+		// this._nodeGlyphs
+		// 	.attr("fill", this._fill)
+		// 	.attr("stroke", this._stroke)
+		// 	.attr("stroke-width", this._stroke_width)
+		// 	.attr("r", this._radius);
 	}
 
-	// public transformNodeGlyphsTo(shape: CircleGlyphShape) {
-	// 	console.log("circle")
-	// }
+	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
+		console.log("circle")
+	}
 
-	// public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
-	// 	console.log("line")
-	// }
+	public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
+		console.log("line")
+	}
 
-	public setNodeGlyphAttrs() {
-
+	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
+		let color = this._colorScheme;
+		this._nodeGlyphs
+			.attr("fill", function (d: Node): string {
+				return color(d.id);
+			})
+			.attr("stroke", attr.stroke)
+			.attr("stroke-width", attr.stroke_width)
+			.attr("r", attr.radius);
 	}
 
 	public setEdgeGlyphAttrs() {

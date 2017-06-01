@@ -16,5 +16,9 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_simulation: Simulation<any, undefined>
 	_height = 500;
 	_width = 500;
-
+	_radius = 10;
+	_stroke = "#0000";
+	_fill = "#0000";
+	_stroke_width = 2
+	_opacity = 100;
 }
