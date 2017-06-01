@@ -4,6 +4,7 @@ import { Node, Edge } from "../model/dynamicgraph";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
+import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsWill } from "./DGLOsWill";
@@ -31,9 +32,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			.attr("r", 5);
 	}
 
+	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
 
-	// 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
-	// this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
+	}
+
+	public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
+
+	}
+
 	// this.lib.setNodeGlyphAttrs(this.opts);
 	// this.lib.setEdgeGlyphAttrs(this.opts);
 
