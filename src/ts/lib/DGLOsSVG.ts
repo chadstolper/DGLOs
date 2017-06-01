@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node } from "../model/dynamicgraph";
+import { Node, Edge } from "../model/dynamicgraph";
 
 
 
@@ -8,7 +8,13 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 
 	_nodeG: Selection<any, {}, any, {}>;
 	_nodeGlyphs: Selection<any, {}, any, {}>;
+<<<<<<< HEAD
 	_timeStamp = this._data.timesteps[0].timestamp;
+=======
+	_edgeG: Selection<any, {}, any, {}>
+	_edgeGlyphs: Selection<any, {}, any, {}>;
+	_timeStamp: number;
+>>>>>>> 31cf744f1df286fac0f53d223198eb0e300de768
 
 	public drawNodeGlyphs() {
 		this._nodeG = this.loc.append("g")
@@ -33,7 +39,11 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	}
 
 	public drawEdgeGlyphs() {
-		//this.data.timestepshfeiowhf
+		this._edgeG = this.loc.append("g")
+			.classed("edges", true);
+
+		this._nodeGlyphs = this._edgeG.selectAll("line")
+			.data(this.data.timesteps[this._timeStamp].edges, function (d: Edge): string { return d.source + ":" + d.target });
 	}
 
 }
