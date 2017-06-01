@@ -1,21 +1,6 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
+import { NodeGlyphShape, EdgeGlyphShape, AttrOpts } from "./LibDependencies";
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./TodoClasses";
-
-
-export interface NodeGlyphShape { }
-export interface EdgeGlyphShape { }
-
-/**
- * TODO: map of varibles/attrs:
-	- fill
-	- stroke
-	- stroke-width
-	- radius
-	- opacity
-	 - width, height
- */
-
-export interface AttrOpts { }
 
 export interface DGLOs {
 
@@ -27,17 +12,54 @@ export interface DGLOs {
 	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
 	readonly gestaltShape: GestaltGlyphShape;
 
+	/**
+	 * Draw all NodeGlyphs in a given data set at the current timestep.
+	 * Draws all Nodes regardless of duplicates or exiting Nodes.
+	 * Returns void.
+	 */
 	drawNodeGlyphs(): void;
+	/**
+	 * Draw all EdgeGlyphs in a given data set at the current timestep.
+	 * Draws all Edges regardless of duplicats or exiting Edges.
+	 * Returns Void.
+	 */
 	drawEdgeGlyphs(): void;
+	/**
+	 * Draw entering Nodes from another timestep. Acts as an update to an existing graphic.
+	 * Returns void.
+	 */
 	drawNewNodeGlyphs(): void;
+	/**
+	 * Draw entering Edges from another timestep. Acts as an update to an existing graphic.
+	 * Returns void.
+	 */
 	drawNewEdgeGlyphs(): void;
-	drawRegions(): void; //take an attr for color in draw method
-
-
+	/**
+	 * Draw Voronoi Tesselation paths and fill them with a color. 
+	 * Color will defualt to #00000.
+	 * Returns void.
+	 */
+	drawRegions(): void;
+	/**
+	 * Morphs NodeGlyph visual representation to another visualization
+	 * Accepts NodeGlyphShape(attr, attr).	  
+	 * Returns void.
+	 */
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void;
+	/**
+	 * Morphs EdgeGlyph visual representation to another visualization
+	 * Accepts EdgeGlyphShape(attr, attr).
+	 * Returns void.
+	 */
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void;
-
+	/**
+	 * Removes all NodeGlyphs.
+	 * Returns void.
+	 */
 	removeNodeGlyphs(): void;
+	/**
+	 * Removes 
+	 */
 	removeExitNodeGlyphs(): void;
 	removeEdgeGlyphs(): void;
 	removeExitEdgeGlyphs(): void;
