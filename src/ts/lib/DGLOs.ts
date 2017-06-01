@@ -1,6 +1,21 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
-import { NodeGlyphShape, EdgeGlyphShape, AttrOpts } from "./LibDependencies";
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./TodoClasses";
+
+
+export interface NodeGlyphShape { }
+export interface EdgeGlyphShape { }
+
+/**
+ * TODO: map of varibles/attrs:
+	- fill
+	- stroke
+	- stroke-width
+	- radius
+	- opacity
+	 - width, height
+ */
+
+export interface AttrOpts { }
 
 export interface DGLOs {
 

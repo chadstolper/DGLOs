@@ -1,4 +1,4 @@
-import { NodeGlyphShape, EdgeGlyphShape } from "./LibDependencies";
+import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 
 export class LabelGlyphShape implements NodeGlyphShape { }
 export class CircleGlyphShape implements NodeGlyphShape { }
