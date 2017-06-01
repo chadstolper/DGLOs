@@ -14,7 +14,6 @@ export interface EdgeGlyphShape { }
 	- opacity
 	 - width, height
  */
-
 export interface AttrOpts { }
 
 export interface DGLOs {
