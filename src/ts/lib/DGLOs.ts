@@ -1,9 +1,4 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
-<<<<<<< HEAD
-import { NodeGlyphShape, EdgeGlyphShape, AttrOpts } from "./LibDependencies";
-import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./TodoClasses";
-
-=======
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
 
 
@@ -21,7 +16,6 @@ export interface EdgeGlyphShape { }
  */
 export interface AttrOpts { }
 
->>>>>>> 9d935c411ee4a2d18d3404d147af5140efa8591e
 export interface DGLOs {
 
 	data: DynamicGraph;
