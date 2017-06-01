@@ -48,10 +48,19 @@ export interface DGLOs {
 	replicateTimesteps(): void;
 	removeTimesteps(): void;
 
-
+	/**
+	 * Starts running a node positioning simulation.
+	 */
 	runSimulation(): void;
+	/**
+	 * Ends the current node positioning simulation.
+	 */
 	stopSimulation(): void;
 
+	/**
+	 * Sets the central node for a Dynamic Graph. This is used 
+	 * for creating Ego Graphs.
+	 */
 	setCenterNode(center: Node): void;
 
 	/**
