@@ -10,13 +10,13 @@ import { DGLOsWill } from "./DGLOsWill";
 import { DGLOsMatt } from "./DGLOsMatt";
 
 export class SVGAttrOpts implements AttrOpts {
-	private _fill: string;
-	private _stroke: string;
-	private _stroke_width: number;
-	private _radius: number;
-	private _opacity: number;
-	private _width: number;
-	private _height: number;
+	private _fill: string = "";
+	private _stroke: string = "";
+	private _stroke_width: number = null;
+	private _radius: number = null;
+	private _opacity = 100;
+	private _width: number = null;
+	private _height: number = null;
 
 	constructor(fill?: string, stroke?: string, radius?: number, stroke_width?: number, width?: number, height?: number, opacity?: number) {
 		this._fill = fill;

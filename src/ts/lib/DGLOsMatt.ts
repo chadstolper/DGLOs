@@ -42,22 +42,29 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		let color = this._colorScheme;
+		let color = this._colorScheme; //because scope issues
 		this._nodeGlyphs
 			.attr("fill", function (d: Node): string {
 				return color(d.id);
 			})
 			.attr("stroke", attr.stroke)
+			.attr("r", attr.radius)
 			.attr("stroke-width", attr.stroke_width)
-			.attr("r", attr.radius);
+			.attr("width", attr.width)
+			.attr("height", attr.height)
+			.attr("opacity", attr.opacity);
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		console.log(attr)
-		console.log(this._edgeGlyphs)
+		let color = this._colorScheme; //because scope issues
 		this._edgeGlyphs
+			.attr("fill", attr.fill)
 			.attr("stroke", attr.stroke)
-			.attr("stroke-width", attr.stroke_width);
+			.attr("r", attr.radius)
+			.attr("stroke-width", attr.stroke_width)
+			.attr("width", attr.width)
+			.attr("height", attr.height)
+			.attr("opacity", attr.opacity);
 	}
 
 	public runSimulation() {
