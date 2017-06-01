@@ -1,4 +1,4 @@
-import { DynamicGraph, Graph, Node, Edge } from "./Graph";
+import { DynamicGraph, Graph, Node, Edge } from "../model/DynamicGraph";
 
 export class RadoslawEmployee extends Node {
 	constructor(id: number | string) {
