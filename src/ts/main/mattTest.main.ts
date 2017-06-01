@@ -11,7 +11,7 @@ json("data/dummy/dummy.json", function (response: any) {
 	let width: number, height: number;
 	width = height = 500;
 	let g: DynamicGraph = new DynamicDrinkGraph(response);
-	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
+	let svg: Selection<any, {}, any, {}> = select("#chart").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
 	let vis: Technique = new ForceDirectedAnimated(lib, {});
