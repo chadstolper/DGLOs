@@ -53,20 +53,40 @@ export interface DGLOs {
 	 */
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void;
 	/**
-	 * Removes all NodeGlyphs.
+	 * Removes __all__ NodeGlyphs.
 	 * Returns void.
 	 */
 	removeNodeGlyphs(): void;
 	/**
-	 * Removes 
+	 * Removes exiting or leaving Node visualizations not present in new data.
+	 * Returns void.
 	 */
 	removeExitNodeGlyphs(): void;
+	/**
+	 * Removes __all__ EdgeGlyphs.
+	 * Returns void.
+	 */
 	removeEdgeGlyphs(): void;
+	/**
+	 * Removes exiting or leaving Edge visualizations not present in new data.
+	 * Returns void.
+	 */
 	removeExitEdgeGlyphs(): void;
+	/**
+	 * Removes __all__ Voronoi Tesselation from the graphic.
+	 * Returns void.
+	 */
 	removeRegions(): void;
 
-
+	/**
+	 * Enables some manner of animation between two timesteps
+	 * Returns void.
+	 */
 	enableStepping(): void;
+	/**
+	 * Disables animation between timesteps.
+	 * Returns void.
+	 */
 	disableStepping(): void;
 	replicateTimesteps(): void;
 	removeTimesteps(): void;
