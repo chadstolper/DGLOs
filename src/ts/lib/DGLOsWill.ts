@@ -32,6 +32,8 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public transformEdgeGlyphsTo(shape: any) {
 		this.transformLinesToRect();
+		this.transformRectToLines();
+		this.transformLinesToRect();
 	}
 
 	private transformLinesToRect() {
@@ -70,20 +72,20 @@ export class DGLOsWill extends DGLOsMatt {
 			})
 	}
 
-	// public transformRectToLines() {
-	// 	this._edgeGlyphs = this._edgeG.selectAll("line")
-	// 		.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+	public transformRectToLines() {
+		this._edgeGlyphs = this._edgeG.selectAll("line")
+			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-	// 	this._edgeGlyphs.exit().remove();
+		this._edgeGlyphs.exit().remove();
 
-	// 	let edgeEnter = this._edgeGlyphs.enter().append("line")
-	// 		.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-	// 		.attr("x1", 0)
-	// 		.attr("x2", 1)
-	// 		.attr("y1", 0)
-	// 		.attr("y2", 1);
+		let edgeEnter = this._edgeGlyphs.enter().append("line")
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+			.attr("x1", 0)
+			.attr("x2", 1)
+			.attr("y1", 0)
+			.attr("y2", 1);
 
-	// 	this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
-	// }
+		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+	}
 
 }
