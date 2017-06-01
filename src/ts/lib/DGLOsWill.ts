@@ -35,54 +35,29 @@ export class DGLOsWill extends DGLOsMatt {
 		//}
 		//console.log("you dummy");
 	}
+
 	private transformEdgeGlyphsToRect() {
 		console.log("its a rect");
 		let curGraph = this.data.timesteps[this._timeStampIndex];
 		let arraySize = curGraph.nodes.length;
 
-		// let colorMap = d3Scale.scaleLinear<string>()
-		// 	.domain(this.createColorDomain(curGraph.edges))
-		// 	.range(this._colorDomain);
-
 		this._edgeG = this.loc.append("g")
-			.classed("edges", true);
+			.classed("rectEdges", true);
 
-		this._edgeGlyphs = this._edgeG.selectAll("line")
-			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		this._edgeGlyphs = this._edgeG.selectAll("rect")
+			.data(curGraph.edges, function (d: Edge): string { return d.source + ":" + d.target });
 
 		this._edgeGlyphs.exit().remove();
 
-		let cells = super.loc.selectAll("rect")
-			.data(curGraph.edges, function (d: Edge): string { return "" + d.id; })
-
-		cells.exit().remove();
-
-		let cellsEnter = cells.enter()
+		let cellsEnter = this._edgeGlyphs.enter()
 			.append("rect")
 			.attr("stroke", "black")
+			.attr("width", 0)
+			.attr("height", 0)
 			.attr("id", function (d: Edge) { return d.id });
 
-		cells = cells.merge(cellsEnter)
-			//cells.transition()
-			.attr("x", function (d: Edge) {
-				return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-			})
-			.attr("y", function (d: Edge) {
-				return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-			})
-			.attr("width", this._width / arraySize)
-			.attr("height", this._height / arraySize)
-			.attr("fill", "red");
+		this._edgeG = this._edgeG.merge(cellsEnter)
 
-		// .attr("fill", function (d) {
-		// 	return colorMap(d.weight);
-		// })
 	}
 
-
 }
-
-
-//import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
-//import * as d3force from "d3-force";
-//import { Simulation } from "d3-force";
