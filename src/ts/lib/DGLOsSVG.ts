@@ -43,7 +43,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		this._nodeGlyphs = this._edgeG.selectAll("line")
 			.data(this.data.timesteps[this._timeStamp].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-		//this._edgeGlyphs.exit().remove();
+		this._edgeGlyphs.exit().remove();
 
 		let edgeEnter = this._edgeGlyphs.enter().append("line")
 			.attr("id", function (d: Edge): string { return d.source + ":" + d.target })
