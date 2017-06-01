@@ -54,13 +54,31 @@ export interface DGLOs {
 
 	setCenterNode(center: Node): void;
 
-	/*TODO: Parameters
-	*/
+	/**
+	 * Aligns the current nodes in the graph so that they
+	 * are in position to serve as labels for a matrix.
+	 */
 	positionNodeGlyphsMatrix(): void;
+	/**
+	 * Positions the current nodes in the graph using a
+	 * Cartesian coordinate scheme.
+	 */
 	positionNodeGlyphsCartesian(): void;
+	/**
+	 * Positions the current nodes in the graph using a polar
+	 * coordinate scheme.
+	 */
 	positionNodeGlyphsPolar(): void;
 	//TODO: drop? positionNodeGlyphsGestalt(): void;
+	/**
+	 * Aligns the current edges in the graph so that
+	 * they point from source to target. 
+	 */
 	positionEdgeGlyphsSourceTarget(): void;
+	/**
+	 * Aligns the current edges in the graph so that they
+	 * are in position to form a matrix.
+	 */
 	positionEdgeGlyphsMatrix(): void;
 	/**
 	 * Aligns the current edges in the graph so that they
