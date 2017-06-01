@@ -1,5 +1,5 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
-import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./TodoClasses";
+import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
 
 
 export interface NodeGlyphShape { }
