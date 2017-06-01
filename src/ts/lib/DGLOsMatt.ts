@@ -37,19 +37,22 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			.attr("id", function (d: any): string | number { return d.name; });
 
 		this._nodeLabelGlyphs = this._nodeLabelGlyphs.merge(nodeEnter);
+
+		this._nodeLabelGlyphs
+			.text(function (d: Node): string {
+				return d.label;
+			})
 	}
 
-	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
-		if (shape.radius !== null) {
-			this.transformNodesFromLabelToCircle();
-		}
+	public transformNodeGlyphsTo(shape: any) {
 		this.transformNodesFromCircleToLabel();
+		this.transformNodesFromLabelToCircle();
 	}
 
 	private transformNodesFromCircleToLabel() {
 		console.log("be quiet Vegeta");
 		this._nodeCircleGlyphs
-			.style("display", "hidden");
+			.style("display", "none");
 
 		this._nodeLabelGlyphs
 			.style("display", null);
