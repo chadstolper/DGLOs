@@ -12,38 +12,57 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 	public drawNodeGlyphs() {
+		//create circle nodes
 		this._nodeG = this.loc.append("g")
 			.classed("nodes", true);
 
-		this._nodeGlyphs = this._nodeG.selectAll("circle")
+		this._nodeCircleGlyphs = this._nodeG.selectAll("circle")
 			.data(this._data.timesteps[this._timeStampIndex].nodes, function (d: Node): string { return "" + d.id });
 
-		this._nodeGlyphs.exit().remove();
+		this._nodeCircleGlyphs.exit().remove();
 
-		let nodeEnter = this._nodeGlyphs.enter().append("circle")
+		let nodeEnter = this._nodeCircleGlyphs.enter().append("circle")
 			.attr("id", function (d: any): string | number { return d.name; });
 
-		this._nodeGlyphs = this._nodeGlyphs.merge(nodeEnter);
+		this._nodeCircleGlyphs = this._nodeCircleGlyphs.merge(nodeEnter);
 
-		// //here for debugging
-		// this._nodeGlyphs
-		// 	.attr("fill", this._fill)
-		// 	.attr("stroke", this._stroke)
-		// 	.attr("stroke-width", this._stroke_width)
-		// 	.attr("r", this._radius);
+
+		//create rect nodes
+		this._nodeLabelGlyphs = this._nodeG.selectAll("label")
+			.data(this._data.timesteps[this._timeStampIndex].nodes, function (d: Node): string { return "" + d.id });
+
+		this._nodeLabelGlyphs.exit().remove();
+
+		nodeEnter = this._nodeLabelGlyphs.enter().append("label")
+			.attr("id", function (d: any): string | number { return d.name; });
+
+		this._nodeLabelGlyphs = this._nodeLabelGlyphs.merge(nodeEnter);
 	}
 
 	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
-		console.log("circle")
+		this.transformNodesFromLabelToCircle();
+	}
+
+	private transformNodesFromLabelToCircle() {
+		console.log("this isnt even my final form!");
+		this._nodeCircleGlyphs
+			.style("display", null);
+
+		this._nodeLabelGlyphs
+			.style("display", "hidden");
 	}
 
 	public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
-		console.log("line")
+		this.transformEdgesFromRectToSTLines();
+	}
+
+	private transformEdgesFromRectToSTLines() {
+		console.log("be quiet vegeta")
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
 		let color = this._colorScheme; //because scope issues
-		this._nodeGlyphs
+		this._nodeCircleGlyphs
 			.attr("fill", function (d: Node): string {
 				return color(d.id);
 			})
@@ -56,7 +75,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		let color = this._colorScheme; //because scope issues
 		this._edgeGlyphs
 			.attr("fill", attr.fill)
 			.attr("stroke", attr.stroke)
@@ -99,8 +117,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		} else {
 			console.log("No links!");
 		}
-		if (this._nodeGlyphs !== undefined) {
-			this._nodeGlyphs
+		if (this._nodeCircleGlyphs !== undefined) {
+			this._nodeCircleGlyphs
 				.attr("cx", function (d: Node) {
 					return d.x;
 				})

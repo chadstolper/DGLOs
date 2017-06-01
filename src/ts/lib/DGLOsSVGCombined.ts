@@ -8,7 +8,8 @@ import { Simulation } from "d3-force";
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
 	_nodeG: Selection<any, {}, any, {}>;
-	_nodeGlyphs: Selection<any, {}, any, {}>;
+	_nodeCircleGlyphs: Selection<any, {}, any, {}>;
+	_nodeLabelGlyphs: Selection<any, {}, any, {}>;
 	_edgeG: Selection<any, {}, any, {}>
 	_edgeGlyphs: Selection<any, {}, any, {}>;
 	_timeStampIndex = 0;
