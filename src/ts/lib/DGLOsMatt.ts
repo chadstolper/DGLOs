@@ -40,6 +40,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	protected tick() {
+		console.log(this._edgeGlyphs);
+		console.log(this._nodeGlyphs);
 		if (this._edgeGlyphs !== undefined) {
 			this._edgeGlyphs //as in the lines representing links
 				.attr("x1", function (d: Edge) { return d.source.x; })
