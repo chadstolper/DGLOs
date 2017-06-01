@@ -10,8 +10,6 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 
 	_nodeG: Selection<any, {}, any, {}>;
 	_nodeGlyphs: Selection<any, {}, any, {}>;
-	_edgeG: Selection<any, {}, any, {}>
-	_edgeGlyphs: Selection<any, {}, any, {}>;
 	_timeStampIndex = 0;
 	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20b);
 	_simulation: Simulation<any, undefined>
@@ -41,27 +39,6 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			.attr("r", 25);
 	}
 
-	public drawEdgeGlyphs() {
-		this._edgeG = this.loc.append("g")
-			.classed("edges", true);
-
-		this._nodeGlyphs = this._edgeG.selectAll("line")
-
-			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
-		this._edgeGlyphs.exit().remove();
-
-		let edgeEnter = this._edgeGlyphs.enter().append("line")
-			.attr("id", function (d: Edge): string { return d.source + ":" + d.target })
-			.attr("x1", 0)
-			.attr("x2", 1)
-			.attr("y1", 0)
-			.attr("y2", 1)
-			.attr("Stroke", "white");
-
-		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
-
-	}
-
 	public runSimulation() {
 		this._simulation = d3force.forceSimulation() //init sim for chart?
 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //pull applied to link lengths
@@ -70,7 +47,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			.on("tick", this.tick);
 	}
 
-	private tick() {
+	protected tick() {
 		if (this._edgeGlyphs !== undefined) {
 			this._edgeGlyphs //as in the lines representing links
 				.attr("x1", function (d: Edge) { return d.source.x; })
@@ -89,6 +66,46 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		} else {
 			console.log("No nodes!");
 		}
+	}
+
+
+
+
+
+
+
+	//////////////////////////////
+	/* 
+	 * Matt ^^
+	 *
+	 * Will vv
+	 */
+	//////////////////////////////
+
+	_edgeG: Selection<any, {}, any, {}>
+	_edgeGlyphs: Selection<any, {}, any, {}>;
+
+
+
+
+	public drawEdgeGlyphs() {
+		this._edgeG = this.loc.append("g")
+			.classed("edges", true);
+
+		this._nodeGlyphs = this._edgeG.selectAll("line")
+			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		this._edgeGlyphs.exit().remove();
+
+		let edgeEnter = this._edgeGlyphs.enter().append("line")
+			.attr("id", function (d: Edge): string { return d.source + ":" + d.target })
+			.attr("x1", 0)
+			.attr("x2", 1)
+			.attr("y1", 0)
+			.attr("y2", 1)
+			.attr("Stroke", "white");
+
+		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+
 	}
 
 
