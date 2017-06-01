@@ -13,8 +13,9 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeG = this.loc.append("g")
 			.classed("edges", true);
 
-		this._nodeGlyphs = this._edgeG.selectAll("line")
+		this._edgeGlyphs = this._edgeG.selectAll("line")
 			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+
 		this._edgeGlyphs.exit().remove();
 
 		let edgeEnter = this._edgeGlyphs.enter().append("line")
