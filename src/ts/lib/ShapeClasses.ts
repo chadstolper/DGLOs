@@ -2,7 +2,51 @@ import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 
 export class LabelGlyphShape implements NodeGlyphShape {
 }
-export class CircleGlyphShape implements NodeGlyphShape { }
+export class CircleGlyphShape implements NodeGlyphShape {
+	private _radius: number;
+	private _fill: string;
+	private _stroke: string;
+	private _stroke_width: number;
+
+	constructor(radius: number, fill: string, stroke: string, strokeWidth: number) {
+		this._radius = radius;
+		this._fill = fill;
+		this._stroke = stroke;
+		this._stroke_width = strokeWidth;
+	}
+
+	get radius(): number {
+		return this._radius;
+	}
+
+	set radius(radius: number) {
+		this._radius = radius;
+	}
+
+	get fill(): string {
+		return this._fill;
+	}
+
+	set fill(fill: string) {
+		this._fill = fill;
+	}
+
+	get stroke(): string {
+		return this._stroke;
+	}
+
+	set stroke(stroke: string) {
+		this._stroke = stroke;
+	}
+
+	get stroke_width(): number {
+		return this._stroke_width;
+	}
+
+	set stroke_width(stroke_width: number) {
+		this._stroke_width = stroke_width;
+	}
+}
 
 export class RectGlyphShape implements EdgeGlyphShape {
 	private _width: number;
