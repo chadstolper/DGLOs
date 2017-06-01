@@ -19,7 +19,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeGlyphs.exit().remove();
 
 		let edgeEnter = this._edgeGlyphs.enter().append("line")
-			.attr("id", function (d: Edge): string { return d.source + ":" + d.target })
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 			.attr("x1", 0)
 			.attr("x2", 1)
 			.attr("y1", 0)
@@ -27,6 +27,9 @@ export class DGLOsWill extends DGLOsMatt {
 			.attr("Stroke", "white");
 
 		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+	}
+
+	public transformEdgeGlyphsTo() {
 
 	}
 }
