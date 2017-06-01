@@ -44,9 +44,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			})
 	}
 
-	public transformNodeGlyphsTo(shape: any) {
-		this.transformNodesFromCircleToLabel();
-		this.transformNodesFromLabelToCircle();
+	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
+		// switch ()
+		// {
+		// 	case "Circle": switch (){ };
+		// 		break;
+
+		// 	case ""
+		// }
 	}
 
 	private transformNodesFromCircleToLabel() {
