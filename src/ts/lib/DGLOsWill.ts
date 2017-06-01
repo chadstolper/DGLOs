@@ -30,7 +30,11 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
 	}
 
-	public transformEdgeGlyphsTo(shape: any) {
+	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
+		if (shape === undefined) {
+			console.log("haven't implemented that edgeGlyphShape yet");
+			return;
+		}
 		if (shape.shapeType === "Rect") {
 			this.transformLinesToRect();
 		}
