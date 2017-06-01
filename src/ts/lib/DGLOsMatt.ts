@@ -1,7 +1,7 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
 import { Node, Edge } from "../model/dynamicgraph";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
@@ -52,11 +52,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			.attr("r", attr.radius);
 	}
 
-	public setEdgeGlyphAttrs() {
-
+	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
+		console.log(attr)
+		console.log(this._edgeGlyphs)
+		this._edgeGlyphs
+			.attr("stroke", attr.stroke)
+			.attr("stroke-width", attr.stroke_width);
 	}
-	// this.lib.setNodeGlyphAttrs(this.opts);
-	// this.lib.setEdgeGlyphAttrs(this.opts);
 
 	public runSimulation() {
 
