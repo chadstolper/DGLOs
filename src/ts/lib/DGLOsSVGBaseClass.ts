@@ -2,8 +2,25 @@ import { DGLOs, NodeGlyphShape, EdgeGlyphShape, AttrOpts } from "./DGLOs";
 import * as model from "../model/DynamicGraph";
 import * as shape from "./ShapeClasses";
 
+import { DynamicGraph } from "../model/DynamicGraph";
+import { Selection } from "d3-selection";
+
+
 export class DGLOsSVGBaseClass implements DGLOs {
-	data: model.DynamicGraph;
+	protected _data: model.DynamicGraph;
+	protected _location: Selection<any, {}, any, {}>;
+
+	public get data(): model.DynamicGraph {
+		return this._data;
+	}
+
+	public get loc(): Selection<any, {}, any, {}> {
+		return this._location;
+	}
+
+	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
+		this._data = data;
+	}
 
 	readonly rectShape: shape.RectGlyphShape;
 	readonly circleShape: shape.CircleGlyphShape;
@@ -11,7 +28,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	readonly sourceTargetLineShape: shape.SourceTargetLineGlyphShape;
 	readonly gestaltShape: shape.GestaltGlyphShape;
 
-	public drawNodeGlyphs(): void { };
+	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
 	drawNewNodeGlyphs(): void { };
 	drawNewEdgeGlyphs(): void { };

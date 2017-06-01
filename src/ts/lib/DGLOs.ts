@@ -1,6 +1,6 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
-
+import { Selection } from "d3-selection";
 
 export interface NodeGlyphShape { }
 export interface EdgeGlyphShape { }
@@ -19,6 +19,7 @@ export interface AttrOpts { }
 export interface DGLOs {
 
 	data: DynamicGraph;
+	loc: Selection<any, {}, any, {}>;
 
 	readonly rectShape: RectGlyphShape;
 	readonly circleShape: CircleGlyphShape;
