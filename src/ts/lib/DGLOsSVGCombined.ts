@@ -4,6 +4,7 @@ import { Node, Edge } from "../model/dynamicgraph";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
+import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
@@ -24,4 +25,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_fill = "#0000";
 	_stroke_width = 2
 	_opacity = 100;
+	_currentEdgeShape: EdgeGlyphShape;
+	_currentNodeShape: NodeGlyphShape;
+
 }

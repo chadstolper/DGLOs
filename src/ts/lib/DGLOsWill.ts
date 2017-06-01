@@ -31,9 +31,9 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public transformEdgeGlyphsTo(shape: any) {
-		this.transformLinesToRect();
-		this.transformRectToLines();
-		this.transformLinesToRect();
+		if (shape.shapeType === "Rect") {
+			this.transformLinesToRect();
+		}
 	}
 
 	private transformLinesToRect() {
