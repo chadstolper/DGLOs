@@ -1,7 +1,27 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
+<<<<<<< HEAD
 import { NodeGlyphShape, EdgeGlyphShape, AttrOpts } from "./LibDependencies";
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./TodoClasses";
 
+=======
+import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
+
+
+export interface NodeGlyphShape { }
+export interface EdgeGlyphShape { }
+
+/**
+ * TODO: map of varibles/attrs:
+	- fill
+	- stroke
+	- stroke-width
+	- radius
+	- opacity
+	 - width, height
+ */
+export interface AttrOpts { }
+
+>>>>>>> 9d935c411ee4a2d18d3404d147af5140efa8591e
 export interface DGLOs {
 
 	data: DynamicGraph;
@@ -97,26 +117,55 @@ export interface DGLOs {
 
 	setCenterNode(center: Node): void;
 
-	/*TODO: Parameters
-	*/
+	/**
+	 * Aligns the current nodes in the graph so that they
+	 * are in position to serve as labels for a matrix.
+	 */
 	positionNodeGlyphsMatrix(): void;
+	/**
+	 * Positions the current nodes in the graph using a
+	 * Cartesian coordinate scheme.
+	 */
 	positionNodeGlyphsCartesian(): void;
+	/**
+	 * Positions the current nodes in the graph using a polar
+	 * coordinate scheme.
+	 */
 	positionNodeGlyphsPolar(): void;
 	//TODO: drop? positionNodeGlyphsGestalt(): void;
+	/**
+	 * Aligns the current edges in the graph so that
+	 * they point from source to target. 
+	 */
 	positionEdgeGlyphsSourceTarget(): void;
+	/**
+	 * Aligns the current edges in the graph so that they
+	 * are in position to form a matrix.
+	 */
 	positionEdgeGlyphsMatrix(): void;
+	/**
+	 * Aligns the current edges in the graph so that they
+	 * are in position to form a Gestalt Graph. 
+	 */
 	positionEdgeGlyphsGestalt(): void; //matrix-y
 
-	/*TODO: map of varibles/attrs
-		fill
-		stroke
-		stroke-width
-		radius
-		opacity
-		width, height
-	*/
+	/**
+	 * Takes a map of variables and applies them to the nodes
+	 * present in the current visualization. Examples include
+	 * color and size.
+	 */
 	setNodeGlyphAttrs(opts: AttrOpts): void;
+	/**
+	 * Takes a map of variables and applies them to the edges
+	 * present in the current visualization. Examples include line-thickness
+	 * and color.
+	 */
 	setEdgeGlyphAttrs(opts: AttrOpts): void;
+	/**
+	 * Takes a map of variables and applies them to the regions 
+	 * present in the current visualization. Color is an example of an
+	 * attribute that can be assigned to regionGlyphs. 
+	 */
 	setRegionGlyphAttrs(opts: AttrOpts): void;
 
 }
