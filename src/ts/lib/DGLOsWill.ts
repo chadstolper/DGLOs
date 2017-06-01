@@ -4,6 +4,7 @@ import { Node, Edge } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
+import { SVGAttrOpts } from "../lib/DGLOsSVG";
 import * as shapes from "./ShapeClasses";
 import * as d3 from "d3-selection";
 import * as d3Scale from "d3-scale";
@@ -30,10 +31,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public transformEdgeGlyphsTo(shape: any) {
-		//if (shape instanceof shapes.RectGlyphShape) {
 		this.transformEdgeGlyphsToRect();
-		//}
-		//console.log("you dummy");
 	}
 
 	private transformEdgeGlyphsToRect() {
@@ -57,6 +55,19 @@ export class DGLOsWill extends DGLOsMatt {
 			.attr("id", function (d: Edge) { return d.id });
 
 		this._edgeG = this._edgeG.merge(cellsEnter)
+	}
+
+	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
+		//let color = this._colorScheme;
+		console.log("you made it here");
+		this._edgeGlyphs
+			.attr("fill", attr.fill)
+			.attr("height", attr.height)
+			.attr("width", attr.width)
+			.attr("stroke-width", attr.stroke_width)
+			.attr("stroke", attr.stroke)
+			.attr("radius", attr.radius)
+			.attr("opacity", attr.opacity);
 
 	}
 
