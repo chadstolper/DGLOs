@@ -1,12 +1,10 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
 import { Node, Edge } from "../model/dynamicgraph";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
-import * as d3force from "d3-force";
-import { Simulation } from "d3-force";
-
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
+import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
+import * as shapes from "./ShapeClasses";
 
 export class DGLOsWill extends DGLOsMatt {
 	public drawEdgeGlyphs() {
@@ -29,7 +27,18 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
 	}
 
-	public transformEdgeGlyphsTo() {
-
+	public transformEdgeGlyphsTo(shape: NodeGlyphShape) {
+		console.log(Object.prototype.toString.call(shape));
+		this.transformEdgeGlyphsToRect();
 	}
+	private transformEdgeGlyphsToRect() {
+		console.log("hey");
+	}
+
+
 }
+
+
+//import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
+//import * as d3force from "d3-force";
+//import { Simulation } from "d3-force";
