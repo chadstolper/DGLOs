@@ -20,6 +20,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
 		this._data = data;
+		this._location = location;
 	}
 
 	readonly rectShape: shape.RectGlyphShape;
