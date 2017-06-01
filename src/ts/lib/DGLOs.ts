@@ -102,7 +102,15 @@ export interface DGLOs {
 	 * Returns void.
 	 */
 	disableStepping(): void;
+	/**
+	 * Draws a graph visualization of the current form for every timestep
+	 * in the timeline.
+	 */
 	replicateTimesteps(): void;
+	/**
+	 * Removes all but one graph visualization from a series of graph 
+	 * visualizations.
+	 */
 	removeTimesteps(): void;
 
 	/**
