@@ -8,13 +8,11 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 
 	_nodeG: Selection<any, {}, any, {}>;
 	_nodeGlyphs: Selection<any, {}, any, {}>;
-<<<<<<< HEAD
-	_timeStamp = this._data.timesteps[0].timestamp;
-=======
 	_edgeG: Selection<any, {}, any, {}>
 	_edgeGlyphs: Selection<any, {}, any, {}>;
-	_timeStamp: number;
->>>>>>> 31cf744f1df286fac0f53d223198eb0e300de768
+	_timeStamp: number = 0;
+
+
 
 	public drawNodeGlyphs() {
 		this._nodeG = this.loc.append("g")
@@ -43,9 +41,9 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			.classed("edges", true);
 
 		this._nodeGlyphs = this._edgeG.selectAll("line")
-			.data(this._data.timesteps[this._timeStamp].edges, function (d: Edge): string { return d.source + ":" + d.target });
+			.data(this.data.timesteps[this._timeStamp].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-		this._edgeGlyphs.exit().remove();
+		//this._edgeGlyphs.exit().remove();
 
 		let edgeEnter = this._edgeGlyphs.enter().append("line")
 			.attr("id", function (d: Edge): string { return d.source + ":" + d.target })
