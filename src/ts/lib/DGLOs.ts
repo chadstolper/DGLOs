@@ -32,60 +32,82 @@ export interface DGLOs {
 	 * Returns void.
 	 */
 	drawNodeGlyphs(): void;
+
+
 	/**
 	 * Draw all EdgeGlyphs in a given data set at the current timestep.
 	 * Draws all Edges regardless of duplicats or exiting Edges.
 	 * Returns Void.
 	 */
 	drawEdgeGlyphs(): void;
+
+
 	/**
 	 * Draw entering Nodes from another timestep. Acts as an update to an existing graphic.
 	 * Returns void.
 	 */
 	drawNewNodeGlyphs(): void;
+
+
 	/**
 	 * Draw entering Edges from another timestep. Acts as an update to an existing graphic.
 	 * Returns void.
 	 */
 	drawNewEdgeGlyphs(): void;
+
+
 	/**
 	 * Draw Voronoi Tesselation paths and fill them with a color. 
 	 * Color will defualt to #00000.
 	 * Returns void.
 	 */
 	drawRegions(): void;
+
+
 	/**
 	 * Morphs NodeGlyph visual representation to another visualization
 	 * Accepts NodeGlyphShape(attr, attr).	  
 	 * Returns void.
 	 */
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void;
+
+
 	/**
 	 * Morphs EdgeGlyph visual representation to another visualization
 	 * Accepts EdgeGlyphShape(attr, attr).
 	 * Returns void.
 	 */
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void;
+
+
 	/**
 	 * Removes __all__ NodeGlyphs.
 	 * Returns void.
 	 */
 	removeNodeGlyphs(): void;
+
+
 	/**
 	 * Removes exiting or leaving Node visualizations not present in new data.
 	 * Returns void.
 	 */
 	removeExitNodeGlyphs(): void;
+
+
 	/**
 	 * Removes __all__ EdgeGlyphs.
 	 * Returns void.
 	 */
 	removeEdgeGlyphs(): void;
+
+
 	/**
 	 * Removes exiting or leaving Edge visualizations not present in new data.
 	 * Returns void.
 	 */
 	removeExitEdgeGlyphs(): void;
+
+
 	/**
 	 * Removes __all__ Voronoi Tesselation from the graphic.
 	 * Returns void.
@@ -97,16 +119,22 @@ export interface DGLOs {
 	 * Returns void.
 	 */
 	enableStepping(): void;
+
+
 	/**
 	 * Disables animation between timesteps.
 	 * Returns void.
 	 */
 	disableStepping(): void;
+
+
 	/**
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
 	replicateTimesteps(): void;
+
+
 	/**
 	 * Removes all but one graph visualization from a series of graph 
 	 * visualizations.
@@ -117,10 +145,14 @@ export interface DGLOs {
 	 * Starts running a node positioning simulation.
 	 */
 	runSimulation(): void;
+
+
 	/**
 	 * Ends the current node positioning simulation.
 	 */
 	stopSimulation(): void;
+
+
 
 	/**
 	 * Sets the central node for a Dynamic Graph. This is used 
@@ -128,37 +160,51 @@ export interface DGLOs {
 	 */
 	setCenterNode(center: Node): void;
 
+
 	/**
 	 * Aligns the current nodes in the graph so that they
 	 * are in position to serve as labels for a matrix.
 	 */
 	positionNodeGlyphsMatrix(): void;
+
+
 	/**
 	 * Positions the current nodes in the graph using a
 	 * Cartesian coordinate scheme.
 	 */
 	positionNodeGlyphsCartesian(): void;
+
+
 	/**
 	 * Positions the current nodes in the graph using a polar
 	 * coordinate scheme.
 	 */
 	positionNodeGlyphsPolar(): void;
+
+
 	//TODO: drop? positionNodeGlyphsGestalt(): void;
+
+
 	/**
 	 * Aligns the current edges in the graph so that
 	 * they point from source to target. 
 	 */
 	positionEdgeGlyphsSourceTarget(): void;
+
+
 	/**
 	 * Aligns the current edges in the graph so that they
 	 * are in position to form a matrix.
 	 */
 	positionEdgeGlyphsMatrix(): void;
+
+
 	/**
 	 * Aligns the current edges in the graph so that they
 	 * are in position to form a Gestalt Graph. 
 	 */
 	positionEdgeGlyphsGestalt(): void; //matrix-y
+
 
 	/**
 	 * Takes a map of variables and applies them to the nodes
@@ -166,17 +212,20 @@ export interface DGLOs {
 	 * color and size.
 	 */
 	setNodeGlyphAttrs(opts: AttrOpts): void;
+
+
 	/**
 	 * Takes a map of variables and applies them to the edges
 	 * present in the current visualization. Examples include line-thickness
 	 * and color.
 	 */
 	setEdgeGlyphAttrs(opts: AttrOpts): void;
+
+
 	/**
 	 * Takes a map of variables and applies them to the regions 
 	 * present in the current visualization. Color is an example of an
 	 * attribute that can be assigned to regionGlyphs. 
 	 */
 	setRegionGlyphAttrs(opts: AttrOpts): void;
-
 }
