@@ -26,7 +26,7 @@
     "rollup": "^0.41.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "tslint": "^5.2.0",
+    "tslint": "^5.4.1",
     "typescript": "next"
   }
 }
