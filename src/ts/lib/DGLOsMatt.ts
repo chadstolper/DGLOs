@@ -5,7 +5,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
-
+import { CircleGlyphShape, SourceTargetLineGlyphShape } from "./shapeClasses";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsWill } from "./DGLOsWill";
 
@@ -33,13 +33,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public transformNodeGlyphsTo(shape: CircleGlyphShape) {
-
+		console.log("circle")
 	}
 
 	public transformEdgeGlyphsTo(shape: SourceTargetLineGlyphShape) {
+		console.log("line")
+	}
+
+	public setNodeGlyphAttrs() {
 
 	}
 
+	public setEdgeGlyphAttrs() {
+
+	}
 	// this.lib.setNodeGlyphAttrs(this.opts);
 	// this.lib.setEdgeGlyphAttrs(this.opts);
 
