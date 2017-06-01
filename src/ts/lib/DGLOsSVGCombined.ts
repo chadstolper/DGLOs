@@ -5,7 +5,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 
-export class DGLOsSVGCombinedBase extends DGLOsSVGBaseClass {
+export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
 	_nodeG: Selection<any, {}, any, {}>;
 	_nodeGlyphs: Selection<any, {}, any, {}>;

@@ -5,7 +5,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 
-import { DGLOsSVGCombinedBase } from "./DGLOsCombinedBase";
+import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsWill } from "./DGLOsWill";
 import { DGLOsMatt } from "./DGLOsMatt";
 

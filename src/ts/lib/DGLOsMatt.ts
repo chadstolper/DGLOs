@@ -5,10 +5,10 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20b } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 
-import { DGLOsSVGCombinedBase } from "./DGLOsCombinedBase";
+import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsWill } from "./DGLOsWill";
 
-export class DGLOsMatt extends DGLOsSVGCombinedBase {
+export class DGLOsMatt extends DGLOsSVGCombined {
 	public drawNodeGlyphs() {
 		this._nodeG = this.loc.append("g")
 			.classed("nodes", true);
