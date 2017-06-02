@@ -22,10 +22,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 		let edgeLineEnter = this._edgeLineGlyphs.enter().append("line")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-		// .attr("x1", 0)
-		// .attr("x2", 1)
-		// .attr("y1", 0)
-		// .attr("y2", 1);
+
 		this._edgeLineGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
 
 		this._edgeRectGlyphs = this._edgeG.selectAll("rect")
@@ -35,6 +32,16 @@ export class DGLOsWill extends DGLOsMatt {
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 
 		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
+
+		this._gestaltLineGlyphs = this._edgeG.selectAll("gestalt")
+			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+
+		this._edgeLineGlyphs.exit().remove();
+
+		let gestaltLineEnter = this._edgeLineGlyphs.enter().append("gestalt")
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+
+		this._gestaltLineGlyphs = this._gestaltLineGlyphs.merge(gestaltLineEnter);
 
 		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null)
 	}
