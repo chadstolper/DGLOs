@@ -3,7 +3,7 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG";
 export class MatrixAnimated extends Technique {
 	public draw(): void {
 		this.lib.drawNodeGlyphs();
-		//this.lib.transformNodeGlyphsTo(this.lib.labelShape);
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformEdgeGlyphsTo(this.lib.rectShape);
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("purple", "grey", 10, 2));

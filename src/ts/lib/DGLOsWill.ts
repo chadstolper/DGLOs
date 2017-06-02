@@ -30,7 +30,6 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
 	}
 
-<<<<<<< HEAD
 	public transformEdgeGlyphsTo(shape: any) {
 		switch (shape) {
 			case this._currentEdgeShape.shapeType === "Rect":
@@ -61,15 +60,6 @@ export class DGLOsWill extends DGLOsMatt {
 						console.log("Your shape has not been implemented");
 
 				}
-=======
-	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		if (shape === undefined) {
-			console.log("haven't implemented that edgeGlyphShape yet");
-			return;
-		}
-		if (shape.shapeType === "Rect") {
-			this.transformLinesToRect();
->>>>>>> 9575ff882bf9e89d4bfe814c05c0c0fc98bfc88a
 		}
 	}
 
