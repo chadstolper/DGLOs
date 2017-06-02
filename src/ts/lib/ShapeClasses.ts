@@ -171,6 +171,21 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
+	public init(location: Location): void {
+
+	}
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
+		return null;
+	}
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+		return null;
+	}
 }
 
 export abstract class LineGlyphShape implements EdgeGlyphShape {
@@ -193,6 +208,22 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 		this._y1 = y1;
 		this._x2 = x2;
 		this._y2 = y2;
+	}
+
+	public init(location: Location): void {
+
+	}
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
+		return null;
+	}
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+		return null;
 	}
 
 
