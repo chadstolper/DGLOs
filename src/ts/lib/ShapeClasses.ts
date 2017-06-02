@@ -101,6 +101,28 @@ export class CircleGlyphShape implements NodeGlyphShape {
 
 	}
 
+
+	init(location: Selection<any, {}, any, {}>) {
+
+	}
+	//TODO: Make new <g>
+	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return;
+	}
+	//TODO: draw nodes
+	updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return;
+	}
+	//TODO: position and add attr
+	transformTo(shape: NodeGlyphShape): NodeGlyphShape {
+		return;
+	}
+	//TODO: says what it does on the tin
+	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number) {
+
+	}
+	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
+
 	get radius(): number {
 		return this._radius;
 	}
