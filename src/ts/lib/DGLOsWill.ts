@@ -33,7 +33,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
 
-		this._gestaltLineGlyphs = this._edgeG.selectAll("gestalt")
+		this._edgeGestaltGlyphs = this._edgeG.selectAll("gestalt")
 			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
 		this._edgeLineGlyphs.exit().remove();
@@ -41,7 +41,7 @@ export class DGLOsWill extends DGLOsMatt {
 		let gestaltLineEnter = this._edgeLineGlyphs.enter().append("gestalt")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 
-		this._gestaltLineGlyphs = this._gestaltLineGlyphs.merge(gestaltLineEnter);
+		this._edgeGestaltGlyphs = this._edgeGestaltGlyphs.merge(gestaltLineEnter);
 
 		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null)
 	}
@@ -122,10 +122,10 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log("transfromRectToGestalt not yet implemented :)");
 	}
 	private transformLinesToRect() {
-		this._edgeLineGlyphs.transition()
+		this._edgeLineGlyphs   //.transition()
 			.style("display", "none");
 
-		this._edgeRectGlyphs.transition()
+		this._edgeRectGlyphs   //.transition()
 			.style("display", null);
 	}
 	public positionEdgeGlyphsMatrix() {
