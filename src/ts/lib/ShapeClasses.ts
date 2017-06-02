@@ -4,8 +4,10 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	private _text: string;
 	private _fill: string;
-	private _X: number;
-	private _Y: number;
+	private _x: number;
+	private _y: number;
+	private _textAnchor: string = "middle";
+	private _dominantBaseline: string = "middle";
 	// private _font = "ComicSans";
 	// private _font_weight = "Normal";
 	//private _font_size : string |number; //eg. "10px"
@@ -14,8 +16,8 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
 		this._fill = fill;
-		this._X = x;
-		this._Y = y;
+		this._x = x;
+		this._y = y;
 	}
 
 
@@ -36,18 +38,26 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 
 	get X(): number {
-		return this._X;
+		return this._x;
 	}
 	set X(x: number) {
-		this._X = x;
+		this._x = x;
 	}
 
 
 	get Y(): number {
-		return this._Y;
+		return this._y;
 	}
 	set Y(y: number) {
-		this._Y = y;
+		this._y = y;
+	}
+
+	get textAnchor(): string {
+		return this._textAnchor;
+	}
+
+	get dominantBaseline(): string {
+		return this._dominantBaseline;
 	}
 
 
@@ -147,20 +157,20 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	private _stroke_width: number;
 	private _source: string | number;
 	private _target: string | number;
-	private _X1: number;
-	private _Y1: number;
-	private _X2: number;
-	private _Y2: number;
+	private _x1: number;
+	private _y1: number;
+	private _x2: number;
+	private _y2: number;
 
 	constructor(stroke: string, stroke_width: number, source?: string | number, target?: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
 		this._stroke = stroke;
 		this._stroke_width = stroke_width;
 		this._source = source; //needed?
 		this._target = target;
-		this._X1 = x1;
-		this._Y1 = y1;
-		this._X2 = x2;
-		this._Y2 = y2;
+		this._x1 = x1;
+		this._y1 = y1;
+		this._x2 = x2;
+		this._y2 = y2;
 	}
 
 
@@ -197,34 +207,34 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 
 
 	get X1(): number {
-		return this._X1;
+		return this._x1;
 	}
 	set X1(x1: number) {
-		this._X1 = x1
+		this._x1 = x1
 	}
 
 
 	get Y1(): number {
-		return this._Y1;
+		return this._y1;
 	}
 	set Y1(y1: number) {
-		this._Y1 = y1;
+		this._y1 = y1;
 	}
 
 
 	get X2(): number {
-		return this._X2;
+		return this._x2;
 	}
 	set X2(x2: number) {
-		this._X2 = x2
+		this._x2 = x2
 	}
 
 
 	get Y2(): number {
-		return this._Y2;
+		return this._y2;
 	}
 	set Y2(y2: number) {
-		this._Y2 = y2;
+		this._y2 = y2;
 	}
 
 
