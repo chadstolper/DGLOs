@@ -43,26 +43,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				return d.label;
 			})
 
-<<<<<<< HEAD
-		//this._currentEdgeShape = new SourceTargetLineGlyphShape();
-=======
-		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
->>>>>>> origin/dglos
+		//set current shapes
+		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
 		this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
 
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
 		switch (this._currentNodeShape.shapeType) {
 			case "Circle": switch (shape.shapeType) {
-<<<<<<< HEAD
 				case "Label": this.transformNodesFromCircleToLabel();
-=======
-				case "Label": this.transformNodesFromCircleToLabel()
 					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
->>>>>>> origin/dglos
 					break;
 
-				case "Circle": console.log("Circle-->Circle Catch")
+				case "Circle": console.log("Circle-->Circle Catch");
+					this._nodeLabelGlyphs.style("display", "none");
 					this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 					break;
 
@@ -72,12 +66,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				break;
 
 			case "Label": switch (shape.shapeType) {
-				case "Circle": this.transformNodesFromLabelToCircle()
+				case "Circle": this.transformNodesFromLabelToCircle();
 					this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 					this.setNodeGlyphAttrs(new SVGAttrOpts(shape.fill, shape.stroke, shape.radius, shape.stroke_width));
 					break;
 
-				case "Label": console.log("Label-->Label Catch")
+				case "Label": console.log("Label-->Label Catch");
+					this._nodeCircleGlyphs.style("display", "none");
 					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
 					break;
 
@@ -93,19 +88,19 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	private transformNodesFromCircleToLabel() {
 		console.log("be quiet Vegeta");
-		this._nodeCircleGlyphs
+		this._nodeCircleGlyphs.transition()
 			.style("display", "none");
 
-		this._nodeLabelGlyphs
+		this._nodeLabelGlyphs.transition()
 			.style("display", null);
 	}
 
 	private transformNodesFromLabelToCircle() {
 		console.log("this isnt even my final form!");
-		this._nodeCircleGlyphs
+		this._nodeCircleGlyphs.transition()
 			.style("display", null);
 
-		this._nodeLabelGlyphs
+		this._nodeLabelGlyphs.transition()
 			.style("display", "hidden");
 	}
 
@@ -161,32 +156,29 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			this._edgeGlyphs
 				.attr("x1", function (d: Edge) { return d.source.x; })
 				.attr("y1", function (d: Edge) { return d.source.y; })
-				.attr("x2", function (d: Edge) { return d.target.x; })
+				.attr("x2", function (d: Edge) { return d.target.x; })// make thing for other edges
 				.attr("y2", function (d: Edge) { return d.target.y; });
 		} else {
 			console.log("No links!");
 		}
-		if (this._currentNodeShape.shapeType === "Circle") {
-			if (this._nodeCircleGlyphs !== undefined) {
-				this._nodeCircleGlyphs
-					.attr("cx", function (d: Node) {
-						return d.x;
-					})
-					.attr("cy", function (d: Node) { return d.y; });
-			} else {
-				console.log("No nodes!");
-			}
+		if (this._nodeCircleGlyphs !== undefined) {
+			this._nodeCircleGlyphs
+				.attr("cx", function (d: Node) {
+					return d.x;
+				})
+				.attr("cy", function (d: Node) { return d.y; });
+		} else {
+			console.log("No circle nodes!");
 		}
-		else {
-			if (this._nodeLabelGlyphs !== undefined) {
-				this._nodeLabelGlyphs
-					.attr("x", function (d: Node) {
-						return d.x;
-					})
-					.attr("y", function (d: Node) { return d.y; });
-			} else {
-				console.log("No nodes!");
-			}
+		if (this._nodeLabelGlyphs !== undefined) {
+			this._nodeLabelGlyphs
+				.attr("x", function (d: Node) {
+					return d.x;
+				})
+				.attr("y", function (d: Node) { return d.y; });
+		} else {
+			console.log("No label nodes!");
+
 		}
 
 	}
