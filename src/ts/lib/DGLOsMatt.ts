@@ -46,6 +46,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			})
 
 		//set current shapes
+		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
+		this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
 		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
 		this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
@@ -125,6 +127,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
+<<<<<<< HEAD
 		console.log(this._currentEdgeShape)
 		if (this._currentEdgeShape.shapeType === "STLine") {
 			this._edgeLineGlyphs
@@ -154,6 +157,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				.attr("height", attr.height)
 				.attr("opacity", attr.opacity);
 		}
+=======
+		this._edgeLineGlyphs
+			.attr("fill", attr.fill)
+			.attr("stroke", attr.stroke)
+			.attr("r", attr.radius)
+			.attr("stroke-width", attr.stroke_width)
+			.attr("width", attr.width)
+			.attr("height", attr.height)
+			.attr("opacity", attr.opacity);
+>>>>>>> origin/dglos
 	}
 
 	public runSimulation() {
@@ -179,11 +192,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	private tick() {
-		if (this._edgeGlyphs !== undefined) {
-			this._edgeGlyphs
+		if (this._edgeLineGlyphs !== undefined) { //only lineglyphs needed for simulation
+			this._edgeLineGlyphs
 				.attr("x1", function (d: Edge) { return d.source.x; })
 				.attr("y1", function (d: Edge) { return d.source.y; })
-				.attr("x2", function (d: Edge) { return d.target.x; })// make thing for other edges
+				.attr("x2", function (d: Edge) { return d.target.x; })
 				.attr("y2", function (d: Edge) { return d.target.y; });
 		} else {
 			console.log("No links!");
