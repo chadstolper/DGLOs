@@ -1,13 +1,13 @@
 import { Technique } from "./Technique";
-import { CircleGlyphShape, SourceTargetLineGlyphShape } from "../lib/ShapeClasses"
+import { CircleGlyphShape, SourceTargetLineGlyphShape, LabelGlyphShape } from "../lib/ShapeClasses"
 import { SVGAttrOpts } from "../lib/DGLOsSVG";
 
 export class ForceDirectedAnimated extends Technique {
 	public draw() {
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
-		this.lib.transformNodeGlyphsTo(new CircleGlyphShape(10, "purple", "grey", 2));
-		this.lib.transformEdgeGlyphsTo(new SourceTargetLineGlyphShape);
+		this.lib.transformNodeGlyphsTo(new LabelGlyphShape(null, null, null, null));//new CircleGlyphShape(10, "purple", "grey", 2));
+		this.lib.transformEdgeGlyphsTo(new SourceTargetLineGlyphShape("black", 1));
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("purple", "grey", 10, 2));
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, 1));
 		this.lib.runSimulation();
