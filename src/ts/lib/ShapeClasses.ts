@@ -1,4 +1,5 @@
-import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
+import { NodeGlyphShape } from "./NodeGlyphShape"
+import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 
 export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
