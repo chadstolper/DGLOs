@@ -4,7 +4,7 @@ import { Node, Edge } from "../model/dynamicgraph";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
-import { NodeGlyphShape } from "./NodeGlyphShape";
+import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { CircleGlyphShape, SourceTargetLineGlyphShape, LabelGlyphShape } from "./shapeClasses";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
@@ -202,16 +202,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		} else {
 			console.log("No circle nodes!");
 		}
-		if (this._nodeLabelGlyphs !== undefined) {
-			this._nodeLabelGlyphs
-				.attr("x", function (d: Node) {
-					return d.x;
-				})
-				.attr("y", function (d: Node) { return d.y; });
-		} else {
-			console.log("No label nodes!");
-
-		}
-
+		// this._nodeLabelGlyphs.
 	}
 }

@@ -1,6 +1,7 @@
 import { Technique } from "./Technique"
 import { SVGAttrOpts } from "../lib/DGLOsSVG"
-import { NodeGlyphShape, EdgeGlyphShape } from "../lib/DGLOs"
+import { NodeGlyphShape } from "../lib/NodeGlyphInterface";
+import { EdgeGlyphShape } from "../lib/EdgeGlyphInterface";
 import { LabelGlyphShape, RectGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "../lib/ShapeClasses";
 
 export class MatrixAnimated extends Technique {

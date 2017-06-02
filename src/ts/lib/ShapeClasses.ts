@@ -1,7 +1,7 @@
-import { NodeGlyphShape } from "./NodeGlyphShape"
+import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-import { DynamicGraph } from "../model/dynamicgraph";
+import { DynamicGraph, Node, Edge } from "../model/dynamicgraph";
 
 export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
@@ -13,6 +13,8 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	private _dominantBaseline: string = "middle";
 	// private _font = "ComicSans";
 
+	private _labelGlyphs: Selection<any, {}, any, {}>;
+
 	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
 		this._fill = fill;
@@ -20,24 +22,51 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		this._y = y;
 	}
 
-	init(location: Selection<any, {}, any, {}>) {
-
+	public init(location: Selection<any, {}, any, {}>): void {
+		this._labelGlyphs = location.append("g").classed("Nodes", true);
 	}
 	//TODO: Make new <g>
-	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return;
+	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let newLabel = location.append("text")
+			.attr("id", function (d: Node): string | number { return d.label; })
+			.style("dominant-baseline", "middle")
+			.style("text-anchor", "middle");
+		return newLabel;
 	}
 	//TODO: draw nodes
-	updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return;
+	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		if (this._labelGlyphs !== undefined) {
+			this._labelGlyphs
+				.attr("x", function (d: Node) {
+					return d.x;
+				})
+				.attr("y", function (d: Node) { return d.y; });
+		} else {
+			console.log("No label nodes!");
+
+		}
+		return this._labelGlyphs; //?
 	}
-	//TODO: position and add attr
-	transformTo(shape: NodeGlyphShape): NodeGlyphShape {
+	//TODO: position and add attr to nodes
+	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
+		console.log("eventually");
 		return;
 	}
 	//TODO: says what it does on the tin
-	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number) {
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		this._labelGlyphs = location.selectAll("label")
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
+			.enter().call(this.initDraw);
 
+		this._labelGlyphs.exit().remove();
+
+		let labelEnter = this._labelGlyphs.enter().call(this.init);
+
+		this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
+		this._labelGlyphs
+			.text(function (d: Node): string {
+				return d.label;
+			});
 	}
 	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
 
