@@ -3,7 +3,8 @@ import { Selection } from "d3-selection";
 import { Node, Edge } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
-import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
+import { NodeGlyphShape } from "./NodeGlyphShape"
+import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { SVGAttrOpts } from "../lib/DGLOsSVG";
 import * as shapes from "./ShapeClasses";
 import * as d3 from "d3-selection";
