@@ -43,15 +43,23 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				return d.label;
 			})
 
+<<<<<<< HEAD
+		//this._currentEdgeShape = new SourceTargetLineGlyphShape();
+=======
 		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
+>>>>>>> origin/dglos
 		this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
 
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
 		switch (this._currentNodeShape.shapeType) {
 			case "Circle": switch (shape.shapeType) {
+<<<<<<< HEAD
+				case "Label": this.transformNodesFromCircleToLabel();
+=======
 				case "Label": this.transformNodesFromCircleToLabel()
 					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
+>>>>>>> origin/dglos
 					break;
 
 				case "Circle": console.log("Circle-->Circle Catch")
