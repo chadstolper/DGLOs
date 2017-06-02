@@ -28,4 +28,17 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 
+	set currentEdgeShape(shape: EdgeGlyphShape) {
+		this._currentEdgeShape = shape;
+	}
+	get currentEdgeShape(): EdgeGlyphShape {
+		return this._currentEdgeShape;
+	}
+	set currentNodeShape(shape: NodeGlyphShape) {
+		this._currentNodeShape = shape;
+	}
+	get currentNodeShape(): NodeGlyphShape {
+		return this._currentNodeShape;
+	}
+
 }
