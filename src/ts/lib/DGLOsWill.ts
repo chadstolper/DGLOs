@@ -26,7 +26,7 @@ export class DGLOsWill extends DGLOsMatt {
 		// .attr("x2", 1)
 		// .attr("y1", 0)
 		// .attr("y2", 1);
-		this._edgeGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
+		this._edgeLineGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
 
 		this._edgeRectGlyphs = this._edgeG.selectAll("rect")
 			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
@@ -34,7 +34,7 @@ export class DGLOsWill extends DGLOsMatt {
 		let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 
-		this._edgeGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
+		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
 
 		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null)
 	}
@@ -115,20 +115,11 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log("transfromRectToGestalt not yet implemented :)");
 	}
 	private transformLinesToRect() {
-		let curGraph = this.data.timesteps[this._timeStampIndex];
-		let arraySize = curGraph.nodes.length;
+		this._edgeLineGlyphs.transition()
+			.style("display", "none");
 
-		// this._edgeLineGlyphs.style("display","hidden");
-		// this._edgeRectGlyphs.style("display",null);
-
-		this._edgeGlyphs = this._edgeG.selectAll("rect")
-			.data(curGraph.edges, function (d: Edge): string { return d.source + ":" + d.target });
-
-		this._edgeGlyphs.exit().remove();
-
-		let cellsEnter = this._edgeGlyphs.enter()
-			.append("rect")
-		this._edgeGlyphs = this._edgeGlyphs.merge(cellsEnter)
+		this._edgeRectGlyphs.transition()
+			.style("display", null);
 	}
 	public positionEdgeGlyphsMatrix() {
 		let curGraph = this._data.timesteps[this._timeStampIndex];
@@ -141,19 +132,11 @@ export class DGLOsWill extends DGLOsMatt {
 			})
 	}
 	public transformRectToLines() {
-		this._edgeGlyphs = this._edgeG.selectAll("line")
-			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		this._edgeRectGlyphs.transition()
+			.style("display", "none");
 
-		this._edgeGlyphs.exit().remove();
-
-		let edgeEnter = this._edgeGlyphs.enter().append("line")
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-			.attr("x1", 0)
-			.attr("x2", 1)
-			.attr("y1", 0)
-			.attr("y2", 1);
-
-		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+		this._edgeLineGlyphs.transition()
+			.style("display", null);
 	}
 
 }
