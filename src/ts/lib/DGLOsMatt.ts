@@ -28,12 +28,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 
 		//create rect nodes
-		this._nodeLabelGlyphs = this._nodeG.selectAll("label")
+		this._nodeLabelGlyphs = this._nodeG.selectAll("text")
 			.data(this._data.timesteps[this._timeStampIndex].nodes, function (d: Node): string { return "" + d.id });
 
 		this._nodeLabelGlyphs.exit().remove();
 
-		nodeEnter = this._nodeLabelGlyphs.enter().append("label")
+		nodeEnter = this._nodeLabelGlyphs.enter().append("text")
 			.attr("id", function (d: any): string | number { return d.name; });
 
 		this._nodeLabelGlyphs = this._nodeLabelGlyphs.merge(nodeEnter);
@@ -43,14 +43,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				return d.label;
 			})
 
-		this._currentEdgeShape = new SourceTargetLineGlyphShape();
+		//this._currentEdgeShape = new SourceTargetLineGlyphShape();
 		this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
 
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
 		switch (this._currentNodeShape.shapeType) {
 			case "Circle": switch (shape.shapeType) {
-				case "Label": this.transformNodesFromCircleToLabel
+				case "Label": this.transformNodesFromCircleToLabel();
 					break;
 
 				case "Circle": console.log("Circle-->Circle Catch")
