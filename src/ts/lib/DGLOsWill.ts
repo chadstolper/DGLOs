@@ -63,7 +63,22 @@ export class DGLOsWill extends DGLOsMatt {
 		// }
 		this.transformLinesToRect();
 	}
-
+	public positionNodeGlyphsMatrix() {
+		let curGraph = this.data.timesteps[this._timeStampIndex];
+		this._nodeLabelGlyphs
+			.attr("x", function (d: Node) {
+				return (+d.id / curGraph.nodes.length) * 100 + "%";
+			})
+			.attr("y", function (d: Edge) {
+				return (+d.id / curGraph.nodes.length) * 100 + "%";
+			})
+			.attr("stroke", "red")
+			.attr("text", function (d: Node) {
+				return d.id;
+			})
+			.attr("font", "Verdana")
+			.attr("Font-Size", 20);
+	}
 	private transformGestaltToLines() {
 		console.log("transfromGestaltToLines not yet implemented :)");
 	}
