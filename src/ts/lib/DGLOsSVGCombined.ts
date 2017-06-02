@@ -15,6 +15,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_edgeGlyphs: Selection<any, {}, any, {}>;
 	_edgeLineGlyphs: Selection<any, {}, any, {}>;
 	_edgeRectGlyphs: Selection<any, {}, any, {}>;
+	_gestaltLineGlyphs: Selection<any, {}, any, {}>;
 	_timeStampIndex = 0;
 	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	_simulation: Simulation<any, undefined>
