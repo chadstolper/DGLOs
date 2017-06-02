@@ -34,7 +34,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._nodeLabelGlyphs.exit().remove();
 
 		nodeEnter = this._nodeLabelGlyphs.enter().append("text")
-			.attr("id", function (d: any): string | number { return d.name; });
+			.attr("id", function (d: any): string | number { return d.name; })
+			.style("dominant-baseline", "middle")
+			.style("text-anchor", "middle");
 
 		this._nodeLabelGlyphs = this._nodeLabelGlyphs.merge(nodeEnter);
 
