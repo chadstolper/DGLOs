@@ -130,13 +130,33 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 	public positionEdgeGlyphsMatrix() {
 		let curGraph = this._data.timesteps[this._timeStampIndex];
-		this._edgeGlyphs
-			.attr("x", function (d: Edge) {
-				return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-			})
-			.attr("y", function (d: Edge) {
-				return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-			})
+		if (this._currentEdgeShape.shapeType === "STLine") {
+			this._edgeLineGlyphs
+				.attr("x", function (d: Edge) {
+					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+				})
+				.attr("y", function (d: Edge) {
+					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+				})
+		}
+		if (this._currentEdgeShape.shapeType === "Rect") {
+			this._edgeRectGlyphs
+				.attr("x", function (d: Edge) {
+					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+				})
+				.attr("y", function (d: Edge) {
+					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+				})
+		}
+		if (this._currentEdgeShape.shapeType === "Gestalt") {
+			this._edgeGestaltGlyphs
+				.attr("x", function (d: Edge) {
+					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+				})
+				.attr("y", function (d: Edge) {
+					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+				})
+		}
 	}
 	public transformRectToLines() {
 		this._edgeRectGlyphs.transition()
