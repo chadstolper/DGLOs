@@ -3,7 +3,7 @@ import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyp
 import { Selection } from "d3-selection";
 
 export interface NodeGlyphShape { readonly shapeType: string; }
-export interface EdgeGlyphShape { readonly shapeType: string; }
+
 
 /**
  * TODO: map of varibles/attrs:
