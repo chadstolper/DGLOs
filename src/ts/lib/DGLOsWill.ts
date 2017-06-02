@@ -15,19 +15,27 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeG = this.loc.append("g")
 			.classed("edges", true);
 
-		this._edgeGlyphs = this._edgeG.selectAll("line")
+		this._edgeLineGlyphs = this._edgeG.selectAll("line")
 			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-		this._edgeGlyphs.exit().remove();
+		this._edgeLineGlyphs.exit().remove();
 
-		let edgeEnter = this._edgeGlyphs.enter().append("line")
+		let edgeLineEnter = this._edgeLineGlyphs.enter().append("line")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-			.attr("x1", 0)
-			.attr("x2", 1)
-			.attr("y1", 0)
-			.attr("y2", 1);
+		// .attr("x1", 0)
+		// .attr("x2", 1)
+		// .attr("y1", 0)
+		// .attr("y2", 1);
+		this._edgeGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
 
-		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+		this._edgeRectGlyphs = this._edgeG.selectAll("rect")
+			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+
+		let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+
+		this._edgeGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
+
 		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null)
 	}
 
@@ -93,12 +101,6 @@ export class DGLOsWill extends DGLOsMatt {
 			.attr("y", function (d: Edge) {
 				return (+d.id / curGraph.nodes.length) * 100 + "%";
 			})
-			.attr("stroke", "red")
-			.attr("text", function (d: Node) {
-				return d.id;
-			})
-			.attr("font", "Verdana")
-			.attr("Font-Size", 20);
 	}
 	private transformGestaltToLines() {
 		console.log("transfromGestaltToLines not yet implemented :)");
