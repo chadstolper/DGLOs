@@ -48,8 +48,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		//set current shapes
 		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
 		this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
-		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
-		this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
+		// this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
+		// this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
 
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
@@ -98,10 +98,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	private transformNodesFromCircleToLabel() {
 		console.log("be quiet Vegeta");
-		this._nodeCircleGlyphs //.transition()
+		this._nodeCircleGlyphs.transition()
 			.style("display", "none");
 
-		this._nodeLabelGlyphs //.transition()
+		this._nodeLabelGlyphs.transition()
 			.style("display", null);
 	}
 
@@ -129,37 +129,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-<<<<<<< HEAD
-		console.log(this._currentEdgeShape)
-		if (this._currentEdgeShape.shapeType === "STLine") {
-			this._edgeLineGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		} else if (this._currentEdgeShape.shapeType === "Rect") {
-			this._edgeRectGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		} else if (this._currentEdgeShape.shapeType === "Gestalt") {
-			this._edgeGestaltGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		}
-=======
 		this._edgeLineGlyphs
 			.attr("fill", attr.fill)
 			.attr("stroke", attr.stroke)
@@ -168,7 +137,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			.attr("width", attr.width)
 			.attr("height", attr.height)
 			.attr("opacity", attr.opacity);
->>>>>>> origin/dglos
 	}
 
 	public runSimulation() {
