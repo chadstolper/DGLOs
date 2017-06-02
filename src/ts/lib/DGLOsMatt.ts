@@ -13,42 +13,15 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 	public drawNodeGlyphs() {
-		//create circle nodes
-		this._nodeG = this.loc.append("g")
-			.classed("nodes", true);
 
-		this._nodeCircleGlyphs = this._nodeG.selectAll("circle")
-			.data(this._data.timesteps[this._timeStampIndex].nodes, function (d: Node): string { return "" + d.id });
-
-		this._nodeCircleGlyphs.exit().remove();
-
-		let nodeEnter = this._nodeCircleGlyphs.enter().append("circle")
-			.attr("id", function (d: any): string | number { return d.name; });
-
-		this._nodeCircleGlyphs = this._nodeCircleGlyphs.merge(nodeEnter);
-
-
-		//create rect nodes
-		this._nodeLabelGlyphs = this._nodeG.selectAll("label")
-			.data(this._data.timesteps[this._timeStampIndex].nodes, function (d: Node): string { return "" + d.id });
-
-		this._nodeLabelGlyphs.exit().remove();
-
-		nodeEnter = this._nodeLabelGlyphs.enter().append("text")
-			.attr("id", function (d: any): string | number { return d.name; })
-			.style("dominant-baseline", "middle")
-			.style("text-anchor", "middle");
-
-		this._nodeLabelGlyphs = this._nodeLabelGlyphs.merge(nodeEnter);
-
-		this._nodeLabelGlyphs
-			.text(function (d: Node): string {
-				return d.label;
-			})
-
-		//set current shapes
 		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
 		this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
+
+
+		this._currentEdgeShape.draw(this.loc, this.data, this._timeStampIndex);
+		this._currentNodeShape.draw(this.loc, this.data, this._timeStampIndex);
+
+		// //set current shapes
 		// this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
 		// this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
@@ -65,7 +38,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				case "Circle":
 					console.log("Circle-->Circle Catch");
 					this._nodeLabelGlyphs.style("display", "none");
-					this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
+					this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
 					break;
 
 				default: console.log("new NodeShape is undefined");
@@ -77,7 +50,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				case "Circle":
 					console.log("Label-->Circle")
 					this.transformNodesFromLabelToCircle();
-					this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
+					this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
 					this.setNodeGlyphAttrs(new SVGAttrOpts(shape.fill, shape.stroke, shape.radius, shape.stroke_width));
 					break;
 
@@ -202,6 +175,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		} else {
 			console.log("No circle nodes!");
 		}
-		// this._nodeLabelGlyphs.
+		this.currentNodeShape.updateDraw(this._nodeLabelGlyphs);
+		this.currentNodeShape.updateDraw(this._nodeCircleGlyphs);
 	}
 }

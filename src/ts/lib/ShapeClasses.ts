@@ -3,6 +3,11 @@ import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../model/dynamicgraph";
 
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+
+const COLOR_SCHEME: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
+
+
 export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	private _text: string;
@@ -117,10 +122,12 @@ export class LabelGlyphShape implements NodeGlyphShape {
 }
 export class CircleGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
-	private _radius: number;
+	private _radius: number = 10;
 	private _fill: string;
-	private _stroke: string;
-	private _stroke_width: number;
+	private _stroke: string = "grey";
+	private _stroke_width: number = 2;
+
+	private _circleGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(radius: number, fill: string, stroke: string, strokeWidth: number) {
 		this._radius = radius;
@@ -130,25 +137,56 @@ export class CircleGlyphShape implements NodeGlyphShape {
 
 	}
 
-
-	init(location: Selection<any, {}, any, {}>) {
-
+	public init(location: Selection<any, {}, any, {}>): void {
+		this._circleGlyphs = location.append("g").classed("Nodes", true);
 	}
 	//TODO: Make new <g>
-	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return;
+	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let newCircle = location.append("text")
+			.attr("id", function (d: Node): string | number { return d.label; })
+			.attr("fill", function (d: Node): string {
+				console.log(COLOR_SCHEME(d.id))
+				return COLOR_SCHEME(d.id);
+			})
+			.attr("stroke", this.stroke)
+			.attr("r", this.radius)
+			.attr("stroke-width", this.stroke_width);
+		return newCircle;
 	}
 	//TODO: draw nodes
-	updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return;
+	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		if (this._circleGlyphs !== undefined) {
+			this._circleGlyphs
+				.attr("x", function (d: Node) {
+					return d.x;
+				})
+				.attr("y", function (d: Node) { return d.y; });
+		} else {
+			console.log("No circle nodes!");
+
+		}
+		return this._circleGlyphs; //?
 	}
-	//TODO: position and add attr
-	transformTo(shape: NodeGlyphShape): NodeGlyphShape {
+	//TODO: position and add attr to nodes
+	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
+		console.log("eventually");
 		return;
 	}
 	//TODO: says what it does on the tin
-	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number) {
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		this._circleGlyphs = location.selectAll("label")
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
+			.enter().call(this.initDraw);
 
+		this._circleGlyphs.exit().remove();
+
+		let circleEnter = this._circleGlyphs.enter().call(this.init);
+
+		this._circleGlyphs = this._circleGlyphs.merge(circleEnter);
+		this._circleGlyphs
+			.text(function (d: Node): string {
+				return d.label;
+			});
 	}
 	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
 
