@@ -150,10 +150,10 @@ export class SourceTargetLineGlyphShape implements EdgeGlyphShape {
 	private _X2: number;
 	private _Y2: number;
 
-	constructor(stroke: string, stroke_width: number, source: string | number, target: string | number, x1: number, y1: number, x2: number, y2: number) {
+	constructor(stroke: string, stroke_width: number, source?: string | number, target?: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
 		this._stroke = stroke;
 		this._stroke_width = stroke_width;
-		this._source = source;
+		this._source = source; //needed?
 		this._target = target;
 		this._X1 = x1;
 		this._Y1 = y1;
