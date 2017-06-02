@@ -24,16 +24,16 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 	}
 	//TODO: Make new <g>
-	initDraw(location: Selection<any, {}, any, {}>) {
-
+	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return;
 	}
 	//TODO: draw nodes
-	updateDraw(location: Selection<any, {}, any, {}>) {
-
+	updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return;
 	}
 	//TODO: position and add attr
-	transformTo(shape: NodeGlyphShape) {
-
+	transformTo(shape: NodeGlyphShape): NodeGlyphShape {
+		return;
 	}
 	//TODO: says what it does on the tin
 	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number) {
