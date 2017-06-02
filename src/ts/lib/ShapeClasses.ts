@@ -1,5 +1,7 @@
 import { NodeGlyphShape } from "./NodeGlyphShape"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { Selection } from "d3-selection";
+import { DynamicGraph } from "../model/dynamicgraph";
 
 export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
@@ -10,9 +12,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	private _textAnchor: string = "middle";
 	private _dominantBaseline: string = "middle";
 	// private _font = "ComicSans";
-	// private _font_weight = "Normal";
-	//private _font_size : string |number; //eg. "10px"
-	// private _float = "center";
 
 	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
@@ -20,6 +19,27 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		this._x = x;
 		this._y = y;
 	}
+
+	init(location: Selection<any, {}, any, {}>) {
+
+	}
+	//TODO: Make new <g>
+	initDraw(location: Selection<any, {}, any, {}>) {
+
+	}
+	//TODO: draw nodes
+	updateDraw(location: Selection<any, {}, any, {}>) {
+
+	}
+	//TODO: position and add attr
+	transformTo(shape: NodeGlyphShape) {
+
+	}
+	//TODO: says what it does on the tin
+	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number) {
+
+	}
+	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
 
 
 	get text(): string {
@@ -78,6 +98,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		this._fill = fill;
 		this._stroke = stroke;
 		this._stroke_width = strokeWidth;
+
 	}
 
 	get radius(): number {
