@@ -28,7 +28,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 
 		//create rect nodes
-		this._nodeLabelGlyphs = this._nodeG.selectAll("text")
+		this._nodeLabelGlyphs = this._nodeG.selectAll("label")
 			.data(this._data.timesteps[this._timeStampIndex].nodes, function (d: Node): string { return "" + d.id });
 
 		this._nodeLabelGlyphs.exit().remove();
@@ -172,10 +172,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		else {
 			if (this._nodeLabelGlyphs !== undefined) {
 				this._nodeLabelGlyphs
-					.attr("cx", function (d: Node) {
+					.attr("x", function (d: Node) {
 						return d.x;
 					})
-					.attr("cy", function (d: Node) { return d.y; });
+					.attr("y", function (d: Node) { return d.y; });
 			} else {
 				console.log("No nodes!");
 			}

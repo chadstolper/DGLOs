@@ -6,11 +6,12 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	private _fill: string;
 	private _X: number;
 	private _Y: number;
-	// private _font = "Arial";
+	// private _font = "ComicSans";
 	// private _font_weight = "Normal";
+	//private _font_size : string |number; //eg. "10px"
 	// private _float = "center";
 
-	constructor(text: string, fill: string, x: number, y: number) {
+	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
 		this._fill = fill;
 		this._X = x;
@@ -139,8 +140,9 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		return this._shapeType;
 	}
 }
-export class SourceTargetLineGlyphShape implements EdgeGlyphShape {
-	readonly _shapeType = "STLine";
+
+export abstract class LineGlyphShape implements EdgeGlyphShape {
+	readonly _shapeType: string;
 	private _stroke: string;
 	private _stroke_width: number;
 	private _source: string | number;
@@ -230,10 +232,47 @@ export class SourceTargetLineGlyphShape implements EdgeGlyphShape {
 		return this._shapeType;
 	}
 }
-export class GestaltGlyphShape implements EdgeGlyphShape {
+
+export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
+	readonly _shapeType = "STLine";
+
+	constructor(stroke: string, stroke_width: number, source?: string | number, target?: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
+		super(stroke, stroke_width, source, target, x1, y1, x2, y2);
+	}
+
+	//gets and sets inherited from LineGlyphShape
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
+}
+
+export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "Gestalt";
+	private _angleProperty: number;
+	private _timeStepIndex: number;
+
+	constructor(stroke: string, stroke_width: number, angleProperty: number, timeStepIndex: number, source: string | number, target: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
+		super(stroke, stroke_width, source, target, x1, y1, x2, y2);
+		this._angleProperty = angleProperty;
+		this._timeStepIndex = timeStepIndex;
+	}
 
 
+	get angleProperty(): number {
+		return this._angleProperty;
+	}
+	set angleProperty(angleProperty: number) {
+		this._angleProperty = angleProperty;
+	}
+
+
+	get timeStepIndex(): number {
+		return this.timeStepIndex;
+	}
+	set timeStepIndex(timeStepIndex: number) {
+		this._timeStepIndex = timeStepIndex;
+	}
 
 
 	get shapeType(): string {
