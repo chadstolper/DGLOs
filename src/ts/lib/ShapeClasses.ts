@@ -2,6 +2,26 @@ import { NodeGlyphShape, EdgeGlyphShape } from "./DGLOs";
 
 export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
+	private _text = "";
+	private _fill = "Black";
+	// private _font = "Arial";
+	// private _font_weight = "Normal";
+	// private _float = "center";
+
+	get text(): string {
+		return this._text;
+	}
+	set text(text: string) {
+		this._text = text;
+	}
+
+
+	get fill(): string {
+		return this._fill;
+	}
+	set fill(fill: string) {
+		this._fill = fill;
+	}
 
 
 	get shapeType(): string {
