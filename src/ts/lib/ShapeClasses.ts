@@ -9,6 +9,21 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	// private _font = "Arial";
 	// private _font_weight = "Normal";
 	// private _float = "center";
+	private _xPos = 0;
+	private _yPos = 0;
+
+	get xPos(): number {
+		return this._xPos;
+	}
+	set xPos(x: number) {
+		this._xPos = x;
+	}
+	get yPos(): number {
+		return this._yPos;
+	}
+	set yPos(y: number) {
+		this._yPos = y;
+	}
 
 	constructor(text: string, fill: string, x: number, y: number) {
 		this._text = text;

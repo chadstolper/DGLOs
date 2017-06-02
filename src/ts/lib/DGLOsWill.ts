@@ -31,36 +31,37 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public transformEdgeGlyphsTo(shape: any) {
-		switch (shape) {
-			case this._currentEdgeShape.shapeType === "Rect":
-				switch (shape) {
-					case shape.shapeType === "STLine":
-						this.transformRectToLines();
-					case shape.shapeType === "Gestalt":
-						this.transformRectToGestalt();
-					default:
-						console.log("Your shape has not been implemented");
-				}
-			case this._currentEdgeShape.shapeType === "STLine":
-				switch (shape) {
-					case shape.shapteType === "Rect":
-						this.transformLinesToRect();
-					case shape.shapeType === "Gestalt":
-						this.transformLinesToGestalt();
-					default:
-						console.log("Your shape has not been implemented");
-				}
-			case this._currentEdgeShape.shapeType === "Gestalt":
-				switch (shape) {
-					case shape.shapteType === "Rect":
-						this.transformGestaltToRect();
-					case shape.shapteType === "STLine":
-						this.transformGestaltToLines();
-					default:
-						console.log("Your shape has not been implemented");
+		// switch (shape) {
+		// 	case this._currentEdgeShape.shapeType === "Rect":
+		// 		switch (shape) {
+		// 			case shape.shapeType === "STLine":
+		// 				this.transformRectToLines();
+		// 			case shape.shapeType === "Gestalt":
+		// 				this.transformRectToGestalt();
+		// 			default:
+		// 				console.log("Your shape has not been implemented");
+		// 		}
+		// 	case this._currentEdgeShape.shapeType === "STLine":
+		// 		switch (shape) {
+		// 			case shape.shapteType === "Rect":
+		// 				this.transformLinesToRect();
+		// 			case shape.shapeType === "Gestalt":
+		// 				this.transformLinesToGestalt();
+		// 			default:
+		// 				console.log("Your shape has not been implemented");
+		// 		}
+		// 	case this._currentEdgeShape.shapeType === "Gestalt":
+		// 		switch (shape) {
+		// 			case shape.shapteType === "Rect":
+		// 				this.transformGestaltToRect();
+		// 			case shape.shapteType === "STLine":
+		// 				this.transformGestaltToLines();
+		// 			default:
+		// 				console.log("Your shape has not been implemented");
 
-				}
-		}
+		// 		}
+		// }
+		this.transformLinesToRect();
 	}
 
 	private transformGestaltToLines() {
@@ -72,7 +73,6 @@ export class DGLOsWill extends DGLOsMatt {
 	private transformLinesToGestalt() {
 		console.log("transfromLinesToGestalt not yet implemented :)");
 	}
-
 	private transformRectToGestalt() {
 		console.log("transfromRectToGestalt not yet implemented :)");
 	}
