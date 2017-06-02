@@ -129,7 +129,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-<<<<<<< HEAD
 		this._edgeLineGlyphs
 			.attr("fill", attr.fill)
 			.attr("stroke", attr.stroke)
@@ -138,7 +137,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			.attr("width", attr.width)
 			.attr("height", attr.height)
 			.attr("opacity", attr.opacity);
-=======
 		console.log(this._currentEdgeShape)
 		if (this._currentEdgeShape.shapeType === "STLine") {
 			this._edgeLineGlyphs
@@ -168,7 +166,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				.attr("height", attr.height)
 				.attr("opacity", attr.opacity);
 		}
->>>>>>> 871edf015b8170e8e8f549f2bf2137a24eb71f60
 	}
 
 	public runSimulation() {
