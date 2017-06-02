@@ -1,6 +1,8 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
 import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
 import { Selection } from "d3-selection";
+import { NodeGlyphShape } from "./NodeGlyphShape"
+import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 
 /**
  * TODO: map of varibles/attrs:
