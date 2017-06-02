@@ -55,31 +55,33 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
 		switch (this._currentNodeShape.shapeType) {
 			case "Circle": switch (shape.shapeType) {
-				case "Label": this.transformNodesFromCircleToLabel();
+				case "Label":
+					console.log("Circle-->Label")
+					this.transformNodesFromCircleToLabel();
 					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
 					break;
 
-				case "Label": this.transformNodesFromCircleToLabel()
-					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
-					break;
-
-				case "Circle": console.log("Circle-->Circle Catch");
+				case "Circle":
+					console.log("Circle-->Circle Catch");
 					this._nodeLabelGlyphs.style("display", "none");
 					this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 					break;
 
-				default: console.log("current shape is undefined");
+				default: console.log("new NodeShape is undefined");
 					break;
 			}
 				break;
 
 			case "Label": switch (shape.shapeType) {
-				case "Circle": this.transformNodesFromLabelToCircle();
+				case "Circle":
+					console.log("Label-->Circle")
+					this.transformNodesFromLabelToCircle();
 					this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 					this.setNodeGlyphAttrs(new SVGAttrOpts(shape.fill, shape.stroke, shape.radius, shape.stroke_width));
 					break;
 
-				case "Label": console.log("Label-->Label Catch");
+				case "Label":
+					console.log("Label-->Label Catch");
 					this._nodeCircleGlyphs.style("display", "none");
 					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
 					break;
