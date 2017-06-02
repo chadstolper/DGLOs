@@ -28,41 +28,62 @@ export class DGLOsWill extends DGLOsMatt {
 			.attr("y2", 1);
 
 		this._edgeGlyphs = this._edgeGlyphs.merge(edgeEnter);
+		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null)
 	}
 
 	public transformEdgeGlyphsTo(shape: any) {
-		// switch (shape) {
-		// 	case this._currentEdgeShape.shapeType === "Rect":
-		// 		switch (shape) {
-		// 			case shape.shapeType === "STLine":
-		// 				this.transformRectToLines();
-		// 			case shape.shapeType === "Gestalt":
-		// 				this.transformRectToGestalt();
-		// 			default:
-		// 				console.log("Your shape has not been implemented");
-		// 		}
-		// 	case this._currentEdgeShape.shapeType === "STLine":
-		// 		switch (shape) {
-		// 			case shape.shapteType === "Rect":
-		// 				this.transformLinesToRect();
-		// 			case shape.shapeType === "Gestalt":
-		// 				this.transformLinesToGestalt();
-		// 			default:
-		// 				console.log("Your shape has not been implemented");
-		// 		}
-		// 	case this._currentEdgeShape.shapeType === "Gestalt":
-		// 		switch (shape) {
-		// 			case shape.shapteType === "Rect":
-		// 				this.transformGestaltToRect();
-		// 			case shape.shapteType === "STLine":
-		// 				this.transformGestaltToLines();
-		// 			default:
-		// 				console.log("Your shape has not been implemented");
+		switch (this._currentEdgeShape.shapeType) {
+			case "Rect":
+				console.log("current shape is a rect!");
+				console.log("changing to " + shape.shapeType);
+				switch (shape.shapeType) {
+					case "STLine":
+						this.transformRectToLines();
+						break;
+					case "Gestalt":
+						this.transformRectToGestalt();
+						break;
+					default:
+						console.log("Your shape has not been implemented");
+						break;
+				}
+				break;
+			case "STLine":
+				console.log("current shape is a STLine!");
+				console.log("changing to " + shape.shapeType);
+				switch (shape.shapeType) {
+					case "Rect":
+						this.transformLinesToRect();
+						break;
+					case "Gestalt":
+						this.transformLinesToGestalt();
+						break;
+					default:
+						console.log("Your shape has not been implemented");
+						break;
+				}
+				break;
+			case "Gestalt":
+				console.log("current shape is a Gestalt!");
+				console.log("changing to " + shape.shapeType);
+				switch (shape.shapeType) {
+					case "Rect":
+						this.transformGestaltToRect();
+						break;
+					case "STLine":
+						this.transformGestaltToLines();
+						break;
+					default:
+						console.log("Your shape has not been implemented");
+						break;
 
-		// 		}
-		// }
-		this.transformLinesToRect();
+				}
+			default:
+				break;
+		}
+		//this.transformLinesToRect();
 	}
+	//TODO
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.data.timesteps[this._timeStampIndex];
 		this._nodeLabelGlyphs
@@ -92,7 +113,6 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log("transfromRectToGestalt not yet implemented :)");
 	}
 	private transformLinesToRect() {
-		console.log("hello, we're here");
 		let curGraph = this.data.timesteps[this._timeStampIndex];
 		let arraySize = curGraph.nodes.length;
 

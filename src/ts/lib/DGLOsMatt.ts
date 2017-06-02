@@ -34,7 +34,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._nodeLabelGlyphs.exit().remove();
 
 		nodeEnter = this._nodeLabelGlyphs.enter().append("text")
-			.attr("id", function (d: any): string | number { return d.name; });
+			.attr("id", function (d: any): string | number { return d.name; })
+			.style("dominant-baseline", "middle")
+			.style("text-anchor", "middle");
 
 		this._nodeLabelGlyphs = this._nodeLabelGlyphs.merge(nodeEnter);
 
@@ -43,16 +45,29 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				return d.label;
 			})
 
+<<<<<<< HEAD
 		//set current shapes
 		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
+=======
+
+		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
+
+>>>>>>> 54e4751c517e839dfdec889c655290f34b463910
 		this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
 
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
 		switch (this._currentNodeShape.shapeType) {
 			case "Circle": switch (shape.shapeType) {
+<<<<<<< HEAD
 				case "Label": this.transformNodesFromCircleToLabel();
 					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
+=======
+
+				case "Label": this.transformNodesFromCircleToLabel()
+					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
+
+>>>>>>> 54e4751c517e839dfdec889c655290f34b463910
 					break;
 
 				case "Circle": console.log("Circle-->Circle Catch");
