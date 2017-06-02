@@ -37,18 +37,18 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	}
 
 
-	get X(): number {
+	get x(): number {
 		return this._x;
 	}
-	set X(x: number) {
+	set x(x: number) {
 		this._x = x;
 	}
 
 
-	get Y(): number {
+	get y(): number {
 		return this._y;
 	}
-	set Y(y: number) {
+	set y(y: number) {
 		this._y = y;
 	}
 
@@ -206,34 +206,34 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	}
 
 
-	get X1(): number {
+	get x1(): number {
 		return this._x1;
 	}
-	set X1(x1: number) {
+	set x1(x1: number) {
 		this._x1 = x1
 	}
 
 
-	get Y1(): number {
+	get y1(): number {
 		return this._y1;
 	}
-	set Y1(y1: number) {
+	set y1(y1: number) {
 		this._y1 = y1;
 	}
 
 
-	get X2(): number {
+	get x2(): number {
 		return this._x2;
 	}
-	set X2(x2: number) {
+	set x2(x2: number) {
 		this._x2 = x2
 	}
 
 
-	get Y2(): number {
+	get y2(): number {
 		return this._y2;
 	}
-	set Y2(y2: number) {
+	set y2(y2: number) {
 		this._y2 = y2;
 	}
 
