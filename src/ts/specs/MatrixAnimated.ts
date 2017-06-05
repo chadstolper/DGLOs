@@ -1,10 +1,6 @@
 import { Technique } from "./Technique"
 import { SVGAttrOpts } from "../lib/DGLOsSVG"
-<<<<<<< HEAD
-import { NodeGlyphShape } from "../lib/NodeGlyphShape"
-=======
 import { NodeGlyphShape } from "../lib/NodeGlyphInterface";
->>>>>>> origin/dglos
 import { EdgeGlyphShape } from "../lib/EdgeGlyphInterface";
 import { LabelGlyphShape, RectGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "../lib/ShapeClasses";
 
