@@ -284,7 +284,8 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	private _width: number;
 	private _height: number;
 	private _fill: string;
-	private _edgeRectGlyphs: Selection<any, {}, any, {}>;
+	private _parent: Selection<any, {}, any, {}>;
+	private _rectGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(width: number, height: number, fill: string, numNodes: number) {
 		this._width = width;
@@ -313,21 +314,13 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
-
-	/**
-	 * Adds a new <g> tag to hold the rectangles
-	 * @param location is an SVG location where the rectangles will be drawn
-	 */
 	public init(location: Selection<any, {}, any, {}>): void {
 		location.append("g")
 			.classed("rectEdges", true);
 	}
 
-	/**
-	 * Creates the rectangle objects
-	 * @param selection 
-	 */
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		console.log(selection);
 		selection.enter().append("rect")
 			.attr("id", function (d: Edge) {
 				return d.source.id + ":" + d.target.id;
@@ -335,34 +328,37 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		return selection;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		this._edgeRectGlyphs
+		this._rectGlyphs
 			.attr("x", function (d: Edge) {
 				return (+d.source.id / this.numNodes) * 100 + "%";
 			})
 			.attr("y", function (d: Edge) {
 				return (+d.target.id / this.numNodes) * 100 + "%";
 			})
-		return this._edgeRectGlyphs;
+		return this._rectGlyphs;
 	}
-	/**
-	 * Turns these here shapes into some other shapes
-	 * @param shape 
-	 */
 	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
 		return null;
 	}
-	/**
-	 * Does all the things
-	 * @param selection 
-	 * @param data 
-	 * @param TimeStampIndex 
-	 */
 	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
-		console.log("drawing~~~");
+		// 	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		// //this.init(location); //move me eventually
+		// let labelGlyphs = labelG.selectAll("text.label")
+		// 	.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
+		// //.enter().call(this.initDraw);
 		this.init(selection);
+		this._parent = selection.select("rectEdges");
+		selection.merge(this.initDraw(this._parent.data(data.timesteps[TimeStampIndex].edges)));
+
+		//this._parent
+		//.append("rect")
+		//.attr("id", "RORO");
+		//this._rectGlyphs = selection.selectAll("rect");
+		//console.log("drawing~~~");
+		//this.init(selection);
 		//now selection has a <g> tag: WORKS
 		//selection.select("g")
-		this.initDraw(selection.select("g").data(data.timesteps[TimeStampIndex].edges));
+		//	this.initDraw(selection.select("g").data(data.timesteps[TimeStampIndex].edges));
 		//selection should have a bunch of rects
 		//console.log(selection);
 		//console.log(selection.datum);
