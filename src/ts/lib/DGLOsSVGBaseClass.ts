@@ -1,5 +1,5 @@
 import { DGLOs, AttrOpts } from "./DGLOs";
-import { NodeGlyphShape } from "./NodeGlyphShape"
+import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import * as model from "../model/DynamicGraph";
 import * as shape from "./ShapeClasses";
