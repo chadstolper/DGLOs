@@ -295,6 +295,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
+
 	/**
 	 * Adds a new <g> tag to hold the rectangles
 	 * @param location is an SVG location where the rectangles will be drawn
@@ -303,20 +304,17 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		location.append("g")
 			.classed("rectEdges", true);
 	}
+
 	/**
 	 * Creates the rectangle objects
 	 * @param selection 
 	 */
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		// let edgeRectEnter = selection.enter().append("rect")
-		// 	.attr("id", function (d: any): string { return d.source.id + ":" + d.target.id })
-		// selection = selection.merge(edgeRectEnter);
-		// return selection;
-		let newRect = selection.append("rect")
-			.attr("width", this._width)
-			.attr("height", this._height)
-			.attr("fill", this._fill);
-		return newRect;
+		selection.enter().append("rect")
+			.attr("id", function (d: Edge) {
+				return d.source.id + ":" + d.target.id;
+			})
+		return selection;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		this._edgeRectGlyphs
@@ -342,15 +340,17 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	 * @param TimeStampIndex 
 	 */
 	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
-		this._edgeRectGlyphs = selection.selectAll("rect")
-			.data(data.timesteps[TimeStampIndex].nodes, function (d: Node): string { return "" + d.id })
-			.enter().call(this.initDraw);
+		console.log("drawing~~~");
+		this.init(selection);
+		//now selection has a <g> tag: WORKS
+		//selection.select("g")
+		this.initDraw(selection.select("g").data(data.timesteps[TimeStampIndex].edges));
+		//selection should have a bunch of rects
+		//console.log(selection);
+		//console.log(selection.datum);
+		//this.updateDraw(selection);
+		//should draw the rectangles
 
-		this._edgeRectGlyphs.exit().remove();
-		let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-
-		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
 	}
 }
 

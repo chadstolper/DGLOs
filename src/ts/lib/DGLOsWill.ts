@@ -13,38 +13,39 @@ import * as d3Array from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
 	public drawEdgeGlyphs() {
-		this._edgeG = this.loc.append("g")
-			.classed("edges", true);
+		// this._edgeG = this.loc.append("g")
+		// 	.classed("edges", true);
 
-		this._edgeLineGlyphs = this._edgeG.selectAll("line")
-			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		// this._edgeLineGlyphs = this._edgeG.selectAll("line")
+		// 	.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-		this._edgeLineGlyphs.exit().remove();
+		// this._edgeLineGlyphs.exit().remove();
 
-		let edgeLineEnter = this._edgeLineGlyphs.enter().append("line")
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+		// let edgeLineEnter = this._edgeLineGlyphs.enter().append("line")
+		// 	.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 
-		this._edgeLineGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
+		// this._edgeLineGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
 
-		this._edgeRectGlyphs = this._edgeG.selectAll("rect")
-			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		// this._edgeRectGlyphs = this._edgeG.selectAll("rect")
+		// 	.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-		let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+		// let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
+		// 	.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 
-		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
+		// this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
 
-		this._edgeGestaltGlyphs = this._edgeG.selectAll("gestalt")
-			.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		// this._edgeGestaltGlyphs = this._edgeG.selectAll("gestalt")
+		// 	.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
 
-		this._edgeLineGlyphs.exit().remove();
+		// this._edgeLineGlyphs.exit().remove();
 
-		let gestaltLineEnter = this._edgeLineGlyphs.enter().append("gestalt")
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+		// let gestaltLineEnter = this._edgeLineGlyphs.enter().append("gestalt")
+		// 	.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
 
-		this._edgeGestaltGlyphs = this._edgeGestaltGlyphs.merge(gestaltLineEnter);
+		// this._edgeGestaltGlyphs = this._edgeGestaltGlyphs.merge(gestaltLineEnter);
 
-		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null)
+		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null, null);
+		this._currentEdgeShape.draw(this._location, this._data, 0);
 	}
 
 	public transformEdgeGlyphsTo(shape: any) {
