@@ -27,19 +27,36 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		this._y = y;
 	}
 
+
 	public init(location: Selection<any, {}, any, {}>): void {
+		console.log("init start")
 		this._labelGlyphs = location.append("g").classed("Nodes", true);
+		console.log(this._labelGlyphs)
+		console.log("init finished")
 	}
-	//TODO: Make new <g>
+
+
 	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		console.log("initdraw start")
 		let newLabel = location.append("text")
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", "middle")
 			.style("text-anchor", "middle");
+
+		console.log(newLabel)
+		console.log("initdraw done")
 		return newLabel;
 	}
-	//TODO: draw nodes
+
+
 	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		console.log("update start")
+		this._labelGlyphs.exit().remove();
+
+		let labelEnter = this._labelGlyphs.enter().call(this.initDraw);
+
+		this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
+
 		if (this._labelGlyphs !== undefined) {
 			this._labelGlyphs
 				.attr("x", function (d: Node) {
@@ -50,30 +67,44 @@ export class LabelGlyphShape implements NodeGlyphShape {
 			console.log("No label nodes!");
 
 		}
+
+		console.log(this._labelGlyphs)
+		console.log("update done")
 		return this._labelGlyphs; //?
 	}
-	//TODO: position and add attr to nodes
+
+
 	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
 		console.log("eventually");
 		return;
 	}
-	//TODO: says what it does on the tin
+
+
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		this.init(location);
+		console.log("init was called")
 		this._labelGlyphs = location.selectAll("label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
 			.enter().call(this.initDraw);
 
-		this._labelGlyphs.exit().remove();
+		console.log("init done, start update")
 
-		let labelEnter = this._labelGlyphs.enter().call(this.init);
+		this.updateDraw;
 
-		this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
+		console.log("update done, finishing")
+
+		// this._labelGlyphs.exit().remove();
+
+		// let labelEnter = this._labelGlyphs.enter().call(this.init);
+
+		// this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
 		this._labelGlyphs
 			.text(function (d: Node): string {
+				console.log(d.label);
 				return d.label;
 			});
+		console.log("finished draw")
 	}
-	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
 
 
 	get text(): string {

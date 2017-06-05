@@ -15,10 +15,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	public drawNodeGlyphs() {
 
 		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
-		this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
+		this._currentNodeShape = new LabelGlyphShape(null, "black");
 
 
-		this._currentEdgeShape.draw(this.loc, this.data, this._timeStampIndex);
+		// this._currentEdgeShape.draw(this.loc, this.data, this._timeStampIndex);
+		console.log("start draw")
 		this._currentNodeShape.draw(this.loc, this.data, this._timeStampIndex);
 
 		// //set current shapes
