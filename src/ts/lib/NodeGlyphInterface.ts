@@ -4,7 +4,7 @@ import { DynamicGraph } from "../model/DynamicGraph";
 export interface NodeGlyphShape {
 	readonly shapeType: string;
 
-	init(location: Selection<any, {}, any, {}>): void;
+	init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
 	//TODO: Make new <g>
 	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
 	//TODO: draw nodes

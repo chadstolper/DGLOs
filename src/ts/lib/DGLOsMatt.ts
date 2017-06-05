@@ -12,64 +12,80 @@ import { SVGAttrOpts } from "./DGLOsSVG";
 import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
+
+
 	public drawNodeGlyphs() {
 
 		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
-		this._currentNodeShape = new LabelGlyphShape(null, "black");
+		this._currentNodeShape = new LabelGlyphShape(null, "black"); //need to update later
 
 
 		// this._currentEdgeShape.draw(this.loc, this.data, this._timeStampIndex);
-		console.log("start draw")
-		this._currentNodeShape.draw(this.loc, this.data, this._timeStampIndex);
+		//console.log("start draw")
+
+		if (this._nodeG === undefined) {
+			this._nodeG = this.loc.append("g").classed("nodeG", true)
+		}
+
+		//if (this._nodeLabelGlyphs === undefined) {
+		//console.log(this.loc);
+		let nodeLabelG: Selection<any, {}, any, {}> = this._currentNodeShape.init(this._nodeG); //replace with call to the library's instance of the shape
+		//}
+
+		this._nodeGlyphs.set(this._currentNodeShape, nodeLabelG); //need to update later
+
+		//console.log(nodeLabelG)
+
+		//this._currentNodeShape.draw(nodeLabelG, this.data, this._timeStampIndex);
 
 		// //set current shapes
 		// this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
 		// this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
 	}
 
-	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
-		switch (this._currentNodeShape.shapeType) {
-			case "Circle": switch (shape.shapeType) {
-				case "Label":
-					console.log("Circle-->Label")
-					this.transformNodesFromCircleToLabel();
-					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
-					break;
+	// public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
+	// 	switch (this._currentNodeShape.shapeType) {
+	// 		case "Circle": switch (shape.shapeType) {
+	// 			case "Label":
+	// 				console.log("Circle-->Label")
+	// 				this.transformNodesFromCircleToLabel();
+	// 				this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
+	// 				break;
 
-				case "Circle":
-					console.log("Circle-->Circle Catch");
-					this._nodeLabelGlyphs.style("display", "none");
-					this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
-					break;
+	// 			case "Circle":
+	// 				console.log("Circle-->Circle Catch");
+	// 				this._nodeLabelGlyphs.style("display", "none");
+	// 				this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
+	// 				break;
 
-				default: console.log("new NodeShape is undefined");
-					break;
-			}
-				break;
+	// 			default: console.log("new NodeShape is undefined");
+	// 				break;
+	// 		}
+	// 			break;
 
-			case "Label": switch (shape.shapeType) {
-				case "Circle":
-					console.log("Label-->Circle")
-					this.transformNodesFromLabelToCircle();
-					this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
-					this.setNodeGlyphAttrs(new SVGAttrOpts(shape.fill, shape.stroke, shape.radius, shape.stroke_width));
-					break;
+	// 		case "Label": switch (shape.shapeType) {
+	// 			case "Circle":
+	// 				console.log("Label-->Circle")
+	// 				this.transformNodesFromLabelToCircle();
+	// 				this._currentNodeShape = new CircleGlyphShape(10, "purple", "grey", 2);
+	// 				this.setNodeGlyphAttrs(new SVGAttrOpts(shape.fill, shape.stroke, shape.radius, shape.stroke_width));
+	// 				break;
 
-				case "Label":
-					console.log("Label-->Label Catch");
-					this._nodeCircleGlyphs.style("display", "none");
-					this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
-					break;
+	// 			case "Label":
+	// 				console.log("Label-->Label Catch");
+	// 				this._nodeCircleGlyphs.style("display", "none");
+	// 				this._currentNodeShape = new LabelGlyphShape(null, null, null, null);
+	// 				break;
 
-				default: console.log("new NodeShape is undefined");
-					break;
-			};
-				break;
+	// 			default: console.log("new NodeShape is undefined");
+	// 				break;
+	// 		};
+	// 			break;
 
-			default: console.log("current NodeShape is undefined");
-				break;
-		}
-	}
+	// 		default: console.log("current NodeShape is undefined");
+	// 			break;
+	// 	}
+	// }
 
 	private transformNodesFromCircleToLabel() {
 		console.log("be quiet Vegeta");
@@ -176,7 +192,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		} else {
 			console.log("No circle nodes!");
 		}
-		this.currentNodeShape.updateDraw(this._nodeLabelGlyphs);
-		this.currentNodeShape.updateDraw(this._nodeCircleGlyphs);
+		let self = this;
+		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+			shape.draw(glyphs, self._data, self._timeStampIndex);
+		})
+
 	}
 }
