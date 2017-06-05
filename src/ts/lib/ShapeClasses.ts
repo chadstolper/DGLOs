@@ -484,6 +484,22 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	get shapeType(): string {
 		return this._shapeType;
 	}
+
+	public init(location: Selection<any, {}, any, {}>): void {
+
+	}
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
+		return null;
+	}
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+		return null;
+	}
 }
 
 export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
@@ -495,6 +511,22 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		super(stroke, stroke_width, source, target, x1, y1, x2, y2);
 		this._angleProperty = angleProperty;
 		this._timeStepIndex = timeStepIndex;
+	}
+
+	public init(location: Selection<any, {}, any, {}>): void {
+
+	}
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
+		return null;
+	}
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+		return null;
 	}
 
 
