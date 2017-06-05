@@ -27,14 +27,10 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		this._y = y;
 	}
 
-<<<<<<< HEAD
-
-=======
 	/**
 	 * Make new <g>
 	 * @param location
 	 */
->>>>>>> origin/dglos
 	public init(location: Selection<any, {}, any, {}>): void {
 		console.log("init start")
 		this._labelGlyphs = location.append("g").classed("Nodes", true);
@@ -270,6 +266,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	private _width: number;
 	private _height: number;
 	private _fill: string;
+	private _edgeRectGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(width: number, height: number, fill: string) {
 		this._width = width;
@@ -311,10 +308,15 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	 * @param selection 
 	 */
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		let edgeRectEnter = selection.enter().append("rect")
-			.attr("id", function (d: any): string { return d.source.id + ":" + d.target.id })
-		selection = selection.merge(edgeRectEnter);
-		return selection;
+		// let edgeRectEnter = selection.enter().append("rect")
+		// 	.attr("id", function (d: any): string { return d.source.id + ":" + d.target.id })
+		// selection = selection.merge(edgeRectEnter);
+		// return selection;
+		let newRect = selection.append("rect")
+			.attr("width", this._width)
+			.attr("height", this._height)
+			.attr("fill", this._fill);
+		return newRect;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -322,10 +324,25 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
 		return null;
 	}
-	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
-		return null;
+	/**
+	 * Does all the things
+	 * @param selection 
+	 * @param data 
+	 * @param TimeStampIndex 
+	 */
+	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
+		this._edgeRectGlyphs = selection.selectAll("rect")
+			.data(data.timesteps[TimeStampIndex].nodes, function (d: Node): string { return "" + d.id })
+			.enter().call(this.initDraw);
+
+		this._edgeRectGlyphs.exit().remove();
+		let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+
+		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
 	}
 }
+
 
 export abstract class LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType: string;
