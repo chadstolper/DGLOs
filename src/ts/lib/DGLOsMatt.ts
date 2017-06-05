@@ -20,18 +20,18 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 
 		// this._currentEdgeShape.draw(this.loc, this.data, this._timeStampIndex);
-		console.log("start draw")
+		//console.log("start draw")
 
 		if (this._nodeGlyphs === undefined) {
 			this._nodeGlyphs = this.loc.append("g").classed("nodeG", true)
 		}
 
 		//if (this._nodeLabelGlyphs === undefined) {
-		console.log(this.loc);
+		//console.log(this.loc);
 		let nodeLabelG: Selection<any, {}, any, {}> = this._currentNodeShape.init(this._nodeGlyphs); //replace with call to the library's instance of the shape
 		//}
 
-		console.log(nodeLabelG)
+		//console.log(nodeLabelG)
 
 		this._currentNodeShape.draw(nodeLabelG, this.data, this._timeStampIndex);
 

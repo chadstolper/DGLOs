@@ -39,15 +39,17 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	}
 
 
-	public initDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
 		console.log("initdraw start")
-		glyphs = glyphs.append("text")
+		console.log(glyphs)
+		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", "middle")
 			.style("text-anchor", "middle");
 		console.log("initdraw done")
-		return glyphs;
+		console.log(glyphs, ret)
+		return ret;
 	}
 
 
@@ -57,17 +59,17 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 		//if (this._labelGlyphs !== undefined) {
 		//console.log(this._labelGlyphs);
-		console.log(glyphs);
+		//console.log(glyphs);
 		glyphs
 			.text(function (d: Node): string {
-				console.log(d);
+				//console.log(d);
 				return d.label;
 			});
 		glyphs
 			.attr("x", function (d: Node) {
 				//if (d.x !== undefined) { return d.x; }
 				//return 0;
-				console.log(this);
+				//console.log("this", this);
 				return d.x;
 			})
 			.attr("y", function (d: Node) {
@@ -80,7 +82,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 		//}
 		//console.log(this._labelGlyphs)
-		console.log("update done")
+		//console.log("update done")
 		return glyphs; //?
 	}
 
@@ -106,21 +108,23 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 		labelGlyphs.exit().remove();
 
-		let labelEnter = labelGlyphs.enter().call(this.initDraw);
+		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
+		// let labelEnter = labelGlyphs.enter().append("text").classed("label", true);
 
-		console.log("before merge", labelGlyphs)
+		//console.log("before merge", labelGlyphs)
+		console.log(labelEnter);
 		labelGlyphs = labelGlyphs.merge(labelEnter);
-		console.log("after merge", labelGlyphs)
+		//console.log("after merge", labelGlyphs)
 
 
 
-		console.log("init done, start update")
+		//console.log("init done, start update")
 
 		labelGlyphs.call(this.updateDraw);
 
-		console.log("update done, finishing")
+		//console.log("update done, finishing")
 
-		console.log("finished draw")
+		//console.log("finished draw")
 	}
 
 
