@@ -268,7 +268,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	private _fill: string;
 	private _edgeRectGlyphs: Selection<any, {}, any, {}>;
 
-	constructor(width: number, height: number, fill: string) {
+	constructor(width: number, height: number, fill: string, numNodes: number) {
 		this._width = width;
 		this._height = height;
 		this._fill = fill;
@@ -319,8 +319,19 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		return newRect;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return null;
+		this._edgeRectGlyphs
+			.attr("x", function (d: Edge) {
+				return (+d.source.id / this.numNodes) * 100 + "%";
+			})
+			.attr("y", function (d: Edge) {
+				return (+d.target.id / this.numNodes) * 100 + "%";
+			})
+		return this._edgeRectGlyphs;
 	}
+	/**
+	 * Turns these here shapes into some other shapes
+	 * @param shape 
+	 */
 	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
 		return null;
 	}

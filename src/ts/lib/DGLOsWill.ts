@@ -161,7 +161,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.style("display", "none");
 		this._edgeRectGlyphs   //.transition()
 			.style("display", null);
-		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null);
+		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null, null);
 	}
 	private transformLinesToGestalt() {
 		this._edgeLineGlyphs   //.transition()
@@ -183,7 +183,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeRectGlyphs   //.transition()
 			.style("display", null);
 
-		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null);
+		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null, null);
 	}
 
 }
