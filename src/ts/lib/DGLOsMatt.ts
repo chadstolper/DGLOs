@@ -13,34 +13,26 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
+	protected _labelGlyphShape = new LabelGlyphShape(null, null);
+	protected _circleGlyphShape = new CircleGlyphShape(null, null, null, null);
 
 	public drawNodeGlyphs() {
 
 		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
-		this._currentNodeShape = new LabelGlyphShape(null, "black"); //need to update later
+		this._currentNodeShape = this._labelGlyphShape;
 
-
-		// this._currentEdgeShape.draw(this.loc, this.data, this._timeStampIndex);
-		//console.log("start draw")
-
+		//create "g" group for nodes; parent "g"
 		if (this._nodeG === undefined) {
 			this._nodeG = this.loc.append("g").classed("nodeG", true)
 		}
 
-		//if (this._nodeLabelGlyphs === undefined) {
-		//console.log(this.loc);
-		let nodeLabelG: Selection<any, {}, any, {}> = this._currentNodeShape.init(this._nodeG); //replace with call to the library's instance of the shape
-		//}
+		//create child "g" in parent for NodeGlyphs
+		let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
+		let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
 
-		this._nodeGlyphs.set(this._currentNodeShape, nodeLabelG); //need to update later
-
-		//console.log(nodeLabelG)
-
-		//this._currentNodeShape.draw(nodeLabelG, this.data, this._timeStampIndex);
-
-		// //set current shapes
-		// this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null);
-		// this._currentNodeShape = new CircleGlyphShape(null, null, null, null);
+		//add nodes to new map
+		this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG); //need to update later
+		this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG); //need to update later
 	}
 
 	// public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
@@ -183,16 +175,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		} else {
 			console.log("No links!");
 		}
-		if (this._nodeCircleGlyphs !== undefined) {
-			this._nodeCircleGlyphs
-				.attr("cx", function (d: Node) {
-					return d.x;
-				})
-				.attr("cy", function (d: Node) { return d.y; });
-		} else {
-			console.log("No circle nodes!");
-		}
-		let self = this;
+
+		let self = this; //d3 hold this issue
+
+		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 			shape.draw(glyphs, self._data, self._timeStampIndex);
 		})

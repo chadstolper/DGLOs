@@ -18,9 +18,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	private _dominantBaseline: string = "middle";
 	// private _font = "ComicSans";
 
-	private _labelGlyphs: Selection<any, {}, any, {}>;
-	private _labelG: Selection<any, {}, any, {}>;
-
 	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
 		this._fill = fill;
@@ -38,52 +35,40 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		//console.log("init finished")
 	}
 
-
+	/**
+	 * Create selection of nodes. Returns new selection
+	 * @param glyphs
+	 */
 	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
-		console.log("initdraw start")
-		console.log(glyphs)
 		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", "middle")
 			.style("text-anchor", "middle");
-		console.log("initdraw done")
-		console.log(glyphs, ret)
 		return ret;
 	}
 
-
+	/**
+	 * Assign and/or update node label data and (x,y) positions
+	 * @param glyphs 
+	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("update start")
-
-
-		//if (this._labelGlyphs !== undefined) {
-		//console.log(this._labelGlyphs);
-		//console.log(glyphs);
-		glyphs
-			.text(function (d: Node): string {
-				//console.log(d);
-				return d.label;
-			});
-		glyphs
-			.attr("x", function (d: Node) {
-				//if (d.x !== undefined) { return d.x; }
-				//return 0;
-				//console.log("this", this);
-				return d.x;
-			})
-			.attr("y", function (d: Node) {
-				// if (d.y !== undefined) { return d.y; }
-				// return 0;
-				return d.y;
-			});
-		//} else {
-		//	console.log("No label nodes!");
-
-		//}
-		//console.log(this._labelGlyphs)
-		//console.log("update done")
-		return glyphs; //?
+		try {
+			glyphs
+				.text(function (d: Node): string {
+					return d.label;
+				});
+			glyphs
+				.attr("x", function (d: Node) {
+					return d.x;
+				})
+				.attr("y", function (d: Node) {
+					return d.y;
+				});
+		} catch (err) {
+			console.log("No label nodes!");
+		}
+		return glyphs;
 	}
 
 
@@ -93,38 +78,20 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	}
 
 	/**
-	 * 
+	 * Draw and create new visualizations of nodes, initial update included
 	 * @param labelG Should be the labelG
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
 	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
-		//this.init(location); //move me eventually
 		let labelGlyphs = labelG.selectAll("text.label")
-			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
-		//.enter().call(this.initDraw);
-
-
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
 		labelGlyphs.exit().remove();
 
 		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
-		// let labelEnter = labelGlyphs.enter().append("text").classed("label", true);
-
-		//console.log("before merge", labelGlyphs)
-		console.log(labelEnter);
 		labelGlyphs = labelGlyphs.merge(labelEnter);
-		//console.log("after merge", labelGlyphs)
-
-
-
-		//console.log("init done, start update")
-
 		labelGlyphs.call(this.updateDraw);
-
-		//console.log("update done, finishing")
-
-		//console.log("finished draw")
 	}
 
 
@@ -179,68 +146,79 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	private _stroke: string = "grey";
 	private _stroke_width: number = 2;
 
-	private _circleGlyphs: Selection<any, {}, any, {}>;
-
 	constructor(radius: number, fill: string, stroke: string, strokeWidth: number) {
 		this._radius = radius;
 		this._fill = fill;
 		this._stroke = stroke;
 		this._stroke_width = strokeWidth;
-
 	}
 
-	public init(nodesG: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return nodesG.append("g").classed("CircleGlyphs", true);
+	/**
+	 * Make new <g>
+	 * @param location
+	 */
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		//console.log("init start")
+		return location.append("g").classed("CircleNodes", true);
+		//console.log("init finished")
 	}
-	//TODO: Make new <g>
-	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		let newCircle = location.append("text")
-			.attr("id", function (d: Node): string | number { return d.label; })
-			.attr("fill", function (d: Node): string {
-				console.log(COLOR_SCHEME(d.id))
-				return COLOR_SCHEME(d.id);
-			})
-			.attr("stroke", this.stroke)
-			.attr("r", this.radius)
-			.attr("stroke-width", this.stroke_width);
-		return newCircle;
+
+	/**
+	 * Create selection of nodes. Returns new selection
+	 * @param glyphs
+	 */
+	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
+			.classed("node", true)
+			.attr("id", function (d: Node): string | number { return d.id; }) //TODO: Test return id or label?
+			.attr("r", 10) //TODO: Remove
+			.attr("fill", "purple"); //TODO: remove
+		return ret;
 	}
-	//TODO: draw nodes
-	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		if (this._circleGlyphs !== undefined) {
-			this._circleGlyphs
-				.attr("x", function (d: Node) {
+
+	/**
+	 * Assign and/or update node circle data and (cx,cy) positions
+	 * @param glyphs 
+	 */
+	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		try {
+			glyphs
+				.attr("cx", function (d: Node) {
 					return d.x;
 				})
-				.attr("y", function (d: Node) { return d.y; });
-		} else {
+				.attr("cy", function (d: Node) {
+					return d.y;
+				});
+		} catch (err) {
 			console.log("No circle nodes!");
-
 		}
-		return this._circleGlyphs; //?
+		return glyphs;
 	}
-	//TODO: position and add attr to nodes
+
+
 	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
 		console.log("eventually");
 		return;
 	}
-	//TODO: says what it does on the tin
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
-		this._circleGlyphs = location.selectAll("label")
-			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
-			.enter().call(this.initDraw);
 
-		this._circleGlyphs.exit().remove();
+	/**
+	 * Draw and create new visualizations of nodes, initial update included
+	 * @param circleG Should be the circleG
+	 * @param data 
+	 * @param timeStepIndex 
+	 */
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		let circleGlyphs = circleG.selectAll("circle.node")
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
-		let circleEnter = this._circleGlyphs.enter().call(this.init);
+		circleGlyphs.exit().remove();
 
-		this._circleGlyphs = this._circleGlyphs.merge(circleEnter);
-		this._circleGlyphs
-			.text(function (d: Node): string {
-				return d.label;
-			});
+		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+		circleGlyphs = circleGlyphs.merge(circleEnter);
+		circleGlyphs.call(this.updateDraw);
 	}
-	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
+
+
 
 	get radius(): number {
 		return this._radius;
