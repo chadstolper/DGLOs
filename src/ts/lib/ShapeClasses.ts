@@ -19,6 +19,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	// private _font = "ComicSans";
 
 	private _labelGlyphs: Selection<any, {}, any, {}>;
+	private _labelG: Selection<any, {}, any, {}>;
 
 	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
@@ -31,45 +32,56 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * Make new <g>
 	 * @param location
 	 */
-	public init(location: Selection<any, {}, any, {}>): void {
-		console.log("init start")
-		this._labelGlyphs = location.append("g").classed("Nodes", true);
-		console.log("init finished")
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		//console.log("init start")
+		return location.append("g").classed("LabelNodes", true);
+		//console.log("init finished")
 	}
 
 
-	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		console.log("initdraw start")
-		let newLabel = location.append("text")
+		glyphs = glyphs.append("text")
+			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", "middle")
 			.style("text-anchor", "middle");
 		console.log("initdraw done")
-		return newLabel;
+		return glyphs;
 	}
 
 
-	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		console.log("update start")
-		this._labelGlyphs.exit().remove();
 
-		let labelEnter = this._labelGlyphs.enter().call(this.initDraw);
 
-		this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
+		//if (this._labelGlyphs !== undefined) {
+		//console.log(this._labelGlyphs);
+		console.log(glyphs);
+		glyphs
+			.text(function (d: Node): string {
+				console.log(d);
+				return d.label;
+			});
+		glyphs
+			.attr("x", function (d: Node) {
+				//if (d.x !== undefined) { return d.x; }
+				//return 0;
+				console.log(this);
+				return d.x;
+			})
+			.attr("y", function (d: Node) {
+				// if (d.y !== undefined) { return d.y; }
+				// return 0;
+				return d.y;
+			});
+		//} else {
+		//	console.log("No label nodes!");
 
-		if (this._labelGlyphs !== undefined) {
-			this._labelGlyphs
-				.attr("x", function (d: Node) {
-					return d.x;
-				})
-				.attr("y", function (d: Node) { return d.y; });
-		} else {
-			console.log("No label nodes!");
-
-		}
-		console.log(this._labelGlyphs)
+		//}
+		//console.log(this._labelGlyphs)
 		console.log("update done")
-		return this._labelGlyphs; //?
+		return glyphs; //?
 	}
 
 
@@ -78,29 +90,36 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		return;
 	}
 
-
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
-		this.init(location);
-		this._labelGlyphs = this._labelGlyphs.selectAll("label")
+	/**
+	 * 
+	 * @param labelG Should be the labelG
+	 * @param data 
+	 * @param timeStepIndex 
+	 */
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		//this.init(location); //move me eventually
+		let labelGlyphs = labelG.selectAll("text.label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
-			.enter().call(this.initDraw);
+		//.enter().call(this.initDraw);
+
+
+
+		labelGlyphs.exit().remove();
+
+		let labelEnter = labelGlyphs.enter().call(this.initDraw);
+
+		console.log("before merge", labelGlyphs)
+		labelGlyphs = labelGlyphs.merge(labelEnter);
+		console.log("after merge", labelGlyphs)
+
+
 
 		console.log("init done, start update")
 
-		this._labelGlyphs = this.updateDraw(location);
+		labelGlyphs.call(this.updateDraw);
 
 		console.log("update done, finishing")
 
-		// this._labelGlyphs.exit().remove();
-
-		// let labelEnter = this._labelGlyphs.enter().call(this.init);
-
-		// this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
-		this._labelGlyphs
-			.text(function (d: Node): string {
-				console.log(d.label);
-				return d.label;
-			});
 		console.log("finished draw")
 	}
 
@@ -166,8 +185,8 @@ export class CircleGlyphShape implements NodeGlyphShape {
 
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
-		this._circleGlyphs = location.append("g").classed("Nodes", true);
+	public init(nodesG: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return nodesG.append("g").classed("CircleGlyphs", true);
 	}
 	//TODO: Make new <g>
 	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
