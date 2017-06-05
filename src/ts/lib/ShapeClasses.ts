@@ -34,7 +34,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	public init(location: Selection<any, {}, any, {}>): void {
 		console.log("init start")
 		this._labelGlyphs = location.append("g").classed("Nodes", true);
-		console.log(this._labelGlyphs)
 		console.log("init finished")
 	}
 
@@ -45,8 +44,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", "middle")
 			.style("text-anchor", "middle");
-
-		console.log(newLabel)
 		console.log("initdraw done")
 		return newLabel;
 	}
@@ -70,7 +67,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 			console.log("No label nodes!");
 
 		}
-
 		console.log(this._labelGlyphs)
 		console.log("update done")
 		return this._labelGlyphs; //?
@@ -85,14 +81,13 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
 		this.init(location);
-		console.log("init was called")
-		this._labelGlyphs = location.selectAll("label")
+		this._labelGlyphs = this._labelGlyphs.selectAll("label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
 			.enter().call(this.initDraw);
 
 		console.log("init done, start update")
 
-		this.updateDraw;
+		this._labelGlyphs = this.updateDraw(location);
 
 		console.log("update done, finishing")
 
