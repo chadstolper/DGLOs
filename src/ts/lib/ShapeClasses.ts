@@ -71,12 +71,29 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		return glyphs;
 	}
 
+	/**
+	* Transform the current NodeGlyphShapes to given NodeGlyphShape
+	* @param sourceSelection 
+	* @param shape 
+	* @param targetSelection 
+ 	*/
+	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
+		switch (shape.shapeType) {
+			case "Circle":
+				console.log("Label-->Circle")
+				sourceSelection.style("display", "none");
+				targetSelection.style("display", null);
+				break;
 
-	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
-		console.log("eventually");
-		return;
+			case "Label":
+				console.log("Label-->Label Catch");
+				sourceSelection.style("display", null)
+				break;
+
+			default: console.log("new NodeShape is undefined");
+				break;
+		};
 	}
-
 	/**
 	 * Draw and create new visualizations of nodes, initial update included
 	 * @param labelG Should be the labelG
@@ -195,10 +212,28 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		return glyphs;
 	}
 
+	/**
+	 * Transform the current NodeGlyphShapes to given NodeGlyphShape
+	 * @param sourceSelection 
+	 * @param shape 
+	 * @param targetSelection 
+	 */
+	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
+		switch (shape.shapeType) {
+			case "Label":
+				console.log("Circle-->Label")
+				sourceSelection.transition().style("display", "none");
+				targetSelection.transition().style("display", null);
+				break;
 
-	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
-		console.log("eventually");
-		return;
+			case "Circle":
+				console.log("Circle-->Circle Catch");
+				sourceSelection.style("display", null)
+				break;
+
+			default: console.log("new NodeShape is undefined");
+				break;
+		};
 	}
 
 	/**
