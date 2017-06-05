@@ -27,7 +27,14 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		this._y = y;
 	}
 
+<<<<<<< HEAD
 
+=======
+	/**
+	 * Make new <g>
+	 * @param location
+	 */
+>>>>>>> origin/dglos
 	public init(location: Selection<any, {}, any, {}>): void {
 		console.log("init start")
 		this._labelGlyphs = location.append("g").classed("Nodes", true);
