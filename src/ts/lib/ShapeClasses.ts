@@ -196,11 +196,23 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
+	/**
+	 * Adds a new <g> tag to hold the rectangles
+	 * @param location is an SVG location where the rectangles will be drawn
+	 */
 	public init(location: Selection<any, {}, any, {}>): void {
-
+		location.append("g")
+			.classed("rectEdges", true);
 	}
+	/**
+	 * Creates the rectangle objects
+	 * @param selection 
+	 */
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return null;
+		let edgeRectEnter = selection.enter().append("rect")
+			.attr("id", function (d: any): string { return d.source.id + ":" + d.target.id })
+		selection = selection.merge(edgeRectEnter);
+		return selection;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -250,7 +262,6 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
 		return null;
 	}
-
 
 	get stroke(): string {
 		return this._stroke;

@@ -10,7 +10,7 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 
 json("data/dummy/dummy.json", function (response: any) {
 	let width: number, height: number;
-	width = height = 500;
+	width = height = 1500;
 	let g: DynamicGraph = new DynamicDrinkGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
