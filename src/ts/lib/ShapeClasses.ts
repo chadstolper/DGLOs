@@ -486,7 +486,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	public init(location: Selection<any, {}, any, {}>): void {
-
+		location.append("g").classed("STLine", true);
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -498,7 +498,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		return null;
 	}
 	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
-		return null;
+		this.init(selection);
 	}
 }
 
@@ -514,7 +514,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	}
 
 	public init(location: Selection<any, {}, any, {}>): void {
-
+		location.append("g").classed("GestaltLines", true);
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
