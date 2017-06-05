@@ -20,8 +20,11 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		this._y = y;
 	}
 
+	/**
+	 * Make new <g>
+	 * @param location 
+	 */
 	init(location: Selection<any, {}, any, {}>) {
-
 	}
 	//TODO: Make new <g>
 	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
@@ -193,7 +196,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
-	public init(location: Location): void {
+	public init(location: Selection<any, {}, any, {}>): void {
 
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
@@ -232,7 +235,7 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 		this._y2 = y2;
 	}
 
-	public init(location: Location): void {
+	public init(location: Selection<any, {}, any, {}>): void {
 
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
