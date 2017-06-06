@@ -1,8 +1,8 @@
 import { DynamicGraph, Graph, Node, Edge } from "../model/DynamicGraph";
 
 export class RadoslawEmployee extends Node {
-	constructor(id: number | string) {
-		super(id, "RadoslawEmployee", "" + id);
+	constructor(id: number | string, index: number) {
+		super(id, index, "RadoslawEmployee", "" + id);
 	}
 }
 
@@ -16,9 +16,11 @@ export class StaticRadoslawGraph extends Graph {
 	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestep: number) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
+		let index = 0;
 		for (let n of rawNodeData) {
-			let node = new RadoslawEmployee(n);
+			let node = new RadoslawEmployee(n, index);
 			nodeData.push(node);
+			index++;
 		}
 		for (let e of rawEdgeData) {
 			let source: Node = nodeData.find(function (n: Node): boolean {
