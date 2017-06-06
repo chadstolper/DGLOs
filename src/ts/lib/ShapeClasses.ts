@@ -30,9 +30,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		//console.log("init start")
 		return location.append("g").classed("LabelNodes", true);
-		//console.log("init finished")
 	}
 
 	/**
