@@ -1,7 +1,7 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-import { AttrOpts } from "../DGLOs";
+import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 
 import { LineGlyphShape } from "./LineGlyphShape";
@@ -11,32 +11,44 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "STLine";
 
-	constructor(stroke: string, stroke_width: number, source?: string | number, target?: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
-		super(stroke, stroke_width, source, target, x1, y1, x2, y2);
-	}
-
-	//gets and sets inherited from LineGlyphShape
-
-	get shapeType(): string {
-		return this._shapeType;
-	}
-
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		let STLineG = location.append("g")
-			.classed("rectEdges", true);
-		return STLineG;
+		return location.append("g").classed("STDLineEdges", true);
 	}
-	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log(selection);
-		selection.enter().append("line")
+
+	public initDraw(edges: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let ret: Selection<any, {}, any, {}> = edges.append("line")
+			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
 			})
-		return selection;
+		return ret;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
-		return null;
+
+	public updateDraw(edges: Selection<any, {}, any, {}>, attr: SVGAttrOpts): Selection<any, {}, any, {}> {
+		try {
+			edges
+				.attr("x1", function (d: Edge) { return d.source.x; })
+				.attr("y1", function (d: Edge) { return d.source.y; })
+				.attr("x2", function (d: Edge) { return d.target.x; })
+				.attr("y2", function (d: Edge) { return d.target.y; });
+		} catch (err) {
+			console.log("No STDLines links!");
+		}
+
+		if (attr.stroke_width === "weight") {
+			edges.attr("stroke-width", function (d: Edge): number {
+				return d.weight;
+			});
+		}
+		else edges.attr("stroke-width", attr.stroke_width);
+
+		edges
+			.attr("stroke", attr.stroke)
+			.attr("opacity", attr.opacity);
+
+		return edges;
 	}
+
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
 		sourceG.style("display", "none");
 		targetG.style("display", null);
@@ -52,13 +64,18 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
 	}
-	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number, attr: AttrOpts): void {
-		this.init(selection);
-		//works
-		this._lineGlyphs = selection/*.select("STLine")*/.selectAll("line")
-			.data(data.timesteps[TimeStampIndex].edges);
-		this._lineGlyphs = this.initDraw(this._lineGlyphs);
+	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
+		let sTLineEdges = sTLineG.selectAll("STDLine.edge")
+			.data(data.timesteps[timeStampIndex].nodes, function (d: Edge): string { return "" + d.id });
 
-		// let _rectEnter = this.updateDraw(this._rectGlyphs.data(data.timesteps[TimeStampIndex].edges).enter());
+		sTLineEdges.exit().remove();
+
+		let edgeEnter: Selection<any, {}, any, {}> = this.initDraw(sTLineEdges.enter());
+		sTLineEdges = sTLineEdges.merge(edgeEnter as Selection<any, Node, any, {}>);
+		sTLineEdges.call(this.updateDraw);
+	}
+
+	get shapeType(): string {
+		return this._shapeType;
 	}
 }

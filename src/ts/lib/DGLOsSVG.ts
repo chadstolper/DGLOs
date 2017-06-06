@@ -12,13 +12,13 @@ import { DGLOsMatt } from "./DGLOsMatt";
 export class SVGAttrOpts implements AttrOpts {
 	private _fill: string = null;
 	private _stroke: string = null;
-	private _stroke_width: number = null;
+	private _stroke_width: number | string = null;
 	private _radius: number = null;
 	private _opacity = 100;
 	private _width: number = null;
 	private _height: number = null;
 
-	constructor(fill?: string, stroke?: string, radius?: number, stroke_width?: number, width?: number, height?: number, opacity?: number) {
+	constructor(fill?: string, stroke?: string, radius?: number, stroke_width?: number | string, width?: number, height?: number, opacity?: number) {
 		this._fill = fill;
 		this._stroke = stroke;
 		this._radius = radius;
@@ -52,10 +52,10 @@ export class SVGAttrOpts implements AttrOpts {
 	}
 
 
-	get stroke_width(): number {
+	get stroke_width(): number | string {
 		return this._stroke_width;
 	}
-	set stroke_width(stroke_width: number) {
+	set stroke_width(stroke_width: number | string) {
 		this._stroke_width = stroke_width;
 	}
 
