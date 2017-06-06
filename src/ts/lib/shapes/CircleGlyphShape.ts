@@ -95,7 +95,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 
 			case "Circle":
 				console.log("Circle-->Circle Catch");
-				sourceSelection.style("display", null)
+				sourceSelection.style("display", null);
 				break;
 
 			default: console.log("new NodeShape is undefined");

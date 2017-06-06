@@ -44,14 +44,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 	}
 
-	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
+	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
 		if (this._currentNodeShape.shapeType === "Label") {
-			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._labelGlyphShape), shape, this._nodeGlyphs.get(this._circleGlyphShape));
-			this._currentNodeShape = this._circleGlyphShape;
+			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._labelGlyphShape), shape, this._nodeGlyphs.get(shape));
+			this._currentNodeShape = shape;
 		}
 		else {
-			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._circleGlyphShape), shape, this._nodeGlyphs.get(this._labelGlyphShape));
-			this._currentNodeShape = this._labelGlyphShape;
+			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._circleGlyphShape), shape, this._nodeGlyphs.get(shape));
+			this._currentNodeShape = shape;
 		}
 	}
 

@@ -16,6 +16,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	public initDraw(edges: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		console.log(edges)
 		let ret: Selection<any, {}, any, {}> = edges.append("line")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
@@ -55,14 +56,25 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 
 		switch (targetShape.shapeType) {
 			case "Rect":
+				console.log("STLine-->Rect");
+				sourceG.transition().style("display", "none");
+				targetG.transition().style("display", null);
 				break;
+
 			case "STLine":
+				console.log("STLine-->STLine Catch");
+				sourceG.style("display", null);
 				break;
+
 			case "Gestalt":
+				console.log("STLline-->Gestalt");
+				sourceG.transition().style("display", "none");
+				targetG.transition().style("display", null);
 				break;
+
 			default:
-				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
-		}
+				console.log(targetShape.shapeType + " is undefined");
+		};
 	}
 	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
 		let sTLineEdges = sTLineG.selectAll("STDLine.edge")
@@ -70,8 +82,8 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 
 		sTLineEdges.exit().remove();
 
-		let edgeEnter: Selection<any, {}, any, {}> = this.initDraw(sTLineEdges.enter());
-		sTLineEdges = sTLineEdges.merge(edgeEnter as Selection<any, Node, any, {}>);
+		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
+		sTLineEdges = sTLineEdges.merge(edgeEnter);
 		sTLineEdges.call(this.updateDraw);
 	}
 
