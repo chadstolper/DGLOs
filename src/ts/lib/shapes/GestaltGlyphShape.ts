@@ -23,7 +23,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			.classed("rectEdges", true);
 		return gestaltG;
 	}
-	public initDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
@@ -44,7 +44,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
 	}
-	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number, attr: AttrOpts): void {
 		return null;
 	}
 

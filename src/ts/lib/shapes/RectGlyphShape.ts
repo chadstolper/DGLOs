@@ -1,7 +1,7 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-import { AttrOpts } from "./DGLOs";
+import { AttrOpts } from "../DGLOs";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
@@ -47,7 +47,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		return rectG;
 	}
 
-	public initDraw(glyphs: Selection<any, Edge, any, {}>, attr: AttrOpts): Selection<any, Edge, any, {}> {
+	public initDraw(glyphs: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("text")
 			.attr("id", function (d: Edge) {
 				return d.source.id + ":" + d.target.id;
@@ -71,16 +71,13 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		// return glyphs;
 		try {
 			glyphs
-				.text(function (d: Node): string {
-					return d.label;
-				});
-			glyphs
 				.attr("x", function (d: Node) {
 					return d.x;
 				})
 				.attr("y", function (d: Node) {
 					return d.y;
 				});
+
 		} catch (err) {
 			console.log("No label nodes!");
 		}
@@ -103,7 +100,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		}
 	}
 
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number, attr: AttrOpts): void {
 
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[TimeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
