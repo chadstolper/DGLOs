@@ -21,7 +21,6 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	}
 	public initDraw(glyphs: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("rect")
-			.classed("rect", true)
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 		return ret;
 	}
@@ -39,6 +38,8 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	}
 
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+		console.log(sourceG);
+		console.log(targetG);
 		sourceG.style("display", "none");
 		targetG.style("display", null);
 		switch (targetShape.shapeType) {

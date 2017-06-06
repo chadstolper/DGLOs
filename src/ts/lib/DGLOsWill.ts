@@ -6,7 +6,6 @@ import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { SVGAttrOpts } from "../lib/DGLOsSVG";
-
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
@@ -41,16 +40,12 @@ export class DGLOsWill extends DGLOsMatt {
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-
-		this._currentEdgeShape.draw(this._location, this.data, 0, this._attrOpts);
+		this._currentEdgeShape.draw(this._location, this.data, 0, this._willTestAttrOpts);
 
 	}
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		console.log(shape);
-		console.log(this._edgeGlyphs.get(shape));
-
-		//this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
+		this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
