@@ -34,58 +34,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
 
-		this._currentEdgeShape.transformTo(shape);
-
-		switch (this._currentEdgeShape.shapeType) {
-			case "Rect":
-				console.log("current shape is a rect!");
-				console.log("changing to " + shape.shapeType);
-				switch (shape.shapeType) {
-					case "STLine":
-						this.transformRectToLines();
-						break;
-					case "Gestalt":
-						this.transformRectToGestalt();
-						break;
-					default:
-						console.log("Your shape has not been implemented");
-						break;
-				}
-				break;
-			case "STLine":
-				console.log("current shape is a STLine!");
-				console.log("changing to " + shape.shapeType);
-				switch (shape.shapeType) {
-					case "Rect":
-						this.transformLinesToRect();
-						break;
-					case "Gestalt":
-						this.transformLinesToGestalt();
-						break;
-					default:
-						console.log("Your shape has not been implemented");
-						break;
-				}
-				break;
-			case "Gestalt":
-				console.log("current shape is a Gestalt!");
-				console.log("changing to " + shape.shapeType);
-				switch (shape.shapeType) {
-					case "Rect":
-						this.transformGestaltToRect();
-						break;
-					case "STLine":
-						this.transformGestaltToLines();
-						break;
-					default:
-						console.log("Your shape has not been implemented");
-						break;
-
-				}
-			default:
-				break;
-		}
-		//this.transformLinesToRect();
+		this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
