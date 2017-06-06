@@ -2,8 +2,10 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { AttrOpts } from "../DGLOs";
+import * as d3Array from "d3-array";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
+import * as d3Scale from "d3-scale";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
@@ -14,16 +16,13 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	}
 
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("init rectShapes!");
-		let rectG = location.append("g")
-			.classed("rectEdges", true);
+		let rectG = location.append("g").classed("rectEdges", true);
 		return rectG;
 	}
 	public initDraw(glyphs: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("rect")
-			.attr("id", function (d: Edge) {
-				return d.source.id + ":" + d.target.id;
-			})
+			.classed("rect", true)
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 		return ret;
 	}
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts): Selection<any, {}, any, {}> {
@@ -62,5 +61,11 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		rects = rects.merge(enter);
 		this.updateDraw(rects, attr);
 
+	}
+
+	public createColorDomain(edges: Array<Edge>) {
+		return d3Array.extent(edges, function (d: Edge): number {
+			return d.weight;
+		});
 	}
 }
