@@ -2,25 +2,15 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
+import { SVGAttrOpts } from "../DGLOsSVG";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 export class LabelGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
-	private _text: string;
-	private _fill: string;
-	private _x: number;
-	private _y: number;
-	private _textAnchor: string = "middle";
-	private _dominantBaseline: string = "middle";
-	// private _font = "ComicSans";
-
-	constructor(text: string, fill: string, x?: number, y?: number) {
-		this._text = text;
-		this._fill = fill;
-		this._x = x;
-		this._y = y;
-	}
+	readonly _textAnchor: string = "middle";
+	readonly _dominantBaseline: string = "middle";
+	// readonly _font = "ComicSans";
 
 	/**
 	 * Make new <g>
@@ -38,8 +28,8 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
-			.style("dominant-baseline", "middle")
-			.style("text-anchor", "middle");
+			.style("dominant-baseline", this._dominantBaseline)
+			.style("text-anchor", this._textAnchor);
 		return ret;
 	}
 
@@ -47,7 +37,8 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * Assign and/or update node label data and (x,y) positions
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			glyphs
 				.text(function (d: Node): string {
@@ -63,6 +54,36 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No label nodes!");
 		}
+
+		switch (attrOpts.fill) {
+			case "id":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.id);
+					});
+				break;
+
+			case "label":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.label);
+					});
+				break;
+
+			case "type":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.type);
+					});
+				break;
+		}
+
+		glyphs
+			.attr("stroke", attrOpts.stroke)
+			.attr("r", attrOpts.radius)
+			.attr("stroke-width", attrOpts.stroke_width)
+			.attr("opacity", attrOpts.opacity);
+
 		return glyphs;
 	}
 
@@ -95,7 +116,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
 		let labelGlyphs = labelG.selectAll("text.label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
@@ -104,38 +125,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
 		labelGlyphs = labelGlyphs.merge(labelEnter);
 		labelGlyphs.call(this.updateDraw);
-	}
-
-
-	get text(): string {
-		return this._text;
-	}
-	set text(text: string) {
-		this._text = text;
-	}
-
-
-	get fill(): string {
-		return this._fill;
-	}
-	set fill(fill: string) {
-		this._fill = fill;
-	}
-
-
-	get x(): number {
-		return this._x;
-	}
-	set x(x: number) {
-		this._x = x;
-	}
-
-
-	get y(): number {
-		return this._y;
-	}
-	set y(y: number) {
-		this._y = y;
 	}
 
 	get textAnchor(): string {

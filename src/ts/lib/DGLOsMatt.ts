@@ -19,8 +19,8 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
-	protected _labelGlyphShape = new LabelGlyphShape(null, null);
-	protected _circleGlyphShape = new CircleGlyphShape(null, null, null, null);
+	protected _labelGlyphShape = new LabelGlyphShape();
+	protected _circleGlyphShape = new CircleGlyphShape();
 
 	public drawNodeGlyphs() {
 
@@ -32,15 +32,15 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			this._nodeG = this.loc.append("g").classed("nodeG", true)
 
 			//create child "g" in parent for NodeGlyphs
-			let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
-			let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
+			let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG);
+			let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG);
 
 			nodeLabelG.style("display", "none");
 			nodeCircleG.style("display", "none");
 
 			//add nodes to new map
-			this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG); //need to update later
-			this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG); //need to update later
+			this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG);
+			this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG);
 		}
 	}
 
@@ -56,7 +56,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		this._nodeGlyphs.set(this._currentNodeShape, attr.setNodeGlyphAttributes(this._nodeGlyphs.get(this._currentNodeShape), attr, "id"));
+		// this._nodeGlyphs.get(this.currentNodeShape.draw())
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
@@ -128,7 +128,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-			shape.draw(glyphs, self._data, self._timeStampIndex);
+			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
 		})
 
 	}

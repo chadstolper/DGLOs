@@ -2,23 +2,13 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
+import { SVGAttrOpts } from "../DGLOsSVG";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 
 export class CircleGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
-	private _radius: number = 10;
-	private _fill: string;
-	private _stroke: string = "grey";
-	private _stroke_width: number = 2;
-
-	constructor(radius: number, fill: string, stroke: string, strokeWidth: number) {
-		this._radius = radius;
-		this._fill = fill;
-		this._stroke = stroke;
-		this._stroke_width = strokeWidth;
-	}
 
 	/**
 	 * Make new <g>
@@ -37,9 +27,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
 			.classed("node", true)
-			.attr("id", function (d: Node): string | number { return d.id; }) //TODO: Test return id or label?
-			.attr("r", 10) //TODO: Remove
-			.attr("fill", "purple"); //TODO: remove
+			.attr("id", function (d: Node): string | number { return d.id; })
 		return ret;
 	}
 
@@ -47,7 +35,8 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * Assign and/or update node circle data and (cx,cy) positions
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			glyphs
 				.attr("cx", function (d: Node) {
@@ -59,6 +48,37 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
+
+		switch (attrOpts.fill) {
+			case "id":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.id);
+					});
+				break;
+
+			case "label":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.label);
+					});
+				break;
+
+			case "type":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.type);
+					});
+				break;
+		}
+
+
+		glyphs
+			.attr("stroke", attrOpts.stroke)
+			.attr("r", attrOpts.radius)
+			.attr("stroke-width", attrOpts.stroke_width)
+			.attr("opacity", attrOpts.opacity);
+
 		return glyphs;
 	}
 
@@ -92,7 +112,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
 		let circleGlyphs = circleG.selectAll("circle.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
@@ -101,40 +121,6 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 		circleGlyphs = circleGlyphs.merge(circleEnter);
 		circleGlyphs.call(this.updateDraw);
-	}
-
-
-
-	get radius(): number {
-		return this._radius;
-	}
-
-	set radius(radius: number) {
-		this._radius = radius;
-	}
-
-	get fill(): string {
-		return this._fill;
-	}
-
-	set fill(fill: string) {
-		this._fill = fill;
-	}
-
-	get stroke(): string {
-		return this._stroke;
-	}
-
-	set stroke(stroke: string) {
-		this._stroke = stroke;
-	}
-
-	get stroke_width(): number {
-		return this._stroke_width;
-	}
-
-	set stroke_width(stroke_width: number) {
-		this._stroke_width = stroke_width;
 	}
 
 	get shapeType(): string {
