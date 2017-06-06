@@ -6,7 +6,13 @@ import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
-import { CircleGlyphShape, SourceTargetLineGlyphShape, LabelGlyphShape } from "./shapeClasses";
+
+import { RectGlyphShape } from "./shapes/RectGlyphShape";
+import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
+import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
+import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
+import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
+
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { SVGAttrOpts } from "./DGLOsSVG";
 import { DGLOsWill } from "./DGLOsWill";

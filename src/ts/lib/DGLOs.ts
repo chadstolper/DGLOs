@@ -1,5 +1,11 @@
 import { DynamicGraph, Node } from "../model/DynamicGraph";
-import { RectGlyphShape, CircleGlyphShape, LabelGlyphShape, SourceTargetLineGlyphShape, GestaltGlyphShape } from "./ShapeClasses";
+
+import { RectGlyphShape } from "./shapes/RectGlyphShape";
+import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
+import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
+import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
+import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
+
 import { Selection } from "d3-selection";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";

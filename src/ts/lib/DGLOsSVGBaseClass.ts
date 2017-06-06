@@ -2,7 +2,12 @@ import { DGLOs, AttrOpts } from "./DGLOs";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import * as model from "../model/DynamicGraph";
-import * as shape from "./ShapeClasses";
+
+import { RectGlyphShape } from "./shapes/RectGlyphShape";
+import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
+import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
+import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
+import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 
 import { DynamicGraph } from "../model/DynamicGraph";
 import { Selection } from "d3-selection";
@@ -25,11 +30,11 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		this._location = location;
 	}
 
-	readonly rectShape: shape.RectGlyphShape;
-	readonly circleShape: shape.CircleGlyphShape;
-	readonly labelShape: shape.LabelGlyphShape;
-	readonly sourceTargetLineShape: shape.SourceTargetLineGlyphShape;
-	readonly gestaltShape: shape.GestaltGlyphShape;
+	readonly rectShape: RectGlyphShape;
+	readonly circleShape: CircleGlyphShape;
+	readonly labelShape: LabelGlyphShape;
+	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
+	readonly gestaltShape: GestaltGlyphShape;
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };

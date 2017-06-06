@@ -6,14 +6,20 @@ import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { SVGAttrOpts } from "../lib/DGLOsSVG";
-import * as shapes from "./ShapeClasses";
+
+import { RectGlyphShape } from "./shapes/RectGlyphShape";
+import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
+import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
+import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
+import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
+
 import * as d3 from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
 
-	protected _rectGlyphShape = new shapes.RectGlyphShape(null, null, null, null);
+	protected _rectGlyphShape = new RectGlyphShape(null, null, null, null);
 	public drawEdgeGlyphs() {
 
 		this._currentEdgeShape = this._rectGlyphShape;
@@ -84,35 +90,35 @@ export class DGLOsWill extends DGLOsMatt {
 			.style("display", "none");
 		this._edgeLineGlyphs.transition()
 			.style("display", null);
-		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
+		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
 	}
 	private transformGestaltToLines() {
 		this._edgeGestaltGlyphs   //.transition()
 			.style("display", "none");
 		this._edgeLineGlyphs   //.transition()
 			.style("display", null);
-		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
+		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
 	}
 	private transformGestaltToRect() {
 		this._edgeGestaltGlyphs   //.transition()
 			.style("display", "none");
 		this._edgeRectGlyphs   //.transition()
 			.style("display", null);
-		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null, null);
+		this._currentEdgeShape = new RectGlyphShape(null, null, null, null);
 	}
 	private transformLinesToGestalt() {
 		this._edgeLineGlyphs   //.transition()
 			.style("display", "none");
 		this._edgeGestaltGlyphs   //.transition()
 			.style("display", null);
-		this._currentEdgeShape = new shapes.GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
+		this._currentEdgeShape = new GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
 	}
 	private transformRectToGestalt() {
 		this._edgeRectGlyphs   //.transition()
 			.style("display", "none");
 		this._edgeGestaltGlyphs   //.transition()
 			.style("display", null);
-		this._currentEdgeShape = new shapes.GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
+		this._currentEdgeShape = new GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
 	}
 	private transformLinesToRect() {
 		this._edgeLineGlyphs   //.transition()
@@ -120,7 +126,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeRectGlyphs   //.transition()
 			.style("display", null);
 
-		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null, null);
+		this._currentEdgeShape = new RectGlyphShape(null, null, null, null);
 	}
 
 }
