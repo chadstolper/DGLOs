@@ -63,16 +63,15 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public positionEdgeGlyphsMatrix() {
 		let curGraph = this._data.timesteps[this._timeStampIndex];
-		if (this._currentEdgeShape.shapeType === "Rect") {
-			this._edgeRectGlyphs.selectAll("rect")
-				.attr("x", function (d: Edge) {
-					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-				})
-				.attr("y", function (d: Edge) {
-					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-				})
-		}
-
+		//TODO: make rectangles appear in the correct g tab
+		//this._edgeGlyphs.get(this.rectShape).selectAll("rect")
+		this._location.selectAll("rect")
+			.attr("x", function (d: Edge) {
+				return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+			})
+			.attr("y", function (d: Edge) {
+				return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+			})
 	}
 
 
