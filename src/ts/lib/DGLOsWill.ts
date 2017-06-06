@@ -34,7 +34,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
 
-		this._currentEdgeShape.transformTo(EdgeGlyphShape);
+		this._currentEdgeShape.transformTo(shape);
 
 		switch (this._currentEdgeShape.shapeType) {
 			case "Rect":
