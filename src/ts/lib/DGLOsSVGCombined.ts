@@ -33,6 +33,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
+	_willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;
