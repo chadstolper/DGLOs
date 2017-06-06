@@ -60,35 +60,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		console.log(this._currentEdgeShape)
-		if (this._currentEdgeShape.shapeType === "STLine") {
-			this._edgeLineGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		} else if (this._currentEdgeShape.shapeType === "Rect") {
-			this._edgeRectGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		} else if (this._currentEdgeShape.shapeType === "Gestalt") {
-			this._edgeGestaltGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		}
+		console.log("Closed until further notice\nSorry for the inconvience");
 	}
 
 	public runSimulation() {
@@ -114,22 +86,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	private tick() {
-		if (this._edgeLineGlyphs !== undefined) { //only lineglyphs needed for simulation
-			this._edgeLineGlyphs
-				.attr("x1", function (d: Edge) { return d.source.x; })
-				.attr("y1", function (d: Edge) { return d.source.y; })
-				.attr("x2", function (d: Edge) { return d.target.x; })
-				.attr("y2", function (d: Edge) { return d.target.y; });
-		} else {
-			console.log("No links!");
-		}
-
+		console.log("oh god its ticking")
 		let self = this; //d3 hold this issue
+
+		//update edges(specifically STLines) in map; run update of simulation on all edges
+		this._edgeGlyphs.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+			shape.draw(edges, self.data, self._timeStampIndex, self._attrOpts);
+		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
-		})
-
+		});
 	}
 }
