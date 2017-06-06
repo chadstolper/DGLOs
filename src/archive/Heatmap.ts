@@ -23,6 +23,9 @@ export class Heatmap implements Visualization {
 		}
 		this._selection = div;
 		this._graph = graph;
+		if (div.attr("width")) { this._width = +div.attr("width"); }
+		if (div.attr("height")) { this._height = +div.attr("height"); }
+
 		this.draw(this._graph);
 	}
 
@@ -79,11 +82,13 @@ export class Heatmap implements Visualization {
 
 		slots = slots.merge(slotsEnter)
 		slots.transition() //TODO: transition slots
-			.attr("x", function (d) {
-				return (+d.source.id / graph.nodes.length) * 100 + "%";
+			.attr("x", function (d: Edge, i: number) {
+				// return (+d.source.id / graph.nodes.length) * 100 + "%";
+				return (d.source.index / graph.nodes.length) * 100 + "%";
 			})
-			.attr("y", function (d) {
-				return (+d.target.id / graph.nodes.length) * 100 + "%";
+			.attr("y", function (d: Edge, i: number) {
+				// return (+d.target.id / graph.nodes.length) * 100 + "%";
+				return (d.target.index / graph.nodes.length) * 100 + "%";
 			})
 			.attr("width", this._width / arraySize)
 			.attr("height", this._height / arraySize)

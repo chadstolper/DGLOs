@@ -1,8 +1,8 @@
 import { DynamicGraph, Graph, Node, Edge } from "./Graph";
 
 export class Person extends Node {
-	constructor(id: string, group: number) {
-		super(id, "" + group, id);
+	constructor(id: string, index: number, group: number) {
+		super(id, index, "" + group, id);
 	}
 }
 
@@ -16,9 +16,11 @@ export class LesMiserablesGraph extends Graph {
 	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestamp: number) {
 		let nodeData = new Array<Node>();
 		let edgeData = new Array<Edge>();
+		let index = 0;
 		for (let n of rawNodeData) {
-			let node = new Person(n.id, n.group);
+			let node = new Person(n.id, index, n.group);
 			nodeData.push(node);
+			index++;
 		}
 		for (let e of rawEdgeData) {
 			let source: Node = nodeData.find(function (n: Node): boolean {

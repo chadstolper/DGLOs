@@ -13,26 +13,37 @@ export class HeatmapTimeline {
 	private _height: number;
 	private _colorDomain = ["white", "gold"];
 
+	set width(w: number) {
+		this._width = w;
+	}
+
+	set height(h: number) {
+		this._height = h;
+	}
+
 	constructor(dynamicGraph: DynamicGraph, location: Selection<any, {}, any, {}>, colorDomain?: Array<string>) {
 		this._dynamicGraph = dynamicGraph;
 		this._location = location;
 		this._colorDomain = colorDomain;
-		this.draw(this._dynamicGraph.timesteps[0]);
+		if (location.attr("width")) { this._width = +location.attr("width"); }
+		if (location.attr("height")) { this._height = +location.attr("height"); }
+		// this.draw(this._dynamicGraph.timesteps[0]);
 	}
 
 	public draw(graph: Graph) {
-		let width = this._width
-		let height = this._height
 		let colorDomain = this._colorDomain;
-		d3.selectAll("svg.timestamp")
+		let dgraph = this._dynamicGraph;
+		let size = Math.sqrt(2 * (this._width * this._height / dgraph.timesteps.length));
+		this._location.selectAll("svg.timestamp")
 			.data(this._dynamicGraph.timesteps)
 			.enter().append("svg")
-			.attr("width", this._width)
-			.attr("height", this._height)
+			.attr("width", size)
+			.attr("height", size)
+			//.attr("x", function (d, i) { return (i / dgraph.timesteps.length) * 100 + "%"; })
 			.classed("timestamp", true)
 			.each(function (d, i) {
 				console.log(this);
-				let heatmap: Heatmap = new Heatmap(d, d3.select(this), ["white", "gold"]);
+				let heatmap: Heatmap = new Heatmap(d, d3.select(this), colorDomain);
 			});
 
 	}
