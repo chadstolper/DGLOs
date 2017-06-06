@@ -9,15 +9,6 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "Gestalt";
-	private _angleProperty: number;
-	private _timeStepIndex: number;
-
-	constructor(stroke: string, stroke_width: number, angleProperty: number, timeStepIndex: number, source: string | number, target: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
-		super(stroke, stroke_width, source, target, x1, y1, x2, y2);
-		this._angleProperty = angleProperty;
-		this._timeStepIndex = timeStepIndex;
-	}
-
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		let gestaltG = location.append("g")
 			.classed("rectEdges", true);
@@ -47,24 +38,6 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number, attr: AttrOpts): void {
 		return null;
 	}
-
-
-	get angleProperty(): number {
-		return this._angleProperty;
-	}
-	set angleProperty(angleProperty: number) {
-		this._angleProperty = angleProperty;
-	}
-
-
-	get timeStepIndex(): number {
-		return this.timeStepIndex;
-	}
-	set timeStepIndex(timeStepIndex: number) {
-		this._timeStepIndex = timeStepIndex;
-	}
-
-
 	get shapeType(): string {
 		return this._shapeType;
 	}
