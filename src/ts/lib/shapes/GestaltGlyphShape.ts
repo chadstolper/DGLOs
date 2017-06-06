@@ -2,7 +2,7 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-
+import { AttrOpts } from "../DGLOs";
 import { LineGlyphShape } from "./LineGlyphShape";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
@@ -23,10 +23,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			.classed("rectEdges", true);
 		return gestaltG;
 	}
-	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
 		return null;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
 		return null;
 	}
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
