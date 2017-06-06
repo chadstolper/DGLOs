@@ -41,7 +41,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 					return d.weight;
 				});
 			}
-			else edges.attr("stroke-width", attrOpts.stroke_width);
+			else { edges.attr("stroke-width", attrOpts.stroke_width) };
 
 			edges
 				.attr("stroke", attrOpts.stroke)
