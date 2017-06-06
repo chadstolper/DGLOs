@@ -39,8 +39,8 @@ export class DGLOsWill extends DGLOsMatt {
 			this._edgeGlyphs.set(this._stlineGlyphShape, edgeSTLineG);
 
 			edgeRectG.style("display", null);
-			edgeRectG.style("display", "none");
-			edgeRectG.style("display", "none");
+			edgeGestaltG.style("display", "none");
+			edgeSTLineG.style("display", "none");
 
 		}
 
