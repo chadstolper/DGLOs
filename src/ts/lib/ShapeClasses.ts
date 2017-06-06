@@ -375,6 +375,7 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	private _y1: number;
 	private _x2: number;
 	private _y2: number;
+	protected _lineGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(stroke: string, stroke_width: number, source?: string | number, target?: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
 		this._stroke = stroke;
@@ -489,7 +490,19 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		location.append("g").classed("STLine", true);
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return null;
+		console.log(selection);
+		selection.enter().append("line")
+			.attr("id", function (d: Edge): string {
+				return d.source.id + ":" + d.target.id;
+			})
+		return selection;
+
+		// console.log("initDraw");
+		// selection.enter().append("rect")
+		// 	.attr("id", function (d: Edge) {
+		// 		return d.source.id + ":" + d.target.id;
+		// 	})
+		// return selection;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -497,8 +510,21 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
 		return null;
 	}
-	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
 		this.init(selection);
+		//works
+		this._lineGlyphs = selection.selectAll("line")
+			.data(data.timesteps[TimeStampIndex].edges);
+		this._lineGlyphs = this.initDraw(this._lineGlyphs);
+
+		//this.initDraw(selection.data(data.timesteps[TimeStampIndex].edges).selectAll("line").enter());
+
+
+		// this.init(selection);
+		// this._rectGlyphs = selection.selectAll("rect")
+		// 	.data(data.timesteps[TimeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		// this._rectGlyphs = this.initDraw(this._rectGlyphs);
+		// let _rectEnter = this.updateDraw(this._rectGlyphs.data(data.timesteps[TimeStampIndex].edges).enter());
 	}
 }
 
