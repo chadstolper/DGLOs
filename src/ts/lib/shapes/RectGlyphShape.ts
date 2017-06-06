@@ -1,6 +1,7 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
+import { AttrOpts } from "./DGLOs";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
@@ -46,28 +47,43 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		return rectG;
 	}
 
-	public initDraw(selection: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
-		console.log("initDraw");
-		selection.enter().append("rect")
+	public initDraw(glyphs: Selection<any, Edge, any, {}>, attr: AttrOpts): Selection<any, Edge, any, {}> {
+		let ret: Selection<any, Edge, any, {}> = glyphs.append("text")
 			.attr("id", function (d: Edge) {
 				return d.source.id + ":" + d.target.id;
 			})
-		return selection;
+		return ret;
 	}
-	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("updateDraw");
-		glyphs
-			.attr("x", function (d: Edge) {
-				console.log(d);
-				return (+d.source.id / 12) * 100 + "%";
-			})
-			.attr("y", function (d: Edge) {
-				return (+d.target.id / 12) * 100 + "%";
-			})
-			.attr("fill", this._fill)
-			.attr("width", 10)
-			.attr("height", 10);
-		console.log("leaving updateDraw");
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
+		// console.log("updateDraw");
+		// glyphs
+		// 	.attr("x", function (d: Edge) {
+		// 		console.log(d);
+		// 		return (+d.source.id / 12) * 100 + "%";
+		// 	})
+		// 	.attr("y", function (d: Edge) {
+		// 		return (+d.target.id / 12) * 100 + "%";
+		// 	})
+		// 	.attr("fill", this._fill)
+		// 	.attr("width", 10)
+		// 	.attr("height", 10);
+		// console.log("leaving updateDraw");
+		// return glyphs;
+		try {
+			glyphs
+				.text(function (d: Node): string {
+					return d.label;
+				});
+			glyphs
+				.attr("x", function (d: Node) {
+					return d.x;
+				})
+				.attr("y", function (d: Node) {
+					return d.y;
+				});
+		} catch (err) {
+			console.log("No label nodes!");
+		}
 		return glyphs;
 	}
 
