@@ -19,24 +19,23 @@ import * as d3Array from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
 
-	protected _rectGlyphShape = new RectGlyphShape();
-	protected _gestaltGlyphShape = new GestaltGlyphShape();
-	protected _stlineGlyphShape = new SourceTargetLineGlyphShape();
+	// protected _rectGlyphShape = new RectGlyphShape();
+	// protected _gestaltGlyphShape = new GestaltGlyphShape();
+	// protected _stlineGlyphShape = new SourceTargetLineGlyphShape();
 
 	public drawEdgeGlyphs() {
-
-		this._currentEdgeShape = this._rectGlyphShape;
+		this._currentEdgeShape = this.rectShape;
 
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
-			let edgeRectG: Selection<any, {}, any, {}> = this._rectGlyphShape.init(this._edgeG);
-			let edgeGestaltG: Selection<any, {}, any, {}> = this._gestaltGlyphShape.init(this._edgeG);
-			let edgeSTLineG: Selection<any, {}, any, {}> = this._stlineGlyphShape.init(this._edgeG);
+			let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(this._edgeG);
+			let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
+			let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
 
-			this._edgeGlyphs.set(this._rectGlyphShape, edgeRectG);
-			this._edgeGlyphs.set(this._gestaltGlyphShape, edgeGestaltG);
-			this._edgeGlyphs.set(this._stlineGlyphShape, edgeSTLineG);
+			this._edgeGlyphs.set(this.rectShape, edgeRectG);
+			this._edgeGlyphs.set(this.gestaltShape, edgeGestaltG);
+			this._edgeGlyphs.set(this.sourceTargetLineShape, edgeSTLineG);
 
 			edgeRectG.style("display", "none");
 			edgeGestaltG.style("display", "none");
@@ -48,7 +47,10 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
+		console.log(shape);
+		console.log(this._edgeGlyphs.get(shape));
+
+		//this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
