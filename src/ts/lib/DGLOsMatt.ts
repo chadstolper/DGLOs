@@ -21,21 +21,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
 		this._currentNodeShape = this._labelGlyphShape;
 
-		//create "g" group for nodes; parent "g"
+		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		if (this._nodeG === undefined) {
 			this._nodeG = this.loc.append("g").classed("nodeG", true)
+
+			//create child "g" in parent for NodeGlyphs
+			let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
+			let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
+
+			nodeLabelG.style("display", "none");
+			nodeCircleG.style("display", "none");
+
+			//add nodes to new map
+			this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG); //need to update later
+			this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG); //need to update later
 		}
-
-		//create child "g" in parent for NodeGlyphs
-		let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
-		let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
-
-		nodeLabelG.style("display", "none");
-		nodeCircleG.style("display", "none");
-
-		//add nodes to new map
-		this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG); //need to update later
-		this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG); //need to update later
 	}
 
 	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
@@ -50,17 +50,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		let color = this._colorScheme; //because scope issues
-		this._nodeCircleGlyphs
-			.attr("fill", function (d: Node): string {
-				return color(d.id);
-			})
-			.attr("stroke", attr.stroke)
-			.attr("r", attr.radius)
-			.attr("stroke-width", attr.stroke_width)
-			.attr("width", attr.width)
-			.attr("height", attr.height)
-			.attr("opacity", attr.opacity);
+		this._nodeGlyphs.set(this._currentNodeShape, attr.setNodeGlyphAttributes(this._nodeGlyphs.get(this._currentNodeShape), attr, "id"));
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
