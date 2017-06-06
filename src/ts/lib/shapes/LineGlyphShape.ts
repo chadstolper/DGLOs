@@ -2,7 +2,7 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-
+import { AttrOpts } from "../DGLOs"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 export abstract class LineGlyphShape implements EdgeGlyphShape {
@@ -34,13 +34,13 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
 		return null;
 	}
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
 		return null;
 	}
-	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number, attr: AttrOpts): void {
 		return null;
 	}
 

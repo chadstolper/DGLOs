@@ -26,7 +26,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			.classed("rectEdges", true);
 		return STLineG;
 	}
-	public initDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		console.log(selection);
 		selection.enter().append("line")
 			.attr("id", function (d: Edge): string {
@@ -52,7 +52,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
 	}
-	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
+	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number, attr: AttrOpts): void {
 		this.init(selection);
 		//works
 		this._lineGlyphs = selection/*.select("STLine")*/.selectAll("line")
