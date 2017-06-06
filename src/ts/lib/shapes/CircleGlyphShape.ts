@@ -15,9 +15,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		//console.log("init start")
 		return location.append("g").classed("CircleNodes", true);
-		//console.log("init finished")
 	}
 
 	/**
@@ -71,7 +69,6 @@ export class CircleGlyphShape implements NodeGlyphShape {
 					});
 				break;
 		}
-
 
 		glyphs
 			.attr("stroke", attrOpts.stroke)
