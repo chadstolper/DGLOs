@@ -19,8 +19,8 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
-	protected _labelGlyphShape = new LabelGlyphShape(null, null);
-	protected _circleGlyphShape = new CircleGlyphShape(null, null, null, null);
+	protected _labelGlyphShape = new LabelGlyphShape();
+	protected _circleGlyphShape = new CircleGlyphShape();
 
 	public drawNodeGlyphs() {
 
@@ -32,63 +32,35 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			this._nodeG = this.loc.append("g").classed("nodeG", true)
 
 			//create child "g" in parent for NodeGlyphs
-			let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
-			let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG); //replace with call to the library's instance of the shape
+			let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG);
+			let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG);
 
 			nodeLabelG.style("display", "none");
 			nodeCircleG.style("display", "none");
 
 			//add nodes to new map
-			this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG); //need to update later
-			this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG); //need to update later
+			this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG);
+			this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG);
 		}
 	}
 
-	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
+	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
 		if (this._currentNodeShape.shapeType === "Label") {
-			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._labelGlyphShape), shape, this._nodeGlyphs.get(this._circleGlyphShape));
-			this._currentNodeShape = this._circleGlyphShape;
+			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._labelGlyphShape), shape, this._nodeGlyphs.get(shape));
+			this._currentNodeShape = shape;
 		}
 		else {
-			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._circleGlyphShape), shape, this._nodeGlyphs.get(this._labelGlyphShape));
-			this._currentNodeShape = this._labelGlyphShape;
+			this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._circleGlyphShape), shape, this._nodeGlyphs.get(shape));
+			this._currentNodeShape = shape;
 		}
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		this._nodeGlyphs.set(this._currentNodeShape, attr.setNodeGlyphAttributes(this._nodeGlyphs.get(this._currentNodeShape), attr, "id"));
+		// this._nodeGlyphs.get(this.currentNodeShape.draw())
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		console.log(this._currentEdgeShape)
-		if (this._currentEdgeShape.shapeType === "STLine") {
-			this._edgeLineGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		} else if (this._currentEdgeShape.shapeType === "Rect") {
-			this._edgeRectGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		} else if (this._currentEdgeShape.shapeType === "Gestalt") {
-			this._edgeGestaltGlyphs
-				.attr("fill", attr.fill)
-				.attr("stroke", attr.stroke)
-				.attr("r", attr.radius)
-				.attr("stroke-width", attr.stroke_width)
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("opacity", attr.opacity);
-		}
+		console.log("Closed until further notice\nSorry for the inconvience");
 	}
 
 	public runSimulation() {
@@ -114,22 +86,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	private tick() {
-		if (this._edgeLineGlyphs !== undefined) { //only lineglyphs needed for simulation
-			this._edgeLineGlyphs
-				.attr("x1", function (d: Edge) { return d.source.x; })
-				.attr("y1", function (d: Edge) { return d.source.y; })
-				.attr("x2", function (d: Edge) { return d.target.x; })
-				.attr("y2", function (d: Edge) { return d.target.y; });
-		} else {
-			console.log("No links!");
-		}
-
+		console.log("oh god its ticking")
 		let self = this; //d3 hold this issue
+
+		//update edges(specifically STLines) in map; run update of simulation on all edges
+		this._edgeGlyphs.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+			shape.draw(edges, self.data, self._timeStampIndex, self._attrOpts);
+		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-			shape.draw(glyphs, self._data, self._timeStampIndex);
-		})
-
+			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
+		});
 	}
 }

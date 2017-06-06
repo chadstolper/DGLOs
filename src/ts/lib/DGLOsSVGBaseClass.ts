@@ -30,11 +30,11 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		this._location = location;
 	}
 
-	readonly rectShape: RectGlyphShape;
-	readonly circleShape: CircleGlyphShape;
-	readonly labelShape: LabelGlyphShape;
-	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
-	readonly gestaltShape: GestaltGlyphShape;
+	readonly rectShape: RectGlyphShape = new RectGlyphShape();
+	readonly circleShape: CircleGlyphShape = new CircleGlyphShape();
+	readonly labelShape: LabelGlyphShape = new LabelGlyphShape();
+	readonly sourceTargetLineShape: SourceTargetLineGlyphShape = new SourceTargetLineGlyphShape();
+	readonly gestaltShape: GestaltGlyphShape = new GestaltGlyphShape();
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };

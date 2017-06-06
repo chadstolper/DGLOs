@@ -1,5 +1,6 @@
 import { Selection } from "d3-selection";
 import { DynamicGraph } from "../model/DynamicGraph";
+import { SVGAttrOpts } from "./DGLOsSVG";
 
 export interface NodeGlyphShape {
 	readonly shapeType: string;
@@ -8,10 +9,10 @@ export interface NodeGlyphShape {
 	//TODO: Make new <g>
 	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
 	//TODO: draw nodes
-	updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
+	updateDraw(location: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}>;
 	//TODO: position and add attr
 	transformTo(source: Selection<any, {}, any, {}>, shape: NodeGlyphShape, target: Selection<any, {}, any, {}>): void;
 	//TODO: says what it does on the tin
-	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void;
+	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void;
 	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
 }

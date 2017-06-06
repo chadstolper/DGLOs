@@ -19,28 +19,38 @@ import * as d3Array from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
 
-	protected _rectGlyphShape = new RectGlyphShape(null, null, null, null);
-	public drawEdgeGlyphs() {
+	// protected _rectGlyphShape = new RectGlyphShape();
+	// protected _gestaltGlyphShape = new GestaltGlyphShape();
+	// protected _stlineGlyphShape = new SourceTargetLineGlyphShape();
 
-		this._currentEdgeShape = this._rectGlyphShape;
+	public drawEdgeGlyphs() {
+		this._currentEdgeShape = this.rectShape;
 
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
-			let edgeRectG: Selection<any, {}, any, {}> = this._rectGlyphShape.init(this._edgeG);
-			this._edgeGlyphs.set(this._rectGlyphShape, edgeRectG);
+			let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(this._edgeG);
+			let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
+			let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
+
+			this._edgeGlyphs.set(this.rectShape, edgeRectG);
+			this._edgeGlyphs.set(this.gestaltShape, edgeGestaltG);
+			this._edgeGlyphs.set(this.sourceTargetLineShape, edgeSTLineG);
 
 			edgeRectG.style("display", "none");
-
+			edgeGestaltG.style("display", "none");
+			edgeSTLineG.style("display", "none");
 		}
 
-		// this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null);
-		// this._currentEdgeShape.draw(this._location, this._data, 0);
+		this._currentEdgeShape.draw(this._location, this.data, 0, this._attrOpts);
+
 	}
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
+		console.log(shape);
+		console.log(this._edgeGlyphs.get(shape));
 
-		this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
+		//this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
@@ -53,20 +63,13 @@ export class DGLOsWill extends DGLOsMatt {
 				return (+d.id / curGraph.nodes.length) * 100 + "%";
 			})
 	}
+
+
+
 	public positionEdgeGlyphsMatrix() {
 		let curGraph = this._data.timesteps[this._timeStampIndex];
-		if (this._currentEdgeShape.shapeType === "STLine") {
-			this.transformLinesToRect();
-			this._edgeRectGlyphs
-				.attr("x", function (d: Edge) {
-					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-				})
-				.attr("y", function (d: Edge) {
-					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-				})
-		}
 		if (this._currentEdgeShape.shapeType === "Rect") {
-			this._edgeRectGlyphs
+			this._edgeRectGlyphs.selectAll("rect")
 				.attr("x", function (d: Edge) {
 					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
 				})
@@ -74,59 +77,8 @@ export class DGLOsWill extends DGLOsMatt {
 					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
 				})
 		}
-		if (this._currentEdgeShape.shapeType === "Gestalt") {
-			this.transformGestaltToRect();
-			this._edgeRectGlyphs
-				.attr("x", function (d: Edge) {
-					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-				})
-				.attr("y", function (d: Edge) {
-					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-				})
-		}
-	}
-	public transformRectToLines() {
-		this._edgeRectGlyphs.transition()
-			.style("display", "none");
-		this._edgeLineGlyphs.transition()
-			.style("display", null);
-		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
-	}
-	private transformGestaltToLines() {
-		this._edgeGestaltGlyphs   //.transition()
-			.style("display", "none");
-		this._edgeLineGlyphs   //.transition()
-			.style("display", null);
-		this._currentEdgeShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
-	}
-	private transformGestaltToRect() {
-		this._edgeGestaltGlyphs   //.transition()
-			.style("display", "none");
-		this._edgeRectGlyphs   //.transition()
-			.style("display", null);
-		this._currentEdgeShape = new RectGlyphShape(null, null, null, null);
-	}
-	private transformLinesToGestalt() {
-		this._edgeLineGlyphs   //.transition()
-			.style("display", "none");
-		this._edgeGestaltGlyphs   //.transition()
-			.style("display", null);
-		this._currentEdgeShape = new GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
-	}
-	private transformRectToGestalt() {
-		this._edgeRectGlyphs   //.transition()
-			.style("display", "none");
-		this._edgeGestaltGlyphs   //.transition()
-			.style("display", null);
-		this._currentEdgeShape = new GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
-	}
-	private transformLinesToRect() {
-		this._edgeLineGlyphs   //.transition()
-			.style("display", "none");
-		this._edgeRectGlyphs   //.transition()
-			.style("display", null);
 
-		this._currentEdgeShape = new RectGlyphShape(null, null, null, null);
 	}
+
 
 }
