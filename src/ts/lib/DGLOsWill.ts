@@ -20,6 +20,9 @@ import * as d3Array from "d3-array";
 export class DGLOsWill extends DGLOsMatt {
 
 	protected _rectGlyphShape = new RectGlyphShape(null, null, null, null);
+	protected _gestaltGlyphShape = new GestaltGlyphShape(null, null, null, null, null, null, null, null, null, null);
+	protected _stlineGlyphShape = new SourceTargetLineGlyphShape(null, null, null, null, null, null, null, null);
+
 	public drawEdgeGlyphs() {
 
 		this._currentEdgeShape = this._rectGlyphShape;
@@ -28,14 +31,19 @@ export class DGLOsWill extends DGLOsMatt {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
 			let edgeRectG: Selection<any, {}, any, {}> = this._rectGlyphShape.init(this._edgeG);
-			this._edgeGlyphs.set(this._rectGlyphShape, edgeRectG);
+			let edgeGestaltG: Selection<any, {}, any, {}> = this._gestaltGlyphShape.init(this._edgeG);
+			let edgeSTLineG: Selection<any, {}, any, {}> = this._stlineGlyphShape.init(this._edgeG);
 
+			this._edgeGlyphs.set(this._rectGlyphShape, edgeRectG);
+			this._edgeGlyphs.set(this._gestaltGlyphShape, edgeGestaltG);
+			this._edgeGlyphs.set(this._stlineGlyphShape, edgeSTLineG);
+
+			edgeRectG.style("display", null);
+			edgeRectG.style("display", "none");
 			edgeRectG.style("display", "none");
 
 		}
 
-		// this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null);
-		// this._currentEdgeShape.draw(this._location, this._data, 0);
 	}
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
