@@ -307,13 +307,11 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	}
 
 	public init(location: Selection<any, {}, any, {}>): void {
-		console.log("init");
 		location.append("g")
 			.classed("rectEdges", true);
 	}
 
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("initDraw");
 		selection.enter().append("rect")
 			.attr("id", function (d: Edge) {
 				return d.source.id + ":" + d.target.id;
@@ -321,7 +319,6 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		return selection;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("updateDraw");
 		selection.selectAll("rect")
 			.attr("x", function (d: Edge) {
 				console.log(d);
@@ -333,8 +330,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 			.attr("fill", this._fill)
 			.attr("width", 10)
 			.attr("height", 10);
-		console.log("leaving updateDraw");
-		return this._rectGlyphs;
+		return selection;
 	}
 	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
 		return null;
@@ -509,13 +505,6 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				return d.source.id + ":" + d.target.id;
 			})
 		return selection;
-
-		// console.log("initDraw");
-		// selection.enter().append("rect")
-		// 	.attr("id", function (d: Edge) {
-		// 		return d.source.id + ":" + d.target.id;
-		// 	})
-		// return selection;
 	}
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -526,17 +515,10 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
 		this.init(selection);
 		//works
-		this._lineGlyphs = selection.selectAll("line")
+		this._lineGlyphs = selection/*.select("STLine")*/.selectAll("line")
 			.data(data.timesteps[TimeStampIndex].edges);
 		this._lineGlyphs = this.initDraw(this._lineGlyphs);
 
-		//this.initDraw(selection.data(data.timesteps[TimeStampIndex].edges).selectAll("line").enter());
-
-
-		// this.init(selection);
-		// this._rectGlyphs = selection.selectAll("rect")
-		// 	.data(data.timesteps[TimeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
-		// this._rectGlyphs = this.initDraw(this._rectGlyphs);
 		// let _rectEnter = this.updateDraw(this._rectGlyphs.data(data.timesteps[TimeStampIndex].edges).enter());
 	}
 }

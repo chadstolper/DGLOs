@@ -44,7 +44,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 		// this._edgeGestaltGlyphs = this._edgeGestaltGlyphs.merge(gestaltLineEnter);
 
-		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null);
+		this._currentEdgeShape = new shapes.RectGlyphShape(null, null, null, null);
 		this._currentEdgeShape.draw(this._location, this._data, 0);
 	}
 
