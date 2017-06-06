@@ -46,35 +46,39 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
+		try {
+			switch (attrOpts.fill) {
+				case "id":
+					glyphs
+						.attr("fill", function (d: Node): string {
+							return colorScheme(d.id);
+						});
+					break;
 
-		switch (attrOpts.fill) {
-			case "id":
-				glyphs
-					.attr("fill", function (d: Node): string {
-						return colorScheme(d.id);
-					});
-				break;
+				case "label":
+					glyphs
+						.attr("fill", function (d: Node): string {
+							return colorScheme(d.label);
+						});
+					break;
 
-			case "label":
-				glyphs
-					.attr("fill", function (d: Node): string {
-						return colorScheme(d.label);
-					});
-				break;
+				case "type":
+					glyphs
+						.attr("fill", function (d: Node): string {
+							return colorScheme(d.type);
+						});
+					break;
+			}
 
-			case "type":
-				glyphs
-					.attr("fill", function (d: Node): string {
-						return colorScheme(d.type);
-					});
-				break;
+			glyphs
+				.attr("stroke", attrOpts.stroke)
+				.attr("r", attrOpts.radius)
+				.attr("stroke-width", attrOpts.stroke_width)
+				.attr("opacity", attrOpts.opacity);
 		}
-
-		glyphs
-			.attr("stroke", attrOpts.stroke)
-			.attr("r", attrOpts.radius)
-			.attr("stroke-width", attrOpts.stroke_width)
-			.attr("opacity", attrOpts.opacity);
+		catch (err) {
+			console.log("attropts Circle undefined");
+		}
 
 		return glyphs;
 	}
@@ -116,8 +120,9 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		circleGlyphs.exit().remove();
 
 		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+
 		circleGlyphs = circleGlyphs.merge(circleEnter);
-		circleGlyphs.call(this.updateDraw);
+		this.updateDraw(circleGlyphs, attrOpts)
 	}
 
 	get shapeType(): string {

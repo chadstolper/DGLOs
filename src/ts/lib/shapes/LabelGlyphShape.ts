@@ -54,35 +54,39 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No label nodes!");
 		}
+		try {
+			switch (attrOpts.fill) {
+				case "id":
+					glyphs
+						.attr("fill", function (d: Node): string {
+							return colorScheme(d.id);
+						});
+					break;
 
-		switch (attrOpts.fill) {
-			case "id":
-				glyphs
-					.attr("fill", function (d: Node): string {
-						return colorScheme(d.id);
-					});
-				break;
+				case "label":
+					glyphs
+						.attr("fill", function (d: Node): string {
+							return colorScheme(d.label);
+						});
+					break;
 
-			case "label":
-				glyphs
-					.attr("fill", function (d: Node): string {
-						return colorScheme(d.label);
-					});
-				break;
+				case "type":
+					glyphs
+						.attr("fill", function (d: Node): string {
+							return colorScheme(d.type);
+						});
+					break;
+			}
 
-			case "type":
-				glyphs
-					.attr("fill", function (d: Node): string {
-						return colorScheme(d.type);
-					});
-				break;
+			glyphs
+				.attr("stroke", attrOpts.stroke)
+				.attr("r", attrOpts.radius)
+				.attr("stroke-width", attrOpts.stroke_width)
+				.attr("opacity", attrOpts.opacity);
 		}
-
-		glyphs
-			.attr("stroke", attrOpts.stroke)
-			.attr("r", attrOpts.radius)
-			.attr("stroke-width", attrOpts.stroke_width)
-			.attr("opacity", attrOpts.opacity);
+		catch (err) {
+			console.log("attropts label undefined")
+		}
 
 		return glyphs;
 	}
@@ -124,7 +128,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
 		labelGlyphs = labelGlyphs.merge(labelEnter);
-		labelGlyphs.call(this.updateDraw);
+		this.updateDraw(labelGlyphs, attrOpts);
 	}
 
 	get textAnchor(): string {
