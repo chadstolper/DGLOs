@@ -9,6 +9,7 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 
 
 json("data/dummy/dummy.json", function (response: any) {
+	console.log("willTest");
 	let width: number, height: number;
 	width = height = 1500;
 	let g: DynamicGraph = new DynamicDrinkGraph(response);
