@@ -18,8 +18,6 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	private _dominantBaseline: string = "middle";
 	// private _font = "ComicSans";
 
-	private _labelGlyphs: Selection<any, {}, any, {}>;
-
 	constructor(text: string, fill: string, x?: number, y?: number) {
 		this._text = text;
 		this._fill = fill;
@@ -31,82 +29,84 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * Make new <g>
 	 * @param location
 	 */
-	public init(location: Selection<any, {}, any, {}>): void {
-		console.log("init start")
-		this._labelGlyphs = location.append("g").classed("Nodes", true);
-		console.log(this._labelGlyphs)
-		console.log("init finished")
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return location.append("g").classed("LabelNodes", true);
 	}
 
-
-	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("initdraw start")
-		let newLabel = location.append("text")
+	/**
+	 * Create selection of nodes. Returns new selection
+	 * @param glyphs
+	 */
+	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
+			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", "middle")
 			.style("text-anchor", "middle");
-
-		console.log(newLabel)
-		console.log("initdraw done")
-		return newLabel;
+		return ret;
 	}
 
-
-	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("update start")
-		this._labelGlyphs.exit().remove();
-
-		let labelEnter = this._labelGlyphs.enter().call(this.initDraw);
-
-		this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
-
-		if (this._labelGlyphs !== undefined) {
-			this._labelGlyphs
+	/**
+	 * Assign and/or update node label data and (x,y) positions
+	 * @param glyphs 
+	 */
+	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		try {
+			glyphs
+				.text(function (d: Node): string {
+					return d.label;
+				});
+			glyphs
 				.attr("x", function (d: Node) {
 					return d.x;
 				})
-				.attr("y", function (d: Node) { return d.y; });
-		} else {
+				.attr("y", function (d: Node) {
+					return d.y;
+				});
+		} catch (err) {
 			console.log("No label nodes!");
-
 		}
-
-		console.log(this._labelGlyphs)
-		console.log("update done")
-		return this._labelGlyphs; //?
+		return glyphs;
 	}
 
+	/**
+	* Transform the current NodeGlyphShapes to given NodeGlyphShape
+	* @param sourceSelection 
+	* @param shape 
+	* @param targetSelection 
+ 	*/
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape, targetG: Selection<any, {}, any, {}>) {
+		switch (targetShape.shapeType) {
+			case "Circle":
+				console.log("Label-->Circle")
+				sourceG.style("display", "none");
+				targetG.style("display", null);
+				break;
 
-	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
-		console.log("eventually");
-		return;
+			case "Label":
+				console.log("Label-->Label Catch");
+				sourceG.style("display", null)
+				break;
+
+			default: console.log("new NodeShape is undefined");
+				break;
+		};
 	}
+	/**
+	 * Draw and create new visualizations of nodes, initial update included
+	 * @param labelG Should be the labelG
+	 * @param data 
+	 * @param timeStepIndex 
+	 */
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		let labelGlyphs = labelG.selectAll("text.label")
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
+		labelGlyphs.exit().remove();
 
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
-		this.init(location);
-		console.log("init was called")
-		this._labelGlyphs = location.selectAll("label")
-			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
-			.enter().call(this.initDraw);
-
-		console.log("init done, start update")
-
-		this.updateDraw;
-
-		console.log("update done, finishing")
-
-		// this._labelGlyphs.exit().remove();
-
-		// let labelEnter = this._labelGlyphs.enter().call(this.init);
-
-		// this._labelGlyphs = this._labelGlyphs.merge(labelEnter);
-		this._labelGlyphs
-			.text(function (d: Node): string {
-				console.log(d.label);
-				return d.label;
-			});
-		console.log("finished draw")
+		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
+		labelGlyphs = labelGlyphs.merge(labelEnter);
+		labelGlyphs.call(this.updateDraw);
 	}
 
 
@@ -161,68 +161,97 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	private _stroke: string = "grey";
 	private _stroke_width: number = 2;
 
-	private _circleGlyphs: Selection<any, {}, any, {}>;
-
 	constructor(radius: number, fill: string, stroke: string, strokeWidth: number) {
 		this._radius = radius;
 		this._fill = fill;
 		this._stroke = stroke;
 		this._stroke_width = strokeWidth;
-
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
-		this._circleGlyphs = location.append("g").classed("Nodes", true);
+	/**
+	 * Make new <g>
+	 * @param location
+	 */
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		//console.log("init start")
+		return location.append("g").classed("CircleNodes", true);
+		//console.log("init finished")
 	}
-	//TODO: Make new <g>
-	public initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		let newCircle = location.append("text")
-			.attr("id", function (d: Node): string | number { return d.label; })
-			.attr("fill", function (d: Node): string {
-				console.log(COLOR_SCHEME(d.id))
-				return COLOR_SCHEME(d.id);
-			})
-			.attr("stroke", this.stroke)
-			.attr("r", this.radius)
-			.attr("stroke-width", this.stroke_width);
-		return newCircle;
+
+	/**
+	 * Create selection of nodes. Returns new selection
+	 * @param glyphs
+	 */
+	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
+			.classed("node", true)
+			.attr("id", function (d: Node): string | number { return d.id; }) //TODO: Test return id or label?
+			.attr("r", 10) //TODO: Remove
+			.attr("fill", "purple"); //TODO: remove
+		return ret;
 	}
-	//TODO: draw nodes
-	public updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		if (this._circleGlyphs !== undefined) {
-			this._circleGlyphs
-				.attr("x", function (d: Node) {
+
+	/**
+	 * Assign and/or update node circle data and (cx,cy) positions
+	 * @param glyphs 
+	 */
+	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		try {
+			glyphs
+				.attr("cx", function (d: Node) {
 					return d.x;
 				})
-				.attr("y", function (d: Node) { return d.y; });
-		} else {
+				.attr("cy", function (d: Node) {
+					return d.y;
+				});
+		} catch (err) {
 			console.log("No circle nodes!");
-
 		}
-		return this._circleGlyphs; //?
+		return glyphs;
 	}
-	//TODO: position and add attr to nodes
-	public transformTo(shape: NodeGlyphShape): NodeGlyphShape {
-		console.log("eventually");
-		return;
+
+	/**
+	 * Transform the current NodeGlyphShapes to given NodeGlyphShape
+	 * @param sourceSelection 
+	 * @param shape 
+	 * @param targetSelection 
+	 */
+	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
+		switch (shape.shapeType) {
+			case "Label":
+				console.log("Circle-->Label")
+				sourceSelection.transition().style("display", "none");
+				targetSelection.transition().style("display", null);
+				break;
+
+			case "Circle":
+				console.log("Circle-->Circle Catch");
+				sourceSelection.style("display", null)
+				break;
+
+			default: console.log("new NodeShape is undefined");
+				break;
+		};
 	}
-	//TODO: says what it does on the tin
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
-		this._circleGlyphs = location.selectAll("label")
-			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id })
-			.enter().call(this.initDraw);
 
-		this._circleGlyphs.exit().remove();
+	/**
+	 * Draw and create new visualizations of nodes, initial update included
+	 * @param circleG Should be the circleG
+	 * @param data 
+	 * @param timeStepIndex 
+	 */
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void {
+		let circleGlyphs = circleG.selectAll("circle.node")
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
-		let circleEnter = this._circleGlyphs.enter().call(this.init);
+		circleGlyphs.exit().remove();
 
-		this._circleGlyphs = this._circleGlyphs.merge(circleEnter);
-		this._circleGlyphs
-			.text(function (d: Node): string {
-				return d.label;
-			});
+		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+		circleGlyphs = circleGlyphs.merge(circleEnter);
+		circleGlyphs.call(this.updateDraw);
 	}
-	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
+
+
 
 	get radius(): number {
 		return this._radius;
@@ -266,13 +295,13 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	private _width: number;
 	private _height: number;
 	private _fill: string;
-	private _edgeRectGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(width: number, height: number, fill: string, numNodes: number) {
 		this._width = width;
 		this._height = height;
 		this._fill = fill;
 	}
+
 	get width(): number {
 		return this._width;
 	}
@@ -295,62 +324,63 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
-	/**
-	 * Adds a new <g> tag to hold the rectangles
-	 * @param location is an SVG location where the rectangles will be drawn
-	 */
-	public init(location: Selection<any, {}, any, {}>): void {
-		location.append("g")
+
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let rectG = location.append("g")
 			.classed("rectEdges", true);
+		return rectG;
 	}
-	/**
-	 * Creates the rectangle objects
-	 * @param selection 
-	 */
-	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		// let edgeRectEnter = selection.enter().append("rect")
-		// 	.attr("id", function (d: any): string { return d.source.id + ":" + d.target.id })
-		// selection = selection.merge(edgeRectEnter);
-		// return selection;
-		let newRect = selection.append("rect")
-			.attr("width", this._width)
-			.attr("height", this._height)
-			.attr("fill", this._fill);
-		return newRect;
+
+	public initDraw(selection: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
+		console.log("initDraw");
+		selection.enter().append("rect")
+			.attr("id", function (d: Edge) {
+				return d.source.id + ":" + d.target.id;
+			})
+		return selection;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		this._edgeRectGlyphs
+	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		console.log("updateDraw");
+		glyphs
 			.attr("x", function (d: Edge) {
-				return (+d.source.id / this.numNodes) * 100 + "%";
+				console.log(d);
+				return (+d.source.id / 12) * 100 + "%";
 			})
 			.attr("y", function (d: Edge) {
-				return (+d.target.id / this.numNodes) * 100 + "%";
+				return (+d.target.id / 12) * 100 + "%";
 			})
-		return this._edgeRectGlyphs;
+			.attr("fill", this._fill)
+			.attr("width", 10)
+			.attr("height", 10);
+		console.log("leaving updateDraw");
+		return glyphs;
 	}
-	/**
-	 * Turns these here shapes into some other shapes
-	 * @param shape 
-	 */
-	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
-		return null;
+
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+		sourceG.style("display", "none");
+		targetG.style("display", null);
+
+		switch (targetShape.shapeType) {
+			case "Rect":
+				break;
+			case "STLine":
+				break;
+			case "Gestalt":
+				break;
+			default:
+				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
+		}
 	}
-	/**
-	 * Does all the things
-	 * @param selection 
-	 * @param data 
-	 * @param TimeStampIndex 
-	 */
-	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
-		this._edgeRectGlyphs = selection.selectAll("rect")
-			.data(data.timesteps[TimeStampIndex].nodes, function (d: Node): string { return "" + d.id })
-			.enter().call(this.initDraw);
 
-		this._edgeRectGlyphs.exit().remove();
-		let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
 
-		this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
+		let rects = rectG.selectAll("rect")
+			.data(data.timesteps[TimeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		let enter = this.initDraw(rects.enter());
+		rects.exit().remove();
+		rects = rects.merge(enter);
+		this.updateDraw(rects);
+
 	}
 }
 
@@ -365,6 +395,7 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	private _y1: number;
 	private _x2: number;
 	private _y2: number;
+	protected _lineGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(stroke: string, stroke_width: number, source?: string | number, target?: string | number, x1?: number, y1?: number, x2?: number, y2?: number) {
 		this._stroke = stroke;
@@ -377,8 +408,8 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 		this._y2 = y2;
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
-
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -386,7 +417,7 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
 	}
-	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
 		return null;
 	}
 	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
@@ -456,7 +487,6 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 		this._y2 = y2;
 	}
 
-
 	get shapeType(): string {
 		return this._shapeType;
 	}
@@ -474,6 +504,47 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	get shapeType(): string {
 		return this._shapeType;
 	}
+
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let STLineG = location.append("g")
+			.classed("rectEdges", true);
+		return STLineG;
+	}
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		console.log(selection);
+		selection.enter().append("line")
+			.attr("id", function (d: Edge): string {
+				return d.source.id + ":" + d.target.id;
+			})
+		return selection;
+	}
+	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+		sourceG.style("display", "none");
+		targetG.style("display", null);
+
+		switch (targetShape.shapeType) {
+			case "Rect":
+				break;
+			case "STLine":
+				break;
+			case "Gestalt":
+				break;
+			default:
+				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
+		}
+	}
+	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
+		this.init(selection);
+		//works
+		this._lineGlyphs = selection/*.select("STLine")*/.selectAll("line")
+			.data(data.timesteps[TimeStampIndex].edges);
+		this._lineGlyphs = this.initDraw(this._lineGlyphs);
+
+		// let _rectEnter = this.updateDraw(this._rectGlyphs.data(data.timesteps[TimeStampIndex].edges).enter());
+	}
 }
 
 export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
@@ -485,6 +556,36 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		super(stroke, stroke_width, source, target, x1, y1, x2, y2);
 		this._angleProperty = angleProperty;
 		this._timeStepIndex = timeStepIndex;
+	}
+
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let gestaltG = location.append("g")
+			.classed("rectEdges", true);
+		return gestaltG;
+	}
+	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
+	}
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+		sourceG.style("display", "none");
+		targetG.style("display", null);
+
+		switch (targetShape.shapeType) {
+			case "Rect":
+				break;
+			case "STLine":
+				break;
+			case "Gestalt":
+				break;
+			default:
+				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
+		}
+	}
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
+		return null;
 	}
 
 
