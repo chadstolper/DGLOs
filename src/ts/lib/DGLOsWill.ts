@@ -25,7 +25,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public drawEdgeGlyphs() {
 
-		this._currentEdgeShape = this._rectGlyphShape;
+		this._currentEdgeShape = this._stlineGlyphShape;
 
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
@@ -38,11 +38,12 @@ export class DGLOsWill extends DGLOsMatt {
 			this._edgeGlyphs.set(this._gestaltGlyphShape, edgeGestaltG);
 			this._edgeGlyphs.set(this._stlineGlyphShape, edgeSTLineG);
 
-			edgeRectG.style("display", null);
+			edgeRectG.style("display", "none");
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
-
 		}
+
+		this._currentEdgeShape.draw(this._location, this.data, 0, this._attrOpts);
 
 	}
 
@@ -61,20 +62,11 @@ export class DGLOsWill extends DGLOsMatt {
 				return (+d.id / curGraph.nodes.length) * 100 + "%";
 			})
 	}
+
 	public positionEdgeGlyphsMatrix() {
 		let curGraph = this._data.timesteps[this._timeStampIndex];
-		if (this._currentEdgeShape.shapeType === "STLine") {
-			this.transformLinesToRect();
-			this._edgeRectGlyphs
-				.attr("x", function (d: Edge) {
-					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-				})
-				.attr("y", function (d: Edge) {
-					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-				})
-		}
 		if (this._currentEdgeShape.shapeType === "Rect") {
-			this._edgeRectGlyphs
+			this._edgeRectGlyphs.selectAll("rect")
 				.attr("x", function (d: Edge) {
 					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
 				})
@@ -82,16 +74,7 @@ export class DGLOsWill extends DGLOsMatt {
 					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
 				})
 		}
-		if (this._currentEdgeShape.shapeType === "Gestalt") {
-			this.transformGestaltToRect();
-			this._edgeRectGlyphs
-				.attr("x", function (d: Edge) {
-					return (+d.source.id / curGraph.nodes.length) * 100 + "%";
-				})
-				.attr("y", function (d: Edge) {
-					return (+d.target.id / curGraph.nodes.length) * 100 + "%";
-				})
-		}
+
 	}
 	public transformRectToLines() {
 		this._edgeRectGlyphs.transition()
