@@ -29,7 +29,7 @@ export class VoronoiDiagram extends ForceDirectedGraph {
 			.selectAll("path");
 
 		this._cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
-		this._noisePoints = [new Node("noise0", "noise", ""), new Node("noise1", "noise", ""), new Node("noise2", "noise", ""), new Node("noise3", "noise", ""), new Node("noise4", "noise", ""), new Node("noise5", "noise", ""), new Node("noise6", "noise", ""), new Node("noise7", "noise", "")];
+		this._noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", ""), new Node("noise1", this._cardinalPoints.length + 1, "noise", ""), new Node("noise2", this._cardinalPoints.length + 2, "noise", ""), new Node("noise3", this._cardinalPoints.length + 3, "noise", ""), new Node("noise4", this._cardinalPoints.length + 4, "noise", ""), new Node("noise5", this._cardinalPoints.length + 5, "noise", ""), new Node("noise6", this._cardinalPoints.length + 6, "noise", ""), new Node("noise7", this._cardinalPoints.length + 7, "noise", "")];
 
 		for (let i = 0; i < this._cardinalPoints.length; i++) //give noise nodes x,y of cardinals
 		{
