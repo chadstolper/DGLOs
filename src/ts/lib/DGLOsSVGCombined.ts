@@ -6,6 +6,8 @@ import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { SVGAttrOpts } from "./DGLOsSVG";
+
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
 	_nodeG: Selection<any, {}, any, {}>;
@@ -30,6 +32,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_opacity = 100;
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
+	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;
