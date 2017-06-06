@@ -10,7 +10,7 @@ export interface NodeGlyphShape {
 	//TODO: draw nodes
 	updateDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
 	//TODO: position and add attr
-	transformTo(shape: NodeGlyphShape): NodeGlyphShape;
+	transformTo(source: Selection<any, {}, any, {}>, shape: NodeGlyphShape, target: Selection<any, {}, any, {}>): void;
 	//TODO: says what it does on the tin
 	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number): void;
 	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
