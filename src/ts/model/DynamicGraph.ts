@@ -2,6 +2,7 @@ import { SimulationNodeDatum } from "d3-force";
 
 export class Node implements SimulationNodeDatum {
 	private _id: string | number;
+	private _index: number;
 	private _type: string;
 	private _label: string;
 	public x?: number;
@@ -11,8 +12,9 @@ export class Node implements SimulationNodeDatum {
 	public _fx?: number;
 	public _fy?: number;
 
-	public constructor(id: number | string, type: string, label: string) {
+	public constructor(id: number | string, index: number, type: string, label: string) {
 		this._id = id;
+		this._index = index;
 		this._type = type;
 		this._label = label;
 	}
@@ -31,6 +33,15 @@ export class Node implements SimulationNodeDatum {
 	set id(id: string | number) {
 		this._id = id;
 	}
+
+	get index(): number {
+		return this._index;
+	}
+
+	set index(index: number) {
+		this._index = index;
+	}
+
 	set fx(num: number) {
 		this._fx = num;
 	}
