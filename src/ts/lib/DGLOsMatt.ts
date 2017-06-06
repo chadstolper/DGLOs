@@ -18,7 +18,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	public drawNodeGlyphs() {
 
-		this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
+		// this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
 		this._currentNodeShape = this._labelGlyphShape;
 
 		//create "g" group for nodes; parent "g"

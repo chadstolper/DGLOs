@@ -12,43 +12,30 @@ import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
+
+	protected _rectGlyphShape = new shapes.RectGlyphShape(null, null, null, null);
 	public drawEdgeGlyphs() {
-		// this._edgeG = this.loc.append("g")
-		// 	.classed("edges", true);
 
-		// this._edgeLineGlyphs = this._edgeG.selectAll("line")
-		// 	.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		this._currentEdgeShape = this._rectGlyphShape;
 
-		// this._edgeLineGlyphs.exit().remove();
+		if (this._edgeG === undefined) {
+			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
-		// let edgeLineEnter = this._edgeLineGlyphs.enter().append("line")
-		// 	.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+			let edgeRectG: Selection<any, {}, any, {}> = this._rectGlyphShape.init(this._edgeG);
+			this._edgeGlyphs.set(this._rectGlyphShape, edgeRectG);
 
-		// this._edgeLineGlyphs = this._edgeLineGlyphs.merge(edgeLineEnter);
+			edgeRectG.style("display", "none");
 
-		// this._edgeRectGlyphs = this._edgeG.selectAll("rect")
-		// 	.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
+		}
 
-		// let edgeRectEnter = this._edgeRectGlyphs.enter().append("rect")
-		// 	.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-
-		// this._edgeRectGlyphs = this._edgeRectGlyphs.merge(edgeRectEnter);
-
-		// this._edgeGestaltGlyphs = this._edgeG.selectAll("gestalt")
-		// 	.data(this.data.timesteps[this._timeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
-
-		// this._edgeLineGlyphs.exit().remove();
-
-		// let gestaltLineEnter = this._edgeLineGlyphs.enter().append("gestalt")
-		// 	.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-
-		// this._edgeGestaltGlyphs = this._edgeGestaltGlyphs.merge(gestaltLineEnter);
-
-		this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null);
-		this._currentEdgeShape.draw(this._location, this._data, 0);
+		// this._currentEdgeShape = new shapes.SourceTargetLineGlyphShape(null, null, null, null, null, null);
+		// this._currentEdgeShape.draw(this._location, this._data, 0);
 	}
 
-	public transformEdgeGlyphsTo(shape: any) {
+	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
+
+		this._currentEdgeShape.transformTo(EdgeGlyphShape);
+
 		switch (this._currentEdgeShape.shapeType) {
 			case "Rect":
 				console.log("current shape is a rect!");

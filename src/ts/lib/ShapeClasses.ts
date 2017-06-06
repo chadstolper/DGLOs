@@ -77,17 +77,17 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	* @param shape 
 	* @param targetSelection 
  	*/
-	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
-		switch (shape.shapeType) {
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape, targetG: Selection<any, {}, any, {}>) {
+		switch (targetShape.shapeType) {
 			case "Circle":
 				console.log("Label-->Circle")
-				sourceSelection.style("display", "none");
-				targetSelection.style("display", null);
+				sourceG.style("display", "none");
+				targetG.style("display", null);
 				break;
 
 			case "Label":
 				console.log("Label-->Label Catch");
-				sourceSelection.style("display", null)
+				sourceG.style("display", null)
 				break;
 
 			default: console.log("new NodeShape is undefined");
@@ -297,8 +297,8 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	private _width: number;
 	private _height: number;
 	private _fill: string;
-	private _parent: Selection<any, {}, any, {}>;
-	private _rectGlyphs: Selection<any, {}, any, {}>;
+	// private _parent: Selection<any, {}, any, {}>;
+	// private _rectGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(width: number, height: number, fill: string, numNodes: number) {
 		this._width = width;
@@ -306,13 +306,15 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		this._fill = fill;
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		console.log("init");
-		location.append("g")
+		let rectG = location.append("g")
 			.classed("rectEdges", true);
+
+		return rectG;
 	}
 
-	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(selection: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
 		console.log("initDraw");
 		selection.enter().append("rect")
 			.attr("id", function (d: Edge) {
@@ -320,9 +322,9 @@ export class RectGlyphShape implements EdgeGlyphShape {
 			})
 		return selection;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		console.log("updateDraw");
-		selection.selectAll("rect")
+		glyphs
 			.attr("x", function (d: Edge) {
 				console.log(d);
 				return (+d.source.id / 12) * 100 + "%";
@@ -334,22 +336,33 @@ export class RectGlyphShape implements EdgeGlyphShape {
 			.attr("width", 10)
 			.attr("height", 10);
 		console.log("leaving updateDraw");
-		return this._rectGlyphs;
+		return glyphs;
 	}
-	public transformTo(shape: EdgeGlyphShape): EdgeGlyphShape {
-		return null;
-	}
-	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
 
-		//TODO put the rectangles in the <g> tag
-		//	   size the rectangles correctly
-		//	   understand the code that I wrote
-		this.init(selection);
-		this._rectGlyphs = selection.selectAll("rect")
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+		sourceG.style("display", "none");
+		targetG.style("display", null);
+
+		switch (targetShape.shapeType) {
+			case "Rect":
+				break;
+			case "STLine":
+				break;
+			case "Gestalt":
+				break;
+			default:
+				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
+		}
+	}
+
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
+
+		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[TimeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
-		this._rectGlyphs = this.initDraw(this._rectGlyphs);
-		let _rectEnter = this.updateDraw(this._rectGlyphs.data(data.timesteps[TimeStampIndex].edges).enter());
-
+		let enter = this.initDraw(rects.enter());
+		rects.exit().remove();
+		rects = rects.merge(enter);
+		this.updateDraw(rects);
 
 	}
 

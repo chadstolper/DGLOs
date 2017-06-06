@@ -12,6 +12,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_nodeCircleGlyphs: Selection<any, {}, any, {}>;
 	_nodeLabelGlyphs: Selection<any, {}, any, {}>;
 	_nodeGlyphs: Map<NodeGlyphShape, Selection<any, {}, any, {}>> = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
+	_edgeGlyphs: Map<EdgeGlyphShape, Selection<any, {}, any, {}>> = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
+
 	_edgeG: Selection<any, {}, any, {}>
 	_edgeLineGlyphs: Selection<any, {}, any, {}>;
 	_edgeRectGlyphs: Selection<any, {}, any, {}>;
