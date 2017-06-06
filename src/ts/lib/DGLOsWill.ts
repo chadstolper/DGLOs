@@ -25,7 +25,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public drawEdgeGlyphs() {
 
-		this._currentEdgeShape = this._stlineGlyphShape;
+		this._currentEdgeShape = this._rectGlyphShape;
 
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
@@ -48,26 +48,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		switch (this._currentEdgeShape.shapeType) {
-			case "Rect":
-				this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._rectGlyphShape), shape, this._edgeGlyphs.get(shape));
-				this._currentEdgeShape = shape;
-				break;
-
-			case "Gestalt":
-				this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._gestaltGlyphShape), shape, this._edgeGlyphs.get(shape));
-				this._currentEdgeShape = shape;
-				break;
-
-			case "STLine":
-				this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._stlineGlyphShape), shape, this._edgeGlyphs.get(shape));
-				this._currentEdgeShape = shape;
-				break;
-
-			default:
-				console.log("Unreachable Code Reached. Dividing by 0 is now possible!");
-				break;
-		}
+		this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
