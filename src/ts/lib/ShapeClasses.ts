@@ -297,8 +297,6 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	private _width: number;
 	private _height: number;
 	private _fill: string;
-	// private _parent: Selection<any, {}, any, {}>;
-	// private _rectGlyphs: Selection<any, {}, any, {}>;
 
 	constructor(width: number, height: number, fill: string, numNodes: number) {
 		this._width = width;
@@ -306,11 +304,32 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		this._fill = fill;
 	}
 
+	get width(): number {
+		return this._width;
+	}
+	set width(width: number) {
+		this._width = width;
+	}
+	get height(): number {
+		return this._height;
+	}
+	set height(height: number) {
+		this._height = height;
+	}
+	get fill(): string {
+		return this._fill;
+	}
+	set fill(fill: string) {
+		this._fill = fill;
+	}
+
+	get shapeType(): string {
+		return this._shapeType;
+	}
+
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		console.log("init");
 		let rectG = location.append("g")
 			.classed("rectEdges", true);
-
 		return rectG;
 	}
 
@@ -365,29 +384,6 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		this.updateDraw(rects);
 
 	}
-
-	get width(): number {
-		return this._width;
-	}
-	set width(width: number) {
-		this._width = width;
-	}
-	get height(): number {
-		return this._height;
-	}
-	set height(height: number) {
-		this._height = height;
-	}
-	get fill(): string {
-		return this._fill;
-	}
-	set fill(fill: string) {
-		this._fill = fill;
-	}
-
-	get shapeType(): string {
-		return this._shapeType;
-	}
 }
 
 
@@ -414,8 +410,8 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 		this._y2 = y2;
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
-
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		return null;
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -493,7 +489,6 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 		this._y2 = y2;
 	}
 
-
 	get shapeType(): string {
 		return this._shapeType;
 	}
@@ -512,8 +507,10 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		return this._shapeType;
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
-		location.append("g").classed("STLine", true);
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let STLineG = location.append("g")
+			.classed("rectEdges", true);
+		return STLineG;
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		console.log(selection);
@@ -527,7 +524,19 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		return null;
 	}
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
-		return null;
+		sourceG.style("display", "none");
+		targetG.style("display", null);
+
+		switch (targetShape.shapeType) {
+			case "Rect":
+				break;
+			case "STLine":
+				break;
+			case "Gestalt":
+				break;
+			default:
+				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
+		}
 	}
 	public draw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): void {
 		this.init(selection);
@@ -551,8 +560,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		this._timeStepIndex = timeStepIndex;
 	}
 
-	public init(location: Selection<any, {}, any, {}>): void {
-		location.append("g").classed("GestaltLines", true);
+	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+		let gestaltG = location.append("g")
+			.classed("rectEdges", true);
+		return gestaltG;
 	}
 	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
@@ -561,7 +572,19 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		return null;
 	}
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
-		return null;
+		sourceG.style("display", "none");
+		targetG.style("display", null);
+
+		switch (targetShape.shapeType) {
+			case "Rect":
+				break;
+			case "STLine":
+				break;
+			case "Gestalt":
+				break;
+			default:
+				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
+		}
 	}
 	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number): void {
 		return null;
