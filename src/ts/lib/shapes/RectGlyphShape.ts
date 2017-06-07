@@ -27,10 +27,11 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts): Selection<any, {}, any, {}> {
 		try {
 			glyphs
-				.attr("fill", "red")
+				.attr("fill", attr.fill)
 				.attr("width", attr.width)
-				.attr("height", attr.height);
-
+				.attr("height", attr.height)
+				.attr("stroke", attr.stroke)
+				.attr("stroke-width", attr.stroke_width);
 		} catch (err) {
 			console.log("No edges!");
 		}
@@ -56,12 +57,11 @@ export class RectGlyphShape implements EdgeGlyphShape {
 
 	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number, attr: SVGAttrOpts): void {
 		let rects = rectG.selectAll("rect")
-			.data(data.timesteps[TimeStampIndex].edges, function (d: Edge): string { return d.source + ":" + d.target });
-		let enter = this.initDraw(rects.enter());
+			.data(data.timesteps[TimeStampIndex].edges);
 		rects.exit().remove();
-		rects = rects.merge(enter);
+		let enter = this.initDraw(rects.enter());
+		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
 		this.updateDraw(rects, attr);
-
 	}
 
 	public createColorDomain(edges: Array<Edge>) {
