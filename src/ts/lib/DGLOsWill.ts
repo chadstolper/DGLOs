@@ -56,7 +56,7 @@ export class DGLOsWill extends DGLOsMatt {
 		let curGraph = this.data.timesteps[this._timeStampIndex];
 		this._nodeLabelGlyphs
 			.attr("x", function (d: Node) {
-				return (+d.id / curGraph.nodes.length) * 100 + "%";
+				return (+d.index / curGraph.nodes.length) * 100 + "%";
 			})
 			.attr("y", function (d: Edge) {
 				return (+d.id / curGraph.nodes.length) * 100 + "%";
@@ -71,10 +71,10 @@ export class DGLOsWill extends DGLOsMatt {
 		//this._edgeGlyphs.get(this.rectShape).selectAll("rect")
 		this._location.selectAll("rect")
 			.attr("x", function (d: Edge) {
-				return (+d.source.id / curGraph.nodes.length) * 100 + "%";
+				return (+d.source.index / curGraph.nodes.length) * 100 + "%";
 			})
 			.attr("y", function (d: Edge) {
-				return (+d.target.id / curGraph.nodes.length) * 100 + "%";
+				return (+d.target.index / curGraph.nodes.length) * 100 + "%";
 			})
 	}
 
