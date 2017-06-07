@@ -5,7 +5,7 @@ import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
-
+import "d3-transition";
 
 export class CircleGlyphShape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
@@ -93,8 +93,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		switch (shape.shapeType) {
 			case "Label":
 				console.log("Circle-->Label")
-				sourceSelection.transition().style("display", "none");
-				targetSelection.transition().style("display", null);
+				console.log(sourceSelection)
 				break;
 
 			case "Circle":
@@ -105,6 +104,9 @@ export class CircleGlyphShape implements NodeGlyphShape {
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
+
+		sourceSelection.transition().style("display", "none");
+		targetSelection.transition().style("display", null);
 	}
 
 	/**
