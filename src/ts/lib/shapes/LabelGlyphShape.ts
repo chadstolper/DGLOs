@@ -102,18 +102,17 @@ export class LabelGlyphShape implements NodeGlyphShape {
 		switch (targetShape.shapeType) {
 			case "Circle":
 				console.log("Label-->Circle")
-				sourceG.style("display", "none");
-				targetG.style("display", null);
 				break;
 
 			case "Label":
 				console.log("Label-->Label Catch");
-				sourceG.style("display", null)
 				break;
 
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
+		sourceG.style("display", "none");
+		targetG.style("display", null);
 	}
 	/**
 	 * Draw and create new visualizations of nodes, initial update included

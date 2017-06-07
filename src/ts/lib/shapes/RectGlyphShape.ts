@@ -95,8 +95,6 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	 * @param targetG 
 	 */
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
-		sourceG.style("display", "none");
-		targetG.style("display", null);
 		switch (targetShape.shapeType) {
 			case "Rect":
 				break;
@@ -107,6 +105,8 @@ export class RectGlyphShape implements EdgeGlyphShape {
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
+		sourceG.style("display", "none");
+		targetG.style("display", null);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.
