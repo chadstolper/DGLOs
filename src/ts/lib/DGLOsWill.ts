@@ -18,10 +18,12 @@ import * as d3Array from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
 
-	// protected _rectGlyphShape = new RectGlyphShape();
-	// protected _gestaltGlyphShape = new GestaltGlyphShape();
-	// protected _stlineGlyphShape = new SourceTargetLineGlyphShape();
-
+	/**
+	 * drawEdgeGlyphs is a DGLO responsible drawing edge glyphs. It creates the <g> tags
+	 * that hold all of the glyphs (e.g. edgeRectG, edgeGestaltG, and edgeSTLineG). It then
+	 * maps each of the shapeType objects to their respective <g> tag, thus linking the two.
+	 * It hides all of the edge groups and then draws the currentEdgeShape.
+	 */
 	public drawEdgeGlyphs() {
 		this._currentEdgeShape = this.rectShape;
 
@@ -40,9 +42,12 @@ export class DGLOsWill extends DGLOsMatt {
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-		this._currentEdgeShape.draw(this._edgeGlyphs.get(this.rectShape), this.data, 0, this._edgeAttrOpts); //draw(this._location, this.data, 0, this._willTestAttrOpts);
-
+		this._currentEdgeShape.draw(this._edgeGlyphs.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
 	}
+	/**
+	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts object, which is used to 
+	 * @param attr 
+	 */
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
 		console.log("setting edge attr");
 		this._edgeAttrOpts = attr;
