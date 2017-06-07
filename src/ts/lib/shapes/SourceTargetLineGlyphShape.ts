@@ -74,7 +74,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				.attr("x2", function (d: Edge) { return d.target.x; })
 				.attr("y2", function (d: Edge) { return d.target.y; });
 		} catch (err) {
-			console.log("No STDLines links!");
+			console.log("No STLines links!");
 		}
 
 		try {
@@ -87,7 +87,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 
 			edges
 				.attr("stroke", attrOpts.stroke)
-				.attr("opacity", 0.05);
+				.attr("opacity", attrOpts.opacity);
 		}
 		catch (err) {
 			console.log("attrOpts undefined");
@@ -139,7 +139,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param attr 
 	 */
 	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
-		let sTLineEdges = sTLineG.selectAll("STDLine.edge")
+		let sTLineEdges = sTLineG.selectAll("line.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
 		sTLineEdges.exit().remove();
