@@ -9,6 +9,13 @@ import { AttrOpts } from "./DGLOs";
 import { DGLOsWill } from "./DGLOsWill";
 import { DGLOsMatt } from "./DGLOsMatt";
 
+/**
+ * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
+ * Specific options for fill and stroke-width:
+ * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
+ * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
+ * Opacity defaults to 100%.
+ */
 export class SVGAttrOpts implements AttrOpts {
 	private _fill: string = null;
 	private _stroke: string = null;

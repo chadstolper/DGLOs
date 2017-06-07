@@ -46,7 +46,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
