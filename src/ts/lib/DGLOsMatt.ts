@@ -44,13 +44,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 	}
 
-	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
-		this._currentNodeShape.transformTo(this._nodeGlyphs.get(this.currentNodeShape), shape, this._nodeGlyphs.get(shape));
+	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
+		console.log(shape, this._circleGlyphShape)
+		this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._currentNodeShape), shape, this._nodeGlyphs.get(this._circleGlyphShape));
 		this._currentNodeShape = shape;
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		// this._nodeGlyphs.get(this.currentNodeShape.draw())
+		// this._currentNodeShape
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
@@ -58,7 +59,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public runSimulation() {
-
 		//Check simulation exists
 		if (this._simulation === undefined) {
 			this._simulation = d3force.forceSimulation()

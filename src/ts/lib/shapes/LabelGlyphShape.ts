@@ -98,6 +98,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	* @param targetSelection 
  	*/
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape, targetG: Selection<any, {}, any, {}>) {
+		console.log(sourceG, targetG)
 		switch (targetShape.shapeType) {
 			case "Circle":
 				console.log("Label-->Circle")
