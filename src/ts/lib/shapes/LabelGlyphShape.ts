@@ -24,7 +24,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * Create selection of nodes. Returns new selection
 	 * @param glyphs
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
@@ -37,7 +37,7 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * Assign and/or update node label data and (x,y) positions
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			glyphs
@@ -127,9 +127,9 @@ export class LabelGlyphShape implements NodeGlyphShape {
 
 		labelGlyphs.exit().remove();
 
-		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
+		let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
 		labelGlyphs = labelGlyphs.merge(labelEnter);
-		this.updateDraw(labelGlyphs, attrOpts);
+		this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex);
 	}
 
 	get textAnchor(): string {

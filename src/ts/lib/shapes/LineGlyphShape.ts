@@ -11,10 +11,10 @@ export abstract class LineGlyphShape implements EdgeGlyphShape {
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return null;
 	}
-	public initDraw(selection: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		return null;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		return null;
 	}
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {

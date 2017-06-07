@@ -40,8 +40,12 @@ export class DGLOsWill extends DGLOsMatt {
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-		this._currentEdgeShape.draw(this._location, this.data, 0, this._willTestAttrOpts);
+		this._currentEdgeShape.draw(this._location, this.data, 0, this._edgeAttrOpts); //draw(this._location, this.data, 0, this._willTestAttrOpts);
 
+	}
+	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
+		console.log("setting edge attr");
+		this._edgeAttrOpts = attr;
 	}
 
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {

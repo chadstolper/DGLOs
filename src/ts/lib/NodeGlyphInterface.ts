@@ -7,9 +7,9 @@ export interface NodeGlyphShape {
 
 	init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
 	//TODO: Make new <g>
-	initDraw(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}>;
+	initDraw(location: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}>;
 	//TODO: draw nodes
-	updateDraw(location: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}>;
+	updateDraw(location: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}>;
 	//TODO: position and add attr
 	transformTo(source: Selection<any, {}, any, {}>, shape: NodeGlyphShape, target: Selection<any, {}, any, {}>): void;
 	//TODO: says what it does on the tin

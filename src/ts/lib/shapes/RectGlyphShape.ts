@@ -19,15 +19,20 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		let rectG = location.append("g").classed("rectEdges", true);
 		return rectG;
 	}
-	public initDraw(glyphs: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
+	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("rect")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 		return ret;
 	}
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
+			let colorMap = d3Scale.scaleLinear<string>()
+				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
+				.range(["white", "gold"]);
 			glyphs
-				.attr("fill", attr.fill)
+				.attr("fill", function (d: Edge) {
+					return colorMap(d.weight);
+				})
 				.attr("width", attr.width)
 				.attr("height", attr.height)
 				.attr("stroke", attr.stroke)
@@ -55,13 +60,13 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		}
 	}
 
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number, attr: SVGAttrOpts): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
 		let rects = rectG.selectAll("rect")
-			.data(data.timesteps[TimeStampIndex].edges);
+			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
-		let enter = this.initDraw(rects.enter());
+		let enter = this.initDraw(rects.enter(), data, timeStampIndex);
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
-		this.updateDraw(rects, attr);
+		this.updateDraw(rects, attr, data, timeStampIndex);
 	}
 
 	public createColorDomain(edges: Array<Edge>) {
