@@ -90,15 +90,23 @@ export class DGLOsWill extends DGLOsMatt {
 	 * DGLO, and then positions the rectangles to form a matrix (heatmap).
 	 */
 	public positionEdgeGlyphsMatrix() {
-		this.transformEdgeGlyphsTo(this.rectShape);
-		let curGraph = this._data.timesteps[this._timeStampIndex];
-		this._location.selectAll("rect")            //this._edgeGlyphMap(this.currentEdgeShape))
-			.attr("x", function (d: Edge) {
-				return (+d.source.index / curGraph.nodes.length) * 100 + "%";
+		let h = this._height;
+		let w = this._width;
+		this.data.timesteps.forEach(function (g: Graph) {
+			g.edges.forEach(function (e: Edge) {
+				e.x = (+e.source.index / g.nodes.length) * w;
+				e.y = (+e.target.index / g.nodes.length) * h;
 			})
-			.attr("y", function (d: Edge) {
-				return (+d.target.index / curGraph.nodes.length) * 100 + "%";
-			})
+		})
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
+		// let curGraph = this._data.timesteps[this._timeStampIndex];
+		// this._location.selectAll("rect")            //this._edgeGlyphMap(this.currentEdgeShape))
+		// 	.attr("x", function (d: Edge) {
+		// 		return (+d.source.index / curGraph.nodes.length) * 100 + "%";
+		// 	})
+		// 	.attr("y", function (d: Edge) {
+		// 		return (+d.target.index / curGraph.nodes.length) * 100 + "%";
+		// 	})
 	}
 
 

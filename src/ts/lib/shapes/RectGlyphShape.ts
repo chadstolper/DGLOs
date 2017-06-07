@@ -73,6 +73,12 @@ export class RectGlyphShape implements EdgeGlyphShape {
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", "gold"]);
 			glyphs
+				.attr("x", function (e: Edge) {
+					return e.x;
+				})
+				.attr("y", function (e: Edge) {
+					return e.y;
+				})
 				.attr("fill", function (d: Edge) {
 					return colorMap(d.weight);
 				})
