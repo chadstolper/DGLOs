@@ -87,7 +87,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 
 			edges
 				.attr("stroke", attrOpts.stroke)
-				.attr("opacity", 0.05);
+				.attr("opacity", attrOpts.opacity);
 		}
 		catch (err) {
 			console.log("attrOpts undefined");
