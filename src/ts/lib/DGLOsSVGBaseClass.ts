@@ -18,6 +18,8 @@ import { Selection } from "d3-selection";
 export class DGLOsSVGBaseClass implements DGLOs {
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
+	protected _height = 500;
+	protected _width = 500;
 
 	public get data(): model.DynamicGraph {
 		return this._data;
@@ -30,6 +32,9 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
 		this._data = data;
 		this._location = location;
+		if (location.attr("width")) { this._width = +location.attr("width"); }
+		if (location.attr("height")) { this._width = +location.attr("height"); }
+
 	}
 	/**
 	 * The __only instance__ of RectGlyphShape in the entire code. Used to coordinate transitions

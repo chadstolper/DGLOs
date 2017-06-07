@@ -34,8 +34,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * The physics simulation used to direct froce-directed visualizations.
 	 */
 	_simulation: Simulation<any, undefined>
-	_height = 500;
-	_width = 500;
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
