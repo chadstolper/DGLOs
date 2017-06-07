@@ -6,20 +6,42 @@ import { LineGlyphShape } from "./LineGlyphShape";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
+/**
+ * The __GestaltGlyphsShape__ class contains all of the methods required to draw and position a Gestalt Glyph on screen.
+ * The only attribute in the class is its __ _shapeType __ which is readonly. Shape types are used to coordinate 
+ * transisitons between shapes.
+ * 
+ * The class implements __EdgeGlyphShape__ and as such must contain the following methods:
+ * 	 *init()*, 
+ * 	 *initDraw()*,
+ * 	 *updateDraw()*, 
+ * 	 *transformTo()*,
+ *	 *draw()*, 
+ */
 export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "Gestalt";
 
 	/**
-	 * Make new <g>
-	 * @param location
-	 */
+ 	* The init method is a requirement of the __EdgeGlyphShape__ interface.
+ 	* 
+ 	* It takes an SVG selection and appends a <g> tag with class name GestaltGlyphs.
+ 	* This class is used to store the Gestalt Glyph objects.
+ 	* @param location
+ 	*/
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		return location.append("g").classed("GestaltGlyphs", true);
 	}
-
 	/**
-	 * Create selection of edges. Returns new selection
-	 * @param edges
+	 * The initDraw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * It takes an SVG selection with entered data and creates Gestalt Glyph objects with
+	 * an ID based on the source and target of the edge.
+	 * 
+	 * The DynamicGraph and number parameteres are required by the interface but are not
+	 * explicitly used here.
+	 * @param glyphs 
+	 * @param data 
+	 * @param TimeStampIndex 
 	 */
 	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")

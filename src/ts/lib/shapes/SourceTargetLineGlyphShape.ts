@@ -8,11 +8,26 @@ import { LineGlyphShape } from "./LineGlyphShape";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
+/**
+ * The __SourceTargetLineGlyphShape__ class contains all of the methods required to draw and position a source-target line
+ * (i.e. a straight line) on screen. The only attribute in the class is its __ _shapeType __ which is readonly. Shape types 
+ * are used to coordinate transisitons between shapes.
+ * 
+ * The class implements __EdgeGlyphShape__ and as such must contain the following methods:
+ * 	 *init()*, 
+ * 	 *initDraw()*,
+ * 	 *updateDraw()*, 
+ * 	 *transformTo()*,
+ *	 *draw()*, 
+ */
 export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "STLine";
 
 	/**
-	 * Make new <g>
+	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * It takes an SVG selection and appends a <g> tag with class name STLineEdges.
+	 * This class is used to store the line objects.
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
@@ -20,10 +35,18 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	/**
-	 * Create selection of edges. Returns new selection
-	 * @param edges
+	 * The initDraw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * It takes an SVG selection with entered data and creates line objects with
+	 * an ID based on the source and target of the edge.
+	 * 
+	 * The DynamicGraph and number parameteres are required by the interface but are not
+	 * explicitly used here.
+	 * @param glyphs 
+	 * @param data 
+	 * @param TimeStampIndex 
 	 */
-	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
+	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
@@ -33,8 +56,15 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	/**
-	 * Assign and/or update edge line attributes and ((x1, y1), (x2, y2)) positions
-	 * @param edges 
+	 * The updateDraw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * updateDraw takes a selection of rectangle glyphs and an SVGAttrOpts object
+	 * and assigns attributes to the lines (e.g. lenghth, thickness, etc..). The
+	 * method also takes a DynamicGraph and a number as required by the interface.
+	 * @param glyphs 
+	 * @param attr 
+	 * @param data 
+	 * @param TimeStampIndex 
 	 */
 	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
@@ -67,7 +97,10 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	/**
-	 * Transform the current EdgeGlyphShape to given EdgeGlyphShape
+	 * The transformTo is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * transformTo takes the current <g> tag displaying glyphs, an EdgeGlyphsShape, and a target <g> tag.
+	 * It hides all glyphs in the current tag, and unhides all glyphs in the target tag.
 	 * @param sourceG 
 	 * @param targetShape 
 	 * @param targetG 
@@ -95,12 +128,15 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				console.log(targetShape.shapeType + " is undefined");
 		};
 	}
-
 	/**
-	 * Draw and create new visualizations of edges, initial update included
-	 * @param sTlineG Should be the sTlineG
+	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * The draw method takes a SVG selection to draw within, a DynamicGraph to be displayed, a timeStampIndex,
+	 * and an SVGAttrOpts object to assign attributes to draw.
+	 * @param rectG 
 	 * @param data 
-	 * @param timeStepIndex 
+	 * @param timeStampIndex 
+	 * @param attr 
 	 */
 	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
 		let sTLineEdges = sTLineG.selectAll("STDLine.edge")
