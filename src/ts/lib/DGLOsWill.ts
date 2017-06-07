@@ -99,14 +99,6 @@ export class DGLOsWill extends DGLOsMatt {
 			})
 		})
 		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
-		// let curGraph = this._data.timesteps[this._timeStampIndex];
-		// this._location.selectAll("rect")            //this._edgeGlyphMap(this.currentEdgeShape))
-		// 	.attr("x", function (d: Edge) {
-		// 		return (+d.source.index / curGraph.nodes.length) * 100 + "%";
-		// 	})
-		// 	.attr("y", function (d: Edge) {
-		// 		return (+d.target.index / curGraph.nodes.length) * 100 + "%";
-		// 	})
 	}
 
 
