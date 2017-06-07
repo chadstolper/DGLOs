@@ -22,10 +22,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
-			console.log("TODO: attributes for gestalt");
+			// console.log("TODO: attributes for gestalt");
 		}
 		catch (err) {
-			console.log("attrOpts Gestalt undefined")
+			// console.log("attrOpts Gestalt undefined")
 		}
 		return edges;
 	}
