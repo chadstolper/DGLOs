@@ -59,7 +59,7 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	 * The updateDraw method is a requirement of the __EdgeGlyphShape__ interface.
 	 * 
 	 * updateDraw takes a selection of rectangle glyphs and an SVGAttrOpts object
-	 * and assigns  attributes to the rectants (e.g. Width, Height, etc..). The
+	 * and assigns attributes to the rectangles (e.g. Width, Height, etc..). The
 	 * method also takes a DynamicGraph and a number. These are used to make 
 	 * calculations required to color the rectanges on a linear color scale.
 	 * @param glyphs 
