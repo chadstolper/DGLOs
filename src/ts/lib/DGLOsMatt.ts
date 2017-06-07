@@ -57,11 +57,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
 		this._attrOpts = attr;
-<<<<<<< HEAD
-		this._currentNodeShape.updateDraw(this._nodeGlyphMap.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
-=======
-		// this._currentNodeShape.updateDraw(this._nodeGlyphs.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
->>>>>>> ff5279f1f85bb33cdc05ecf17252ae1320fe6722
 	}
 
 	/**
@@ -97,13 +92,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
-<<<<<<< HEAD
 		this._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
-=======
-		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-			shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
->>>>>>> ff5279f1f85bb33cdc05ecf17252ae1320fe6722
 		});
 	}
 }

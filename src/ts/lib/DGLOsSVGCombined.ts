@@ -36,16 +36,12 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
-<<<<<<< HEAD
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
 	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and
 	 * an NodeAttrOpts class. TODO.
 	 */
 	_edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts(null, null, null, null, null, null, null);
-=======
-	_edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts(null, "black", null, "weight");
->>>>>>> ff5279f1f85bb33cdc05ecf17252ae1320fe6722
 	_willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {
