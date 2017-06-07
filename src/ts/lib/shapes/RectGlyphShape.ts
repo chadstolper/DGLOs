@@ -90,8 +90,6 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	 * 
 	 * transformTo takes the current <g> tag displaying glyphs, an EdgeGlyphsShape, and a target <g> tag.
 	 * It hides all glyphs in the current tag, and unhides all glyphs in the target tag.
-	 * 
-	 * targetShape might not be necessary. Talk to Dr. Stolper.
 	 * @param sourceG 
 	 * @param targetShape 
 	 * @param targetG 
