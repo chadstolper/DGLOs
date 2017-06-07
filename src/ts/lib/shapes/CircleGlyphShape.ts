@@ -30,7 +30,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Assign and/or update node circle data and (cx,cy) positions
+	 * Assign and/or update node circle attributes and (cx,cy) positions
 	 * @param glyphs 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
@@ -122,7 +122,8 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter(), data, timeStepIndex);
 
 		circleGlyphs = circleGlyphs.merge(circleEnter);
-		this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex)
+
+		this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
 	}
 
 	get shapeType(): string {

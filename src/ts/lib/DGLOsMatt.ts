@@ -19,10 +19,11 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
+	/**
+	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none"
+	 */
 	public drawNodeGlyphs() {
-
-		// this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
-		this._currentNodeShape = this.labelShape;
+		this._currentNodeShape = this.circleShape;
 
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		if (this._nodeG === undefined) {
@@ -41,22 +42,27 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 	}
 
+	/**
+	 * Transforms/makes visible the target NodeGlyphShape
+	 * @param shape 
+	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
-		console.log(shape)
-		console.log(this._nodeGlyphs)
-		console.log(this._nodeGlyphs.get(shape))
 		this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._currentNodeShape), shape, this._nodeGlyphs.get(shape));
 		this._currentNodeShape = shape;
 	}
 
+	/**
+	 * Resets the visual attributes of the NodeGlyphShape
+	 * @param attr 
+	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		console.log("Closed until further notice\nSorry for the inconvience");
+		this._attrOpts = attr;
+		this._currentNodeShape.updateDraw(this._nodeGlyphs.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
 	}
 
-	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		console.log("Closed until further notice\nSorry for the inconvience");
-	}
-
+	/**
+	 * Begins the force simulation, calls internal tick().
+	 */
 	public runSimulation() {
 		//Check simulation exists
 		if (this._simulation === undefined) {
@@ -79,8 +85,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	private tick() {
-		console.log("oh god its ticking")
-		let self = this; //d3 hold this issue
+		let self = this; //d3 scope this issue
 
 		//update edges(specifically STLines) in map; run update of simulation on all edges
 		this._edgeGlyphs.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
