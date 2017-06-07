@@ -66,9 +66,10 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log(this._currentNodeShape);
 		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
 		let h = this._height;
+		let w = this._width;
 		this.data.timesteps.forEach(function (g: Graph) {
 			g.nodes.forEach(function (d: Node) {
-				d.x = 10;
+				d.x = w / 10;
 				d.y = d.index / curGraph.nodes.length * h;
 			})
 		})
@@ -98,7 +99,10 @@ export class DGLOsWill extends DGLOsMatt {
 				e.y = (+e.target.index / g.nodes.length) * h;
 			})
 		})
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
+			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._edgeAttrOpts.opacity)
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, _matrixAttrOpts);
 	}
 
 
