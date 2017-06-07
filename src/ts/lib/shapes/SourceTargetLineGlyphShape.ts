@@ -27,7 +27,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
 	 * 
 	 * It takes an SVG selection and appends a <g> tag with class name STLineEdges.
-	 * This class is used to store the rectangle objects.
+	 * This class is used to store the line objects.
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
