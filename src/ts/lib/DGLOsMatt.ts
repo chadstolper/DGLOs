@@ -88,7 +88,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let self = this; //d3 scope this issue
 
 		//update edges(specifically STLines) in map; run update of simulation on all edges
-		this._edgeGlyphs.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
 			shape.draw(edges, self.data, self._timeStampIndex, self._attrOpts);
 		});
 
