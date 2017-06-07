@@ -37,8 +37,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			nodeCircleG.style("display", "none");
 
 			//add nodes to new map
-			this._nodeGlyphs.set(this.labelShape, nodeLabelG);
-			this._nodeGlyphs.set(this.circleShape, nodeCircleG);
+			this._nodeGlyphMap.set(this.labelShape, nodeLabelG);
+			this._nodeGlyphMap.set(this.circleShape, nodeCircleG);
 		}
 	}
 
@@ -47,7 +47,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
-		this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._currentNodeShape), shape, this._nodeGlyphs.get(shape));
+		this._currentNodeShape.transformTo(this._nodeGlyphMap.get(this._currentNodeShape), shape, this._nodeGlyphMap.get(shape));
 		this._currentNodeShape = shape;
 	}
 
@@ -57,7 +57,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
 		this._attrOpts = attr;
-		this._currentNodeShape.updateDraw(this._nodeGlyphs.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
+		this._currentNodeShape.updateDraw(this._nodeGlyphMap.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
 	}
 
 	/**
@@ -93,7 +93,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
-		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+		this._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
 		});
 	}

@@ -12,7 +12,9 @@ import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import { DynamicGraph } from "../model/DynamicGraph";
 import { Selection } from "d3-selection";
 
-
+/**
+ * Our extension of DGLOs to impelement SVG as the method of drawing.
+ */
 export class DGLOsSVGBaseClass implements DGLOs {
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
@@ -29,11 +31,30 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		this._data = data;
 		this._location = location;
 	}
-
+	/**
+	 * The __only instance__ of RectGlyphShape in the entire code. Used to coordinate transitions
+	 * as well as to draw rectangles when needed.
+	 */
 	readonly rectShape: RectGlyphShape = new RectGlyphShape();
+	/**
+	 * The __only instance__ of CircleGlyphShape in the entire code. Used to coordinate transitions
+	 * as well as to draw rectangles when needed.
+	 */
 	readonly circleShape: CircleGlyphShape = new CircleGlyphShape();
+	/**
+	 * The __only instance__ of LabelGlyphShape in the entire code. Used to coordinate transitions
+	 * as well as to draw rectangles when needed.
+	 */
 	readonly labelShape: LabelGlyphShape = new LabelGlyphShape();
+	/**
+	 * The __only instance__ of SourceTargetLineGlyphShape in the entire code. Used to coordinate transitions
+	 * as well as to draw rectangles when needed.
+	 */
 	readonly sourceTargetLineShape: SourceTargetLineGlyphShape = new SourceTargetLineGlyphShape();
+	/**
+	 * The __only instance__ of GestaltGlyphShape in the entire code. Used to coordinate transitions
+	 * as well as to draw rectangles when needed.
+	 */
 	readonly gestaltShape: GestaltGlyphShape = new GestaltGlyphShape();
 
 	drawNodeGlyphs(): void { };
