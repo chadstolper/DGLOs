@@ -8,6 +8,8 @@ import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import { SVGAttrOpts } from "./DGLOsSVG";
+import { VoronoiLayout } from "d3-voronoi";
+import * as d3 from "d3"; //TODO: replace later with module
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
@@ -44,6 +46,12 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_width = 500;
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
+	_currentGroupGlyph: GroupGlyph;
+	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1, -1], [this._width + 1, this._height + 1]]) //set dimensions of voronoi
+		.x(function (d: Node) { return d.x; })
+		.y(function (d: Node) { return d.y; });
+	_cardinalPoints: [number, number][];
+	_noisePoints: Node[];
 	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between

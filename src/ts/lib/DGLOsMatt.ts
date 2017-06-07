@@ -8,9 +8,6 @@ import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 
-import { VoronoiLayout } from "d3-voronoi";
-import * as d3 from "d3"; //TODO: replace later with module
-
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
@@ -47,17 +44,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public drawRegions() {
-		let voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1, -1], [this._width + 1, this._height + 1]]) //set dimensions of voronoi
-			.x(function (d: Node) { return d.x; })
-			.y(function (d: Node) { return d.y; });
-		let cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
-		let noisePoints = [new Node("noise0", cardinalPoints.length + 0, "noise", ""), new Node("noise1", cardinalPoints.length + 1, "noise", ""), new Node("noise2", cardinalPoints.length + 2, "noise", ""), new Node("noise3", cardinalPoints.length + 3, "noise", ""), new Node("noise4", cardinalPoints.length + 4, "noise", ""), new Node("noise5", cardinalPoints.length + 5, "noise", ""), new Node("noise6", cardinalPoints.length + 6, "noise", ""), new Node("noise7", cardinalPoints.length + 7, "noise", "")];
-
-		//give noisenodes (x, y) of cardinalPoints
-		for (let i = 0; i < cardinalPoints.length; i++) {
-			noisePoints[i].x = cardinalPoints[i][0];
-			noisePoints[i].y = cardinalPoints[i][1];
-		}
+		this._currentGroupGlyph = this.voronoiGroupGlyph;
 
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true);
@@ -70,6 +57,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//add voronoi regions to map
 			this._groupGlyphMap.set(this.voronoiGroupGlyph, voronoiG);
 		}
+
+		this.transformNodeGlyphsTo(this.circleShape);
+		this.transformEdgeGlyphsTo(this.sourceTargetLineShape);
+		this._currentGroupGlyph.transformTo(this._groupGlyphMap.get(this._currentGroupGlyph), this.voronoiGroupGlyph, this._groupGlyphMap.get(this.voronoiGroupGlyph));
+		this.setNodeGlyphAttrs(new SVGAttrOpts("grey", null, 1));
+		this.setEdgeGlyphAttrs(new SVGAttrOpts(null, "grey", null, 1));
 	}
 
 	public removeRegions() {
@@ -94,7 +87,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setRegionGlyphAttrs(attr: SVGAttrOpts) {
-		//set regions attr
+		// set regions attr
 		//custom set nodes and edges
 	}
 
@@ -126,7 +119,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let self = this; //d3 scope this issue
 
 		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
-			group.draw(paths, self.data, self._timeStampIndex, self._attrOpts);
+			self.voronoiInit();
+			group.draw(paths, self.data, self._timeStampIndex, self._attrOpts, self._noisePoints, self._voronoi);
 		});
 
 		//update edges in map; run update of simulation on all edges
@@ -138,5 +132,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
 		});
+	}
+
+	private voronoiInit() {
+		this._cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
+		this._noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", ""), new Node("noise1", this._cardinalPoints.length + 1, "noise", ""), new Node("noise2", this._cardinalPoints.length + 2, "noise", ""), new Node("noise3", this._cardinalPoints.length + 3, "noise", ""), new Node("noise4", this._cardinalPoints.length + 4, "noise", ""), new Node("noise5", this._cardinalPoints.length + 5, "noise", ""), new Node("noise6", this._cardinalPoints.length + 6, "noise", ""), new Node("noise7", this._cardinalPoints.length + 7, "noise", "")];
+
+		//give noisenodes (x, y) of cardinalPoints
+		for (let i = 0; i < this._cardinalPoints.length; i++) {
+			this._noisePoints[i].x = this._cardinalPoints[i][0];
+			this._noisePoints[i].y = this._cardinalPoints[i][1];
+		}
 	}
 }
