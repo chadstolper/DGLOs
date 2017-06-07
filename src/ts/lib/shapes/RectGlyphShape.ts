@@ -27,10 +27,12 @@ export class RectGlyphShape implements EdgeGlyphShape {
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			let colorMap = d3Scale.scaleLinear<string>()
-				.domain()
+				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", "gold"]);
 			glyphs
-				.attr("fill", attr.fill)
+				.attr("fill", function (d: Edge) {
+					return colorMap(d.weight);
+				})
 				.attr("width", attr.width)
 				.attr("height", attr.height)
 				.attr("stroke", attr.stroke)
