@@ -12,9 +12,6 @@ import { DGLOsMatt } from "./DGLOsMatt";
 /**
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
  * Specific options for fill and stroke-width:
- * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
- * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
- * Opacity defaults to 100%.
  */
 export class SVGAttrOpts implements AttrOpts {
 	private _fill: string = null;
@@ -25,6 +22,18 @@ export class SVGAttrOpts implements AttrOpts {
 	private _width: number = null;
 	private _height: number = null;
 
+	/**
+	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
+     * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
+ 	 * Opacity defaults to 100%.
+	 * @param fill 
+	 * @param stroke 
+	 * @param radius 
+	 * @param stroke_width 
+	 * @param width 
+	 * @param height 
+	 * @param opacity 
+	 */
 	constructor(fill?: string, stroke?: string, radius?: number, stroke_width?: number | string, width?: number, height?: number, opacity?: number) {
 		this._fill = fill;
 		this._stroke = stroke;
@@ -38,6 +47,9 @@ export class SVGAttrOpts implements AttrOpts {
 	get fill(): string {
 		return this._fill;
 	}
+	/**
+	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
+	 */
 	set fill(fill: string) {
 		this._fill = fill;
 	}
@@ -62,6 +74,9 @@ export class SVGAttrOpts implements AttrOpts {
 	get stroke_width(): number | string {
 		return this._stroke_width;
 	}
+	/**
+     * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
+	 */
 	set stroke_width(stroke_width: number | string) {
 		this._stroke_width = stroke_width;
 	}
