@@ -34,18 +34,19 @@ export class DGLOsWill extends DGLOsMatt {
 			let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
 			let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
 
-			this._edgeGlyphs.set(this.rectShape, edgeRectG);
-			this._edgeGlyphs.set(this.gestaltShape, edgeGestaltG);
-			this._edgeGlyphs.set(this.sourceTargetLineShape, edgeSTLineG);
+			this._edgeGlyphMap.set(this.rectShape, edgeRectG);
+			this._edgeGlyphMap.set(this.gestaltShape, edgeGestaltG);
+			this._edgeGlyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
 
 			edgeRectG.style("display", "none");
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-		this._currentEdgeShape.draw(this._edgeGlyphs.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
 	}
 	/**
-	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts object, which is used to 
+	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This objecy
+	 * determines the attributes that are used when drawing edges (e.g. color, thickness, etc..). 
 	 * @param attr 
 	 */
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
@@ -53,8 +54,12 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeAttrOpts = attr;
 	}
 
+	/**
+	 * tansformEdgeGlyphsTo is a DGLO method that calls the ___ _currentEdgeShape ___ transformTo method.
+	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
+	 */
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		this._currentEdgeShape.transformTo(this._edgeGlyphs.get(this._currentEdgeShape), shape, this._edgeGlyphs.get(shape));
+		this._currentEdgeShape.transformTo(this._edgeGlyphMap.get(this._currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
@@ -69,12 +74,14 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 
-
+	/**
+	 * positionEdgeGlyphsMatrix transforms edges to rectangles using the transfromEdgeGlyphsTo
+	 * DGLO, and then positions the rectangles to form a matrix (heatmap).
+	 */
 	public positionEdgeGlyphsMatrix() {
+		this.transformEdgeGlyphsTo(this.rectShape);
 		let curGraph = this._data.timesteps[this._timeStampIndex];
-		//TODO: make rectangles appear in the correct g tab
-		//this._edgeGlyphs.get(this.rectShape).selectAll("rect")
-		this._location.selectAll("rect")
+		this._location.selectAll("rect")            //this._edgeGlyphMap(this.currentEdgeShape))
 			.attr("x", function (d: Edge) {
 				return (+d.source.index / curGraph.nodes.length) * 100 + "%";
 			})
