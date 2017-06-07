@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node, Edge } from "../model/dynamicgraph";
+import { Node, Edge, Graph } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
@@ -65,11 +65,20 @@ export class DGLOsWill extends DGLOsMatt {
 		let curGraph = this.data.timesteps[this._timeStampIndex];
 		console.log(this._currentNodeShape);
 		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
-		this._nodeGlyphMap.get(this._currentNodeShape)
-			.attr("x", 10)
-			.attr("y", function (d: Node) {
-				return (d.index / curGraph.nodes.length) * 100 + "%";
+		let h = this._height;
+		this.data.timesteps.forEach(function (g: Graph) {
+			g.nodes.forEach(function (d: Node) {
+				d.x = 10;
+				d.y = d.index / curGraph.nodes.length * h;
 			})
+		})
+		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
+
+		// this._nodeGlyphMap.get(this._currentNodeShape)
+		// 	.attr("x", 10)
+		// 	.attr("y", function (d: Node) {
+		// 		return (d.index / curGraph.nodes.length) * 100 + "%";
+		// 	})
 		// function (d: Node) {
 		// 	return (+d.index / curGraph.nodes.length) * 100 + "%";
 		// })

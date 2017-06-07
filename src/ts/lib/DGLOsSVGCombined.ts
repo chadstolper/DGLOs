@@ -10,6 +10,9 @@ import { SVGAttrOpts } from "./DGLOsSVG";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
+	/**
+	 * The overarching <g> tag holding the shape glyph selections
+	 */
 	_nodeG: Selection<any, {}, any, {}>;
 	_nodeCircleGlyphs: Selection<any, {}, any, {}>;
 	_nodeLabelGlyphs: Selection<any, {}, any, {}>;
