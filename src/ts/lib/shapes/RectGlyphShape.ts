@@ -9,21 +9,64 @@ import * as d3Scale from "d3-scale";
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
+/**
+ * The __RectGlyphsShape__ class contains all of the methods required to draw and position a rectangle on screen.
+ * The only attribute in the class is its __ _shapeType __ which is readonly. Shape types are used to coordinate 
+ * transisitons between shapes.
+ * 
+ * The class implements __EdgeGlyphShape__ and as such must contain the following methods:
+ * 	 *init()*, 
+ * 	 *initDraw()*,
+ * 	 *updateDraw()*, 
+ * 	 *transformTo()*,
+ *	 *draw()*, 
+ */
 export class RectGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "Rect";
 	get shapeType(): string {
 		return this._shapeType;
 	}
 
+	/**
+	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * It takes an SVG selection and appends a <g> tag with class name rectEdges.
+	 * This class is used to store the rectangle objects.
+	 * @param location
+	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		let rectG = location.append("g").classed("rectEdges", true);
 		return rectG;
 	}
+	/**
+	 * The initDraw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * It takes an SVG selection with entered data and creates rectangle objects with
+	 * an ID based on the source and target of the edge.
+	 * 
+	 * The DynamicGraph and number parameteres are required by the interface but are not
+	 * explicitly used here.
+	 * @param glyphs 
+	 * @param data 
+	 * @param TimeStampIndex 
+	 */
 	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("rect")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 		return ret;
 	}
+	/**
+	 * The updateDraw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * updateDraw takes a selection of rectangle glyphs and an SVGAttrOpts object
+	 * and assigns  attributes to the rectants (e.g. Width, Height, etc..). The
+	 * method also takes a DynamicGraph and a number. These are used to make 
+	 * calculations required to color the rectanges on a linear color scale.
+	 * @param glyphs 
+	 * @param attr 
+	 * @param data 
+	 * @param TimeStampIndex 
+	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			let colorMap = d3Scale.scaleLinear<string>()
@@ -42,10 +85,18 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		}
 		return glyphs;
 	}
-
+	/**
+	 * The transformTo is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * transformTo takes the current <g> tag displaying glyphs, an EdgeGlyphsShape, and a target <g> tag.
+	 * It hides all glyphs in the current tag, and unhides all glyphs in the target tag.
+	 * 
+	 * targetShape might not be necessary. Talk to Dr. Stolper.
+	 * @param sourceG 
+	 * @param targetShape 
+	 * @param targetG 
+	 */
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
-		console.log(sourceG);
-		console.log(targetG);
 		sourceG.style("display", "none");
 		targetG.style("display", null);
 		switch (targetShape.shapeType) {
@@ -59,7 +110,16 @@ export class RectGlyphShape implements EdgeGlyphShape {
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
 	}
-
+	/**
+	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.
+	 * 
+	 * The draw method takes a SVG selection to draw within, a DynamicGraph to be displayed, a timeStampIndex,
+	 * and an SVGAttrOpts object to assign attributes to draw.
+	 * @param rectG 
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param attr 
+	 */
 	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
@@ -69,6 +129,10 @@ export class RectGlyphShape implements EdgeGlyphShape {
 		this.updateDraw(rects, attr, data, timeStampIndex);
 	}
 
+	/**
+	 * Create color domain takes an array of edges and finds the extent of the edge weights.
+	 * @param edges 
+	 */
 	public createColorDomain(edges: Array<Edge>) {
 		return d3Array.extent(edges, function (d: Edge): number {
 			return d.weight;
