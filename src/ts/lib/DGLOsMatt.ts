@@ -57,7 +57,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
 		this._attrOpts = attr;
-		this._currentNodeShape.updateDraw(this._nodeGlyphs.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
+		// this._currentNodeShape.updateDraw(this._nodeGlyphs.get(this._currentNodeShape), this._attrOpts, this._data, this._timeStampIndex);
 	}
 
 	/**
@@ -87,14 +87,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		//update edges(specifically STLines) in map; run update of simulation on all edges
+		//update edges in map; run update of simulation on all edges
 		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.data, self._timeStampIndex, self._attrOpts);
+			shape.draw(edges, self.data, self._timeStampIndex, self._edgeAttrOpts);
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphs.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
+			shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
 		});
 	}
 }
