@@ -42,11 +42,7 @@ export class DGLOsWill extends DGLOsMatt {
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-<<<<<<< HEAD
 		// this._currentEdgeShape.draw(this._edgeGlyphs.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
-=======
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
->>>>>>> de00b465a6f12d30302cc1b0d41cfd95ab74ce8c
 	}
 	/**
 	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This objecy

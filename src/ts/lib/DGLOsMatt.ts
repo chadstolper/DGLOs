@@ -88,13 +88,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let self = this; //d3 scope this issue
 
 		//update edges(specifically STLines) in map; run update of simulation on all edges
-<<<<<<< HEAD
-		this._edgeGlyphs.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.data, self._timeStampIndex, self._edgeAttrOpts);
-=======
 		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.data, self._timeStampIndex, self._attrOpts);
->>>>>>> de00b465a6f12d30302cc1b0d41cfd95ab74ce8c
+			shape.draw(edges, self.data, self._timeStampIndex, self._edgeAttrOpts);
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
