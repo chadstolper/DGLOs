@@ -6,6 +6,10 @@ import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
+
+import { VoronoiLayout } from "d3-voronoi";
+import * as d3 from "d3"; //TODO: replace later with module
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -42,6 +46,28 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 	}
 
+	public drawRegions() {
+		let voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1, -1], [this._width + 1, this._height + 1]]) //set dimensions of voronoi
+			.x(function (d: Node) { return d.x; })
+			.y(function (d: Node) { return d.y; });
+		let cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
+		let noisePoints = [new Node("noise0", cardinalPoints.length + 0, "noise", ""), new Node("noise1", cardinalPoints.length + 1, "noise", ""), new Node("noise2", cardinalPoints.length + 2, "noise", ""), new Node("noise3", cardinalPoints.length + 3, "noise", ""), new Node("noise4", cardinalPoints.length + 4, "noise", ""), new Node("noise5", cardinalPoints.length + 5, "noise", ""), new Node("noise6", cardinalPoints.length + 6, "noise", ""), new Node("noise7", cardinalPoints.length + 7, "noise", "")];
+
+		//give noisenodes (x, y) of cardinalPoints
+		for (let i = 0; i < cardinalPoints.length; i++) {
+			noisePoints[i].x = cardinalPoints[i][0];
+			noisePoints[i].y = cardinalPoints[i][1];
+		}
+
+		if (this._GroupG === undefined) {
+			this._GroupG
+		}
+	}
+
+	public removeRegions() {
+
+	}
+
 	/**
 	 * Transforms/makes visible the target NodeGlyphShape
 	 * @param shape 
@@ -57,6 +83,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
 		this._attrOpts = attr;
+	}
+
+	public setRegionGlyphAttrs(attr: SVGAttrOpts) {
+		//set regions attr
+		//custom set nodes and edges
 	}
 
 	/**

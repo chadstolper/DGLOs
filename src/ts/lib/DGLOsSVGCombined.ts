@@ -6,6 +6,7 @@ import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 import { SVGAttrOpts } from "./DGLOsSVG";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
@@ -25,6 +26,14 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * The overarching <g> tag holding the shape glyph selections (e.g. rectEdges, GestaltGlyphs, STLineEdges, etc..)
 	 */
 	_edgeG: Selection<any, {}, any, {}>
+	/**  
+	 * The overarching <g> tag holding the GroupGlyph selections.
+	*/
+	_groupGlyphGL: Selection<any, {}, any, {}>;
+	/**
+	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
+	 */
+	_GroupGlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>> = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
 	_timeStampIndex = 0;
 	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	/**
