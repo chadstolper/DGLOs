@@ -99,12 +99,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 	/**
 	 * Draw and create new visualizations of regions, initial update included
-	 * @param voronoiG Should be the circleG
+	 * @param voronoiG Should be the vonornoiG
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
 	public draw(voronoiG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
-		this.preInit();
 		let voronoiPaths = voronoiG.selectAll("circle.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 

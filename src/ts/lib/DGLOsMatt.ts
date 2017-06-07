@@ -31,7 +31,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		if (this._nodeG === undefined) {
-			this._nodeG = this.loc.append("g").classed("nodeG", true)
+			this._nodeG = this.loc.append("g").classed("nodeG", true);
 
 			//create child "g" in parent for NodeGlyphs
 			let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(this._nodeG);
@@ -59,8 +59,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			noisePoints[i].y = cardinalPoints[i][1];
 		}
 
-		if (this._GroupG === undefined) {
-			this._GroupG
+		if (this._groupGlyphG === undefined) {
+			this._groupGlyphG = this.loc.append("g").classed("groupG", true);
+
+			//create child "g" in parent for GroupGlyphs
+			let voronoiG: Selection<any, {}, any, {}> = this.voronoiGroupGlyph.init(this._groupGlyphG);
+
+			voronoiG.style("display", "none");
+
+			//add voronoi regions to map
+			this._groupGlyphMap.set(this.voronoiGroupGlyph, voronoiG);
 		}
 	}
 
@@ -116,6 +124,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	private tick() {
 		let self = this; //d3 scope this issue
+
+		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
+			group.draw(paths, self.data, self._timeStampIndex, self._attrOpts);
+		});
 
 		//update edges in map; run update of simulation on all edges
 		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {

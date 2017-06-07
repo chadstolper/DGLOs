@@ -8,6 +8,7 @@ import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
+import { VoronoiGroupGlyph } from "./shapes/VoronoiGroupGlyph";
 
 import { DynamicGraph } from "../model/DynamicGraph";
 import { Selection } from "d3-selection";
@@ -56,6 +57,11 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	 * as well as to draw rectangles when needed.
 	 */
 	readonly gestaltShape: GestaltGlyphShape = new GestaltGlyphShape();
+	/**
+	 * The __only instance__ of VoronoiGroupGlyph in the entire code. Used to coordinate transitions
+	 * as well as to draw regions when needed.
+	 */
+	readonly voronoiGroupGlyph: VoronoiGroupGlyph = new VoronoiGroupGlyph();
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
