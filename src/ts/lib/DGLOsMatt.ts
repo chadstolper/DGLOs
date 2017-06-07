@@ -19,39 +19,38 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
-	protected _labelGlyphShape = new LabelGlyphShape();
-	protected _circleGlyphShape = new CircleGlyphShape();
-
 	public drawNodeGlyphs() {
 
 		// this._currentEdgeShape = new SourceTargetLineGlyphShape("black", 1); //need to make specific?
-		this._currentNodeShape = this._labelGlyphShape;
+		this._currentNodeShape = this.labelShape;
 
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		if (this._nodeG === undefined) {
 			this._nodeG = this.loc.append("g").classed("nodeG", true)
 
 			//create child "g" in parent for NodeGlyphs
-			let nodeLabelG: Selection<any, {}, any, {}> = this._labelGlyphShape.init(this._nodeG);
-			let nodeCircleG: Selection<any, {}, any, {}> = this._circleGlyphShape.init(this._nodeG);
+			let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(this._nodeG);
+			let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(this._nodeG);
 
 			nodeLabelG.style("display", "none");
 			nodeCircleG.style("display", "none");
 
 			//add nodes to new map
-			this._nodeGlyphs.set(this._labelGlyphShape, nodeLabelG);
-			this._nodeGlyphs.set(this._circleGlyphShape, nodeCircleG);
+			this._nodeGlyphs.set(this.labelShape, nodeLabelG);
+			this._nodeGlyphs.set(this.circleShape, nodeCircleG);
 		}
 	}
 
-	public transformNodeGlyphsTo(shape: NodeGlyphShape | any) {
-		console.log(shape, this._circleGlyphShape)
-		this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._currentNodeShape), shape, this._nodeGlyphs.get(this._circleGlyphShape));
+	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
+		console.log(shape)
+		console.log(this._nodeGlyphs)
+		console.log(this._nodeGlyphs.get(shape))
+		this._currentNodeShape.transformTo(this._nodeGlyphs.get(this._currentNodeShape), shape, this._nodeGlyphs.get(shape));
 		this._currentNodeShape = shape;
 	}
 
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
-		// this._currentNodeShape
+		console.log("Closed until further notice\nSorry for the inconvience");
 	}
 
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
