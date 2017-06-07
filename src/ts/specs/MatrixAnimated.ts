@@ -18,7 +18,7 @@ export class MatrixAnimated extends Technique {
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformEdgeGlyphsTo(this.lib.rectShape);
-		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("purple", "grey", 10, 2));
+		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("pink", "black", null, 1, null, null));
 		this.lib.positionNodeGlyphsMatrix();
 		this.lib.positionEdgeGlyphsMatrix();
 		this.lib.enableStepping();

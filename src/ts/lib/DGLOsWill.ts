@@ -63,13 +63,16 @@ export class DGLOsWill extends DGLOsMatt {
 	//TODO
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.data.timesteps[this._timeStampIndex];
-		this._nodeLabelGlyphs
-			.attr("x", function (d: Node) {
-				return (+d.index / curGraph.nodes.length) * 100 + "%";
+		console.log(this._currentNodeShape);
+		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
+		this._nodeGlyphMap.get(this._currentNodeShape)
+			.attr("x", 10)
+			.attr("y", function (d: Node) {
+				return (d.index / curGraph.nodes.length) * 100 + "%";
 			})
-			.attr("y", function (d: Edge) {
-				return (+d.id / curGraph.nodes.length) * 100 + "%";
-			})
+		// function (d: Node) {
+		// 	return (+d.index / curGraph.nodes.length) * 100 + "%";
+		// })
 	}
 
 
