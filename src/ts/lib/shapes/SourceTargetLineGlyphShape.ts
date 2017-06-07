@@ -15,7 +15,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		return location.append("g").classed("STLineEdges", true);
 	}
 
-	public initDraw(edges: Selection<any, Edge, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
@@ -24,7 +24,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		return ret;
 	}
 
-	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			edges
 				.attr("x1", function (d: Edge) { return d.source.x; })
@@ -83,11 +83,11 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 
 		sTLineEdges.exit().remove();
 
-		let edgeEnter = this.initDraw(sTLineEdges.enter());
+		let edgeEnter = this.initDraw(sTLineEdges.enter(), data, timeStampIndex);
 
 		sTLineEdges = sTLineEdges.merge(edgeEnter as Selection<any, Edge, any, {}>);
 
-		this.updateDraw(sTLineEdges, attrOpts);
+		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex);
 	}
 
 	get shapeType(): string {

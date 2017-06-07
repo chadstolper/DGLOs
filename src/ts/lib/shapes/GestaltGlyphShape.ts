@@ -13,14 +13,14 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		return location.append("g").classed("GestaltGlyphs", true);
 	}
 
-	public initDraw(edges: Selection<any, Edge, any, {}>): Selection<any, {}, any, {}> {
+	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id });
 		return ret;
 	}
 
-	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			console.log("TODO: attributes for gestalt");
 		}
@@ -58,11 +58,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 		gestaltGlyphs.exit().remove();
 
-		let gestaltEnter = this.initDraw(gestaltGlyphs.enter());
+		let gestaltEnter = this.initDraw(gestaltGlyphs.enter(), data, timeStampIndex);
 
 		gestaltGlyphs = gestaltGlyphs.merge(gestaltEnter as Selection<any, Edge, any, {}>);
 
-		this.updateDraw(gestaltGlyphs, attrOpts);
+		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex);
 	}
 	get shapeType(): string {
 		return this._shapeType;

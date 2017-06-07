@@ -14,11 +14,11 @@ export class MatrixAnimated extends Technique {
 	public draw(): void {
 		console.log("MatrixAnimated");
 		this.lib.drawNodeGlyphs();
+		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 1, 1500 / (this._library.data.timesteps[0].nodes.length - 1), 1500 / (this._library.data.timesteps[0].nodes.length - 1), null));
 		this.lib.transformNodeGlyphsTo(this._library.labelShape);
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformEdgeGlyphsTo(this._library.rectShape);
 		//this.lib.setNodeGlyphAttrs(new SVGAttrOpts("purple", "grey", 10, 2));
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, null, 1500 / (this._library.data.timesteps[0].nodes.length - 1), 1500 / (this._library.data.timesteps[0].nodes.length - 1), null));
 		//this.lib.positionNodeGlyphsMatrix();
 		this.lib.positionEdgeGlyphsMatrix();
 		//this.lib.enableStepping();

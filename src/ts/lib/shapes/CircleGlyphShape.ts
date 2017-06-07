@@ -22,7 +22,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * Create selection of nodes. Returns new selection
 	 * @param glyphs
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
@@ -33,7 +33,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * Assign and/or update node circle data and (cx,cy) positions
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			glyphs
@@ -119,10 +119,10 @@ export class CircleGlyphShape implements NodeGlyphShape {
 
 		circleGlyphs.exit().remove();
 
-		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter(), data, timeStepIndex);
 
 		circleGlyphs = circleGlyphs.merge(circleEnter);
-		this.updateDraw(circleGlyphs, attrOpts)
+		this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex)
 	}
 
 	get shapeType(): string {
