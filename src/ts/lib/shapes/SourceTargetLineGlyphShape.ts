@@ -109,24 +109,21 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		switch (targetShape.shapeType) {
 			case "Rect":
 				console.log("STLine-->Rect");
-				sourceG.transition().style("display", "none");
-				targetG.transition().style("display", null);
 				break;
 
 			case "STLine":
 				console.log("STLine-->STLine Catch");
-				sourceG.style("display", null);
 				break;
 
 			case "Gestalt":
 				console.log("STLline-->Gestalt");
-				sourceG.transition().style("display", "none");
-				targetG.transition().style("display", null);
 				break;
 
 			default:
 				console.log(targetShape.shapeType + " is undefined");
 		};
+		sourceG.style("display", "none");
+		targetG.style("display", null);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.

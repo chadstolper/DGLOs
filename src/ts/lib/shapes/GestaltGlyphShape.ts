@@ -74,24 +74,21 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		switch (targetShape.shapeType) {
 			case "Rect":
 				console.log("Gestalt-->Rect");
-				sourceG.transition().style("display", "none");
-				targetG.transition().style("display", null);
 				break;
 
 			case "STLine":
 				console.log("Gestalt-->STLine");
-				sourceG.transition().style("display", "none");
-				targetG.transition().style("display", null);
 				break;
 
 			case "Gestalt":
 				console.log("Gestalt-->Gestalt Catch");
-				sourceG.style("display", null);
 				break;
 
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		};
+		sourceG.style("display", "none");
+		targetG.style("display", null);
 	}
 
 	/**
