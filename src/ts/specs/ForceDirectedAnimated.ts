@@ -17,5 +17,6 @@ export class ForceDirectedAnimated extends Technique {
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("id", "grey", 10, 2, null, null));
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, "weight"));
 		this.lib.runSimulation();
+		this.lib.enableStepping();
 	}
 }
