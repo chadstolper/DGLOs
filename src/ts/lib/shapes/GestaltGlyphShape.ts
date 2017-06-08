@@ -44,12 +44,15 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param TimeStampIndex 
 	 */
 	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+		let self = this;
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
-			.on("click", function () {
-				console.log("clicked");
-			});
+		// FIX
+		// .on("click", function (d: Node) {
+		// 	console.log(d.origID);
+		// 	self._lib._centralNodeID = d.origID;
+		// });
 		return ret;
 	}
 

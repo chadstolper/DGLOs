@@ -26,13 +26,15 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param glyphs
 	 */
 	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
+		let self = this;
 		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", this._dominantBaseline)
 			.style("text-anchor", this._textAnchor)
-			.on("click", function () {
-				console.log("clicked");
+			.on("click", function (d: Node) {
+				console.log(d.origID);
+				self._lib._centralNodeID = d.origID;
 			});
 		return ret;
 	}
