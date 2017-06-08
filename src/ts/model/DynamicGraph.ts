@@ -11,12 +11,23 @@ export class Node implements SimulationNodeDatum {
 	public vy?: number;
 	public _fx?: number;
 	public _fy?: number;
+	readonly _origID: string | number;
+	readonly _timestamp: number;
 
 	public constructor(id: number | string, index: number, type: string, label: string) {
 		this._id = id;
 		this._index = index;
 		this._type = type;
 		this._label = label;
+	}
+
+	get origID(): string | number {
+		return this._origID;
+	}
+
+
+	get timestamp(): number {
+		return this._timestamp;
 	}
 
 	get label(): string {
@@ -61,15 +72,24 @@ export class Edge {
 	private _source: Node;
 	private _target: Node;
 	private _weight: number;
-
 	private _x?: number;
 	private _y?: number;
+	readonly _origID: string | number;
+	readonly _timestamp: number;
 
 	public constructor(id: number | string, source: Node, target: Node, weight: number) {
 		this._id = id;
 		this._source = source;
 		this._target = target;
 		this._weight = weight;
+	}
+
+	get origID(): string | number {
+		return this._origID;
+	}
+
+	get timestamp(): number {
+		return this._timestamp;
 	}
 
 	get id(): number | string {

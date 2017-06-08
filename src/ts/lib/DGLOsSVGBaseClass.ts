@@ -94,7 +94,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	runSimulation(): void { };
 	stopSimulation(): void { };
 
-	setCenterNode(center: model.Node): void { };
+	setCenterNode(centerNodeID: number): void { };
 
 	positionNodeGlyphsMatrix(): void { };
 	positionNodeGlyphsCartesian(): void { };

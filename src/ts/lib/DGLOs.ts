@@ -164,7 +164,7 @@ export interface DGLOs {
 	 * Sets the central node for a Dynamic Graph. This is used 
 	 * for creating Ego Graphs.
 	 */
-	setCenterNode(center: Node): void;
+	setCenterNode(centerNodeID: number): void;
 
 
 	/**
