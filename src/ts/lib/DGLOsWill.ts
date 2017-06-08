@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node, Edge, Graph } from "../model/dynamicgraph";
+import { Node, Edge, Graph, DynamicGraph } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
@@ -130,14 +130,17 @@ export class DGLOsWill extends DGLOsMatt {
 			});
 	}
 	public setCenterNode(newID: number | string) {
+		console.log(this.data);
 		this._centralNodeID = newID;
 		this._calculateNeighborsAndIncidentEdges();
+		console.log(this.data);
 	}
 	protected _calculateNeighborsAndIncidentEdges() {
 		this._getCentralNodes();
 		this._getEdges();
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
+		this.data = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
 	}
 
 

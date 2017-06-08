@@ -26,6 +26,9 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	public get data(): model.DynamicGraph {
 		return this._data;
 	}
+	public set data(dGraph: model.DynamicGraph) {
+		this._data = dGraph;
+	}
 
 	public get loc(): Selection<any, {}, any, {}> {
 		return this._location;
@@ -33,10 +36,14 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	public set dataToDraw(dGraph: model.DynamicGraph) {
 		this._dataToDraw = dGraph;
 	}
+	public get dataToDraw(): model.DynamicGraph {
+		return this._dataToDraw;
+	}
 
 	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
 		this._data = data;
 		this._location = location;
+		this._dataToDraw = data;
 		if (location.attr("width")) { this._width = +location.attr("width"); }
 		if (location.attr("height")) { this._width = +location.attr("height"); }
 
