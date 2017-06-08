@@ -164,7 +164,7 @@ export interface DGLOs {
 	 * Sets the central node for a Dynamic Graph. This is used 
 	 * for creating Ego Graphs.
 	 */
-	setCenterNode(centerNodeID: number): void;
+	setCenterNode(centerNodeID: number | string): void;
 
 
 	/**
@@ -234,6 +234,4 @@ export interface DGLOs {
 	 * attribute that can be assigned to regionGlyphs. 
 	 */
 	setRegionGlyphAttrs(opts: AttrOpts): void;
-
-	getNeighbors(): void;
 }

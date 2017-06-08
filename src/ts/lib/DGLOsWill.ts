@@ -129,66 +129,67 @@ export class DGLOsWill extends DGLOsMatt {
 				self.runSimulation();
 			});
 	}
-	public setCenterNode(ID: number) {
-		this._centralNodeID = ID;
+	public setCenterNode(newID: number | string) {
+		this._centralNodeID = newID;
+		this._calculateNeighborsAndIncidentEdges();
 	}
-	public getNeighbors() {
-		this.getCentralNodes();
-		this.getEdges();
-		this.getNodes();
-		this.mergeNodeLists();
+	protected _calculateNeighborsAndIncidentEdges() {
+		this._getCentralNodes();
+		this._getEdges();
+		this._getNeighboringNodes();
+		this._mergeNodeLists();
 	}
 
 
-	private getCentralNodes() {
+	protected _getCentralNodes() {
 		console.log("getCentralNodes");
-		console.log(this._centralNodeID);
+		// console.log(this._centralNodeID);
 		this._centralNodeArray = [];
 		for (let step of this.data.timesteps) {
 			for (let node of step.nodes) {
-				console.log(node);
-				if (node._origID === this._centralNodeID) {
+				// console.log(node.origID, this._centralNodeID);
+				if (node.origID === this._centralNodeID) {
 					this._centralNodeArray.push(node);
 				}
 			}
 		}
-		console.log(this._centralNodeArray);
+		// console.log(this._centralNodeArray);
 	}
 
 
-	private getEdges() {
+	protected _getEdges() {
 		console.log("getEdges");
 		this._nbrEdges = [];
 		for (let step of this.data.timesteps) {
 			for (let edge of step.edges) {
-				if (this._centralNodeArray.includes(edge._origSource)
-					|| this._centralNodeArray.includes(edge._origTarget)) {
+				if (this._centralNodeArray.includes(edge.origSource)
+					|| this._centralNodeArray.includes(edge.origTarget)) {
 					this._nbrEdges.push(edge);
 				}
 			}
 		}
-		console.log(this._nbrEdges);
+		// console.log(this._nbrEdges);
 	}
 
-	private getNodes() {
+	protected _getNeighboringNodes() {
 		console.log("getNodes");
 		this._nbrNodes = [];
 		for (let edge of this._nbrEdges) {
-			if (this._centralNodeArray.includes(edge._origTarget)) {
-				this._neighboringNodesMap.set(edge._origSource._origID, edge._origSource);
+			if (this._centralNodeArray.includes(edge.origTarget)) {
+				this._neighboringNodesMap.set(edge.origSource.origID, edge.origSource);
 			}
 			if (this._centralNodeArray.includes(edge.origSource)) {
-				this._neighboringNodesMap.set(edge._origTarget._origID, edge._origTarget);
+				this._neighboringNodesMap.set(edge.origTarget.origID, edge.origTarget);
 			}
 		}
 
 		for (let edge of this._nbrEdges) {
-			if (this._neighboringNodesMap.has(edge._origSource._origID)) {
-				edge.source = this._neighboringNodesMap.get(edge._origSource._origID);
-				edge.target = edge._origTarget;
+			if (this._neighboringNodesMap.has(edge.origSource.origID)) {
+				edge.source = this._neighboringNodesMap.get(edge.origSource.origID);
+				edge.target = edge.origTarget;
 			}
-			if (this._neighboringNodesMap.has(edge._origTarget._origID)) {
-				edge.target = this._neighboringNodesMap.get(edge.origTarget._origID);
+			if (this._neighboringNodesMap.has(edge.origTarget.origID)) {
+				edge.target = this._neighboringNodesMap.get(edge.origTarget.origID);
 				edge.source = edge.origSource;
 			}
 		}
@@ -196,9 +197,9 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let key of this._neighboringNodesMap.keys()) {
 			this._nbrNodes.push(this._neighboringNodesMap.get(key));
 		}
-		console.log(this._nbrNodes);
+		// console.log(this._nbrNodes);
 	}
-	private mergeNodeLists() {
+	protected _mergeNodeLists() {
 		for (let node of this._centralNodeArray) {
 			this._nbrNodes.push(node);
 		}

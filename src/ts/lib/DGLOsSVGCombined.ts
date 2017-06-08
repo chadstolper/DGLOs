@@ -65,7 +65,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * A map used for constructing an Egograph.
 	 */
-	_neighboringNodesMap: Map<string | number, Node> = new Map();
+	_neighboringNodesMap: Map<string | number, Node> = new Map<string | number, Node>();
 	/**
 	 * An array holding all of the nodes that neighbor the central node.
 	 */
@@ -78,7 +78,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
 	_centralNodeArray: Array<Node>;
-	_centralNodeID: number;
+	_centralNodeID: number | string;
 
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {

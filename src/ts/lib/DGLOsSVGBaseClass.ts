@@ -94,7 +94,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	runSimulation(): void { };
 	stopSimulation(): void { };
 
-	setCenterNode(centerNodeID: number): void { };
+	setCenterNode(centerNodeID: number | string): void { };
 
 	positionNodeGlyphsMatrix(): void { };
 	positionNodeGlyphsCartesian(): void { };
@@ -103,7 +103,6 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	positionEdgeGlyphsSourceTarget(): void { };
 	positionEdgeGlyphsMatrix(): void { };
 	positionEdgeGlyphsGestalt(): void { }; //matrix-y
-	getNeighbors(): void { };
 	/*TODO: map of varibles/attrs
 		fill
 		stroke

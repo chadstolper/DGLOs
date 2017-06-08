@@ -4,8 +4,7 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG"
 export class Egograph extends Technique {
 	public draw() {
 		let attr = new SVGAttrOpts("gold", "black", 10, 1);
-		this.lib.setCenterNode(0);
-		this.lib.getNeighbors();
+		this.lib.setCenterNode(this.lib.data.timesteps[0].nodes[0].origID);
 
 		//this.lib.drawNodeGlyphs();
 		//this.lib.drawEdgeGlyphs();
