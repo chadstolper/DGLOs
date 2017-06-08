@@ -45,9 +45,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	public drawRegions() {
 		this._currentGroupGlyph = this.voronoiGroupGlyph;
-
 		this.voronoiInit();
-		console.log(this._cardinalPoints)
 
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
@@ -62,8 +60,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 
 		this._currentGroupGlyph.transformTo(this._groupGlyphMap.get(this._currentGroupGlyph), this.voronoiGroupGlyph, this._groupGlyphMap.get(this.voronoiGroupGlyph));
-		this.setNodeGlyphAttrs(new SVGAttrOpts("grey", null, 1));
-		this.setEdgeGlyphAttrs(new SVGAttrOpts(null, "grey", null, 1));
 	}
 
 	public removeRegions() {
@@ -104,6 +100,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
 					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
 					.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
+					.force("collide", d3force.forceCollide().radius(function (d: Node) { return 50 + 0.5; }).iterations(2)) //TODO: make it calculate collision based on label...what about circles...
 					.on("tick", this.ticked(this))
 					.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
 			}
@@ -115,7 +112,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			}
 		}
 		else {
-			console.log("sim stopped")
+			this._simulation.stop();
 		}
 	}
 
