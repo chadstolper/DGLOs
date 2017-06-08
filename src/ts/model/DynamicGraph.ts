@@ -76,8 +76,8 @@ export class Edge {
 	private _weight: number;
 	private _x?: number;
 	private _y?: number;
-	protected _origSource: Node;
-	protected _origTarget: Node;
+	public readonly _origSource: Node;
+	public readonly _origTarget: Node;
 	public constructor(id: number | string, source: Node, target: Node, weight: number, timestamp: number) {
 		this._id = id;
 		this._source = source;
