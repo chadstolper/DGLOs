@@ -103,8 +103,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				.on("tick", this.ticked(this));
 		}
 		if (this._simulation !== undefined) {
-			console.log(this.data.timesteps[0].nodes)
-			alert("stop");
 			this._simulation.nodes(this.data.timesteps[this._timeStampIndex].nodes);
 			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this.data.timesteps[this._timeStampIndex].edges);
 

@@ -128,7 +128,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 */
 	public draw(voronoiG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: any): void {
 		let voronoiPaths = voronoiG.selectAll("path.voronoi")
-			.data(voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints)), function (d: Node): string { return "" + d.id });
+			.data(voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints)), function (d: Node): string {
+				console.log(d)
+				console.log(d.id)
+				return "" + d.id;
+			});
 
 		voronoiPaths.exit().remove();
 

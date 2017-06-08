@@ -80,6 +80,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_centralNodeArray: Array<Node>;
 	_centralNodeID: number;
 
+	//TODO: MAKE ALL THE GETTERS! MAKE ALL THE SETTERS!
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;
