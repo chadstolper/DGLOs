@@ -106,6 +106,10 @@ export class DGLOsWill extends DGLOsMatt {
 	public enableStepping() {
 		console.log("Texas two-step!");
 
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
+			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._edgeAttrOpts.opacity)
+
 		let self = this;
 
 		let prevButton = d3.select("body").append("div").append("button")
@@ -113,11 +117,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
-				self.drawEdgeGlyphs();
-				self.drawNodeGlyphs();
-				self.transformEdgeGlyphsTo(self._currentEdgeShape);
-				self.transformNodeGlyphsTo(self._currentNodeShape);
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, self._edgeAttrOpts);
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 			});
 
 		let nextButton = d3.select("body").append("div").append("button")
@@ -125,11 +125,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
-				self.drawEdgeGlyphs();
-				self.drawNodeGlyphs();
-				self.transformEdgeGlyphsTo(self._currentEdgeShape);
-				self.transformNodeGlyphsTo(self._currentNodeShape);
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, self._edgeAttrOpts);
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 			});
 	}
 
