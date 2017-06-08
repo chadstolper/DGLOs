@@ -15,7 +15,7 @@ export class ForceDirectedAnimated extends Technique {
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("id", "grey", 10, 2, null, null));
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, 1));
+		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, "weight"));
 		this.lib.runSimulation();
 	}
 }
