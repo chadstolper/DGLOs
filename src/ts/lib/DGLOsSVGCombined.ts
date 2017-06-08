@@ -54,6 +54,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_cardinalPoints: [number, number][];
 	_noisePoints: Node[];
 	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
+	_groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
 	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and

@@ -23,7 +23,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param paths
 	 */
 	public initDraw(paths: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
-		let ret: Selection<any, Node, any, {}> = paths.append("path")
+		let ret: Selection<any, Node, any, {}> = paths.insert("path")
 			.classed("voronoi", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 		return ret;
@@ -33,8 +33,33 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * Assign and/or update voronoi path attributes and draw paths
 	 * @param paths 
 	 */
-	public updateDraw(paths: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(paths: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+		try {
+			switch (attrOpts.fill) {
+				case "id":
+					paths
+						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
+						.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "id"));
+					break;
+
+				case "label":
+					paths
+						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "label"))
+						.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "label"));
+					break;
+
+				case "type":
+					paths
+						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "type"))
+						.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "type"));
+					break;
+			}
+		}
+		catch (err) {
+			console.log("attrOpts Circle undefined");
+		}
+
 		try {
 			paths
 				.attr("d", function (d: any): string {
@@ -43,48 +68,37 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		} catch (err) {
 			console.log("No paths!");
 		}
-		try {
-			switch (attrOpts.fill) {
-				case "id":
-					paths
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.id);
-						})
-						.attr("stroke", function (d: Node): string {
-							return colorScheme(d.id);
-						});
-					break;
-
-				case "label":
-					paths
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.label);
-						})
-						.attr("stroke", function (d: Node): string {
-							return colorScheme(d.id);
-						});
-					break;
-
-				case "type":
-					paths
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.type);
-						})
-						.attr("stroke", function (d: Node): string {
-							return colorScheme(d.id);
-						});
-					break;
-			}
-
-			// paths
-			// 	.attr("stroke", "black")
-			// 	.attr("stroke-width", 1);
-		}
-		catch (err) {
-			console.log("attrOpts Circle undefined");
-		}
 
 		return paths;
+	}
+	//TODO: figure out how to parse
+	private fill(data: DynamicGraph, timeStampIndex: number, noisePoints: Node[], key: string) {
+		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+		switch (key) {
+			case "id":
+				return function (d: Node, i: number): string {
+					if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+						return "white";
+					}
+					return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].id);
+				}
+
+			case "label":
+				return function (d: Node, i: number): string {
+					if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+						return "white";
+					}
+					return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].label);
+				}
+
+			case "type":
+				return function (d: Node, i: number): string {
+					if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+						return "white";
+					}
+					return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type);
+				}
+		}
 	}
 
 	/**
@@ -122,7 +136,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 		voronoiPaths = voronoiPaths.merge(voronoiEnter);
 
-		this.updateDraw(voronoiPaths, attrOpts, data, timeStepIndex);
+		this.updateDraw(voronoiPaths, attrOpts, data, timeStepIndex, noisePoints);
 	}
 
 	get groupType(): string {

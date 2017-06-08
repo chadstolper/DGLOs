@@ -47,7 +47,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._currentGroupGlyph = this.voronoiGroupGlyph;
 
 		if (this._groupGlyphG === undefined) {
-			this._groupGlyphG = this.loc.append("g").classed("groupG", true);
+			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
 
 			//create child "g" in parent for GroupGlyphs
 			let voronoiG: Selection<any, {}, any, {}> = this.voronoiGroupGlyph.init(this._groupGlyphG);
@@ -58,8 +58,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			this._groupGlyphMap.set(this.voronoiGroupGlyph, voronoiG);
 		}
 
-		this.transformNodeGlyphsTo(this.circleShape);
-		this.transformEdgeGlyphsTo(this.sourceTargetLineShape);
 		this._currentGroupGlyph.transformTo(this._groupGlyphMap.get(this._currentGroupGlyph), this.voronoiGroupGlyph, this._groupGlyphMap.get(this.voronoiGroupGlyph));
 		this.setNodeGlyphAttrs(new SVGAttrOpts("grey", null, 1));
 		this.setEdgeGlyphAttrs(new SVGAttrOpts(null, "grey", null, 1));
@@ -87,8 +85,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setRegionGlyphAttrs(attr: SVGAttrOpts) {
-		// set regions attr
-		//custom set nodes and edges
+		this._groupAttrOpts = attr;
+		this._attrOpts = new SVGAttrOpts("black", null, 0.5);
+		this._edgeAttrOpts = new SVGAttrOpts(null, "grey", null, 0.25);
 	}
 
 	/**
@@ -120,7 +119,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
 			self.voronoiInit();
-			group.draw(paths, self.data, self._timeStampIndex, self._attrOpts, self._noisePoints, self._voronoi);
+			group.draw(paths, self.data, self._timeStampIndex, self._groupAttrOpts, self._noisePoints, self._voronoi);
 		});
 
 		//update edges in map; run update of simulation on all edges
