@@ -12,14 +12,13 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 
 
 json("data/radoslaw/emails.json", function (response: any) {
-	console.log("willTest");
 	let width: number, height: number;
 	width = height = 500;
 	let g: DynamicGraph = new DynamicRadoslawGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
-	let vis: Technique = new ForceDirectedAnimated(lib, {});
+	let vis: Technique = new Egograph(lib, {});
 	vis.draw();
 })
 

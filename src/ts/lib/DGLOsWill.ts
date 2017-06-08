@@ -146,7 +146,8 @@ export class DGLOsWill extends DGLOsMatt {
 		this._centralNodeArray = [];
 		for (let step of this.data.timesteps) {
 			for (let node of step.nodes) {
-				if (node.origID === this._centralNodeID) {
+				console.log(node);
+				if (node._origID === this._centralNodeID) {
 					this._centralNodeArray.push(node);
 				}
 			}
@@ -160,8 +161,8 @@ export class DGLOsWill extends DGLOsMatt {
 		this._nbrEdges = [];
 		for (let step of this.data.timesteps) {
 			for (let edge of step.edges) {
-				if (this._centralNodeArray.includes(edge.origSource)
-					|| this._centralNodeArray.includes(edge.origTarget)) {
+				if (this._centralNodeArray.includes(edge._origSource)
+					|| this._centralNodeArray.includes(edge._origTarget)) {
 					this._nbrEdges.push(edge);
 				}
 			}
@@ -173,21 +174,21 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log("getNodes");
 		this._nbrNodes = [];
 		for (let edge of this._nbrEdges) {
-			if (this._centralNodeArray.includes(edge.origTarget)) {
-				this._neighboringNodesMap.set(edge.origSource._origID, edge.origSource);
+			if (this._centralNodeArray.includes(edge._origTarget)) {
+				this._neighboringNodesMap.set(edge._origSource._origID, edge._origSource);
 			}
 			if (this._centralNodeArray.includes(edge.origSource)) {
-				this._neighboringNodesMap.set(edge.origTarget.origID, edge.origTarget);
+				this._neighboringNodesMap.set(edge._origTarget._origID, edge._origTarget);
 			}
 		}
 
 		for (let edge of this._nbrEdges) {
-			if (this._neighboringNodesMap.has(edge.origSource.origID)) {
-				edge.source = this._neighboringNodesMap.get(edge.origSource.origID);
-				edge.target = edge.origTarget;
+			if (this._neighboringNodesMap.has(edge._origSource._origID)) {
+				edge.source = this._neighboringNodesMap.get(edge._origSource._origID);
+				edge.target = edge._origTarget;
 			}
-			if (this._neighboringNodesMap.has(edge.origTarget.origID)) {
-				edge.target = this._neighboringNodesMap.get(edge.origTarget.origID);
+			if (this._neighboringNodesMap.has(edge._origTarget._origID)) {
+				edge.target = this._neighboringNodesMap.get(edge.origTarget._origID);
 				edge.source = edge.origSource;
 			}
 		}

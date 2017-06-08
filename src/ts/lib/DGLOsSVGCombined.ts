@@ -71,7 +71,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	_nbrNodes: Array<Node>;
 	/**
-	 * An array holding all of the edges incident to the 
+	 * An array holding all of the edges incident to the central node.
 	 */
 	_nbrEdges: Array<Edge>;
 	/**
