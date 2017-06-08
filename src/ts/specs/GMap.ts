@@ -10,7 +10,7 @@ export class GMap extends Technique {
 		this.lib.drawRegions();
 		// this.lib.setNodeGlyphAttrs(this.opts);
 		// this.lib.setEdgeGlyphAttrs(this.opts);
-		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("id"));
-		this.lib.runSimulation();
+		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("type"));
+		this.lib.runSimulation(true);
 	}
 }

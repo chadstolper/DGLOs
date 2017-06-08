@@ -13,6 +13,6 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.removeExitEdgeGlyphs();
 		this.lib.setNodeGlyphAttrs(this.opts);
 		this.lib.setEdgeGlyphAttrs(this.opts);
-		this.lib.runSimulation();
+		this.lib.runSimulation(true);
 	}
 }

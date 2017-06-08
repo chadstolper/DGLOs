@@ -117,7 +117,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
-				self.runSimulation();
+				self.runSimulation(true);
 			});
 
 		let nextButton = d3.select("body").append("div").append("button")
@@ -126,7 +126,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
-				self.runSimulation();
+				self.runSimulation(true);
 			});
 	}
 	public setCenterNode(ID: number) {

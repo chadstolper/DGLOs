@@ -47,7 +47,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._currentGroupGlyph = this.voronoiGroupGlyph;
 
 		this.voronoiInit();
-
+		console.log(this._cardinalPoints)
 
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
@@ -96,21 +96,26 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	/**
 	 * Begins the force simulation, calls internal tick().
 	 */
-	public runSimulation() {
-		//Check simulation exists
-		if (this._simulation === undefined) {
-			this._simulation = d3force.forceSimulation()
-				.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
-				.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
-				.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
-				.on("tick", this.ticked(this))
-				.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
-		}
-		if (this._simulation !== undefined) {
-			this._simulation.nodes(this.data.timesteps[this._timeStampIndex].nodes);
-			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this.data.timesteps[this._timeStampIndex].edges);
+	public runSimulation(setRunning: boolean) {
+		if (setRunning) {
+			//Check simulation exists
+			if (this._simulation === undefined) {
+				this._simulation = d3force.forceSimulation()
+					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
+					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
+					.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
+					.on("tick", this.ticked(this))
+					.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
+			}
+			if (this._simulation !== undefined) {
+				this._simulation.nodes(this.data.timesteps[this._timeStampIndex].nodes);
+				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this.data.timesteps[this._timeStampIndex].edges);
 
-			this._simulation.alpha(.5).restart();
+				this._simulation.alpha(.5).restart();
+			}
+		}
+		else {
+			console.log("sim stopped")
 		}
 	}
 

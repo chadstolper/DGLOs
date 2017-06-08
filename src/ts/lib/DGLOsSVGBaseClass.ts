@@ -34,8 +34,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		this._data = data;
 		this._location = location;
 		if (location.attr("width")) { this._width = +location.attr("width"); }
-		if (location.attr("height")) { this._width = +location.attr("height"); }
-
+		if (location.attr("height")) { this._height = +location.attr("height") }
 	}
 	/**
 	 * The __only instance__ of RectGlyphShape in the entire code. Used to coordinate transitions
@@ -91,7 +90,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	removeTimesteps(): void { };
 
 
-	runSimulation(): void { };
+	runSimulation(setRunning: boolean): void { };
 	stopSimulation(): void { };
 
 	setCenterNode(centerNodeID: number): void { };
