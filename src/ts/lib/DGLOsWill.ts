@@ -42,7 +42,6 @@ export class DGLOsWill extends DGLOsMatt {
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-		// this._currentEdgeShape.draw(this._edgeGlyphs.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
 	}
 	/**
 	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This objecy
@@ -112,17 +111,25 @@ export class DGLOsWill extends DGLOsMatt {
 		let prevButton = d3.select("body").append("div").append("button")
 			.text("<--")
 			.on("click", function () {
-				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
+				console.log("clicked");
+				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				self.drawEdgeGlyphs();
 				self.drawNodeGlyphs();
+				self.transformEdgeGlyphsTo(self._currentEdgeShape);
+				self.transformNodeGlyphsTo(self._currentNodeShape);
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, self._edgeAttrOpts);
 			});
 
 		let nextButton = d3.select("body").append("div").append("button")
 			.text("-->")
 			.on("click", function () {
+				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				self.drawEdgeGlyphs();
 				self.drawNodeGlyphs();
+				self.transformEdgeGlyphsTo(self._currentEdgeShape);
+				self.transformNodeGlyphsTo(self._currentNodeShape);
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, self._edgeAttrOpts);
 			});
 	}
 
