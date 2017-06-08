@@ -20,8 +20,8 @@ json("data/dummy/dummy.json", function (response: any) {
 	let lib: DGLOs = new DGLOsSVG(g, svg);
 
 	//____________________________________________________________//
-	// let vis: Technique = new ForceDirectedAnimated(lib, {});
-	let vis: Technique = new GMap(lib, {});
+	let vis: Technique = new ForceDirectedAnimated(lib, {});
+	// let vis: Technique = new GMap(lib, {});
 	//____________________________________________________________//
 
 
