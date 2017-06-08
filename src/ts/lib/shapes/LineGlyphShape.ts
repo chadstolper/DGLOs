@@ -4,6 +4,7 @@ import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { AttrOpts } from "../DGLOs"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { Shape } from "./Shape"
 
 /**
  * LineGlyphShape implements __EdgeGlyphShape__.
@@ -11,7 +12,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  * LineGlyphShape is a superClass for GestaltGlyphShape and SourceTargetLineGlyphShape. It
  * has zero functionality at this point!
  */
-export abstract class LineGlyphShape implements EdgeGlyphShape {
+export abstract class LineGlyphShape extends Shape implements EdgeGlyphShape {
 	readonly _shapeType: string;
 
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {

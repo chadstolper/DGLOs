@@ -2,14 +2,14 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
+import { Shape } from "./Shape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import "d3-transition";
 
-export class CircleGlyphShape implements NodeGlyphShape {
+export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
-
 	/**
 	 * Make new <g>
 	 * @param location
@@ -22,7 +22,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * Create selection of nodes. Returns new selection
 	 * @param glyphs
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
+	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number, ): Selection<any, Node, any, {}> {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
@@ -107,9 +107,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
-
-		sourceSelection.transition().style("display", "none");
-		targetSelection.transition().style("display", null);
+		super.transformTo(sourceSelection, null, targetSelection);
 	}
 
 	/**
