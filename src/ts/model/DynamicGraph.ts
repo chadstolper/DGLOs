@@ -14,11 +14,13 @@ export class Node implements SimulationNodeDatum {
 	readonly _origID: string | number;
 	readonly _timestamp: number;
 
-	public constructor(id: number | string, index: number, type: string, label: string) {
+	public constructor(id: number | string, index: number, type: string, label: string, timestamp: number) {
 		this._id = id;
 		this._index = index;
 		this._type = type;
 		this._label = label;
+		this._origID = id;
+		this._timestamp = timestamp;
 	}
 
 	get origID(): string | number {
@@ -77,11 +79,13 @@ export class Edge {
 	readonly _origID: string | number;
 	readonly _timestamp: number;
 
-	public constructor(id: number | string, source: Node, target: Node, weight: number) {
+	public constructor(id: number | string, source: Node, target: Node, weight: number, timestamp: number) {
 		this._id = id;
 		this._source = source;
 		this._target = target;
 		this._weight = weight;
+		this._origID = id;
+		this._timestamp = timestamp;
 	}
 
 	get origID(): string | number {

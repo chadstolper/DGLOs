@@ -1,14 +1,14 @@
 import { DynamicGraph, Graph, Node, Edge } from "../model/DynamicGraph";
 
 export class Person extends Node {
-	constructor(id: string, index: number, group: number) {
-		super(id, index, "" + group, id);
+	constructor(id: string, index: number, group: number, timestep: number) {
+		super(id, index, "" + group, id, timestep);
 	}
 }
 
 export class Cooccurence extends Edge {
-	constructor(id: string | number, source: Node, target: Node, value: number) {
-		super(id, source, target, value);
+	constructor(id: string | number, source: Node, target: Node, value: number, timestep: number) {
+		super(id, source, target, value, timestep);
 	}
 }
 
@@ -18,7 +18,7 @@ export class LesMiserablesGraph extends Graph {
 		let edgeData = new Array<Edge>();
 		let index = 0;
 		for (let n of rawNodeData) {
-			let node = new Person(n.id, index, n.group);
+			let node = new Person(n.id, index, n.group, timestamp);
 			nodeData.push(node);
 			index++;
 		}
@@ -32,7 +32,7 @@ export class LesMiserablesGraph extends Graph {
 			});
 			let id: string = "" + source.id + ":" + target.id;
 
-			let edge = new Cooccurence(id, source, target, e.value);
+			let edge = new Cooccurence(id, source, target, e.value, timestamp);
 			edgeData.push(edge);
 		}
 		nodeData.sort(function (a: Node, b: Node): number {
