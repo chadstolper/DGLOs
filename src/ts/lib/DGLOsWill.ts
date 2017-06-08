@@ -11,7 +11,6 @@ import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
-
 import * as d3 from "d3-selection";
 import * as d3Scale from "d3-scale";
 import * as d3Array from "d3-array";
@@ -129,6 +128,79 @@ export class DGLOsWill extends DGLOsMatt {
 				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation();
 			});
+	}
+	public setCenterNode(ID: number) {
+		this._centralNodeID = ID;
+	}
+	public getNeighbors() {
+		this.getCentralNodes();
+		this.getEdges();
+		this.getNodes();
+		this.mergeNodeLists();
+	}
+
+
+	private getCentralNodes() {
+		console.log("getCentralNodes");
+		console.log(this._centralNodeID);
+		this._centralNodeArray = [];
+		for (let step of this.data.timesteps) {
+			for (let node of step.nodes) {
+				if (node.origID === this._centralNodeID) {
+					this._centralNodeArray.push(node);
+				}
+			}
+		}
+		console.log(this._centralNodeArray);
+	}
+
+
+	private getEdges() {
+		console.log("getEdges");
+		this._nbrEdges = [];
+		for (let step of this.data.timesteps) {
+			for (let edge of step.edges) {
+				if (this._centralNodeArray.includes(edge.origSource)
+					|| this._centralNodeArray.includes(edge.origTarget)) {
+					this._nbrEdges.push(edge);
+				}
+			}
+		}
+		console.log(this._nbrEdges);
+	}
+
+	private getNodes() {
+		console.log("getNodes");
+		this._nbrNodes = [];
+		for (let edge of this._nbrEdges) {
+			if (this._centralNodeArray.includes(edge.origTarget)) {
+				this._neighboringNodesMap.set(edge.origSource._origID, edge.origSource);
+			}
+			if (this._centralNodeArray.includes(edge.origSource)) {
+				this._neighboringNodesMap.set(edge.origTarget.origID, edge.origTarget);
+			}
+		}
+
+		for (let edge of this._nbrEdges) {
+			if (this._neighboringNodesMap.has(edge.origSource.origID)) {
+				edge.source = this._neighboringNodesMap.get(edge.origSource.origID);
+				edge.target = edge.origTarget;
+			}
+			if (this._neighboringNodesMap.has(edge.origTarget.origID)) {
+				edge.target = this._neighboringNodesMap.get(edge.origTarget.origID);
+				edge.source = edge.origSource;
+			}
+		}
+		//convert the map to an array
+		for (let key of this._neighboringNodesMap.keys()) {
+			this._nbrNodes.push(this._neighboringNodesMap.get(key));
+		}
+		console.log(this._nbrNodes);
+	}
+	private mergeNodeLists() {
+		for (let node of this._centralNodeArray) {
+			this._nbrNodes.push(node);
+		}
 	}
 
 }

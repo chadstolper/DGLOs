@@ -1,14 +1,14 @@
 import { DynamicGraph, Graph, Node, Edge } from "../model/DynamicGraph";
 
 export class RadoslawEmployee extends Node {
-	constructor(id: number | string, index: number) {
-		super(id, index, "RadoslawEmployee", "" + id);
+	constructor(id: number | string, index: number, timestep: number) {
+		super(id, index, "RadoslawEmployee", "" + id, timestep);
 	}
 }
 
 export class RadoslawEmail extends Edge {
-	constructor(id: number | string, source: Node, target: Node, weight: number) {
-		super(id, source, target, weight);
+	constructor(id: number | string, source: Node, target: Node, weight: number, timestep: number) {
+		super(id, source, target, weight, timestep);
 	}
 }
 
@@ -18,7 +18,7 @@ export class StaticRadoslawGraph extends Graph {
 		let edgeData = new Array<Edge>();
 		let index = 0;
 		for (let n of rawNodeData) {
-			let node = new RadoslawEmployee(n, index);
+			let node = new RadoslawEmployee(n, index, timestep);
 			nodeData.push(node);
 			index++;
 		}
@@ -32,7 +32,7 @@ export class StaticRadoslawGraph extends Graph {
 			});
 			let id: string = "" + source.id + ":" + target.id;
 
-			let edge = new RadoslawEmail(id, source, target, e.weight);
+			let edge = new RadoslawEmail(id, source, target, e.weight, timestep);
 			edgeData.push(edge);
 		}
 		nodeData.sort(function (a: Node, b: Node): number {

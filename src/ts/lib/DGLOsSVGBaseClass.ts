@@ -103,7 +103,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	positionEdgeGlyphsSourceTarget(): void { };
 	positionEdgeGlyphsMatrix(): void { };
 	positionEdgeGlyphsGestalt(): void { }; //matrix-y
-
+	getNeighbors(): void { };
 	/*TODO: map of varibles/attrs
 		fill
 		stroke

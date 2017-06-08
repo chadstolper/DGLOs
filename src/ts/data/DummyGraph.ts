@@ -2,8 +2,8 @@ import { Graph, DynamicGraph, Node, Edge } from "../model/DynamicGraph";
 
 export class Person extends Node {
 	private _role: string;
-	public constructor(id: number | string, index: number, name: string, role: string) {
-		super(id, index, "Person", name);
+	public constructor(id: number | string, index: number, name: string, role: string, timestamp: number) {
+		super(id, index, "Person", name, timestamp);
 		this._role = role;
 	}
 
@@ -18,8 +18,8 @@ export class Person extends Node {
 
 export class Drink extends Node {
 	private _price: number;
-	public constructor(id: number | string, index: number, name: string, price: number) {
-		super(id, index, "Drink", name);
+	public constructor(id: number | string, index: number, name: string, price: number, timestamp: number) {
+		super(id, index, "Drink", name, timestamp);
 		this._price = price;
 	}
 
@@ -36,8 +36,8 @@ export class DrinkEdge extends Edge {
 	private _consumption: number;
 	private _preference: number;
 	public constructor(id: number | string, source: Node, target: Node,
-		consumption: number, preference: number) {
-		super(id, source, target, preference);
+		consumption: number, preference: number, timestamp: number) {
+		super(id, source, target, preference, timestamp);
 		this._consumption = consumption;
 		this._preference = preference;
 	}
@@ -66,10 +66,10 @@ export class StaticDrinkGraph extends Graph {
 		let index = 0;
 		for (let n of rawNodeData) {
 			if (n.type === "person") {
-				let p = new Person(n.id, index, n.name, n.role);
+				let p = new Person(n.id, index, n.name, n.role, timestep);
 				nodeData.push(p);
 			} else if (n.type === "drink") {
-				let d = new Drink(n.id, index, n.name, n.price);
+				let d = new Drink(n.id, index, n.name, n.price, timestep);
 				nodeData.push(d);
 			}
 			index++;
@@ -87,7 +87,7 @@ export class StaticDrinkGraph extends Graph {
 
 			let id: string = "" + source.id + ":" + target.id;
 
-			let de: DrinkEdge = new DrinkEdge(id, source, target, e.consumption, e.preference);
+			let de: DrinkEdge = new DrinkEdge(id, source, target, e.consumption, e.preference, timestep);
 			edgeData.push(de);
 		}
 
