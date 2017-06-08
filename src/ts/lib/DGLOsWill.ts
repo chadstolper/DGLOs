@@ -104,6 +104,26 @@ export class DGLOsWill extends DGLOsMatt {
 			this._edgeAttrOpts.opacity)
 		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, _matrixAttrOpts);
 	}
+	public enableStepping() {
+		console.log("Texas two-step!");
 
+		let self = this;
+
+		let prevButton = d3.select("body").append("div").append("button")
+			.text("<--")
+			.on("click", function () {
+				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
+				self.drawEdgeGlyphs();
+				self.drawNodeGlyphs();
+			});
+
+		let nextButton = d3.select("body").append("div").append("button")
+			.text("-->")
+			.on("click", function () {
+				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
+				self.drawEdgeGlyphs();
+				self.drawNodeGlyphs();
+			});
+	}
 
 }
