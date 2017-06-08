@@ -11,10 +11,10 @@ import { DGLOs } from "../lib/DGLOs";
 import { DGLOsSVG } from "../lib/DGLOsSVG";
 
 
-json("data/radoslaw/emails.json", function (response: any) {
+json("data/dummy/dummy.json", function (response: any) {
 	let width: number, height: number;
 	width = height = 500;
-	let g: DynamicGraph = new DynamicRadoslawGraph(response);
+	let g: DynamicGraph = new DynamicDrinkGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);

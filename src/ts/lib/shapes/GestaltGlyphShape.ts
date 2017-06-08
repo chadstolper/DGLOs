@@ -46,7 +46,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id });
+			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+			.on("click", function () {
+				console.log("clicked");
+			});
 		return ret;
 	}
 

@@ -15,7 +15,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return location.append("g").classed("CircleNodes", true);
+		return location.append("g").classed("CircleNodes", true)
 	}
 
 	/**
@@ -26,6 +26,9 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
+			.on("click", function () {
+				console.log("clicked");
+			});
 		return ret;
 	}
 

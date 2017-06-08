@@ -29,7 +29,10 @@ export class LabelGlyphShape implements NodeGlyphShape {
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", this._dominantBaseline)
-			.style("text-anchor", this._textAnchor);
+			.style("text-anchor", this._textAnchor)
+			.on("click", function () {
+				console.log("clicked");
+			});
 		return ret;
 	}
 

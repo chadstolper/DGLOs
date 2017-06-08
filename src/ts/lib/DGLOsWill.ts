@@ -141,6 +141,8 @@ export class DGLOsWill extends DGLOsMatt {
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
 		this.data = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
+		//this._nodeGlyphMap.get(this._currentNodeShape).selectAll(this.currentNodeShape.shapeType)
+		//let clicker = d3.select(this._nodeGlyphMap.get(this._currentNodeShape))
 	}
 
 
