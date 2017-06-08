@@ -76,24 +76,23 @@ export class Edge {
 	private _weight: number;
 	private _x?: number;
 	private _y?: number;
-	readonly _origID: string | number;
-	readonly _timestamp: number;
-
+	protected _origSource: Node;
+	protected _origTarget: Node;
 	public constructor(id: number | string, source: Node, target: Node, weight: number, timestamp: number) {
 		this._id = id;
 		this._source = source;
 		this._target = target;
 		this._weight = weight;
-		this._origID = id;
-		this._timestamp = timestamp;
+		this._origSource = source;
+		this._origTarget = target;
 	}
 
-	get origID(): string | number {
-		return this._origID;
+	get origSource(): Node {
+		return this._origSource;
 	}
 
-	get timestamp(): number {
-		return this._timestamp;
+	get origTarget(): Node {
+		return this._origTarget;
 	}
 
 	get id(): number | string {
