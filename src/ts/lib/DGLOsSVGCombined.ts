@@ -6,7 +6,10 @@ import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 import { SVGAttrOpts } from "./DGLOsSVG";
+import { VoronoiLayout } from "d3-voronoi";
+import * as d3 from "d3"; //TODO: replace later with module
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
@@ -28,6 +31,14 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * The overarching <g> tag holding the shape glyph selections (e.g. rectEdges, GestaltGlyphs, STLineEdges, etc..)
 	 */
 	_edgeG: Selection<any, {}, any, {}>
+	/**  
+	 * The overarching <g> tag holding the GroupGlyph selections.
+	*/
+	_groupGlyphG: Selection<any, {}, any, {}>;
+	/**
+	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
+	 */
+	_groupGlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>> = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
 	_timeStampIndex = 0;
 	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	/**
@@ -36,6 +47,12 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_simulation: Simulation<any, undefined>
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
+	_currentGroupGlyph: GroupGlyph;
+	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1, -1], [this._width + 1, this._height + 1]]) //set dimensions of voronoi
+		.x(function (d: Node) { return d.x; })
+		.y(function (d: Node) { return d.y; });
+	_cardinalPoints: [number, number][];
+	_noisePoints: Node[];
 	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
