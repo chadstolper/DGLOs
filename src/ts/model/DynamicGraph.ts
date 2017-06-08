@@ -62,6 +62,9 @@ export class Edge {
 	private _target: Node;
 	private _weight: number;
 
+	private _x?: number;
+	private _y?: number;
+
 	public constructor(id: number | string, source: Node, target: Node, weight: number) {
 		this._id = id;
 		this._source = source;
@@ -91,6 +94,22 @@ export class Edge {
 	set target(target: Node) {
 		this._target = target;
 	}
+
+	get x(): number {
+		return this._x;
+	}
+	set x(newX: number) {
+		this._x = newX;
+	}
+
+	get y(): number {
+		return this._y;
+	}
+	set y(newY: number) {
+		this._y = newY;
+	}
+
+
 }
 
 /**

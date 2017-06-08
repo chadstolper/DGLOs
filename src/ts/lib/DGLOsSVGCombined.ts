@@ -13,6 +13,9 @@ import * as d3 from "d3"; //TODO: replace later with module
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
+	/**
+	 * The overarching <g> tag holding the shape glyph selections
+	 */
 	_nodeG: Selection<any, {}, any, {}>;
 	_nodeCircleGlyphs: Selection<any, {}, any, {}>;
 	_nodeLabelGlyphs: Selection<any, {}, any, {}>;
@@ -42,8 +45,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * The physics simulation used to direct froce-directed visualizations.
 	 */
 	_simulation: Simulation<any, undefined>
-	_height = 500;
-	_width = 500;
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 	_currentGroupGlyph: GroupGlyph;

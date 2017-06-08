@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node, Edge } from "../model/dynamicgraph";
+import { Node, Edge, Graph } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
@@ -42,7 +42,6 @@ export class DGLOsWill extends DGLOsMatt {
 			edgeGestaltG.style("display", "none");
 			edgeSTLineG.style("display", "none");
 		}
-		// this._currentEdgeShape.draw(this._edgeGlyphs.get(this.rectShape), this.data, 0, this._edgeAttrOpts);
 	}
 	/**
 	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This objecy
@@ -63,13 +62,26 @@ export class DGLOsWill extends DGLOsMatt {
 	//TODO
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.data.timesteps[this._timeStampIndex];
-		this._nodeLabelGlyphs
-			.attr("x", function (d: Node) {
-				return (+d.index / curGraph.nodes.length) * 100 + "%";
+		console.log(this._currentNodeShape);
+		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
+		let h = this._height;
+		let w = this._width;
+		this.data.timesteps.forEach(function (g: Graph) {
+			g.nodes.forEach(function (d: Node) {
+				d.x = w / 10;
+				d.y = d.index / curGraph.nodes.length * h;
 			})
-			.attr("y", function (d: Edge) {
-				return (+d.id / curGraph.nodes.length) * 100 + "%";
-			})
+		})
+		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
+
+		// this._nodeGlyphMap.get(this._currentNodeShape)
+		// 	.attr("x", 10)
+		// 	.attr("y", function (d: Node) {
+		// 		return (d.index / curGraph.nodes.length) * 100 + "%";
+		// 	})
+		// function (d: Node) {
+		// 	return (+d.index / curGraph.nodes.length) * 100 + "%";
+		// })
 	}
 
 
@@ -78,16 +90,43 @@ export class DGLOsWill extends DGLOsMatt {
 	 * DGLO, and then positions the rectangles to form a matrix (heatmap).
 	 */
 	public positionEdgeGlyphsMatrix() {
-		this.transformEdgeGlyphsTo(this.rectShape);
-		let curGraph = this._data.timesteps[this._timeStampIndex];
-		this._location.selectAll("rect")            //this._edgeGlyphMap(this.currentEdgeShape))
-			.attr("x", function (d: Edge) {
-				return (+d.source.index / curGraph.nodes.length) * 100 + "%";
+		let h = this._height;
+		let w = this._width;
+		this.data.timesteps.forEach(function (g: Graph) {
+			g.edges.forEach(function (e: Edge) {
+				e.x = (+e.source.index / g.nodes.length) * w;
+				e.y = (+e.target.index / g.nodes.length) * h;
 			})
-			.attr("y", function (d: Edge) {
-				return (+d.target.index / curGraph.nodes.length) * 100 + "%";
-			})
+		})
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
+			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._edgeAttrOpts.opacity)
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, _matrixAttrOpts);
 	}
+	public enableStepping() {
+		console.log("Texas two-step!");
 
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
+			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._edgeAttrOpts.opacity)
+
+		let self = this;
+
+		let prevButton = d3.select("body").append("div").append("button")
+			.text("<--")
+			.on("click", function () {
+				console.log("clicked");
+				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+			});
+
+		let nextButton = d3.select("body").append("div").append("button")
+			.text("-->")
+			.on("click", function () {
+				console.log("clicked");
+				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+			});
+	}
 
 }
