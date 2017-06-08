@@ -5,6 +5,7 @@ import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
 
 
 export class VoronoiGroupGlyph implements GroupGlyph {
@@ -22,10 +23,10 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * Create selection of paths. Returns new selection
 	 * @param paths
 	 */
-	public initDraw(paths: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
-		let ret: Selection<any, Node, any, {}> = paths.insert("path")
+	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, VoronoiPolygon<Node>, any, {}> {
+		let ret: Selection<any, VoronoiPolygon<Node>, any, {}> = paths.insert("path")
 			.classed("voronoi", true)
-			.attr("id", function (d: Node): string | number { return d.id; })
+			.attr("id", function (d: VoronoiPolygon<Node>): string | number { return d.data.id; })
 		return ret;
 	}
 
@@ -33,7 +34,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * Assign and/or update voronoi path attributes and draw paths
 	 * @param paths 
 	 */
-	public updateDraw(paths: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, {}, any, {}> {
+	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			switch (attrOpts.fill) {
@@ -76,27 +77,33 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		switch (key) {
 			case "id":
-				return function (d: Node, i: number): string {
-					if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+				return function (d: VoronoiPolygon<Node>, i: number): string {
+					// if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+					if (d.data.type === "noise") {
 						return "white";
 					}
-					return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].id);
+					// return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].id);
+					return colorScheme(d.data.id);
 				}
 
 			case "label":
-				return function (d: Node, i: number): string {
-					if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+				return function (d: VoronoiPolygon<Node>, i: number): string {
+					// if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+					if (d.data.type === "noise") {
 						return "white";
 					}
-					return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].label);
+					// return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].label);
+					return colorScheme(d.data.label);
 				}
 
 			case "type":
-				return function (d: Node, i: number): string {
-					if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+				return function (d: VoronoiPolygon<Node>, i: number): string {
+					// if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
+					if (d.data.type === "noise") {
 						return "white";
 					}
-					return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type);
+					// return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type);
+					return colorScheme(d.data.type);
 				}
 		}
 	}
@@ -126,17 +133,24 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(voronoiG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: any): void {
-		let voronoiPaths = voronoiG.selectAll("path.voronoi")
-			.data(voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints)), function (d: Node): string {
-				console.log(d)
-				console.log(d.id)
-				return "" + d.id;
+	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>): void {
+		let vData = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
+		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = voronoiG.selectAll("path.voronoi")
+			.data(vData, function (d: VoronoiPolygon<Node>, i: number): string {
+				let ret: string;
+				try {
+					ret = "" + d.data.id;
+					return ret;
+				} catch (err) {
+					console.log(i, vData);
+					// throw err;
+				}
+				return "empty";
 			});
 
 		voronoiPaths.exit().remove();
 
-		let voronoiEnter: Selection<any, Node, any, {}> = this.initDraw(voronoiPaths.enter(), data, timeStepIndex);
+		let voronoiEnter: Selection<any, VoronoiPolygon<Node>, any, {}> = this.initDraw(voronoiPaths.enter(), data, timeStepIndex);
 
 		voronoiPaths = voronoiPaths.merge(voronoiEnter);
 

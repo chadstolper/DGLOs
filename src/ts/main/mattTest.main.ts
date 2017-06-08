@@ -18,7 +18,7 @@ json("data/miserables/miserables.json", function (response: any) {
 	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
 	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
-	let svg: Selection<any, {}, any, {}> = select("#chart").append("svg")
+	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
 

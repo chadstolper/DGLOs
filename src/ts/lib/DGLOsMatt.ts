@@ -46,6 +46,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	public drawRegions() {
 		this._currentGroupGlyph = this.voronoiGroupGlyph;
 
+		this.voronoiInit();
+
+
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
 
@@ -100,7 +103,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
 				.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
 				.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
-				.on("tick", this.ticked(this));
+				.on("tick", this.ticked(this))
+				.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
 		}
 		if (this._simulation !== undefined) {
 			this._simulation.nodes(this.data.timesteps[this._timeStampIndex].nodes);
@@ -118,7 +122,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let self = this; //d3 scope this issue
 
 		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
-			self.voronoiInit();
 			group.draw(paths, self.data, self._timeStampIndex, self._groupAttrOpts, self._noisePoints, self._voronoi);
 		});
 
