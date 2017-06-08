@@ -48,31 +48,32 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		if (location.attr("height")) { this._width = +location.attr("height"); }
 
 	}
+	_centralNodeID: number | string;
 	/**
 	 * The __only instance__ of RectGlyphShape in the entire code. Used to coordinate transitions
 	 * as well as to draw rectangles when needed.
 	 */
-	readonly rectShape: RectGlyphShape = new RectGlyphShape();
+	readonly rectShape: RectGlyphShape = new RectGlyphShape(this);
 	/**
 	 * The __only instance__ of CircleGlyphShape in the entire code. Used to coordinate transitions
 	 * as well as to draw rectangles when needed.
 	 */
-	readonly circleShape: CircleGlyphShape = new CircleGlyphShape();
+	readonly circleShape: CircleGlyphShape = new CircleGlyphShape(this);
 	/**
 	 * The __only instance__ of LabelGlyphShape in the entire code. Used to coordinate transitions
 	 * as well as to draw rectangles when needed.
 	 */
-	readonly labelShape: LabelGlyphShape = new LabelGlyphShape();
+	readonly labelShape: LabelGlyphShape = new LabelGlyphShape(this);
 	/**
 	 * The __only instance__ of SourceTargetLineGlyphShape in the entire code. Used to coordinate transitions
 	 * as well as to draw rectangles when needed.
 	 */
-	readonly sourceTargetLineShape: SourceTargetLineGlyphShape = new SourceTargetLineGlyphShape();
+	readonly sourceTargetLineShape: SourceTargetLineGlyphShape = new SourceTargetLineGlyphShape(this);
 	/**
 	 * The __only instance__ of GestaltGlyphShape in the entire code. Used to coordinate transitions
 	 * as well as to draw rectangles when needed.
 	 */
-	readonly gestaltShape: GestaltGlyphShape = new GestaltGlyphShape();
+	readonly gestaltShape: GestaltGlyphShape = new GestaltGlyphShape(this);
 	/**
 	 * The __only instance__ of VoronoiGroupGlyph in the entire code. Used to coordinate transitions
 	 * as well as to draw regions when needed.

@@ -78,7 +78,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
 	_centralNodeArray: Array<Node>;
-	_centralNodeID: number | string;
+
 
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {

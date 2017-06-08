@@ -1,11 +1,12 @@
 import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
+import { DGLOsSVGBaseClass } from "../DGLOsSVGBaseClass";
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 
 export class Shape {
-	readonly _lib: DGLOsSVG;
-	constructor(lib: DGLOsSVG) {
+	readonly _lib: DGLOsSVGBaseClass;
+	constructor(lib: DGLOsSVGBaseClass) {
 		this._lib = lib
 	}
 
