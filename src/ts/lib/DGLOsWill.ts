@@ -156,7 +156,12 @@ export class DGLOsWill extends DGLOsMatt {
 				}
 			}
 		}
-		// console.log(this._centralNodeArray);
+		let ySpan = this._centralNodeArray.length;
+		for (let node of this._centralNodeArray) {
+			node.fx = this._width / 2;
+			node.fy = (this._height - 20) / ySpan;
+			ySpan -= 1;
+		}
 	}
 
 
