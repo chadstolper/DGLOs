@@ -234,4 +234,5 @@ export interface DGLOs {
 	 * attribute that can be assigned to regionGlyphs. 
 	 */
 	setRegionGlyphAttrs(opts: AttrOpts): void;
+	fixCentralNodePositions(bool: boolean): void;
 }

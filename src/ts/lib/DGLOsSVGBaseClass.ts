@@ -126,4 +126,5 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	setNodeGlyphAttrs(opts: AttrOpts): void { };
 	setEdgeGlyphAttrs(opts: AttrOpts): void { };
 	setRegionGlyphAttrs(opts: AttrOpts): void { };
+	fixCentralNodePositions(bool: boolean): void { };
 }
