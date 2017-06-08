@@ -61,6 +61,23 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	_edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts(null, null, null, null, null, null, null);
 	_willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
+	/**
+	 * A map used for constructing an Egograph.
+	 */
+	_neighboringNodesMap: Map<number, Node> = new Map();
+	/**
+	 * An array holding all of the nodes that neighbor the central node.
+	 */
+	_nbrNodes: Array<Node>;
+	/**
+	 * An array holding all of the edges incident to the 
+	 */
+	_nbrEdges: Array<Edge>;
+	/**
+	 * An array holding all of the instances of the cnetral node across all timesteps.
+	 */
+	_centralNodeArray: Array<Node>;
+
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;
