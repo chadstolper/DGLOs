@@ -131,6 +131,10 @@ export class DGLOsWill extends DGLOsMatt {
 	protected _calculateNeighborsAndIncidentEdges() {
 		this.dataToDraw = this.data;
 		this._getCentralNodes();
+		this.setCentralNodeFixedPositions();
+		for (let node of this._centralNodeArray) {
+			console.log(node.label + ": " + node.fx + " " + node.fy);
+		}
 		this._getEdges();
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
@@ -200,11 +204,9 @@ export class DGLOsWill extends DGLOsMatt {
 		}
 	}
 	public redraw(): void {
-		console.log("redraw!");
-		console.log(this._centralNodeArray);
+		this.setCentralNodeFixedPositions();
 		this.drawEdgeGlyphs();
 		this.drawNodeGlyphs();
-		this.setCentralNodeFixedPositions();
 		this.runSimulation(true);
 		this.emptyArrays();
 	}
