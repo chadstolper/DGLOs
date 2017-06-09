@@ -218,5 +218,9 @@ export class DGLOsWill extends DGLOsMatt {
 			this._nbrNodes.push(node);
 		}
 	}
+	public redraw(): void {
+		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
+		this.currentNodeShape.draw(this._nodeGlyphMap.get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
+	}
 
 }
