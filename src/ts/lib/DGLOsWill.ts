@@ -134,6 +134,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this._calculateNeighborsAndIncidentEdges();
 	}
 	protected _calculateNeighborsAndIncidentEdges() {
+		this.dataToDraw = this.data;
 		this._getCentralNodes();
 		this._getEdges();
 		this._getNeighboringNodes();
@@ -147,32 +148,11 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let step of this.dataToDraw.timesteps) {
 			for (let node of step.nodes) {
 				if (node.origID === this.centralNodeID) {
+					console.log(node);
 					this._centralNodeArray.push(node);
 				}
 			}
 		}
-	}
-
-	public fixCentralNodePositions(fixNodesBool: boolean) {
-		if (fixNodesBool) {
-			this.onClickRedraw = true;
-			let yScale = scaleLinear()
-				.domain(extent(this._centralNodeArray, function (d: Node): number {
-					return d.timestamp;
-				}))
-				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
-			for (let node of this._centralNodeArray) {
-				node.fx = this._width / 2;
-				node.fy = yScale(node.timestamp);
-			}
-		} else {
-			this.onClickRedraw = false;
-			for (let node of this._centralNodeArray) {
-				node.fx = null;
-				node.fy = null;
-			}
-		}
-
 	}
 
 	protected _getEdges() {
@@ -212,6 +192,7 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let key of this._neighboringNodesMap.keys()) {
 			this._nbrNodes.push(this._neighboringNodesMap.get(key));
 		}
+		this._neighboringNodesMap.clear();
 	}
 	protected _mergeNodeLists() {
 		for (let node of this._centralNodeArray) {
@@ -219,8 +200,37 @@ export class DGLOsWill extends DGLOsMatt {
 		}
 	}
 	public redraw(): void {
-		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
-		this.currentNodeShape.draw(this._nodeGlyphMap.get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
+		console.log("redraw");
+		console.log(this.dataToDraw);
+		// this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
+		// this.currentNodeShape.draw(this._nodeGlyphMap.get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
+		this.drawEdgeGlyphs();
+		this.drawNodeGlyphs();
+		this.fixCentralNodePositions(true);
+		this.runSimulation();
+
 	}
+	public fixCentralNodePositions(fixNodesBool: boolean) {
+		if (fixNodesBool) {
+			this.onClickRedraw = true;
+			let yScale = scaleLinear()
+				.domain(extent(this._centralNodeArray, function (d: Node): number {
+					return d.timestamp;
+				}))
+				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+			for (let node of this._centralNodeArray) {
+				node.fx = this._width / 2;
+				node.fy = yScale(node.timestamp);
+			}
+		} else {
+			this.onClickRedraw = false;
+			for (let node of this._centralNodeArray) {
+				node.fx = null;
+				node.fy = null;
+			}
+		}
+
+	}
+
 
 }
