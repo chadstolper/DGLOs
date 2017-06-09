@@ -20,11 +20,10 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsSandwich extends DGLOsWill {
 
-	public replicateTimesteps() {
+	public drawTimesteps() {
 		if (this.data.timesteps.length > 1) {
 			for (let i = 0; i < this.data.timesteps.length; i++) {
 				let newSVG: Selection<any, {}, any, {}> = select("body").append("svg") //TODO: needs to be a way to set the selection entry, ie. replace "body" varible
-					.classed("test" + i, true)
 					.attr("width", this._width).attr("height", this._height);
 
 				this.drawEdgeGlyphsAt(newSVG);
@@ -32,6 +31,7 @@ export class DGLOsSandwich extends DGLOsWill {
 				this._timeStampIndex = this._timeStampIndex + 1;
 			}
 			this._timeStampIndex = 0; //reset to 0;
+			this._simulationMap.set(1, this._metaSimulation);
 		}
 	}
 }

@@ -10,7 +10,7 @@ export class MatrixTimeline extends Technique {
 		this.lib.positionEdgeGlyphsMatrix();
 		this.lib.setNodeGlyphAttrs(this.opts);
 		this.lib.setEdgeGlyphAttrs(this.opts);
-		this.lib.replicateTimesteps();
+		this.lib.drawTimesteps();
 	}
 
 }

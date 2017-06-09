@@ -163,7 +163,7 @@ export class Graph {
 
 export class MetaNode {
 	readonly _origID: number | string;
-	private _nodes: Set<Node>;
+	private _nodes: Set<Node> = new Set<Node>();
 	public x?: number;
 	public y?: number;
 	public vx?: number;
@@ -186,7 +186,7 @@ export class MetaNode {
 
 export class MetaEdge {
 	readonly _origID: [Node, Node];
-	private _metaEdges: Set<Edge>;
+	private _metaEdges: Set<Edge> = new Set<Edge>();
 	public x?: number;
 	public y?: number;
 
@@ -206,29 +206,41 @@ export class MetaEdge {
 
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
-	private _metaNodes: Map<string | number, MetaNode>;
-	private _metaEdges: Map<[Node, Node], MetaEdge>;
+	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
+	private _metaEdges: Map<[Node, Node], MetaEdge> = new Map<[Node, Node], MetaEdge>();
 
 	public constructor(timesteps: Array<Graph>) {
 		this._timesteps = timesteps;
 		for (let g of timesteps) {
 			for (let n of g.nodes) {
-				if (!this._metaNodes.has(n._origID)) {
-					this._metaNodes.set(n._origID, new MetaNode(n._origID));
+				if (!this._metaNodes.has(n.origID)) {
+					this._metaNodes.set(n.origID, new MetaNode(n.origID));
 				}
 				this._metaNodes.get(n._origID).add(n);
 			}
 			for (let e of g.edges) {
-				if (!this._metaEdges.has([e._origSource, e._origTarget])) {
-					this._metaEdges.set([e._origSource, e._origTarget], new MetaEdge([e._origSource, e._origTarget]));
+				if (!this._metaEdges.has([e.origSource, e.origTarget])) {
+					console.log(e.origSource, e.origTarget)
+					this._metaEdges.set([e.origSource, e.origTarget], new MetaEdge([e.origSource, e.origTarget]));
+					console.log(this.metaEdges.get([e.origSource, e.origTarget]))
 				}
-				this._metaEdges.get([e._origSource, e._origTarget]).add(e)
+				console.log(e.origSource, e.origTarget)
+				console.log(this.metaEdges.get([e.origSource, e.origTarget]))
+				this._metaEdges.get([e.origSource, e.origTarget]).add(e)
 			}
 		}
 	}
 
 	get timesteps(): Array<Graph> {
 		return this._timesteps;
+	}
+
+	get metaNodes(): Map<string | number, MetaNode> {
+		return this._metaNodes;
+	}
+
+	get metaEdges(): Map<[Node, Node], MetaEdge> {
+		return this._metaEdges;
 	}
 }
 

@@ -43,7 +43,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		//add nodes to new map
 		this._nodeGlyphMapMap.set(this._timeStampIndex, this._nodeGlyphMap.set(this.labelShape, nodeLabelG));
 		this._nodeGlyphMapMap.set(this._timeStampIndex, this._nodeGlyphMap.set(this.circleShape, nodeCircleG));
-		this._simulationMap.set(this._timeStampIndex, this._simulation)//new Simulation<any, undefined>)
 		// }
 	}
 
@@ -61,7 +60,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 			//add voronoi regions to map
 			this._groupGlyphMap.set(this.voronoiGroupGlyph, voronoiG);
-			this._simulationMap.set(this._timeStampIndex, this._simulation)//new Simulation<any, undefined>)
 		}
 
 		this._currentGroupGlyph.transformTo(this._groupGlyphMap.get(this._currentGroupGlyph), this.voronoiGroupGlyph, this._groupGlyphMap.get(this.voronoiGroupGlyph));

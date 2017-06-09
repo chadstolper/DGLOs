@@ -47,7 +47,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * The physics simulation used to direct froce-directed visualizations.
 	 */
-	_simulation: Simulation<any, undefined>
+	_simulation: Simulation<any, undefined>;
+	_metaSimulation: Simulation<any, undefined>;
 	_simulationMap: Map<number, Simulation<any, undefined>> = new Map<number, Simulation<any, undefined>>();
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
