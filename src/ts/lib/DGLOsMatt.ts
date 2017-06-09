@@ -97,49 +97,69 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	public runSimulation(setRunning: boolean) {
 		if (setRunning) {
 			let self = this;
-			this._simulationMap.forEach(function (sim: Simulation<any, undefined>, timestep: number) {
-				console.log(timestep)
-				//Check simulation exists
-				if (sim === undefined) {
-					sim = d3force.forceSimulation()
-						.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
-						.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
-						.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
-						.force("collide", d3force.forceCollide().radius(function (d: Node) {
-							try {
-								if (self._currentNodeShape.shapeType === "Label") {
-									return d.label.length * 4;
-								}
-								else return self._attrOpts.radius;
+			//Check simulation exists
+			if (this._simulation === undefined) {
+				this._simulation = d3force.forceSimulation()
+					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
+					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
+					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
+					.force("collide", d3force.forceCollide().radius(function (d: Node) {
+						try {
+							if (self._currentNodeShape.shapeType === "Label") {
+								return d.label.length * 4;
 							}
-							catch (err) {
-								return null;
-							}
-						})
-							.iterations(2))
-						.on("tick", self.ticked(self))
-						.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
-				}
-				if (sim !== undefined) {
-					sim.nodes(self.data.timesteps[timestep].nodes);
-					(sim.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[timestep].edges);
+							else return self._attrOpts.radius;
+						}
+						catch (err) {
+							return null;
+						}
+					})
+						.iterations(2))
+					.on("tick", this.ticked(self))
+					.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
+			}
+			if (this._simulation !== undefined) {
+				this._simulation.nodes(self.data.timesteps[this._timeStampIndex].nodes);
+				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[this._timeStampIndex].edges);
 
-					sim.alpha(.5).restart();
-				}
-				self._simulationMap.set(timestep, sim);
-			})
+				this._simulation.alpha(.5).restart();
+			}
+			// this._simulationMap.forEach(function (sim: Simulation<any, any>, timestep: number) {
+			// 	//Check simulation exists
+			// 	if (sim === undefined) {
+			// 		sim = d3force.forceSimulation()
+			// 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
+			// 			.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
+			// 			.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
+			// 			.force("collide", d3force.forceCollide().radius(function (d: Node) {
+			// 				try {
+			// 					if (self._currentNodeShape.shapeType === "Label") {
+			// 						return d.label.length * 4;
+			// 					}
+			// 					else return self._attrOpts.radius;
+			// 				}
+			// 				catch (err) {
+			// 					return null;
+			// 				}
+			// 			})
+			// 				.iterations(2))
+			// 			.on("tick", self.ticked(self))
+			// 			.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
+			// 	}
+			// 	if (sim !== undefined) {
+			// 		sim.nodes(self.data.timesteps[timestep].nodes);
+			// 		(sim.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[timestep].edges);
+
+			// 		sim.alpha(.5).restart();
+			// 	}
+			// 	self._simulationMap.set(timestep, sim);
+			// })
 		}
 		// else {
-		// try {
 		// 	this._simulationMap.forEach(function (sim: Simulation<any, undefined>, timestep: number) {
 		// 		sim.stop();
 		// 	}
 		// }
-		// catch (err) {
-		// 	console.log("simulation does not exisit");
-		// }
-		// }
-		console.log(this._simulationMap)
 	}
 
 	private ticked(self: DGLOsMatt) {
@@ -161,6 +181,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphMapMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			self._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+				console.log(timestep)
 				shape.draw(glyphs, self._data, timestep, self._attrOpts);
 			})
 		});

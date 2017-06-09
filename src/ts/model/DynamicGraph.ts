@@ -161,12 +161,70 @@ export class Graph {
 	}
 }
 
+export class MetaNode {
+	readonly _origID: number | string;
+	private _nodes: Set<Node>;
+	public x?: number;
+	public y?: number;
+	public vx?: number;
+	public vy?: number;
+	public _fx?: number;
+	public _fy?: number;
+
+	constructor(id: number | string) {
+		this._origID = id;
+	}
+
+	get origID(): number | string {
+		return this._origID;
+	}
+
+	public add(data: Node) {
+		this._nodes.add(data);
+	}
+}
+
+export class MetaEdge {
+	readonly _origID: [Node, Node];
+	private _metaEdges: Set<Edge>;
+	public x?: number;
+	public y?: number;
+
+	constructor(id: [Node, Node]) {
+		this._origID = id;
+	}
+
+	get origID(): [Node, Node] {
+		return this._origID;
+	}
+
+	public add(data: Edge) {
+		this._metaEdges.add(data);
+	}
+
+}
 
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
+	private _metaNodes: Map<string | number, MetaNode>;
+	private _metaEdges: Map<[Node, Node], MetaEdge>;
 
 	public constructor(timesteps: Array<Graph>) {
 		this._timesteps = timesteps;
+		for (let g of timesteps) {
+			for (let n of g.nodes) {
+				if (!this._metaNodes.has(n._origID)) {
+					this._metaNodes.set(n._origID, new MetaNode(n._origID));
+				}
+				this._metaNodes.get(n._origID).add(n);
+			}
+			for (let e of g.edges) {
+				if (!this._metaEdges.has([e._origSource, e._origTarget])) {
+					this._metaEdges.set([e._origSource, e._origTarget], new MetaEdge([e._origSource, e._origTarget]));
+				}
+				this._metaEdges.get([e._origSource, e._origTarget]).add(e)
+			}
+		}
 	}
 
 	get timesteps(): Array<Graph> {
