@@ -139,18 +139,13 @@ export class DGLOsWill extends DGLOsMatt {
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
 		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
-		//this._nodeGlyphMap.get(this._currentNodeShape).selectAll(this.currentNodeShape.shapeType)
-		//let clicker = d3.select(this._nodeGlyphMap.get(this._currentNodeShape))
 	}
 
 
 	protected _getCentralNodes() {
-		console.log("getCentralNodes");
-		// console.log(this._centralNodeID);
 		this._centralNodeArray = [];
 		for (let step of this.dataToDraw.timesteps) {
 			for (let node of step.nodes) {
-				// console.log(node.origID, this._centralNodeID);
 				if (node.origID === this.centralNodeID) {
 					this._centralNodeArray.push(node);
 				}
@@ -181,7 +176,6 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	protected _getEdges() {
-		console.log("getEdges");
 		this._nbrEdges = [];
 		for (let step of this.dataToDraw.timesteps) {
 			for (let edge of step.edges) {
@@ -191,11 +185,9 @@ export class DGLOsWill extends DGLOsMatt {
 				}
 			}
 		}
-		// console.log(this._nbrEdges);
 	}
 
 	protected _getNeighboringNodes() {
-		console.log("getNodes");
 		this._nbrNodes = [];
 		for (let edge of this._nbrEdges) {
 			if (this._centralNodeArray.includes(edge.origTarget)) {
@@ -220,7 +212,6 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let key of this._neighboringNodesMap.keys()) {
 			this._nbrNodes.push(this._neighboringNodesMap.get(key));
 		}
-		// console.log(this._nbrNodes);
 	}
 	protected _mergeNodeLists() {
 		for (let node of this._centralNodeArray) {

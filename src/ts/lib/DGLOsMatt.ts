@@ -103,8 +103,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				.on("tick", this.ticked(this));
 		}
 		if (this._simulation !== undefined) {
-			this._simulation.nodes(this._data.timesteps[this._timeStampIndex].nodes);
-			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this._data.timesteps[this._timeStampIndex].edges);
+			this._simulation.nodes(this._dataToDraw.timesteps[this._timeStampIndex].nodes);
+			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this._dataToDraw.timesteps[this._timeStampIndex].edges);
 
 			this._simulation.alpha(.5).restart();
 		}
@@ -119,17 +119,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
 			self.voronoiInit();
-			group.draw(paths, self.data, self._timeStampIndex, self._groupAttrOpts, self._noisePoints, self._voronoi);
+			group.draw(paths, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self._noisePoints, self._voronoi);
 		});
 
 		//update edges in map; run update of simulation on all edges
 		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.data, self._timeStampIndex, self._edgeAttrOpts);
+			shape.draw(edges, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-			shape.draw(glyphs, self._data, self._timeStampIndex, self._attrOpts);
+			shape.draw(glyphs, self._dataToDraw, self._timeStampIndex, self._attrOpts);
 		});
 	}
 
