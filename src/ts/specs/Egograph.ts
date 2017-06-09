@@ -13,5 +13,6 @@ export class Egograph extends Technique {
 		this.lib.setNodeGlyphAttrs(attr);
 		this.lib.setEdgeGlyphAttrs(attr);
 		this.lib.runSimulation();
+		this.lib.enableStepping();
 	}
 }

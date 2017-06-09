@@ -102,12 +102,12 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		switch (shape.shapeType) {
 			case "Label":
-				console.log("Circle-->Label")
+				//console.log("Circle-->Label")
 				console.log(sourceSelection)
 				break;
 
 			case "Circle":
-				console.log("Circle-->Circle Catch");
+				//console.log("Circle-->Circle Catch");
 				sourceSelection.style("display", null);
 				break;
 

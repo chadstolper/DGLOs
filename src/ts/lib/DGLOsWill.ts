@@ -103,8 +103,6 @@ export class DGLOsWill extends DGLOsMatt {
 		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
 	}
 	public enableStepping() {
-		console.log("Texas two-step!");
-
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
 			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
@@ -140,6 +138,8 @@ export class DGLOsWill extends DGLOsMatt {
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
 		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
+		//console.log(this._neighboringNodesMap)
+		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
 	}
 
 
@@ -148,7 +148,6 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let step of this.dataToDraw.timesteps) {
 			for (let node of step.nodes) {
 				if (node.origID === this.centralNodeID) {
-					console.log(node);
 					this._centralNodeArray.push(node);
 				}
 			}
@@ -200,8 +199,8 @@ export class DGLOsWill extends DGLOsMatt {
 		}
 	}
 	public redraw(): void {
-		console.log("redraw");
-		console.log(this.dataToDraw);
+		//console.log("redraw");
+		//console.log(this.dataToDraw);
 		// this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
 		// this.currentNodeShape.draw(this._nodeGlyphMap.get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
 		this.drawEdgeGlyphs();
@@ -221,6 +220,7 @@ export class DGLOsWill extends DGLOsMatt {
 			for (let node of this._centralNodeArray) {
 				node.fx = this._width / 2;
 				node.fy = yScale(node.timestamp);
+				console.log(yScale(node.timestamp));
 			}
 		} else {
 			this.onClickRedraw = false;
