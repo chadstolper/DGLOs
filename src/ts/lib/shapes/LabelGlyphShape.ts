@@ -1,6 +1,7 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
-import { Selection } from "d3-selection";
+import { Selection, select } from "d3-selection";
+import * as d3 from "d3" //TODO: Find module
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
 

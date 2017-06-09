@@ -13,6 +13,9 @@ import * as d3 from "d3"; //TODO: replace later with module
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
+	protected _timeStampIndex = 0;
+
+
 	/**
 	 * The overarching <g> tag holding the shape glyph selections
 	 */
@@ -39,7 +42,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
 	 */
 	_groupGlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>> = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
-	_timeStampIndex = 0;
 	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	/**
 	 * The physics simulation used to direct froce-directed visualizations.
@@ -48,7 +50,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 	_currentGroupGlyph: GroupGlyph;
-	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1, -1], [this._width + 1, this._height + 1]]) //set dimensions of voronoi
+	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]]) //set dimensions of voronoi
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
 	_cardinalPoints: [number, number][];
@@ -80,6 +82,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_centralNodeArray: Array<Node>;
 	_centralNodeID: number;
 
+	//TODO: MAKE ALL THE GETTERS! MAKE ALL THE SETTERS!
 
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;

@@ -45,6 +45,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	public drawRegions() {
 		this._currentGroupGlyph = this.voronoiGroupGlyph;
+		this.voronoiInit();
 
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
@@ -59,8 +60,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 
 		this._currentGroupGlyph.transformTo(this._groupGlyphMap.get(this._currentGroupGlyph), this.voronoiGroupGlyph, this._groupGlyphMap.get(this.voronoiGroupGlyph));
-		this.setNodeGlyphAttrs(new SVGAttrOpts("grey", null, 1));
-		this.setEdgeGlyphAttrs(new SVGAttrOpts(null, "grey", null, 1));
 	}
 
 	public removeRegions() {
@@ -93,22 +92,27 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	/**
 	 * Begins the force simulation, calls internal tick().
 	 */
-	public runSimulation() {
-		//Check simulation exists
-		if (this._simulation === undefined) {
-			this._simulation = d3force.forceSimulation()
-				.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
-				.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
-				.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
-				.on("tick", this.ticked(this));
-		}
-		if (this._simulation !== undefined) {
-			console.log(this.data.timesteps[0].nodes)
-			alert("stop");
-			this._simulation.nodes(this.data.timesteps[this._timeStampIndex].nodes);
-			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this.data.timesteps[this._timeStampIndex].edges);
+	public runSimulation(setRunning: boolean) {
+		if (setRunning) {
+			//Check simulation exists
+			if (this._simulation === undefined) {
+				this._simulation = d3force.forceSimulation()
+					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
+					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
+					.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
+					.force("collide", d3force.forceCollide().radius(function (d: Node) { return d.label.length * 4; }).iterations(2)) //TODO: make it calculate collision based on label...what about circles...
+					.on("tick", this.ticked(this))
+					.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
+			}
+			if (this._simulation !== undefined) {
+				this._simulation.nodes(this.data.timesteps[this._timeStampIndex].nodes);
+				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this.data.timesteps[this._timeStampIndex].edges);
 
-			this._simulation.alpha(.5).restart();
+				this._simulation.alpha(.5).restart();
+			}
+		}
+		else {
+			this._simulation.stop();
 		}
 	}
 
@@ -120,7 +124,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let self = this; //d3 scope this issue
 
 		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
-			self.voronoiInit();
 			group.draw(paths, self.data, self._timeStampIndex, self._groupAttrOpts, self._noisePoints, self._voronoi);
 		});
 
