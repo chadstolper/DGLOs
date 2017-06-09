@@ -125,13 +125,13 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 	public setCenterNode(newID: number | string) {
 		this.centralNodeID = newID;
-		this.emptyArrays();
+		this._emptyArrays();
 		this._calculateNeighborsAndIncidentEdges();
 	}
 	protected _calculateNeighborsAndIncidentEdges() {
 		this.dataToDraw = this.data;
 		this._getCentralNodes();
-		this.setCentralNodeFixedPositions();
+		this._setCentralNodeFixedPositions();
 		for (let node of this._centralNodeArray) {
 			console.log(node.label + ": " + node.fx + " " + node.fy);
 		}
@@ -142,7 +142,16 @@ export class DGLOsWill extends DGLOsMatt {
 		//console.log(this._neighboringNodesMap)
 		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
 	}
-	private emptyArrays() {
+
+	public redraw(): void {
+		//this.emptyArrays();
+		//this.setCentralNodeFixedPositions();
+		this.drawEdgeGlyphs();
+		this.drawNodeGlyphs();
+		this.runSimulation(true);
+	}
+
+	protected _emptyArrays() {
 		if (this._nbrNodes !== undefined) {
 			for (let node of this._nbrNodes) {
 				node.fx = null;
@@ -153,6 +162,26 @@ export class DGLOsWill extends DGLOsMatt {
 		this._centralNodeArray = [];
 		this._nbrEdges = [];
 		this._nbrNodes = [];
+	}
+	protected _setCentralNodeFixedPositions(): void {
+		if (this.onClickRedraw) {
+			let yScale = scaleLinear()
+				.domain(extent(this._centralNodeArray, function (d: Node): number {
+					return d.timestamp;
+				}))
+				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+			for (let node of this._centralNodeArray) {
+				node.fx = this._width / 2;
+				node.fy = yScale(node.timestamp);
+			}
+		} else {
+			this.onClickRedraw = false;
+			for (let node of this._nbrNodes) {
+				node.fx = null;
+				node.fy = null;
+			}
+		}
+		console.log(this._centralNodeArray);
 	}
 	protected _getCentralNodes() {
 		for (let step of this.dataToDraw.timesteps) {
@@ -203,33 +232,11 @@ export class DGLOsWill extends DGLOsMatt {
 			this._nbrNodes.push(node);
 		}
 	}
-	public redraw(): void {
-		this.setCentralNodeFixedPositions();
-		this.drawEdgeGlyphs();
-		this.drawNodeGlyphs();
-		this.runSimulation(true);
-		this.emptyArrays();
+
+	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
+		this.onClickRedraw = newOnClickRedraw;
+		this._setCentralNodeFixedPositions();
+		this.redraw();
 	}
-	public fixCentralNodePositions(_onClickRedraw: boolean) {
-		this.onClickRedraw = _onClickRedraw;
-	}
-	private setCentralNodeFixedPositions() {
-		if (this.onClickRedraw) {
-			let yScale = scaleLinear()
-				.domain(extent(this._centralNodeArray, function (d: Node): number {
-					return d.timestamp;
-				}))
-				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
-			for (let node of this._centralNodeArray) {
-				node.fx = this._width / 2;
-				node.fy = yScale(node.timestamp);
-			}
-		} else {
-			this.onClickRedraw = false;
-			for (let node of this._nbrNodes) {
-				node.fx = null;
-				node.fy = null;
-			}
-		}
-	}
+
 }
