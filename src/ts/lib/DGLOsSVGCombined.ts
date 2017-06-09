@@ -26,6 +26,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * A map linking NodeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. CircleNodes, LabelNodes etc).
 	 */
 	_nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>> = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
+	_nodeGlyphMapMap: Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>>();
 	/**
 	 * A map linking EdgeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. rectEdges, STLineEdges etc).
 	 */
@@ -47,6 +48,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * The physics simulation used to direct froce-directed visualizations.
 	 */
 	_simulation: Simulation<any, undefined>
+	_simulationMap: Map<number, Simulation<any, undefined>> = new Map<number, Simulation<any, undefined>>();
 	_currentEdgeShape: EdgeGlyphShape;
 	_currentNodeShape: NodeGlyphShape;
 	_currentGroupGlyph: GroupGlyph;

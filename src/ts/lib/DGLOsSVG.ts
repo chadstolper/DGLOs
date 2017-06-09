@@ -8,6 +8,7 @@ import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { AttrOpts } from "./DGLOs";
 import { DGLOsWill } from "./DGLOsWill";
 import { DGLOsMatt } from "./DGLOsMatt";
+import { DGLOsSandwich } from "./DGLOsSandwich";
 
 /**
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
@@ -106,4 +107,4 @@ export class SVGAttrOpts implements AttrOpts {
 	}
 }
 
-export class DGLOsSVG extends DGLOsWill { }
+export class DGLOsSVG extends DGLOsSandwich { }

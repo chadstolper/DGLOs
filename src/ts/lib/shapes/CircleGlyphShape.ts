@@ -93,7 +93,6 @@ export class CircleGlyphShape implements NodeGlyphShape {
 		switch (shape.shapeType) {
 			case "Label":
 				console.log("Circle-->Label")
-				console.log(sourceSelection)
 				break;
 
 			case "Circle":

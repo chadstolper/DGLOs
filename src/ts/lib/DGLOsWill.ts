@@ -25,23 +25,27 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public drawEdgeGlyphs() {
 		this._currentEdgeShape = this.rectShape;
-
-		if (this._edgeG === undefined) {
-			this._edgeG = this.loc.append("g").classed("edgeG", true);
-
-			let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(this._edgeG);
-			let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
-			let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
-
-			this._edgeGlyphMap.set(this.rectShape, edgeRectG);
-			this._edgeGlyphMap.set(this.gestaltShape, edgeGestaltG);
-			this._edgeGlyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
-
-			edgeRectG.style("display", "none");
-			edgeGestaltG.style("display", "none");
-			edgeSTLineG.style("display", "none");
-		}
+		this.drawEdgeGlyphsAt(this.loc);
 	}
+
+	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>) {
+		// if (this._edgeG === undefined) {
+		this._edgeG = loc.append("g").classed("edgeG", true);
+
+		let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(this._edgeG);
+		let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
+		let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
+
+		this._edgeGlyphMap.set(this.rectShape, edgeRectG);
+		this._edgeGlyphMap.set(this.gestaltShape, edgeGestaltG);
+		this._edgeGlyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
+
+		edgeRectG.style("display", "none");
+		edgeGestaltG.style("display", "none");
+		edgeSTLineG.style("display", "none");
+		// }
+	}
+
 	/**
 	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This objecy
 	 * determines the attributes that are used when drawing edges (e.g. color, thickness, etc..). 
