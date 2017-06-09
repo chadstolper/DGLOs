@@ -33,8 +33,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			.style("dominant-baseline", this._dominantBaseline)
 			.style("text-anchor", this._textAnchor)
 			.on("click", function (d: Node) {
-				console.log(d.origID);
-				self._lib.centralNodeID = d.origID;
+				self.lib.centralNodeID = d.origID;
 			});
 		return ret;
 	}

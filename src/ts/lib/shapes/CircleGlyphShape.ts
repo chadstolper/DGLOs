@@ -58,7 +58,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 				case "id":
 					glyphs
 						.attr("fill", function (d: Node): string {
-							return colorScheme(d.id);
+							return colorScheme(d.origID);
 						});
 					break;
 
@@ -75,6 +75,9 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 							return colorScheme(d.type);
 						});
 					break;
+				default:
+					glyphs
+						.attr("fill", attrOpts.fill);
 			}
 
 			glyphs
