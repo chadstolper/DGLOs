@@ -150,7 +150,7 @@ export interface DGLOs {
 	/**
 	 * Starts running a node positioning simulation.
 	 */
-	runSimulation(): void;
+	runSimulation(setRunning: boolean): void;
 
 
 	/**

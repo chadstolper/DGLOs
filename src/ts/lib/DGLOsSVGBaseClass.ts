@@ -45,8 +45,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		this._location = location;
 		this._dataToDraw = data;
 		if (location.attr("width")) { this._width = +location.attr("width"); }
-		if (location.attr("height")) { this._width = +location.attr("height"); }
-
+		if (location.attr("height")) { this._height = +location.attr("height") }
 	}
 	private _centralNodeID: number | string;
 	/**
@@ -122,7 +121,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	removeTimesteps(): void { };
 
 
-	runSimulation(): void { };
+	runSimulation(setRunning: boolean): void { };
 	stopSimulation(): void { };
 
 	setCenterNode(centerNodeID: number | string): void { };
