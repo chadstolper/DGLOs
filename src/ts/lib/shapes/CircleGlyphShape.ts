@@ -2,30 +2,37 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
+import { Shape } from "./Shape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import "d3-transition";
 
-export class CircleGlyphShape implements NodeGlyphShape {
+export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
-
 	/**
 	 * Make new <g>
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return location.append("g").classed("CircleNodes", true);
+		return location.append("g").classed("CircleNodes", true)
 	}
 
 	/**
 	 * Create selection of nodes. Returns new selection
 	 * @param glyphs
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
+	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number, ): Selection<any, Node, any, {}> {
+		let self = this;
 		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
+			.on("click", function (d: Node) {
+				self.lib.setCenterNode(d.origID);
+				if (self.lib.onClickRedraw) {
+					self.lib.redraw();
+				}
+			});
 		return ret;
 	}
 
@@ -51,7 +58,7 @@ export class CircleGlyphShape implements NodeGlyphShape {
 				case "id":
 					glyphs
 						.attr("fill", function (d: Node): string {
-							return colorScheme(d.id);
+							return colorScheme(d.origID);
 						});
 					break;
 
@@ -68,6 +75,9 @@ export class CircleGlyphShape implements NodeGlyphShape {
 							return colorScheme(d.type);
 						});
 					break;
+				default:
+					glyphs
+						.attr("fill", attrOpts.fill);
 			}
 
 			glyphs
@@ -92,21 +102,19 @@ export class CircleGlyphShape implements NodeGlyphShape {
 	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		switch (shape.shapeType) {
 			case "Label":
-				console.log("Circle-->Label")
+				//console.log("Circle-->Label")
 				console.log(sourceSelection)
 				break;
 
 			case "Circle":
-				console.log("Circle-->Circle Catch");
+				//console.log("Circle-->Circle Catch");
 				sourceSelection.style("display", null);
 				break;
 
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
-
-		sourceSelection.transition().style("display", "none");
-		targetSelection.transition().style("display", null);
+		super.transformTo(sourceSelection, null, targetSelection);
 	}
 
 	/**

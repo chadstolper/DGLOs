@@ -11,8 +11,8 @@ export class Node implements SimulationNodeDatum {
 	public vy?: number;
 	public _fx?: number;
 	public _fy?: number;
-	readonly _origID: string | number;
-	readonly _timestamp: number;
+	private readonly _origID: string | number;
+	private readonly _timestamp: number;
 
 	public constructor(id: number | string, index: number, type: string, label: string, timestamp: number) {
 		this._id = id;
@@ -76,8 +76,8 @@ export class Edge {
 	private _weight: number;
 	private _x?: number;
 	private _y?: number;
-	public readonly _origSource: Node;
-	public readonly _origTarget: Node;
+	private readonly _origSource: Node;
+	private readonly _origTarget: Node;
 	public constructor(id: number | string, source: Node, target: Node, weight: number, timestamp: number) {
 		this._id = id;
 		this._source = source;
