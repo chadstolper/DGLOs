@@ -70,15 +70,6 @@ export class DGLOsWill extends DGLOsMatt {
 			})
 		})
 		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
-
-		// this._nodeGlyphMap.get(this._currentNodeShape)
-		// 	.attr("x", 10)
-		// 	.attr("y", function (d: Node) {
-		// 		return (d.index / curGraph.nodes.length) * 100 + "%";
-		// 	})
-		// function (d: Node) {
-		// 	return (+d.index / curGraph.nodes.length) * 100 + "%";
-		// })
 	}
 	/**
 	 * positionEdgeGlyphsMatrix transforms edges to rectangles using the transfromEdgeGlyphsTo
@@ -98,6 +89,10 @@ export class DGLOsWill extends DGLOsMatt {
 			this._edgeAttrOpts.opacity)
 		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
 	}
+	/**
+	 * A method that appends buttons to the webpage which allow the user to move through 
+	 * the dynamic graph's timesteps.
+	 */
 	public enableStepping() {
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
 			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
@@ -123,11 +118,19 @@ export class DGLOsWill extends DGLOsMatt {
 				self.runSimulation(true);
 			});
 	}
+	/**
+	 * Sets the central node and calls calculateNeighhborAndIncidentEdges.
+	 * @param newID 
+	 */
 	public setCenterNode(newID: number | string) {
 		this.centralNodeID = newID;
 		this._emptyArrays();
 		this._calculateNeighborsAndIncidentEdges();
 	}
+	/**
+	 * Calculates all edges and nodes that directly touch the central
+	 * node in every timestep.
+	 */
 	protected _calculateNeighborsAndIncidentEdges() {
 		this.dataToDraw = this.data;
 		this._getCentralNodes();
@@ -142,7 +145,9 @@ export class DGLOsWill extends DGLOsMatt {
 		//console.log(this._neighboringNodesMap)
 		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
 	}
-
+	/**
+	 * Redraws the graph.
+	 */
 	public redraw(): void {
 		//this.emptyArrays();
 		//this.setCentralNodeFixedPositions();
@@ -150,7 +155,10 @@ export class DGLOsWill extends DGLOsMatt {
 		this.drawNodeGlyphs();
 		this.runSimulation(true);
 	}
-
+	/**
+	 * _emptyArrays clears _nbrNodes, _nbrEdges, _neighboringNodesMap, and _centralNodeArray. It also
+	 * sets the _fx and _fy properties of all nodes in _nbrNodes to null.
+	 */
 	protected _emptyArrays() {
 		if (this._nbrNodes !== undefined) {
 			for (let node of this._nbrNodes) {
@@ -163,6 +171,9 @@ export class DGLOsWill extends DGLOsMatt {
 		this._nbrEdges = [];
 		this._nbrNodes = [];
 	}
+	/**
+	 * Sets the position of the central nodes.
+	 */
 	protected _setCentralNodeFixedPositions(): void {
 		if (this.onClickRedraw) {
 			let yScale = scaleLinear()
@@ -183,6 +194,10 @@ export class DGLOsWill extends DGLOsMatt {
 		}
 		console.log(this._centralNodeArray);
 	}
+	/**
+	 * collects a list of nodes with the same _origID across all timesteps and places them into
+	 * __ _centralNodeArray ___.
+	 */
 	protected _getCentralNodes() {
 		for (let step of this.dataToDraw.timesteps) {
 			for (let node of step.nodes) {
@@ -192,6 +207,9 @@ export class DGLOsWill extends DGLOsMatt {
 			}
 		}
 	}
+	/**
+	 * Places all edges that touch the central nodes into __ _nbrEdges __.
+	 */
 	protected _getEdges() {
 		for (let step of this.dataToDraw.timesteps) {
 			for (let edge of step.edges) {
@@ -202,6 +220,10 @@ export class DGLOsWill extends DGLOsMatt {
 			}
 		}
 	}
+	/**
+	 * Collects all nodes that share an edge with the central nodes and places them into 
+	 * __ _nbrNodes __
+	 */
 	protected _getNeighboringNodes() {
 		for (let edge of this._nbrEdges) {
 			if (this._centralNodeArray.includes(edge.origTarget)) {
@@ -227,12 +249,19 @@ export class DGLOsWill extends DGLOsMatt {
 			this._nbrNodes.push(this._neighboringNodesMap.get(key));
 		}
 	}
+	/**
+	 * Merges __ _centralNodeArray __ into __ _nbrNodes __
+	 */
 	protected _mergeNodeLists() {
 		for (let node of this._centralNodeArray) {
 			this._nbrNodes.push(node);
 		}
 	}
-
+	/**
+	 * A DGLO that decides if central nodes should have fixed positions, and then
+	 * redraws.	
+	 * @param newOnClickRedraw 
+	 */
 	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
 		this.onClickRedraw = newOnClickRedraw;
 		this._setCentralNodeFixedPositions();
