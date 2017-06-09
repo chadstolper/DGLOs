@@ -113,30 +113,18 @@ export class DGLOsWill extends DGLOsMatt {
 			.text("<--")
 			.on("click", function () {
 				console.log("clicked");
-<<<<<<< HEAD
-				self._timeStampIndex = (self._timeStampIndex + self.dataToDraw.timesteps.length - 1) % self.dataToDraw.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.dataToDraw, self._timeStampIndex, _matrixAttrOpts);
-				self.runSimulation();
-=======
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation(true);
->>>>>>> refs/remotes/origin/dglos
 			});
 
 		let nextButton = d3.select("body").append("div").append("button")
 			.text("-->")
 			.on("click", function () {
 				console.log("clicked");
-<<<<<<< HEAD
-				self._timeStampIndex = (self._timeStampIndex + 1) % self.dataToDraw.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.dataToDraw, self._timeStampIndex, _matrixAttrOpts);
-				self.runSimulation();
-=======
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation(true);
->>>>>>> refs/remotes/origin/dglos
 			});
 	}
 	public setCenterNode(newID: number | string) {
@@ -218,7 +206,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this.drawEdgeGlyphs();
 		this.drawNodeGlyphs();
 		this.fixCentralNodePositions(true);
-		this.runSimulation();
+		this.runSimulation(true);
 
 	}
 	public fixCentralNodePositions(fixNodesBool: boolean) {
