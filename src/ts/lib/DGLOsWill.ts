@@ -129,6 +129,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 	public setCenterNode(newID: number | string) {
 		this.centralNodeID = newID;
+		this.emptyArrays();
 		this._calculateNeighborsAndIncidentEdges();
 	}
 	protected _calculateNeighborsAndIncidentEdges() {
@@ -144,7 +145,6 @@ export class DGLOsWill extends DGLOsMatt {
 
 
 	protected _getCentralNodes() {
-		this._centralNodeArray = [];
 		for (let step of this.dataToDraw.timesteps) {
 			for (let node of step.nodes) {
 				if (node.origID === this.centralNodeID) {
@@ -155,7 +155,6 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	protected _getEdges() {
-		this._nbrEdges = [];
 		for (let step of this.dataToDraw.timesteps) {
 			for (let edge of step.edges) {
 				if (this._centralNodeArray.includes(edge.origSource)
@@ -167,7 +166,6 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	protected _getNeighboringNodes() {
-		this._nbrNodes = [];
 		for (let edge of this._nbrEdges) {
 			if (this._centralNodeArray.includes(edge.origTarget)) {
 				this._neighboringNodesMap.set(edge.origSource.origID, edge.origSource);
@@ -191,7 +189,6 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let key of this._neighboringNodesMap.keys()) {
 			this._nbrNodes.push(this._neighboringNodesMap.get(key));
 		}
-		this._neighboringNodesMap.clear();
 	}
 	protected _mergeNodeLists() {
 		for (let node of this._centralNodeArray) {
@@ -203,10 +200,11 @@ export class DGLOsWill extends DGLOsMatt {
 		//console.log(this.dataToDraw);
 		// this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
 		// this.currentNodeShape.draw(this._nodeGlyphMap.get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
+		this.emptyArrays();
 		this.drawEdgeGlyphs();
 		this.drawNodeGlyphs();
-		this.fixCentralNodePositions(true);
 		this.runSimulation(true);
+		this.fixCentralNodePositions(true);
 
 	}
 	public fixCentralNodePositions(fixNodesBool: boolean) {
@@ -220,7 +218,6 @@ export class DGLOsWill extends DGLOsMatt {
 			for (let node of this._centralNodeArray) {
 				node.fx = this._width / 2;
 				node.fy = yScale(node.timestamp);
-				console.log(yScale(node.timestamp));
 			}
 		} else {
 			this.onClickRedraw = false;
@@ -232,5 +229,11 @@ export class DGLOsWill extends DGLOsMatt {
 
 	}
 
+	private emptyArrays() {
+		this._neighboringNodesMap.clear();
+		this._centralNodeArray = [];
+		this._nbrEdges = [];
+		this._nbrNodes = [];
+	}
 
 }
