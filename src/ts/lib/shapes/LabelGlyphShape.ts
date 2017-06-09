@@ -34,7 +34,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			.style("text-anchor", this._textAnchor)
 			.on("click", function (d: Node) {
 				console.log(d.origID);
-				self._lib._centralNodeID = d.origID;
+				self._lib.centralNodeID = d.origID;
 			});
 		return ret;
 	}

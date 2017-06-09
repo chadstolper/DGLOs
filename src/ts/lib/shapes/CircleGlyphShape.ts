@@ -28,9 +28,10 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 			.on("click", function (d: Node) {
-				console.log(self._lib._centralNodeID);
-				self._lib._centralNodeID = d.origID;
-				console.log(self._lib._centralNodeID);
+				self._lib.centralNodeID = d.origID;
+				if (self._lib.onClickRedraw) {
+					self.draw(glyphs, data, TimeStampIndex, new SVGAttrOpts("blue", "black", 10, 1));
+				}
 			});
 		return ret;
 	}
