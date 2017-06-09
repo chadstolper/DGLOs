@@ -100,7 +100,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
 					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
 					.force("center", d3force.forceCenter(this._width / 2, this._height / 2))
-					.force("collide", d3force.forceCollide().radius(function (d: Node) { return 50 + 0.5; }).iterations(2)) //TODO: make it calculate collision based on label...what about circles...
+					.force("collide", d3force.forceCollide().radius(function (d: Node) { return d.label.length * 4; }).iterations(2)) //TODO: make it calculate collision based on label...what about circles...
 					.on("tick", this.ticked(this))
 					.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
 			}
