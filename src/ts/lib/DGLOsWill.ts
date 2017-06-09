@@ -12,8 +12,8 @@ import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import * as d3 from "d3-selection";
-import * as d3Scale from "d3-scale";
-import * as d3Array from "d3-array";
+import { scaleLinear } from "d3-scale";
+import { extent } from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
 
@@ -60,18 +60,18 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
-		let curGraph = this.data.timesteps[this._timeStampIndex];
+		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
 		console.log(this._currentNodeShape);
 		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
 		let h = this._height;
 		let w = this._width;
-		this.data.timesteps.forEach(function (g: Graph) {
+		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.nodes.forEach(function (d: Node) {
 				d.x = w / 10;
 				d.y = d.index / curGraph.nodes.length * h;
 			})
 		})
-		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
+		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
 
 		// this._nodeGlyphMap.get(this._currentNodeShape)
 		// 	.attr("x", 10)
@@ -91,22 +91,22 @@ export class DGLOsWill extends DGLOsMatt {
 	public positionEdgeGlyphsMatrix() {
 		let h = this._height;
 		let w = this._width;
-		this.data.timesteps.forEach(function (g: Graph) {
+		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.edges.forEach(function (e: Edge) {
 				e.x = (+e.source.index / g.nodes.length) * w;
 				e.y = (+e.target.index / g.nodes.length) * h;
 			})
 		})
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, _matrixAttrOpts);
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
 	}
 	public enableStepping() {
 		console.log("Texas two-step!");
 
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 
 		let self = this;
@@ -115,8 +115,8 @@ export class DGLOsWill extends DGLOsMatt {
 			.text("<--")
 			.on("click", function () {
 				console.log("clicked");
-				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+				self._timeStampIndex = (self._timeStampIndex + self.dataToDraw.timesteps.length - 1) % self.dataToDraw.timesteps.length;
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.dataToDraw, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation();
 			});
 
@@ -124,23 +124,21 @@ export class DGLOsWill extends DGLOsMatt {
 			.text("-->")
 			.on("click", function () {
 				console.log("clicked");
-				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+				self._timeStampIndex = (self._timeStampIndex + 1) % self.dataToDraw.timesteps.length;
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.dataToDraw, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation();
 			});
 	}
 	public setCenterNode(newID: number | string) {
-		console.log(this.data);
-		this._centralNodeID = newID;
+		this.centralNodeID = newID;
 		this._calculateNeighborsAndIncidentEdges();
-		console.log(this.data);
 	}
 	protected _calculateNeighborsAndIncidentEdges() {
 		this._getCentralNodes();
 		this._getEdges();
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
-		this.data = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
+		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
 		//this._nodeGlyphMap.get(this._currentNodeShape).selectAll(this.currentNodeShape.shapeType)
 		//let clicker = d3.select(this._nodeGlyphMap.get(this._currentNodeShape))
 	}
@@ -150,27 +148,42 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log("getCentralNodes");
 		// console.log(this._centralNodeID);
 		this._centralNodeArray = [];
-		for (let step of this.data.timesteps) {
+		for (let step of this.dataToDraw.timesteps) {
 			for (let node of step.nodes) {
 				// console.log(node.origID, this._centralNodeID);
-				if (node.origID === this._centralNodeID) {
+				if (node.origID === this.centralNodeID) {
 					this._centralNodeArray.push(node);
 				}
 			}
 		}
-		let ySpan = this._centralNodeArray.length;
-		for (let node of this._centralNodeArray) {
-			node.fx = this._width / 2;
-			node.fy = (this._height - 20) / ySpan;
-			ySpan -= 1;
-		}
 	}
 
+	public fixCentralNodePositions(fixNodesBool: boolean) {
+		if (fixNodesBool) {
+			this.onClickRedraw = true;
+			let yScale = scaleLinear()
+				.domain(extent(this._centralNodeArray, function (d: Node): number {
+					return d.timestamp;
+				}))
+				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+			for (let node of this._centralNodeArray) {
+				node.fx = this._width / 2;
+				node.fy = yScale(node.timestamp);
+			}
+		} else {
+			this.onClickRedraw = false;
+			for (let node of this._centralNodeArray) {
+				node.fx = null;
+				node.fy = null;
+			}
+		}
+
+	}
 
 	protected _getEdges() {
 		console.log("getEdges");
 		this._nbrEdges = [];
-		for (let step of this.data.timesteps) {
+		for (let step of this.dataToDraw.timesteps) {
 			for (let edge of step.edges) {
 				if (this._centralNodeArray.includes(edge.origSource)
 					|| this._centralNodeArray.includes(edge.origTarget)) {
