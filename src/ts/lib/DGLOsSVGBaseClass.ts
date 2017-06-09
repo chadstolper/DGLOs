@@ -48,7 +48,26 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		if (location.attr("height")) { this._width = +location.attr("height"); }
 
 	}
-	_centralNodeID: number | string;
+	private _centralNodeID: number | string;
+	/**
+	 * A boolean that decides if, on clicking a node, the graph should be redrawn.
+	 * Used for Egographs.
+	 */
+	private _onClickRedraw: boolean;
+
+	public get onClickRedraw(): boolean {
+		return this._onClickRedraw;
+	}
+	public set onClickRedraw(onClickRedraw: boolean) {
+		this._onClickRedraw = onClickRedraw;
+	}
+	public get centralNodeID(): number | string {
+		return this._centralNodeID;
+	}
+	public set centralNodeID(centralNodeID: number | string) {
+		this._centralNodeID = centralNodeID;
+	}
+
 	/**
 	 * The __only instance__ of RectGlyphShape in the entire code. Used to coordinate transitions
 	 * as well as to draw rectangles when needed.
