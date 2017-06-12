@@ -22,9 +22,11 @@ export class DGLOsWill extends DGLOsMatt {
 	 * maps each of the shapeType objects to their respective <g> tag, thus linking the two.
 	 * It hides all of the edge groups and then draws the currentEdgeShape.
 	 */
+	public initEdgeShape(shape: EdgeGlyphShape) {
+		this.currentEdgeShape = shape;
+	}
 	public drawEdgeGlyphs() {
-		this._currentEdgeShape = this.rectShape;
-
+		this.currentEdgeShape = this.rectShape;
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
@@ -54,8 +56,10 @@ export class DGLOsWill extends DGLOsMatt {
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
 	 */
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
+		console.log("transformEdgeGlyphsTo");
 		this.currentEdgeShape.transformTo(this._edgeGlyphMap.get(this._currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
 		this.currentEdgeShape = shape;
+		this.redraw();
 	}
 	public positionEdgeGlyphsGestalt() {
 
@@ -154,11 +158,9 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Redraws the graph.
 	 */
 	public redraw(): void {
-		//this.emptyArrays();
-		//this.setCentralNodeFixedPositions();
-		this.drawEdgeGlyphs();
-		this.drawNodeGlyphs();
-		//this.runSimulation(true);
+		console.log("redrawing");
+		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
+		//this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
 	}
 	/**
 	 * _emptyArrays clears _nbrNodes, _nbrEdges, _neighboringNodesMap, and _centralNodeArray. It also
