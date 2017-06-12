@@ -25,7 +25,7 @@ export class DGLOsSandwich extends DGLOsWill {
 		if (this.data.timesteps.length > 1) {
 			for (let i = 1; i < this.data.timesteps.length; i++) {
 				let newSVG: Selection<any, {}, any, {}> = select("body").append("svg") //TODO: needs to be a way to set the selection entry, ie. replace "body" varible
-					.classed("SVG_Timestamp:" + i, true)
+					.classed("SVG_Timestamp:" + (i + 1), true)
 					.attr("width", this._width).attr("height", this._height);
 				this.drawEdgeGlyphsAt(newSVG);
 				this.drawNodeGlyphsAt(newSVG);

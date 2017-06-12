@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection, select } from "d3-selection";
-import { Node, Edge } from "../model/dynamicgraph";
+import { Node, Edge, DynamicGraph, MetaNode, MetaEdge } from "../model/dynamicgraph";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
@@ -183,10 +183,44 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphMapMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-				console.log(glyphs)
+				// console.log(glyphs)
+				self.metaTick();
 				shape.draw(glyphs, self._data, timestep, self._attrOpts);
+				self.communicateNodePositions(self._data, self._data, timestep);
 			})
 		});
+	}
+
+	private metaTick() {
+		let self = this;
+		for (let step of this._data.timesteps) {
+			for (let n of step.nodes) {
+				let metaN = this._data.metaNodes.get(n.origID);
+				metaN.x = n.x;
+				metaN.y = n.y;
+				this._data.metaNodes.set(n.origID, metaN);
+			}
+		}
+		// console.log(this.data.metaNodes)
+	}
+
+	private communicateNodePositions(from: DynamicGraph, to: DynamicGraph, timestep: number) { //pass previous node positions to next generation
+		for (let n of from.timesteps[timestep].nodes) {
+			let n_prime: Node;
+			try {
+				n_prime = to.timesteps[timestep + 1].nodes.find(function (d: Node) { return d.id === n.id; });
+			}
+			catch (err) {
+				console.log("timsestep revert to 0")
+				n_prime = to.timesteps[0].nodes.find(function (d: Node) { return d.id === n.id; });
+			}
+			if (n_prime !== undefined) {
+				n_prime.x = n.x;
+				n_prime.y = n.y;
+				n_prime.vx = n.vx;
+				n_prime.vy = n.vy;
+			}
+		}
 	}
 
 	private voronoiInit() {
