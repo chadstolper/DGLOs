@@ -43,6 +43,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
+			let self = this;
 			glyphs
 				// .attr("cx", function (d: Node) {
 				// 	return d.x;
@@ -51,46 +52,48 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 				// 	return d.y;
 				// });
 				//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
-				.attr("d", "M 100, 100 m  75, 0 a 75, 75 0 1, 0 150, 0 a 75, 75 0 1, 0  150, 0"); //"M 100 100 a 50 50 0 1 0 0.00001 0 Z");
+				.attr("d", function (d: Node) {
+					return self.circlePath(10, 10, attrOpts.radius);
+				})
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
-		try {
-			switch (attrOpts.fill) {
-				case "id":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.origID);
-						});
-					break;
+		// try {
+		// 	switch (attrOpts.fill) {
+		// 		case "id":
+		// 			glyphs
+		// 				.attr("fill", function (d: Node): string {
+		// 					return colorScheme(d.origID);
+		// 				});
+		// 			break;
 
-				case "label":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.label);
-						});
-					break;
+		// 		case "label":
+		// 			glyphs
+		// 				.attr("fill", function (d: Node): string {
+		// 					return colorScheme(d.label);
+		// 				});
+		// 			break;
 
-				case "type":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.type);
-						});
-					break;
-				default:
-					glyphs
-						.attr("fill", attrOpts.fill);
-			}
+		// 		case "type":
+		// 			glyphs
+		// 				.attr("fill", function (d: Node): string {
+		// 					return colorScheme(d.type);
+		// 				});
+		// 			break;
+		// 		default:
+		// 			glyphs
+		// 				.attr("fill", attrOpts.fill);
+		// 	}
 
-			glyphs
-				.attr("stroke", attrOpts.stroke)
-				.attr("r", attrOpts.radius)
-				.attr("stroke-width", attrOpts.stroke_width)
-				.attr("opacity", attrOpts.opacity);
-		}
-		catch (err) {
-			console.log("attropts Circle undefined");
-		}
+		// glyphs
+		// 	.attr("stroke", attrOpts.stroke)
+		// 	.attr("r", attrOpts.radius)
+		// 	.attr("stroke-width", attrOpts.stroke_width)
+		// 	// 	.attr("opacity", attrOpts.opacity);
+		// }
+		// catch (err) {
+		// 	console.log("attropts Circle undefined");
+		// }
 
 		return glyphs;
 	}
@@ -135,6 +138,12 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		circleGlyphs = circleGlyphs.merge(circleEnter);
 
 		this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
+	}
+
+	//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
+	//I kind of jacked this guys code
+	private circlePath(cx: number, cy: number, r: number) {
+		return 'M ' + cx + ' ' + cy + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
 
 	get shapeType(): string {
