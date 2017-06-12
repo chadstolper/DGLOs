@@ -122,13 +122,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 				this._simulation.alpha(.5).restart();
 			}
-<<<<<<< HEAD
-		}
-		else {
-=======
 
 		} else {
->>>>>>> refs/remotes/origin/dglos
 			this._simulation.stop();
 			this._simulationEnabled = false;
 		}
@@ -188,10 +183,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphMapMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-				// console.log(glyphs)
-				self.metaTick();
+				console.log("glyphs")
+				// self.metaTick();
 				shape.draw(glyphs, self._data, timestep, self._attrOpts);
-				self.communicateNodePositions(self._data, self._data, timestep);
+				// self.communicateNodePositions(self._data, self._data, self._timeStampIndex);
 			})
 		});
 	}

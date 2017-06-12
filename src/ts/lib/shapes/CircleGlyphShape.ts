@@ -102,11 +102,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		switch (shape.shapeType) {
 			case "Label":
-<<<<<<< HEAD
-				console.log("Circle-->Label")
-=======
 				//TODO: add a transition
->>>>>>> refs/remotes/origin/dglos
 				break;
 			case "Circle":
 				//TODO: add a transition
