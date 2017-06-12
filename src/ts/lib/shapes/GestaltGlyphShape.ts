@@ -1,10 +1,11 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
+import { extent } from "d3-array";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { LineGlyphShape } from "./LineGlyphShape";
 import { SVGAttrOpts } from "../DGLOsSVG";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear } from "d3-scale";
 
 /**
  * The __GestaltGlyphsShape__ class contains all of the methods required to draw and position a Gestalt Glyph on screen.
@@ -62,7 +63,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 */
 	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
-			// console.log("TODO: attributes for gestalt");
+			console.log("TODO: attributes for gestalt");
+			let weightScale = scaleLinear<number>()
+				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
+				.range([0, 90])
+			console.log(weightScale);
 		}
 		catch (err) {
 			// console.log("attrOpts Gestalt undefined")
@@ -117,5 +122,14 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	}
 	get shapeType(): string {
 		return this._shapeType;
+	}
+	/**
+ 	* Create color domain takes an array of edges and finds the extent of the edge weights.
+ 	* @param edges 
+ 	*/
+	public createDomain(edges: Array<Edge>) {
+		return extent(edges, function (d: Edge): number {
+			return d.weight;
+		});
 	}
 }

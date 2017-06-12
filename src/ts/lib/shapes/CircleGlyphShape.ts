@@ -102,14 +102,18 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		switch (shape.shapeType) {
 			case "Label":
+<<<<<<< HEAD
 				console.log("Circle-->Label")
+=======
+				//TODO: add a transition
+>>>>>>> refs/remotes/origin/dglos
 				break;
-
 			case "Circle":
-				//console.log("Circle-->Circle Catch");
-				sourceSelection.style("display", null);
+				//TODO: add a transition
 				break;
-
+			case "Gestalt":
+				//TODO: add a transition
+				break;
 			default: console.log("new NodeShape is undefined");
 				break;
 		};

@@ -122,8 +122,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 				this._simulation.alpha(.5).restart();
 			}
+<<<<<<< HEAD
 		}
 		else {
+=======
+
+		} else {
+>>>>>>> refs/remotes/origin/dglos
 			this._simulation.stop();
 			this._simulationEnabled = false;
 		}
