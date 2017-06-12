@@ -2,7 +2,7 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { AttrOpts } from "../DGLOs";
-import * as d3Array from "d3-array";
+import { extent } from "d3-array";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
@@ -139,7 +139,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param edges 
 	 */
 	public createColorDomain(edges: Array<Edge>) {
-		return d3Array.extent(edges, function (d: Edge): number {
+		return extent(edges, function (d: Edge): number {
 			return d.weight;
 		});
 	}
