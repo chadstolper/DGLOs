@@ -13,6 +13,7 @@ export class Shape {
 	protected transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		sourceSelection.transition().style("display", "none");
 		targetSelection.transition().style("display", null);
+		this.lib.redraw();
 	}
 	public get lib(): DGLOsSVGBaseClass {
 		return this._lib;
