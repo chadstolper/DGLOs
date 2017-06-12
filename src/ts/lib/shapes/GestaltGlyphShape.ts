@@ -65,28 +65,31 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param edges 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		try {
-			let weightScale = scaleLinear<number>()
-				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
-				.range([0, 90])
-			glyphs
-				.attr("x1", function (d: Edge) {
-					return d.source.index / data.timesteps[TimeStampIndex].nodes.length * this.lib.width;
-				})
-				.attr("y1", function (d: Edge) {
-					return (d.target.index / data.timesteps[TimeStampIndex].nodes.length * this.lib.height);
-				})
-				.attr("x2", 100)
-				.attr("y2", function (d: Edge) {
-					console.log(100 * Math.tan(weightScale(d.weight)));
-					return 100 * Math.tan(weightScale(d.weight));
-				})
-				.attr("stroke", attrOpts.stroke)
-				.attr("stroke-width", attrOpts.stroke_width);
-		}
-		catch (err) {
-			// console.log("attrOpts Gestalt undefined")
-		}
+		console.log("updateDrawGestalt");
+		let weightScale = scaleLinear<number>()
+			.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
+			.range([0, 60])
+		glyphs
+			.attr("x1", function (d: Edge) {
+				return d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
+			})
+			.attr("y1", function (d: Edge) {
+				return (d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
+			})
+			.attr("x2", function (d: Edge) {
+				return (d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 50;
+			})
+			.attr("y2", function (d: Edge) {
+				if (Math.tan(weightScale(d.weight)) < 0) {
+					console.log(Math.tan(weightScale(d.weight)))
+					return 50 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
+				} else {
+					console.log(Math.tan(weightScale(d.weight)))
+					return 50 * (d.target.index) + (Math.tan(weightScale(d.weight)));
+				}
+			})
+			.attr("stroke", attrOpts.stroke)
+			.attr("stroke-width", attrOpts.stroke_width);
 		return glyphs;
 	}
 
@@ -123,6 +126,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param timeStepIndex 
 	 */
 	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
+		console.log("drawingGestalt");
 		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 

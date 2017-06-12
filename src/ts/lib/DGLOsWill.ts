@@ -59,7 +59,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this.redraw();
 	}
 	public positionEdgeGlyphsGestalt() {
-
+		this.redraw();
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
