@@ -184,17 +184,28 @@ export class MetaNode {
 	}
 }
 
+export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
+
+	public add(e: Edge) {
+		let key = e.origSource.origID + ":::" + e.origTarget.origID;
+		if (!this.has(key)) {
+			this.set(key, new MetaEdge(key));
+		}
+		this.get(key).add(e);
+	}
+}
+
 export class MetaEdge {
-	readonly _origID: [Node, Node];
+	readonly _origID: string;
 	private _metaEdges: Set<Edge> = new Set<Edge>();
 	public x?: number;
 	public y?: number;
 
-	constructor(id: [Node, Node]) {
-		this._origID = id;
+	constructor(e: string) {
+		this._origID = e;
 	}
 
-	get origID(): [Node, Node] {
+	get origID(): string {
 		return this._origID;
 	}
 
@@ -207,7 +218,8 @@ export class MetaEdge {
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
 	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
-	private _metaEdges: Map<[Node, Node], MetaEdge> = new Map<[Node, Node], MetaEdge>();
+	private _metaEdges: DynamicGraphMetaEdgeMap = new DynamicGraphMetaEdgeMap();
+	public iteration = 0;
 
 	public constructor(timesteps: Array<Graph>) {
 		this._timesteps = timesteps;
@@ -216,17 +228,10 @@ export class DynamicGraph {
 				if (!this._metaNodes.has(n.origID)) {
 					this._metaNodes.set(n.origID, new MetaNode(n.origID));
 				}
-				this._metaNodes.get(n._origID).add(n);
+				this._metaNodes.get(n.origID).add(n);
 			}
 			for (let e of g.edges) {
-				if (!this._metaEdges.has([e.origSource, e.origTarget])) {
-					console.log(e.origSource, e.origTarget)
-					this._metaEdges.set([e.origSource, e.origTarget], new MetaEdge([e.origSource, e.origTarget]));
-					console.log(this.metaEdges.get([e.origSource, e.origTarget]))
-				}
-				console.log(e.origSource, e.origTarget)
-				console.log(this.metaEdges.get([e.origSource, e.origTarget]))
-				this._metaEdges.get([e.origSource, e.origTarget]).add(e)
+				this._metaEdges.add(e);
 			}
 		}
 	}
@@ -239,7 +244,7 @@ export class DynamicGraph {
 		return this._metaNodes;
 	}
 
-	get metaEdges(): Map<[Node, Node], MetaEdge> {
+	get metaEdges(): DynamicGraphMetaEdgeMap {
 		return this._metaEdges;
 	}
 }
