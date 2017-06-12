@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node, Edge, Graph } from "../model/dynamicgraph";
+import { Node, Edge, Graph, DynamicGraph } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
@@ -12,11 +12,10 @@ import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import * as d3 from "d3-selection";
-import * as d3Scale from "d3-scale";
-import * as d3Array from "d3-array";
+import { scaleLinear } from "d3-scale";
+import { extent } from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
-
 	/**
 	 * drawEdgeGlyphs is a DGLO responsible drawing edge glyphs. It creates the <g> tags
 	 * that hold all of the glyphs (e.g. edgeRectG, edgeGestaltG, and edgeSTLineG). It then
@@ -54,7 +53,6 @@ export class DGLOsWill extends DGLOsMatt {
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
 		this._edgeAttrOpts = attr;
 	}
-
 	/**
 	 * tansformEdgeGlyphsTo is a DGLO method that calls the ___ _currentEdgeShape ___ transformTo method.
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
@@ -64,18 +62,18 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
-		let curGraph = this.data.timesteps[this._timeStampIndex];
+		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
 		console.log(this._currentNodeShape);
 		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
 		let h = this._height;
 		let w = this._width;
-		this.data.timesteps.forEach(function (g: Graph) {
+		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.nodes.forEach(function (d: Node) {
 				d.x = w / 10;
 				d.y = d.index / curGraph.nodes.length * h;
 			})
 		})
-		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
+		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
 
 		// this._nodeGlyphMap.get(this._currentNodeShape)
 		// 	.attr("x", 10)
@@ -86,8 +84,6 @@ export class DGLOsWill extends DGLOsMatt {
 		// 	return (+d.index / curGraph.nodes.length) * 100 + "%";
 		// })
 	}
-
-
 	/**
 	 * positionEdgeGlyphsMatrix transforms edges to rectangles using the transfromEdgeGlyphsTo
 	 * DGLO, and then positions the rectangles to form a matrix (heatmap).
@@ -95,22 +91,20 @@ export class DGLOsWill extends DGLOsMatt {
 	public positionEdgeGlyphsMatrix() {
 		let h = this._height;
 		let w = this._width;
-		this.data.timesteps.forEach(function (g: Graph) {
+		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.edges.forEach(function (e: Edge) {
 				e.x = (+e.source.index / g.nodes.length) * w;
 				e.y = (+e.target.index / g.nodes.length) * h;
 			})
 		})
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.data, this._timeStampIndex, _matrixAttrOpts);
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
 	}
 	public enableStepping() {
-		console.log("Texas two-step!");
-
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.data.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.data.timesteps[this._timeStampIndex].nodes.length - 1),
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 
 		let self = this;
@@ -133,36 +127,77 @@ export class DGLOsWill extends DGLOsMatt {
 				self.runSimulation(true);
 			});
 	}
-	public setCenterNode(ID: number) {
-		this._centralNodeID = ID;
+	public setCenterNode(newID: number | string) {
+		this.centralNodeID = newID;
+		this._emptyArrays();
+		this._calculateNeighborsAndIncidentEdges();
 	}
-	public getNeighbors() {
-		this.getCentralNodes();
-		this.getEdges();
-		this.getNodes();
-		this.mergeNodeLists();
+	protected _calculateNeighborsAndIncidentEdges() {
+		this.dataToDraw = this.data;
+		this._getCentralNodes();
+		this._setCentralNodeFixedPositions();
+		for (let node of this._centralNodeArray) {
+			console.log(node.label + ": " + node.fx + " " + node.fy);
+		}
+		this._getEdges();
+		this._getNeighboringNodes();
+		this._mergeNodeLists();
+		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
+		//console.log(this._neighboringNodesMap)
+		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
 	}
 
+	public redraw(): void {
+		//this.emptyArrays();
+		//this.setCentralNodeFixedPositions();
+		this.drawEdgeGlyphs();
+		this.drawNodeGlyphs();
+		this.runSimulation(true);
+	}
 
-	private getCentralNodes() {
-		console.log("getCentralNodes");
-		console.log(this._centralNodeID);
+	protected _emptyArrays() {
+		if (this._nbrNodes !== undefined) {
+			for (let node of this._nbrNodes) {
+				node.fx = null;
+				node.fy = null;
+			}
+		}
+		this._neighboringNodesMap.clear();
 		this._centralNodeArray = [];
-		for (let step of this.data.timesteps) {
-			for (let node of step.nodes) {
-				if (node.origID === this._centralNodeID) {
-					this._centralNodeArray.push(node);
-				}
+		this._nbrEdges = [];
+		this._nbrNodes = [];
+	}
+	protected _setCentralNodeFixedPositions(): void {
+		if (this.onClickRedraw) {
+			let yScale = scaleLinear()
+				.domain(extent(this._centralNodeArray, function (d: Node): number {
+					return d.timestamp;
+				}))
+				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+			for (let node of this._centralNodeArray) {
+				node.fx = this._width / 2;
+				node.fy = yScale(node.timestamp);
+			}
+		} else {
+			this.onClickRedraw = false;
+			for (let node of this._nbrNodes) {
+				node.fx = null;
+				node.fy = null;
 			}
 		}
 		console.log(this._centralNodeArray);
 	}
-
-
-	private getEdges() {
-		console.log("getEdges");
-		this._nbrEdges = [];
-		for (let step of this.data.timesteps) {
+	protected _getCentralNodes() {
+		for (let step of this.dataToDraw.timesteps) {
+			for (let node of step.nodes) {
+				if (node.origID === this.centralNodeID) {
+					this._centralNodeArray.push(node);
+				}
+			}
+		}
+	}
+	protected _getEdges() {
+		for (let step of this.dataToDraw.timesteps) {
 			for (let edge of step.edges) {
 				if (this._centralNodeArray.includes(edge.origSource)
 					|| this._centralNodeArray.includes(edge.origTarget)) {
@@ -170,15 +205,11 @@ export class DGLOsWill extends DGLOsMatt {
 				}
 			}
 		}
-		console.log(this._nbrEdges);
 	}
-
-	private getNodes() {
-		console.log("getNodes");
-		this._nbrNodes = [];
+	protected _getNeighboringNodes() {
 		for (let edge of this._nbrEdges) {
 			if (this._centralNodeArray.includes(edge.origTarget)) {
-				this._neighboringNodesMap.set(edge.origSource._origID, edge.origSource);
+				this._neighboringNodesMap.set(edge.origSource.origID, edge.origSource);
 			}
 			if (this._centralNodeArray.includes(edge.origSource)) {
 				this._neighboringNodesMap.set(edge.origTarget.origID, edge.origTarget);
@@ -199,12 +230,17 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let key of this._neighboringNodesMap.keys()) {
 			this._nbrNodes.push(this._neighboringNodesMap.get(key));
 		}
-		console.log(this._nbrNodes);
 	}
-	private mergeNodeLists() {
+	protected _mergeNodeLists() {
 		for (let node of this._centralNodeArray) {
 			this._nbrNodes.push(node);
 		}
+	}
+
+	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
+		this.onClickRedraw = newOnClickRedraw;
+		this._setCentralNodeFixedPositions();
+		this.redraw();
 	}
 
 }

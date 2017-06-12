@@ -3,7 +3,7 @@ import { Graph, DynamicGraph, Node, Edge } from "../model/DynamicGraph";
 export class Person extends Node {
 	private _role: string;
 	public constructor(id: number | string, index: number, name: string, role: string, timestamp: number) {
-		super(id, index, "Person", name, timestamp);
+		super(+id, index, "Person", name, timestamp);
 		this._role = role;
 	}
 
@@ -19,7 +19,7 @@ export class Person extends Node {
 export class Drink extends Node {
 	private _price: number;
 	public constructor(id: number | string, index: number, name: string, price: number, timestamp: number) {
-		super(id, index, "Drink", name, timestamp);
+		super(+id, index, "Drink", name, timestamp);
 		this._price = price;
 	}
 
@@ -78,11 +78,11 @@ export class StaticDrinkGraph extends Graph {
 		for (let e of rawEdgeData) {
 
 			let source: Node = nodeData.find(function (n: Node): boolean {
-				return n.id === e.source;
+				return n.id === +e.source;
 			});
 
 			let target: Node = nodeData.find(function (n: Node): boolean {
-				return n.id === e.target;
+				return n.id === +e.target;
 			});
 
 			let id: string = "" + source.id + ":" + target.id;

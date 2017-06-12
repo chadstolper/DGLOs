@@ -4,10 +4,11 @@ import { Selection, select } from "d3-selection";
 import * as d3 from "d3" //TODO: Find module
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
+import { Shape } from "./Shape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
-export class LabelGlyphShape implements NodeGlyphShape {
+export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	readonly _textAnchor: string = "middle";
 	readonly _dominantBaseline: string = "middle";
@@ -26,11 +27,19 @@ export class LabelGlyphShape implements NodeGlyphShape {
 	 * @param glyphs
 	 */
 	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
+		let self = this;
 		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.style("dominant-baseline", this._dominantBaseline)
-			.style("text-anchor", this._textAnchor);
+			.style("text-anchor", this._textAnchor)
+			.style("user-select", "none")
+			.on("click", function (d: Node) {
+				self.lib.setCenterNode(d.origID);
+				if (self.lib.onClickRedraw) {
+					self.lib.redraw();
+				}
+			});
 		return ret;
 	}
 

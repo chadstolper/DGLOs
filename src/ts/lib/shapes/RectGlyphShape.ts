@@ -6,6 +6,7 @@ import * as d3Array from "d3-array";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
+import { Shape } from "./Shape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
@@ -21,7 +22,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  * 	 *transformTo()*,
  *	 *draw()*, 
  */
-export class RectGlyphShape implements EdgeGlyphShape {
+export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	readonly _shapeType = "Rect";
 	get shapeType(): string {
 		return this._shapeType;

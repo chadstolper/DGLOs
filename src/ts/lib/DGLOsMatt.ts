@@ -153,11 +153,22 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			// 	self._simulationMap.set(timestep, sim);
 			// })
 		}
+<<<<<<< HEAD
 		// else {
 		// 	this._simulationMap.forEach(function (sim: Simulation<any, undefined>, timestep: number) {
 		// 		sim.stop();
 		// 	}
 		// }
+=======
+		if (this._simulation !== undefined) {
+			this._simulation.nodes(this._dataToDraw.timesteps[this._timeStampIndex].nodes);
+			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this._dataToDraw.timesteps[this._timeStampIndex].edges);
+
+			this._simulation.alpha(.5).restart();
+		} else {
+			this._simulation.stop();
+		}
+>>>>>>> refs/remotes/origin/dglos
 	}
 
 	private ticked(self: DGLOsMatt) {
@@ -173,15 +184,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		//update edges in map; run update of simulation on all edges
 		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.data, self._timeStampIndex, self._edgeAttrOpts);
+			shape.draw(edges, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
+<<<<<<< HEAD
 		this._nodeGlyphMapMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			self._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 				console.log(timestep)
 				shape.draw(glyphs, self._data, timestep, self._attrOpts);
 			})
+=======
+		this._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+			shape.draw(glyphs, self._dataToDraw, self._timeStampIndex, self._attrOpts);
+>>>>>>> refs/remotes/origin/dglos
 		});
 	}
 

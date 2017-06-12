@@ -2,13 +2,13 @@ import { DynamicGraph, Graph, Node, Edge } from "../model/DynamicGraph";
 
 export class RadoslawEmployee extends Node {
 	constructor(id: number | string, index: number, timestep: number) {
-		super(id, index, "RadoslawEmployee", "" + id, timestep);
+		super(+id, index, "RadoslawEmployee", "" + id, timestep);
 	}
 }
 
 export class RadoslawEmail extends Edge {
 	constructor(id: number | string, source: Node, target: Node, weight: number, timestep: number) {
-		super(id, source, target, weight, timestep);
+		super(+id, source, target, weight, timestep);
 	}
 }
 
@@ -24,11 +24,11 @@ export class StaticRadoslawGraph extends Graph {
 		}
 		for (let e of rawEdgeData) {
 			let source: Node = nodeData.find(function (n: Node): boolean {
-				return n.id === e.from;
+				return n.id === +e.from;
 			});
 
 			let target: Node = nodeData.find(function (n: Node): boolean {
-				return n.id === e.to;
+				return n.id === +e.to;
 			});
 			let id: string = "" + source.id + ":" + target.id;
 
