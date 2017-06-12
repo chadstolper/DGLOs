@@ -61,18 +61,25 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * Assign and/or update edge attributes
 	 * @param edges 
 	 */
-	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			console.log("TODO: attributes for gestalt");
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
 				.range([0, 45])
 			console.log(weightScale);
+			glyphs
+				.attr("x1", 0)
+				.attr("x2", 100)
+				.attr("y1", 100)
+				.attr("y2", 200)
+				.attr("stroke", attrOpts.stroke)
+				.attr("stroke-width", attrOpts.stroke_width);
 		}
 		catch (err) {
 			// console.log("attrOpts Gestalt undefined")
 		}
-		return edges;
+		return glyphs;
 	}
 
 	/**

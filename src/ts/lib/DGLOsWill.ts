@@ -54,7 +54,11 @@ export class DGLOsWill extends DGLOsMatt {
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
 	 */
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		this._currentEdgeShape.transformTo(this._edgeGlyphMap.get(this._currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
+		this.currentEdgeShape.transformTo(this._edgeGlyphMap.get(this._currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
+		this.currentEdgeShape = shape;
+	}
+	public positionEdgeGlyphsGestalt() {
+
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
@@ -154,7 +158,7 @@ export class DGLOsWill extends DGLOsMatt {
 		//this.setCentralNodeFixedPositions();
 		this.drawEdgeGlyphs();
 		this.drawNodeGlyphs();
-		this.runSimulation(true);
+		//this.runSimulation(true);
 	}
 	/**
 	 * _emptyArrays clears _nbrNodes, _nbrEdges, _neighboringNodesMap, and _centralNodeArray. It also
