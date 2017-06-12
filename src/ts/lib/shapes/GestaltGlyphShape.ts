@@ -49,6 +49,9 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+			.attr("weight", function (d: Edge): string {
+				return d.weight + "";
+			})
 		// FIX
 		// .on("click", function (d: Node) {
 		// 	console.log(d.origID);
@@ -70,9 +73,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			console.log(weightScale);
 			glyphs
 				.attr("x1", 0)
-				.attr("x2", 100)
 				.attr("y1", 100)
-				.attr("y2", 200)
+				.attr("x2", 100)
+				.attr("y2", function (d: Edge) {
+					return 100 * Math.tan(weightScale(d.weight));
+				})
 				.attr("stroke", attrOpts.stroke)
 				.attr("stroke-width", attrOpts.stroke_width);
 		}
@@ -105,8 +110,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		};
-		sourceG.style("display", "none");
-		targetG.style("display", null);
+		super.transformTo(sourceG, targetShape, targetG);
 	}
 
 	/**
