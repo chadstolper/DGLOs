@@ -29,11 +29,11 @@ export class DGLOsWill extends DGLOsMatt {
 
 	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>) {
 		// if (this._edgeG === undefined) {
-		this._edgeG = loc.append("g").classed("edgeG", true);
+		let edgeG = loc.append("g").classed("edgeG", true);
 
-		let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(this._edgeG);
-		let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
-		let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
+		let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(edgeG);
+		let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(edgeG);
+		let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(edgeG);
 
 		edgeRectG.style("display", "none");
 		edgeGestaltG.style("display", "none");
