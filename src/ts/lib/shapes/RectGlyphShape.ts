@@ -112,8 +112,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
-		sourceG.style("display", "none");
-		targetG.style("display", null);
+		super.transformTo(sourceG, targetShape, targetG);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.
