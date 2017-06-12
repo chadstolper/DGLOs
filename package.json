@@ -7,12 +7,12 @@
   "author": "Chad Stolper, Matt Sanford, Will Price",
   "license": "MIT",
   "dependencies": {
-    "d3": "^4.9.1"
+    "d3": "^4.9.1",
+    "flubber": "^0.2.5"
   },
   "devDependencies": {
     "@types/d3": "^4.8.0",
     "eslint": "^3.19.0",
-    "flubber": "^0.2.5",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.1.0",
