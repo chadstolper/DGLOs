@@ -39,14 +39,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		nodeLabelG.style("display", "none");
 		nodeCircleG.style("display", "none");
 
-		//add nodes to new map
-		this._nodeGlyphMapMap.set(this._timeStampIndex, this._nodeGlyphMap.set(this.labelShape, nodeLabelG));
-		this._nodeGlyphMapMap.set(this._timeStampIndex, this._nodeGlyphMap.set(this.circleShape, nodeCircleG));
+		//add nodeselections to new map and map map
+		let glyphMap = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
+		glyphMap.set(this.labelShape, nodeLabelG);
+		glyphMap.set(this.circleShape, nodeCircleG);
+
+		this._nodeGlyphMap.set(this._timeStampIndex, glyphMap);
 		// }
 	}
 
 	public drawRegions() {
-		this._currentGroupGlyph = this.voronoiGroupGlyph;
 		this.voronoiInit();
 
 		if (this._groupGlyphG === undefined) {
@@ -58,10 +60,18 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			voronoiG.style("display", "none");
 
 			//add voronoi regions to map
-			this._groupGlyphMap.set(this.voronoiGroupGlyph, voronoiG);
+			let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
+			glyphMap.set(this.voronoiGroupGlyph, voronoiG);
+
+			this._groupGlyphMap.set(this._timeStampIndex, glyphMap);
 		}
 
-		this._currentGroupGlyph.transformTo(this._groupGlyphMap.get(this._currentGroupGlyph), this.voronoiGroupGlyph, this._groupGlyphMap.get(this.voronoiGroupGlyph));
+		let self = this;
+		this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+			self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), this.voronoiGroupGlyph, groupMap.get(this.voronoiGroupGlyph));
+		});
+
+		this._currentGroupGlyph = this.voronoiGroupGlyph;
 	}
 
 	/**
@@ -69,7 +79,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
-		this._currentNodeShape.transformTo(this._nodeGlyphMap.get(this._currentNodeShape), shape, this._nodeGlyphMap.get(shape));
+		let self = this;
+		this._nodeGlyphMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			self._currentNodeShape.transformTo(nodeGlyphMap.get(self._currentNodeShape), shape, nodeGlyphMap.get(shape));
+		});
+
 		this._currentNodeShape = shape;
 		// this.runSimulation(true);
 	}
@@ -171,22 +185,28 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		this._groupGlyphMap.forEach(function (paths: Selection<any, {}, any, {}>, group: GroupGlyph) {
-			group.draw(paths, self.data, self._timeStampIndex, self._groupAttrOpts, self._noisePoints, self._voronoi);
+		this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
+				// self.metaTick();
+				shape.draw(glyphs, self._data, timestep, self._attrOpts);
+			})
 		});
 
 		//update edges in map; run update of simulation on all edges
-		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
+		this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+				// self.metaTick();
+				shape.draw(glyphs, self._data, timestep, self._attrOpts);
+			})
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
-		this._nodeGlyphMapMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-			nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-				console.log("glyphs")
+		this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+				console.log(self._nodeGlyphMap)
 				// self.metaTick();
 				shape.draw(glyphs, self._data, timestep, self._attrOpts);
-				// self.communicateNodePositions(self._data, self._data, self._timeStampIndex);
+				self.communicateNodePositions(self._data, self._data, self._timeStampIndex);
 			})
 		});
 	}

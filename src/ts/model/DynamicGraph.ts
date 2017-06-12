@@ -161,15 +161,15 @@ export class Graph {
 	}
 }
 
-export class MetaNode {
+export class MetaNode implements SimulationNodeDatum {
 	readonly _origID: number | string;
 	private _nodes: Set<Node> = new Set<Node>();
-	public x?: number;
-	public y?: number;
-	public vx?: number;
-	public vy?: number;
-	public _fx?: number;
-	public _fy?: number;
+	private _x?: number;
+	private _y?: number;
+	private _vx?: number;
+	private _vy?: number;
+	private _fx?: number;
+	private _fy?: number;
 
 	constructor(id: number | string) {
 		this._origID = id;
@@ -181,6 +181,47 @@ export class MetaNode {
 
 	public add(data: Node) {
 		this._nodes.add(data);
+	}
+
+	set x(num: number) {
+		this._nodes.forEach(function (n: Node) {
+			n.x = num;
+		});
+	}
+	get x(): number {
+		return this._x;
+	}
+	set y(num: number) {
+		this._nodes.forEach(function (n: Node) {
+			n.y = num;
+		});
+	}
+	get y(): number {
+		return this._y;
+	}
+	set vx(num: number) {
+		this._vx = num;
+	}
+	get vx(): number {
+		return this._vx;
+	}
+	set vy(num: number) {
+		this._vy = num;
+	}
+	get vy(): number {
+		return this._vy;
+	}
+	set fx(num: number) {
+		this._fx = num;
+	}
+	get fx(): number {
+		return this._fx;
+	}
+	set fy(num: number) {
+		this._fy = num;
+	}
+	get fy(): number {
+		return this._fy;
 	}
 }
 
@@ -219,7 +260,6 @@ export class DynamicGraph {
 	private _timesteps: Array<Graph>;
 	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
 	private _metaEdges: DynamicGraphMetaEdgeMap = new DynamicGraphMetaEdgeMap();
-	public iteration = 0;
 
 	public constructor(timesteps: Array<Graph>) {
 		this._timesteps = timesteps;

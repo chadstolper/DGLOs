@@ -12,8 +12,8 @@ export class ForceDirectedTimeline extends Technique {
 		// this.lib.removeExitEdgeGlyphs();
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("id", "grey", 10, 2, null, null));
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, "1"));
-		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
+		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.runSimulation(true);
 	}
 }

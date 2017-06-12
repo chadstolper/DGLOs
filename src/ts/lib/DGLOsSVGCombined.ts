@@ -25,12 +25,11 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * A map linking NodeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. CircleNodes, LabelNodes etc).
 	 */
-	_nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>> = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
-	_nodeGlyphMapMap: Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>>();
+	_nodeGlyphMap: Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>>();
 	/**
 	 * A map linking EdgeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. rectEdges, STLineEdges etc).
 	 */
-	_edgeGlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>> = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
+	_edgeGlyphMap: Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>>();
 	/**
 	 * The overarching <g> tag holding the shape glyph selections (e.g. rectEdges, GestaltGlyphs, STLineEdges, etc..)
 	 */
@@ -42,7 +41,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
 	 */
-	_groupGlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>> = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
+	_groupGlyphMap: Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>> = new Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>>();
 	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	/**
 	 * The physics simulation used to direct froce-directed visualizations.
@@ -53,7 +52,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	_simulationMap: Map<number, Simulation<any, undefined>> = new Map<number, Simulation<any, undefined>>();
 	_currentEdgeShape: EdgeGlyphShape = this.rectShape;
 	_currentNodeShape: NodeGlyphShape = this.circleShape;
-	_currentGroupGlyph: GroupGlyph;
+	_currentGroupGlyph: GroupGlyph = this.voronoiGroupGlyph;
 	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]]) //set dimensions of voronoi
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });

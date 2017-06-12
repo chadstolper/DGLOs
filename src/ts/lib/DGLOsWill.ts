@@ -23,7 +23,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * It hides all of the edge groups and then draws the currentEdgeShape.
 	 */
 	public drawEdgeGlyphs() {
-		this._currentEdgeShape = this.rectShape;
+		// this._currentEdgeShape = this.rectShape;
 		this.drawEdgeGlyphsAt(this.loc);
 	}
 
@@ -35,13 +35,16 @@ export class DGLOsWill extends DGLOsMatt {
 		let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
 		let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
 
-		this._edgeGlyphMap.set(this.rectShape, edgeRectG);
-		this._edgeGlyphMap.set(this.gestaltShape, edgeGestaltG);
-		this._edgeGlyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
-
 		edgeRectG.style("display", "none");
 		edgeGestaltG.style("display", "none");
 		edgeSTLineG.style("display", "none");
+
+		let glyphMap = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
+		glyphMap.set(this.rectShape, edgeRectG);
+		glyphMap.set(this.gestaltShape, edgeGestaltG);
+		glyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
+
+		this._edgeGlyphMap.set(this._timeStampIndex, glyphMap);
 		// }
 	}
 
@@ -58,7 +61,11 @@ export class DGLOsWill extends DGLOsMatt {
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
 	 */
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		this.currentEdgeShape.transformTo(this._edgeGlyphMap.get(this._currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
+		let self = this;
+		this._edgeGlyphMap.forEach(function (edgeMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			self.currentEdgeShape.transformTo(edgeMap.get(self.currentEdgeShape), shape, edgeMap.get(shape));
+		});
+
 		this.currentEdgeShape = shape;
 		this.redraw();
 	}
@@ -69,7 +76,7 @@ export class DGLOsWill extends DGLOsMatt {
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
 		console.log(this._currentNodeShape);
-		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
+		console.log(this._nodeGlyphMap.get(this._timeStampIndex).get(this.currentNodeShape));
 		let h = this._height;
 		let w = this._width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
@@ -78,7 +85,7 @@ export class DGLOsWill extends DGLOsMatt {
 				d.y = d.index / curGraph.nodes.length * h;
 			})
 		})
-		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
+		this._currentNodeShape.draw(this._nodeGlyphMap.get(this._timeStampIndex).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
 	}
 	/**
 	 * positionEdgeGlyphsMatrix transforms edges to rectangles using the transfromEdgeGlyphsTo
@@ -96,7 +103,7 @@ export class DGLOsWill extends DGLOsMatt {
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
 			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(this._timeStampIndex).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
 	}
 	/**
 	 * A method that appends buttons to the webpage which allow the user to move through 
@@ -115,7 +122,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self._timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation(true);
 			});
 
@@ -124,7 +131,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self._timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation(true);
 			});
 	}
@@ -160,7 +167,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public redraw(): void {
 		console.log("redrawing");
-		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
+		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this._timeStampIndex).get(this.currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
 		//this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
 	}
 	/**

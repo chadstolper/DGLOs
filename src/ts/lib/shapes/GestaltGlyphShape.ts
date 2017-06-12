@@ -70,7 +70,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
 				.range([0, 45])
-			console.log(weightScale);
+			// console.log(weightScale);
 			glyphs
 				.attr("x1", 0)
 				.attr("y1", 100)
