@@ -31,8 +31,8 @@ export class StaticNewcombGraph extends Graph {
 		}
 
 		for (let e of rawEdgeData) {
-			let source = nodeData[+e.source]
-			let target = nodeData[+e.target]
+			let source = nodeData[+e.ranker]
+			let target = nodeData[+e.rankee]
 			let ranking = new Ranking(source, target, e.rank, timestamp);
 			edgeData.push(ranking);
 		}
