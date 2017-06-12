@@ -66,14 +66,16 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
-			console.log("TODO: attributes for gestalt");
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
 				.range([0, 90])
-			console.log(weightScale);
 			glyphs
-				.attr("x1", 0)
-				.attr("y1", 100)
+				.attr("x1", function (d: Edge) {
+					return d.source.index / data.timesteps[TimeStampIndex].nodes.length * this.lib.width;
+				})
+				.attr("y1", function (d: Edge) {
+					return (d.target.index / data.timesteps[TimeStampIndex].nodes.length * this.lib.height);
+				})
 				.attr("x2", 100)
 				.attr("y2", function (d: Edge) {
 					console.log(100 * Math.tan(weightScale(d.weight)));

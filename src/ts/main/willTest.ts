@@ -12,14 +12,14 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 import { GestaltGlyphs } from "../specs/GestaltGlyphs"
 import { DynamicNewcombGraph } from "../data/NewcombGraph"
 
-json("data/radoslaw/emails.json", function (response: any) {
+json("data/newcomb/newcomb.json", function (response: any) {
 	let width: number, height: number;
 	width = height = 1000;
-	let g: DynamicGraph = new DynamicRadoslawGraph(response);
+	let g: DynamicGraph = new DynamicNewcombGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
-	let vis: Technique = new MatrixAnimated(lib, {});
+	let vis: Technique = new GestaltGlyphs(lib, {});
 	vis.draw();
 })
 

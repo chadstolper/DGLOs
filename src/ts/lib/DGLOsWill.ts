@@ -64,8 +64,6 @@ export class DGLOsWill extends DGLOsMatt {
 	//TODO
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
-		console.log(this._currentNodeShape);
-		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
 		let h = this._height;
 		let w = this._width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
