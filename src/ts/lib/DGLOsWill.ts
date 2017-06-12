@@ -100,7 +100,8 @@ export class DGLOsWill extends DGLOsMatt {
 
 		let self = this;
 
-		let prevButton = d3.select("body").append("div").append("button")
+		let buttonDiv = d3.select("body").append("div").classed("buttons", true)
+		let prevButton = buttonDiv.append("button")
 			.text("<--")
 			.on("click", function () {
 				console.log("clicked");
@@ -109,7 +110,7 @@ export class DGLOsWill extends DGLOsMatt {
 				self.runSimulation(true);
 			});
 
-		let nextButton = d3.select("body").append("div").append("button")
+		let nextButton = buttonDiv.append("button")
 			.text("-->")
 			.on("click", function () {
 				console.log("clicked");
