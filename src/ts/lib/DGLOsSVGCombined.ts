@@ -62,7 +62,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and
 	 * an NodeAttrOpts class. TODO.
 	 */
-	_edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts("black", "black", null, 1, null, null, null);
+	_edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts("black", "black", null, 0.25, null, null, null);
 	_willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
 	/**
 	 * A map used for constructing an Egograph.

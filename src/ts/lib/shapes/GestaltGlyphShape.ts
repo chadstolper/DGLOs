@@ -69,13 +69,14 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			console.log("TODO: attributes for gestalt");
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
-				.range([0, 45])
+				.range([0, 90])
 			console.log(weightScale);
 			glyphs
 				.attr("x1", 0)
 				.attr("y1", 100)
 				.attr("x2", 100)
 				.attr("y2", function (d: Edge) {
+					console.log(100 * Math.tan(weightScale(d.weight)));
 					return 100 * Math.tan(weightScale(d.weight));
 				})
 				.attr("stroke", attrOpts.stroke)
