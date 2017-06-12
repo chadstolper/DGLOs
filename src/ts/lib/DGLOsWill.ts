@@ -22,9 +22,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * maps each of the shapeType objects to their respective <g> tag, thus linking the two.
 	 * It hides all of the edge groups and then draws the currentEdgeShape.
 	 */
-	public initEdgeShape(shape: EdgeGlyphShape) {
-		this.currentEdgeShape = shape;
-	}
+
 	public drawEdgeGlyphs() {
 		this.currentEdgeShape = this.rectShape;
 		if (this._edgeG === undefined) {
