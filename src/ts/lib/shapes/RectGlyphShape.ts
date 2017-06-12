@@ -72,7 +72,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		try {
 			let colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
-				.range(["white", attr.fill]);
+				.range(["Aquamarine", "LemonChiffon"]);
 			glyphs
 				.attr("x", function (e: Edge) {
 					return e.x;
