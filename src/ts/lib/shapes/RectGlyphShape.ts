@@ -102,7 +102,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param targetG 
 	 */
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
-		console.log("hey");
 		switch (targetShape.shapeType) {
 			case "Rect":
 				break;

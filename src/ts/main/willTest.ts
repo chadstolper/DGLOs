@@ -5,7 +5,6 @@ import { Technique } from "../specs/Technique";
 import { MatrixAnimated } from "../specs/MatrixAnimated";
 import { Egograph } from "../specs/Egograph";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
-import { GestaltGlyphs } from "../specs/GestaltGlyphs"
 import { select, Selection } from "d3-selection";
 import { json } from "d3-request";
 import { DGLOs } from "../lib/DGLOs";
@@ -19,7 +18,7 @@ json("data/radoslaw/emails.json", function (response: any) {
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
-	let vis: Technique = new GestaltGlyphs(lib, {});
+	let vis: Technique = new Egograph(lib, {});
 	vis.draw();
 })
 

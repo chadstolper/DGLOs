@@ -110,12 +110,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 				this._simulation.alpha(.5).restart();
 			}
-			//}
-			// if (this._simulation !== undefined) {
-			// 	this._simulation.nodes(this._dataToDraw.timesteps[this._timeStampIndex].nodes);
-			// 	(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this._dataToDraw.timesteps[this._timeStampIndex].edges);
+		}
+		if (this._simulation !== undefined) {
+			this._simulation.nodes(this._dataToDraw.timesteps[this._timeStampIndex].nodes);
+			(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(this._dataToDraw.timesteps[this._timeStampIndex].edges);
 
-			// 	this._simulation.alpha(.5).restart();
+			this._simulation.alpha(.5).restart();
 		} else {
 			this._simulation.stop();
 		}

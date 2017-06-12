@@ -49,6 +49,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+		// FIX
+		// .on("click", function (d: Node) {
+		// 	console.log(d.origID);
+		// 	self._lib._centralNodeID = d.origID;
+		// });
 		return ret;
 	}
 
@@ -58,16 +63,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 */
 	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
+			console.log("TODO: attributes for gestalt");
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
 				.range([0, 90])
-			edges
-				.attr("x1", 10)
-				.attr("y1", 10)
-				.attr("x2", 250)
-				.attr("y2", 250)
-				.attr("stroke", attrOpts.stroke)
-				.attr("stroke-width", attrOpts.stroke_width);
+			console.log(weightScale);
 		}
 		catch (err) {
 			// console.log("attrOpts Gestalt undefined")
@@ -109,7 +109,6 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param timeStepIndex 
 	 */
 	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
-		console.log("drawing");
 		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 

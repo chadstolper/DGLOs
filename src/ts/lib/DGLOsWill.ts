@@ -24,6 +24,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public drawEdgeGlyphs() {
 		this._currentEdgeShape = this.rectShape;
+
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
@@ -54,11 +55,12 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
 		this._currentEdgeShape.transformTo(this._edgeGlyphMap.get(this._currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
-		this._currentEdgeShape = shape;
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
+		console.log(this._currentNodeShape);
+		console.log(this._nodeGlyphMap.get(this._currentNodeShape));
 		let h = this._height;
 		let w = this._width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
