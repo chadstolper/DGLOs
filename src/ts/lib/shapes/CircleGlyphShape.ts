@@ -24,7 +24,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number, ): Selection<any, Node, any, {}> {
 		let self = this;
-		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
+		let ret: Selection<any, Node, any, {}> = glyphs.append("path")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 			.on("click", function (d: Node) {
@@ -44,12 +44,14 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			glyphs
-				.attr("cx", function (d: Node) {
-					return d.x;
-				})
-				.attr("cy", function (d: Node) {
-					return d.y;
-				});
+				// .attr("cx", function (d: Node) {
+				// 	return d.x;
+				// })
+				// .attr("cy", function (d: Node) {
+				// 	return d.y;
+				// });
+				//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
+				.attr("d", "M 100, 100 m  75, 0 a 75, 75 0 1, 0 150, 0 a 75, 75 0 1, 0  150, 0"); //"M 100 100 a 50 50 0 1 0 0.00001 0 Z");
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
