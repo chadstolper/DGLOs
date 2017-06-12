@@ -69,27 +69,33 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		let weightScale = scaleLinear<number>()
 			.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
 			.range([0, 60])
-		glyphs
-			.attr("x1", function (d: Edge) {
-				return d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
-			})
-			.attr("y1", function (d: Edge) {
-				return (d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
-			})
-			.attr("x2", function (d: Edge) {
-				return (d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 50;
-			})
-			.attr("y2", function (d: Edge) {
-				if (Math.tan(weightScale(d.weight)) < 0) {
-					console.log(Math.tan(weightScale(d.weight)))
-					return 50 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
-				} else {
-					console.log(Math.tan(weightScale(d.weight)))
-					return 50 * (d.target.index) + (Math.tan(weightScale(d.weight)));
-				}
-			})
-			.attr("stroke", attrOpts.stroke)
-			.attr("stroke-width", attrOpts.stroke_width);
+		let steps = data.timesteps.length;
+		let index = TimeStampIndex;
+		for (let i = 0; i < steps; i++) {
+			glyphs
+				.attr("x1", function (d: Edge) {
+					return d.source.index / data.timesteps[index].nodes.length * 1000;
+				})
+				.attr("y1", function (d: Edge) {
+					return (d.target.index / data.timesteps[index].nodes.length * 1000) + 25;
+				})
+				.attr("x2", function (d: Edge) {
+					return (d.source.index / data.timesteps[index].nodes.length * 1000) + 50;
+				})
+				.attr("y2", function (d: Edge) {
+					if (Math.tan(weightScale(d.weight)) < 0) {
+						console.log("negative");
+						return 75 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
+					} else {
+						console.log("positive");
+						return 75 * (d.target.index) + (Math.tan(weightScale(d.weight)));
+					}
+				})
+				.attr("stroke", attrOpts.stroke)
+				.attr("stroke-width", attrOpts.stroke_width);
+			index += 1;
+		}
+
 		return glyphs;
 	}
 
