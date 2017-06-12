@@ -42,59 +42,47 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-		try {
-			let self = this;
-			glyphs
-				// .attr("cx", function (d: Node) {
-				// 	return d.x;
-				// })
-				// .attr("cy", function (d: Node) {
-				// 	return d.y;
-				// });
-				//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
-				.attr("d", function (d: Node) {
-					return self.circlePath(10, 10, attrOpts.radius);
-				})
-		} catch (err) {
-			console.log("No circle nodes!");
+		let self = this;
+		glyphs
+			// .attr("cx", function (d: Node) {
+			// 	return d.x;
+			// })
+			// .attr("cy", function (d: Node) {
+			// 	return d.y;
+			// });
+			//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
+			.attr("d", function (d: Node) {
+				return self.circlePath(10, 10, attrOpts.radius);
+			})
+
+		switch (attrOpts.fill) {
+			case "id":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.origID);
+					});
+				break;
+
+			case "label":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.label);
+					});
+				break;
+
+			case "type":
+				glyphs
+					.attr("fill", function (d: Node): string {
+						return colorScheme(d.type);
+					});
+				break;
+			default:
+				glyphs
+					.attr("fill", attrOpts.fill);
 		}
-		// try {
-		// 	switch (attrOpts.fill) {
-		// 		case "id":
-		// 			glyphs
-		// 				.attr("fill", function (d: Node): string {
-		// 					return colorScheme(d.origID);
-		// 				});
-		// 			break;
-
-		// 		case "label":
-		// 			glyphs
-		// 				.attr("fill", function (d: Node): string {
-		// 					return colorScheme(d.label);
-		// 				});
-		// 			break;
-
-		// 		case "type":
-		// 			glyphs
-		// 				.attr("fill", function (d: Node): string {
-		// 					return colorScheme(d.type);
-		// 				});
-		// 			break;
-		// 		default:
-		// 			glyphs
-		// 				.attr("fill", attrOpts.fill);
-		// 	}
-
-		// glyphs
-		// 	.attr("stroke", attrOpts.stroke)
-		// 	.attr("r", attrOpts.radius)
-		// 	.attr("stroke-width", attrOpts.stroke_width)
-		// 	// 	.attr("opacity", attrOpts.opacity);
-		// }
-		// catch (err) {
-		// 	console.log("attropts Circle undefined");
-		// }
-
+		glyphs
+			.attr("stroke", attrOpts.stroke)
+			.attr("stroke", attrOpts.stroke_width);
 		return glyphs;
 	}
 
