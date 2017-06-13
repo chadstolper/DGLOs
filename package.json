@@ -8,7 +8,8 @@
   "license": "MIT",
   "dependencies": {
     "d3": "^4.9.1",
-    "flubber": "^0.2.6"
+    "flubber": "^0.2.6",
+    "rollup-plugin-commonjs": "^8.0.2"
   },
   "devDependencies": {
     "@types/d3": "^4.8.0",

@@ -8,14 +8,22 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	var nodeResolve = require("rollup-plugin-node-resolve");
 	var rollupSourcemaps = require('rollup-plugin-sourcemaps');
+	var rollupCommonjs = require('rollup-plugin-commonjs');
 
 	//////////////////    Main File    /////////////////////////
 	////////////////////////////////////////////////////////////
 	mainfile = 'test.main';
+	// mainfile = 'mattTest.main';
+	// mainfile = 'willTest';
+
 	// mainfile = 'EgographTest';
 	// mainfile = 'mainFD';
 	// mainfile = 'LesMiserablesTest';
+	// mainfile = 'DemonstrationsMain';
 	// mainfile = 'RadoslawTest';
+
+	// mainfile = "mainGestalt";
+	// mainfile = 'animatedGraph';
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 
@@ -35,13 +43,15 @@ module.exports = function (grunt) {
 							jsnext: true,
 							main: true
 						}),
-						rollupSourcemaps()
+						rollupSourcemaps(),
+						rollupCommonjs()
 					]
 				}
 			},
 			files: {
 				dest: 'js/bundle.js',
 				src: 'out/src/ts/main/' + mainfile + '.js'
+				// src: 'out/src/ts/' + mainfile + '.js'
 			},
 		},
 		connect: {
