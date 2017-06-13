@@ -129,7 +129,9 @@ export class DGLOsWill extends DGLOsMatt {
 	public setCenterNode(newID: number | string) {
 		this.centralNodeID = newID;
 		this._emptyArrays();
-		this._calculateNeighborsAndIncidentEdges();
+		if (this.onClickRedraw) {
+			this._calculateNeighborsAndIncidentEdges();
+		}
 	}
 	/**
 	 * Calculates all edges and nodes that directly touch the central

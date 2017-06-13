@@ -3,10 +3,10 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
-import { Shape } from "./Shape"
-
+import { Shape } from "./Shape";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import "d3-transition";
+import { interpolate } from "flubber";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
@@ -44,13 +44,6 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		let self = this;
 		glyphs
-			// .attr("cx", function (d: Node) {
-			// 	return d.x;
-			// })
-			// .attr("cy", function (d: Node) {
-			// 	return d.y;
-			// });
-			//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
 			.attr("d", function (d: Node) {
 				return self.circlePath(10, 10, attrOpts.radius);
 			})
@@ -82,7 +75,10 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		}
 		glyphs
 			.attr("stroke", attrOpts.stroke)
-			.attr("stroke", attrOpts.stroke_width);
+			.attr("stroke", attrOpts.stroke_width)
+			.attr("transform", function (d: Node): string {
+				return "translate(" + (d.x - (attrOpts.radius)) + ", " + (d.y - (attrOpts.radius)) + ")";
+			})
 		return glyphs;
 	}
 
@@ -116,7 +112,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param timeStepIndex 
 	 */
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
-		let circleGlyphs = circleG.selectAll("circle.node")
+		let circleGlyphs = circleG.selectAll("path.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
 		circleGlyphs.exit().remove();

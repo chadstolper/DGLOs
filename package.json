@@ -8,7 +8,8 @@
   "license": "MIT",
   "dependencies": {
     "d3": "^4.9.1",
-    "flubber": "^0.2.6"
+    "flubber": "^0.2.6",
+    "typings": "^2.1.1"
   },
   "devDependencies": {
     "@types/d3": "^4.8.0",
