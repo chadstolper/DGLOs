@@ -129,16 +129,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					// 	.iterations(2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
-						console.log(self.data.metaNodes)
 						console.log("SIMULATION DONE HALLELUJAH!");
 					});
 			}
 			if (this._simulation !== undefined) {
-				this._simulation.nodes(self.data.metaNodesAsArray);
-				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.metaEdgesAsArray);
+				this._simulation.nodes(self.data.metaNodes);
+				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>).links(self.data.metaEdges);
 
 				this._simulation.alpha(.5).restart();
-				console.log(this.data.metaNodesAsArray)
 			}
 
 		} else {
@@ -154,7 +152,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		this.communicateNodePositions();
+		// this.communicateNodePositions();
 
 		this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
@@ -183,13 +181,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private communicateNodePositions() {
 		let self = this;
 		for (let t of this.data.timesteps) {
-			for (let node of t.nodes) {
-				this.data.metaNodes.get(node.origID).nodes.forEach(function (metaNode: Node) {
-					console.log(metaNode.x)
-					console.log(node.x)
-					node.x = metaNode.x;
-					node.y = metaNode.y;
-				});
+			for (let i = 0; i < t.nodes.length; i++) {
+				for (let n of this.data.metaNodes) {
+					if ((t.nodes[i].id === n.id) && (t.nodes[i].timestamp === n.timestamp)) {
+						console.log("set")
+						console.log(n)
+						console.log(t.nodes[i])
+						t.nodes[i].x = n.x;
+						t.nodes[i].y = n.y;
+					}
+				}
 			}
 		}
 	}
