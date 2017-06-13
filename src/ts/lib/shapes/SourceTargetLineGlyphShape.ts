@@ -5,6 +5,7 @@ import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { FlubberEdgeShape } from "./FlubberEdgeShape"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { interpolate } from "flubber";
 
 /**
  * The __SourceTargetLineGlyphShape__ class contains all of the methods required to draw and position a source-target line
@@ -50,6 +51,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
 			})
+			.attr("d", "M 0,0 L 0,0");
 		return ret;
 	}
 
@@ -64,38 +66,43 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		try {
-			edges
-				// .attr("x1", function (d: Edge) { return d.source.x; })
-				// .attr("y1", function (d: Edge) { return d.source.y; })
-				// .attr("x2", function (d: Edge) { return d.target.x; })
-				// .attr("y2", function (d: Edge) { return d.target.y; });
-				.attr("d", function (d: Edge): string {
-					return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
-				})
-		} catch (err) {
-			console.log("No STLines links!");
-		}
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+		glyphs
+			// .attr("x1", function (d: Edge) { return d.source.x; })
+			// .attr("y1", function (d: Edge) { return d.source.y; })
+			// .attr("x2", function (d: Edge) { return d.target.x; })
+			// .attr("y2", function (d: Edge) { return d.target.y; });
+			// .attr("d", function (d: Edge): string {
+			// 	console.log("d.source.x: " + d.source.x);
+			// 	console.log("d.source.y: " + d.source.y);
+			// 	console.log("d.target.x: " + d.target.x);
+			// 	console.log("d.target.x: " + d.target.x);
+			// 	console.log("source: " + d.source);
+			// 	console.log("target: " + d.target);
+			// 	return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
+			// })
+			.transition()
+			.attrTween("d", function (d: Edge) {
+				let elem: HTMLElement = this;
+				let oldD: string = elem.getAttribute("d");
+				let newD = "M " + d.source.x + "," + d.source.y + " L " + d.target.x + "," + d.target.y;
+				return interpolate(oldD, newD);
+			})
 
-		try {
-			if (attrOpts.stroke_width === "weight") {
-				edges.attr("stroke-width", function (d: Edge): number {
-					return d.weight;
-				});
-			}
-			else { edges.attr("stroke-width", attrOpts.stroke_width) };
 
-			edges
-				.attr("stroke", attrOpts.stroke)
-				.attr("opacity", attrOpts.opacity);
+		if (attrOpts.stroke_width === "weight") {
+			glyphs.attr("stroke-width", function (d: Edge): number {
+				return d.weight;
+			});
 		}
-		catch (err) {
-			console.log("attrOpts undefined");
-		}
+		else { glyphs.attr("stroke-width", attrOpts.stroke_width) };
 
-		return edges;
+		glyphs
+			.attr("stroke", attrOpts.stroke)
+			.attr("opacity", attrOpts.opacity);
+		return glyphs;
 	}
+
 
 	/**
 	 * The transformTo is a requirement of the __EdgeGlyphShape__ interface.
@@ -123,8 +130,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			default:
 				console.log(targetShape.shapeType + " is undefined");
 		};
-		sourceG.style("display", "none");
-		targetG.style("display", null);
+		super.transformTo(sourceG, targetShape, targetG);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.
