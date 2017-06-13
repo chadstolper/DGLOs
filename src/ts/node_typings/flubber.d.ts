@@ -1,3 +1,6 @@
+/**
+ * typings for https://github.com/veltman/flubber
+ */
 declare module "flubber" {
 
 	/**
