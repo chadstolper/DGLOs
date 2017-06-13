@@ -163,6 +163,7 @@ export class Graph {
 
 export class MetaNode implements SimulationNodeDatum {
 	private readonly _origID: number | string;
+	private _id: string | number;
 	private _nodes: Set<Node> = new Set<Node>();
 	private _x?: number;
 	private _y?: number;
@@ -172,7 +173,11 @@ export class MetaNode implements SimulationNodeDatum {
 	private _fy?: number;
 
 	constructor(id: number | string) {
-		this._origID = id;
+		this._origID = this._id = id;
+	}
+
+	get id(): string | number {
+		return this._id;
 	}
 
 	get origID(): number | string {
@@ -234,28 +239,50 @@ export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
 	public add(e: Edge) {
 		let key = e.origSource.origID + ":::" + e.origTarget.origID;
 		if (!this.has(key)) {
-			this.set(key, new MetaEdge(key));
+			this.set(key, new MetaEdge(key, new MetaNode(e.source.id), new MetaNode(e.target.id)));
 		}
 		this.get(key).add(e);
 	}
 }
 
 export class MetaEdge {
-	readonly _origID: string;
-	private _metaEdges: Set<Edge> = new Set<Edge>();
+	private _id: string;
+	private _edges: Set<Edge> = new Set<Edge>();
+	private _source: MetaNode;
+	private _target: MetaNode;
 	public x?: number;
 	public y?: number;
 
-	constructor(e: string) {
-		this._origID = e;
+	constructor(id: string, source: MetaNode, target: MetaNode) {
+		this._source = source;
+		this._target = target; this._id = id;
 	}
 
-	get origID(): string {
-		return this._origID;
+	get id(): string {
+		return this._id;
 	}
 
 	public add(data: Edge) {
-		this._metaEdges.add(data);
+		this._edges.add(data);
+	}
+
+	get edges(): Set<Edge> {
+		return this._edges;
+	}
+
+	get source(): MetaNode {
+		return this._source;
+	}
+
+	get target(): MetaNode {
+		return this._target;
+	}
+
+	set source(source: MetaNode) {
+		this._source = source;
+	}
+	set target(target: MetaNode) {
+		this._target = target;
 	}
 
 }
@@ -286,6 +313,22 @@ export class DynamicGraph {
 
 	get metaNodes(): Map<string | number, MetaNode> {
 		return this._metaNodes;
+	}
+
+	get metaNodesAsArray(): Array<Node> {
+		let ret: Array<Node> = new Array<Node>();
+		this.metaNodes.forEach(function (mn: MetaNode, id: string | number) {
+			mn.nodes.forEach(v => ret.push(v));
+		})
+		return ret;
+	}
+
+	get metaEdgesAsArray(): Array<Edge> {
+		let ret: Array<Edge> = new Array<Edge>();
+		this.metaEdges.forEach(function (me: MetaEdge, id: string | number) {
+			me.edges.forEach(v => ret.push(v));
+		});
+		return ret;
 	}
 
 	get metaEdges(): DynamicGraphMetaEdgeMap {

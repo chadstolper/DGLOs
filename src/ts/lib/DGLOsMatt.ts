@@ -112,7 +112,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//Check simulation exists
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
-					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.origID })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
+					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
 					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					// .force("collide", d3force.forceCollide().radius(function (d: MetaNode) {
@@ -134,10 +134,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					});
 			}
 			if (this._simulation !== undefined) {
-				this._simulation.nodes(self.data.timesteps[self._timeStampIndex].nodes);
-				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[this._timeStampIndex].edges);
+				this._simulation.nodes(self.data.metaNodesAsArray);
+				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.metaEdgesAsArray);
 
 				this._simulation.alpha(.5).restart();
+				console.log(this.data.metaNodesAsArray)
 			}
 
 		} else {
@@ -152,6 +153,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	private tick() {
 		let self = this; //d3 scope this issue
+
+		this.communicateNodePositions();
 
 		this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
@@ -172,20 +175,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 				// console.log(self._nodeGlyphMap)
-				self.communicateNodePositions();
 				shape.draw(glyphs, self.data, timestep, self._attrOpts);
 			})
 		});
 	}
 
 	private communicateNodePositions() {
+		let self = this;
 		for (let t of this.data.timesteps) {
-			for (let n of t.nodes) {
-				this.data.metaNodes.get(n.origID).nodes.forEach(function (node: Node) {
-					console.log(n)
-					console.log(node)
-					n.x = node.x;
-					n.y = node.y;
+			for (let node of t.nodes) {
+				this.data.metaNodes.get(node.origID).nodes.forEach(function (metaNode: Node) {
+					console.log(metaNode.x)
+					console.log(node.x)
+					node.x = metaNode.x;
+					node.y = metaNode.y;
 				});
 			}
 		}
