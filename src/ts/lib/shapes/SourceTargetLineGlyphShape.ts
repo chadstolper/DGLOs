@@ -47,7 +47,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param TimeStampIndex 
 	 */
 	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
-		let ret: Selection<any, Edge, any, {}> = edges.append("line")
+		let ret: Selection<any, Edge, any, {}> = edges.append("path")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
@@ -69,10 +69,13 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			edges
-				.attr("x1", function (d: Edge) { return d.source.x; })
-				.attr("y1", function (d: Edge) { return d.source.y; })
-				.attr("x2", function (d: Edge) { return d.target.x; })
-				.attr("y2", function (d: Edge) { return d.target.y; });
+				// .attr("x1", function (d: Edge) { return d.source.x; })
+				// .attr("y1", function (d: Edge) { return d.source.y; })
+				// .attr("x2", function (d: Edge) { return d.target.x; })
+				// .attr("y2", function (d: Edge) { return d.target.y; });
+				.attr("d", function (d: Edge): string {
+					return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
+				})
 		} catch (err) {
 			console.log("No STLines links!");
 		}
@@ -136,7 +139,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param attr 
 	 */
 	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
-		let sTLineEdges = sTLineG.selectAll("line.STLine")
+		let sTLineEdges = sTLineG.selectAll("path.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
 		sTLineEdges.exit().remove();
