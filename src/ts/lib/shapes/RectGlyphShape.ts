@@ -87,14 +87,15 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				// .attr("height", attr.height)
 				.transition()
 				.attrTween("d", function (d: Edge) {
+					let h = 1000;
+					let w = 1000;
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
-					console.log(attr.width);
-					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
-						(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
-					console.log(oldD);
-					console.log(newD);
-					console.log("jajajaja");
+					// TODO: MAKE attr.width and attr.height DEFINED
+					// let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
+					// 	(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
+					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + h) + " L " + (d.source.x + w) + " " +
+						(d.source.y + h) + " L " + (d.source.x + w) + " " + d.source.y + " Z";
 					return interpolate(oldD, newD);
 
 				})
