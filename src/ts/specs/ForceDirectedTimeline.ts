@@ -7,8 +7,8 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.replicateTimesteps();
-		this.lib.drawNewNodeGlyphs();
-		this.lib.drawNewEdgeGlyphs();
+		this.lib.drawAllNodeGlyphs();
+		this.lib.drawAllEdgeGlyphs();
 		this.lib.removeExitNodeGlyphs();
 		this.lib.removeExitEdgeGlyphs();
 		// this.lib.setNodeGlyphAttrs(this.opts);
