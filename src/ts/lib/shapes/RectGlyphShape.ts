@@ -7,7 +7,8 @@ import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
 import { Shape } from "./Shape"
-
+import { interpolate, toRect } from "flubber";
+import { transition } from "d3-transition"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 /**
@@ -54,6 +55,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("path")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
+			.attr("d", "M 0 0 L 0 0 L 0 0 L 0 0 Z ");
 		return ret;
 	}
 	/**
@@ -82,9 +84,14 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				// })
 				// .attr("width", attr.width)
 				// .attr("height", attr.height)
-				.attr("d", function (d: Node): string {
-					return "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + attr.height) + " L " + (d.x + attr.width) + " " + (d.y + attr.height)
-						+ " L " + (d.x + attr.width) + " " + d.y + " Z";
+				.transition()
+				.attrTween("d", function (d: Edge) {
+					let elem: HTMLElement = this;
+					let oldD: string = elem.getAttribute("d");
+					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
+						(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
+					return interpolate(oldD, newD);
+
 				})
 				.attr("stroke", attr.stroke)
 				.attr("stroke-width", attr.stroke_width)

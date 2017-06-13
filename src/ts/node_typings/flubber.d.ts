@@ -21,7 +21,7 @@ declare module "flubber" {
 	* `string`: whether to output results as an SVG path string or an array of points. (default: `true`)
 	* `maxSegmentLength`: the lower this number is, the smoother the resulting animation will be, at the expense of performance. Represents a number in pixels (if no transforms are involved). Set it to `false` or `Infinity` for no smoothing. (default: `10`)
 	*/
-	function interpolate(fromShape: [number, number][] | string, toShape: [number, number][] | string, options?: InterpoloateOptions): string | [number, number][];
+	function interpolate(fromShape: [number, number][] | string, toShape: [number, number][] | string, options?: InterpoloateOptions): (t: number) => string;
 
 
 	interface InterpoloateOptions {
@@ -40,7 +40,7 @@ declare module "flubber" {
 	* interpolator(1); // returns a circle path string centered at 100, 100 with a radius of 10
 	* ```
 	*/
-	function toCircle(fromShape: [number, number][] | string, x: number, y: number, r: number, options?: InterpoloateOptions): string | [number, number][];
+	function toCircle(fromShape: [number, number][] | string, x: number, y: number, r: number, options?: InterpoloateOptions): string;
 
 	/**
 	* Like `interpolate()`, but for the specific case of transforming the shape to a rectangle with the upper-left corner `[x, y]` and the dimensions `width` x `height`.
@@ -53,17 +53,17 @@ declare module "flubber" {
 	* interpolator(1); // returns a rectangle path string from [10, 50] in the upper left to [110, 250] in the lower right
 	* ```
 	*/
-	function toRect(fromShape: [number, number][] | string, x: number, y: number, width: number, height: number, options?: InterpoloateOptions): string | [number, number][];
+	function toRect(fromShape: [number, number][] | string, x: number, y: number, width: number, height: number, options?: InterpoloateOptions): string;
 
 	/**
 	 * Like `toCircle()` but reversed.
 	 */
-	function fromCircle(x: number, y: number, r: number, toShape: [number, number][] | string, options?: InterpoloateOptions): [number, number][] | string;
+	function fromCircle(x: number, y: number, r: number, toShape: [number, number][] | string, options?: InterpoloateOptions): string;
 
 	/**
 	 * Like `toRect()` but reversed.
 	 */
-	function fromRect(x: number, y: number, width: number, height: number, toShape: [number, number][] | string, options?: InterpoloateOptions): [number, number][] | string;
+	function fromRect(x: number, y: number, width: number, height: number, toShape: [number, number][] | string, options?: InterpoloateOptions): string;
 
 
 	/**
