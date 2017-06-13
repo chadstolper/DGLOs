@@ -12,10 +12,10 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 import { GestaltGlyphs } from "../specs/GestaltGlyphs"
 import { DynamicNewcombGraph } from "../data/NewcombGraph"
 
-json("data/newcomb/newcomb.json", function (response: any) {
+json("data/dummy/dummy.json", function (response: any) {
 	let width: number, height: number;
 	width = height = 1000;
-	let g: DynamicGraph = new DynamicNewcombGraph(response);
+	let g: DynamicGraph = new DynamicDrinkGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);

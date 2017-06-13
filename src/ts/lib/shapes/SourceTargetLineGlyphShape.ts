@@ -51,7 +51,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
 			})
-			.attr("d", "M 0,0 L 0,0");
+			.attr("d", "M 0,0 L 0,0 L 0,0");
 		return ret;
 	}
 
@@ -68,24 +68,19 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		glyphs
-			// .attr("x1", function (d: Edge) { return d.source.x; })
-			// .attr("y1", function (d: Edge) { return d.source.y; })
-			// .attr("x2", function (d: Edge) { return d.target.x; })
-			// .attr("y2", function (d: Edge) { return d.target.y; });
-			// .attr("d", function (d: Edge): string {
-			// 	console.log("d.source.x: " + d.source.x);
-			// 	console.log("d.source.y: " + d.source.y);
-			// 	console.log("d.target.x: " + d.target.x);
-			// 	console.log("d.target.x: " + d.target.x);
-			// 	console.log("source: " + d.source);
-			// 	console.log("target: " + d.target);
-			// 	return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
-			// })
 			.transition()
 			.attrTween("d", function (d: Edge) {
 				let elem: HTMLElement = this;
 				let oldD: string = elem.getAttribute("d");
-				let newD = "M " + d.source.x + "," + d.source.y + " L " + d.target.x + "," + d.target.y;
+				let newD = "M " + d.source.x + "," + d.source.y + " L " + (d.target.x / 2) + "," + (d.target.y / 2) + " L " + d.target.x + "," + d.target.y;
+				console.log("d.source.x: " + d.source.x);
+				console.log("d.source.y: " + d.source.y);
+				console.log("(d.target.x / 2) :" + (d.target.x / 2));
+				console.log("(d.target.y / 2) :" + (d.target.y / 2))
+				console.log("d.target.x: " + d.target.x);
+				console.log("d.target.y: " + d.target.y);
+				console.log("oldD: " + oldD);
+				console.log("newD: " + newD);
 				return interpolate(oldD, newD);
 			})
 

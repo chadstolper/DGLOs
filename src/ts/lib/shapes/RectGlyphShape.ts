@@ -39,7 +39,6 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		let rectG = location.append("g").classed("rectEdges", true)
-			.attr("d", "M 0,0 L 0,0 L 0,0 L 0,0 Z ");
 		return rectG;
 	}
 	/**
