@@ -162,7 +162,7 @@ export class Graph {
 }
 
 export class MetaNode implements SimulationNodeDatum {
-	readonly _origID: number | string;
+	private readonly _origID: number | string;
 	private _nodes: Set<Node> = new Set<Node>();
 	private _x?: number;
 	private _y?: number;
@@ -177,6 +177,10 @@ export class MetaNode implements SimulationNodeDatum {
 
 	get origID(): number | string {
 		return this._origID;
+	}
+
+	get nodes(): Set<Node> {
+		return this._nodes;
 	}
 
 	public add(data: Node) {

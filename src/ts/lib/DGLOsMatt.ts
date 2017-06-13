@@ -112,21 +112,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//Check simulation exists
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
-					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
+					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.origID })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
 					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
-					.force("collide", d3force.forceCollide().radius(function (d: Node) {
-						try {
-							if (self.currentNodeShape.shapeType === "Label") {
-								return d.label.length * 4; //TODO: replace 4 with font related function
-							}
-							else return self._attrOpts.radius;
-						}
-						catch (err) {
-							return null;
-						}
-					})
-						.iterations(2))
+					// .force("collide", d3force.forceCollide().radius(function (d: MetaNode) {
+					// 	try {
+					// 		if (self.currentNodeShape.shapeType === "Label") {
+					// 			return d.label.length * 4; //TODO: replace 4 with font related function
+					// 		}
+					// 		else return self._attrOpts.radius;
+					// 	}
+					// 	catch (err) {
+					// 		return null;
+					// 	}
+					// })
+					// 	.iterations(2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
 						console.log(self.data.metaNodes)
@@ -134,7 +134,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					});
 			}
 			if (this._simulation !== undefined) {
-				this._simulation.nodes(self.data.timesteps[this._timeStampIndex].nodes);
+				this._simulation.nodes(self.data.timesteps[self._timeStampIndex].nodes);
 				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[this._timeStampIndex].edges);
 
 				this._simulation.alpha(.5).restart();
@@ -144,41 +144,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			this._simulation.stop();
 			this._simulationEnabled = false;
 		}
-		// this._simulationMap.forEach(function (sim: Simulation<any, any>, timestep: number) {
-		// 	//Check simulation exists
-		// 	if (sim === undefined) {
-		// 		sim = d3force.forceSimulation()
-		// 			.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //Pull applied to EdgeGlyphs
-		// 			.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
-		// 			.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
-		// 			.force("collide", d3force.forceCollide().radius(function (d: Node) {
-		// 				try {
-		// 					if (self._currentNodeShape.shapeType === "Label") {
-		// 						return d.label.length * 4;
-		// 					}
-		// 					else return self._attrOpts.radius;
-		// 				}
-		// 				catch (err) {
-		// 					return null;
-		// 				}
-		// 			})
-		// 				.iterations(2))
-		// 			.on("tick", self.ticked(self))
-		// 			.on("end", function () { console.log("SIMULATION DONE HALLELUJAH!"); });
-		// 	}
-		// 	if (sim !== undefined) {
-		// 		sim.nodes(self.data.timesteps[timestep].nodes);
-		// 		(sim.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[timestep].edges);
-
-		// 		sim.alpha(.5).restart();
-		// 	}
-		// 	self._simulationMap.set(timestep, sim);
-		// })
-		// else {
-		// 	this._simulationMap.forEach(function (sim: Simulation<any, undefined>, timestep: number) {
-		// 		sim.stop();
-		// 	}
-		// }
 	}
 
 	private ticked(self: DGLOsMatt) {
@@ -207,37 +172,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 				// console.log(self._nodeGlyphMap)
-				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-				self.metaTick();
 				self.communicateNodePositions();
+				shape.draw(glyphs, self.data, timestep, self._attrOpts);
 			})
 		});
-	}
-
-	private metaTick() {
-		let self = this;
-		for (let step of this.data.timesteps) {
-			for (let n of step.nodes) {
-				if ((n.x !== NaN && n.y !== NaN) && (n.x !== undefined && n.y !== undefined)) {
-					console.log(n.x)
-					console.log(this.data.metaNodes.get(n.origID).x)
-
-					this.data.metaNodes.get(n.origID).x = n.x;
-					this.data.metaNodes.get(n.origID).y = n.y;
-
-
-					console.log(this.data.metaNodes.get(n.origID).x)
-				}
-			}
-		}
-		// console.log(this.data.metaNodes)
 	}
 
 	private communicateNodePositions() {
 		for (let t of this.data.timesteps) {
 			for (let n of t.nodes) {
-				n.x = this.data.metaNodes.get(n.origID).x;
-				n.y = this.data.metaNodes.get(n.origID).y;
+				this.data.metaNodes.get(n.origID).nodes.forEach(function (node: Node) {
+					console.log(n)
+					console.log(node)
+					n.x = node.x;
+					n.y = node.y;
+				});
 			}
 		}
 	}
