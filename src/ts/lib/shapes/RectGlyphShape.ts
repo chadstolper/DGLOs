@@ -6,10 +6,11 @@ import { extent } from "d3-array";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
-import { Shape } from "./Shape"
+
 import { interpolate, toRect } from "flubber";
 import { transition } from "d3-transition"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { FlubberEdgeShape } from "./FlubberEdgeShape"
 
 /**
  * The __RectGlyphsShape__ class contains all of the methods required to draw and position a rectangle on screen.
@@ -23,7 +24,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  * 	 *transformTo()*,
  *	 *draw()*, 
  */
-export class RectGlyphShape extends Shape implements EdgeGlyphShape {
+export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	readonly _shapeType = "Rect";
 	get shapeType(): string {
 		return this._shapeType;
@@ -130,7 +131,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
 		console.log("rectTransformTo: " + targetShape.shapeType);
-		super.transformTo(sourceG, targetShape, targetG);
+		super.transformTo(sourceG, targetShape, targetShape);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.

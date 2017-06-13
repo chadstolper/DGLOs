@@ -3,9 +3,7 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-
-import { LineGlyphShape } from "./LineGlyphShape";
-
+import { FlubberEdgeShape } from "./FlubberEdgeShape"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 /**
@@ -20,7 +18,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  * 	 *transformTo()*,
  *	 *draw()*, 
  */
-export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
+export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	readonly _shapeType = "STLine";
 
 	/**

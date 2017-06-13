@@ -3,9 +3,9 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { extent } from "d3-array";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { LineGlyphShape } from "./LineGlyphShape";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear } from "d3-scale";
+import { FlubberEdgeShape } from "./FlubberEdgeShape"
 
 /**
  * The __GestaltGlyphsShape__ class contains all of the methods required to draw and position a Gestalt Glyph on screen.
@@ -19,7 +19,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear } from "d3-sc
  * 	 *transformTo()*,
  *	 *draw()*, 
  */
-export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
+export class GestaltGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	readonly _shapeType = "Gestalt";
 
 	/**

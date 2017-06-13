@@ -4,11 +4,11 @@ import { Selection, select } from "d3-selection";
 import * as d3 from "d3" //TODO: Find module
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
-import { Shape } from "./Shape"
+import { LabelShape } from "./LabelShape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
-export class LabelGlyphShape extends Shape implements NodeGlyphShape {
+export class LabelGlyphShape extends LabelShape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	readonly _textAnchor: string = "middle";
 	readonly _dominantBaseline: string = "middle";

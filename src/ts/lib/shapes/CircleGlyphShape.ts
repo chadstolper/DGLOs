@@ -3,12 +3,11 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
-import { Shape } from "./Shape";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import "d3-transition";
 import { interpolate, toCircle } from "flubber";
-
-export class CircleGlyphShape extends Shape implements NodeGlyphShape {
+import { FlubberNodeShape } from "./FlubberNodeShape"
+export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
 	/**
 	 * Make new <g>
