@@ -12,16 +12,16 @@ import { json } from "d3-request";
 import { DGLOs } from "../lib/DGLOs";
 import { DGLOsSVG } from "../lib/DGLOsSVG";
 
-json("data/dummy/dummy2.json", function (response: any) {
-	// json("data/miserables/miserables.json", function (response: any) {
-	// json("data/radoslaw/emails.json", function (response: any) {
+// json("data/dummy/dummy.json", function (response: any) {
+// json("data/miserables/miserables.json", function (response: any) {
+json("data/radoslaw/emails.json", function (response: any) {
 
 	let width: number, height: number;
 	width = height = 1000;
 
 	//------------------------------------------------------------//
-	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
-	let g: DynamicGraph = new DynamicDrinkGraph(response);
+	let g: DynamicGraph = new DynamicRadoslawGraph(response);
+	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
 	//------------------------------------------------------------//
 

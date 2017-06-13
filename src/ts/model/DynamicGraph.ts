@@ -163,7 +163,6 @@ export class Graph {
 
 export class MetaNode implements SimulationNodeDatum {
 	private readonly _origID: number | string;
-	private _nodes: Set<Node> = new Set<Node>();
 	private _x?: number;
 	private _y?: number;
 	private _vx?: number;
@@ -179,26 +178,14 @@ export class MetaNode implements SimulationNodeDatum {
 		return this._origID;
 	}
 
-	get nodes(): Set<Node> {
-		return this._nodes;
-	}
-
-	public add(data: Node) {
-		this._nodes.add(data);
-	}
-
 	set x(num: number) {
-		this._nodes.forEach(function (n: Node) {
-			n.x = num;
-		});
+		this._x = num;
 	}
 	get x(): number {
 		return this._x;
 	}
 	set y(num: number) {
-		this._nodes.forEach(function (n: Node) {
-			n.y = num;
-		});
+		this._y = num;
 	}
 	get y(): number {
 		return this._y;
@@ -229,53 +216,69 @@ export class MetaNode implements SimulationNodeDatum {
 	}
 }
 
-export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
-
-	public add(e: Edge) {
-		let key = e.origSource.origID + ":::" + e.origTarget.origID;
-		if (!this.has(key)) {
-			this.set(key, new MetaEdge(key));
-		}
-		this.get(key).add(e);
-	}
-}
-
 export class MetaEdge {
-	readonly _origID: string;
-	private _metaEdges: Set<Edge> = new Set<Edge>();
-	public x?: number;
-	public y?: number;
+	private _id: string | number;
+	private _x?: number;
+	private _y?: number;
+	private _source: Node;
+	private _target: Node;
+	private readonly _origSource: Node;
+	private readonly _origTarget: Node;
+	private readonly _origID: string | number;
 
-	constructor(e: string) {
-		this._origID = e;
+	constructor(id: string | number, source: Node, target: Node) {
+		this._origID = id;
+		this._id = id;
+		this._origSource = source;
+		this._origTarget = target;
 	}
 
-	get origID(): string {
+	get origID(): string | number {
 		return this._origID;
 	}
 
-	public add(data: Edge) {
-		this._metaEdges.add(data);
+	get id(): string | number {
+		return this._id;
 	}
 
+	get origSource(): Node {
+		return this._origSource;
+	}
+
+	get origTarget(): Node {
+		return this._origTarget;
+	}
+
+	set x(d: number) {
+		this._x = d;
+	}
+
+	get x(): number {
+		return this._x;
+	}
+
+	set y(d: number) {
+		this._y = d;
+	}
+
+	get y(): number {
+		return this._y;
+	}
 }
 
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
-	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
-	private _metaEdges: DynamicGraphMetaEdgeMap = new DynamicGraphMetaEdgeMap();
+	private _metaNodes: Array<MetaNode> = new Array<MetaNode>();
+	private _metaEdges: Array<Edge> = new Array<Edge>();
 
 	public constructor(timesteps: Array<Graph>) {
 		this._timesteps = timesteps;
-		for (let g of timesteps) {
-			for (let n of g.nodes) {
-				if (!this._metaNodes.has(n.origID)) {
-					this._metaNodes.set(n.origID, new MetaNode(n.origID));
-				}
-				this._metaNodes.get(n.origID).add(n);
+		for (let i = 0; i < this.timesteps.length; i++) {
+			for (let n of this.timesteps[i].nodes) {
+				this._metaNodes.push(new MetaNode(n.id));
 			}
-			for (let e of g.edges) {
-				this._metaEdges.add(e);
+			for (let e of this.timesteps[i].edges) {
+				this._metaEdges.push(new Edge(e.id, e.source, e.target, e.weight, i));
 			}
 		}
 	}
@@ -284,11 +287,11 @@ export class DynamicGraph {
 		return this._timesteps;
 	}
 
-	get metaNodes(): Map<string | number, MetaNode> {
+	get metaNodes(): Array<MetaNode> {
 		return this._metaNodes;
 	}
 
-	get metaEdges(): DynamicGraphMetaEdgeMap {
+	get metaEdges(): Array<Edge> {
 		return this._metaEdges;
 	}
 }

@@ -112,7 +112,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//Check simulation exists
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
-					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.origID })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
+					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.origID })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
 					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					// .force("collide", d3force.forceCollide().radius(function (d: MetaNode) {
@@ -134,8 +134,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					});
 			}
 			if (this._simulation !== undefined) {
-				this._simulation.nodes(self.data.timesteps[self._timeStampIndex].nodes);
-				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.timesteps[this._timeStampIndex].edges);
+				this._simulation.nodes(self.data.metaNodes);
+				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.metaEdges);
 
 				this._simulation.alpha(.5).restart();
 			}
@@ -179,15 +179,18 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	private communicateNodePositions() {
+		let metaTraverse = 0;
 		for (let t of this.data.timesteps) {
-			for (let n of t.nodes) {
-				this.data.metaNodes.get(n.origID).nodes.forEach(function (node: Node) {
+			for (let n = metaTraverse; n < t.nodes.length + metaTraverse; n++) {
+				if (this.data.metaNodes[n].origID === t.nodes[n - metaTraverse].id) {
 					console.log(n)
-					console.log(node)
-					n.x = node.x;
-					n.y = node.y;
-				});
+					console.log(this.data.metaNodes[n])
+					t.nodes[n - metaTraverse].x = this.data.metaNodes[n].x;
+					t.nodes[n - metaTraverse].y = this.data.metaNodes[n].y;
+
+				}
 			}
+			metaTraverse += t.nodes.length;
 		}
 	}
 
