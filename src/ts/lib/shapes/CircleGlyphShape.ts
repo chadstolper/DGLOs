@@ -44,13 +44,13 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		let self = this;
 		glyphs
-			// .attr("d", function (d: Node) {
-			// 	return self.circlePath(10, 10, attrOpts.radius);
-			// })
 			.attr("d", function (d: Node) {
-				toCircle("", d.x, d.y, attrOpts.radius);
-				return "hey";
+				return self.circlePath(10, 10, attrOpts.radius);
 			})
+		// .attr("init", function (d: Node): string {
+		// 	//toCircle("M 10", d.x, d.y, attrOpts.radius);
+		// 	return "complete";
+		// })
 
 
 		switch (attrOpts.fill) {

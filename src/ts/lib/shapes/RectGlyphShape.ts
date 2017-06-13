@@ -37,7 +37,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		let rectG = location.append("g").classed("rectEdges", true);
+		let rectG = location.append("g").classed("rectEdges", true)
+			.attr("d", "M 0,0 L 0,0 L 0,0 L 0,0 Z ");
 		return rectG;
 	}
 	/**
@@ -55,7 +56,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("path")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
-			.attr("d", "M 0 0 L 0 0 L 0 0 L 0 0 Z ");
+			.attr("d", "M 0,0 L 0,0 L 0,0 L 0,0 Z ");
 		return ret;
 	}
 	/**
@@ -88,8 +89,12 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				.attrTween("d", function (d: Edge) {
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
+					console.log(attr.width);
 					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
 						(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
+					console.log(oldD);
+					console.log(newD);
+					console.log("jajajaja");
 					return interpolate(oldD, newD);
 
 				})
