@@ -121,8 +121,7 @@ export class LabelGlyphShape extends LabelShape implements NodeGlyphShape {
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
-		sourceG.style("display", "none");
-		targetG.style("display", null);
+		super.transformTo(sourceG, targetShape, targetG);
 	}
 	/**
 	 * Draw and create new visualizations of nodes, initial update included
