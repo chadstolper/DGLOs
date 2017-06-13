@@ -149,6 +149,12 @@ export class DGLOsWill extends DGLOsMatt {
 		//console.log(this._neighboringNodesMap)
 		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
 	}
+	public drawAllEdgeGlyphs() {
+		let index = 0;
+		for (let step of this.data.timesteps[index].edges) {
+
+		}
+	}
 	/**
 	 * Redraws the graph.
 	 */
