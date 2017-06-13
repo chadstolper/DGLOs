@@ -6,7 +6,7 @@ import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
 import { Shape } from "./Shape";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import "d3-transition";
-import { interpolate } from "flubber";
+import { interpolate, toCircle } from "flubber";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
@@ -44,9 +44,14 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		let self = this;
 		glyphs
+			// .attr("d", function (d: Node) {
+			// 	return self.circlePath(10, 10, attrOpts.radius);
+			// })
 			.attr("d", function (d: Node) {
-				return self.circlePath(10, 10, attrOpts.radius);
+				toCircle("", d.x, d.y, attrOpts.radius);
+				return "hey";
 			})
+
 
 		switch (attrOpts.fill) {
 			case "id":
