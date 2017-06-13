@@ -52,7 +52,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param TimeStampIndex 
 	 */
 	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
-		let ret: Selection<any, Edge, any, {}> = glyphs.append("rect")
+		let ret: Selection<any, Edge, any, {}> = glyphs.append("path")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 		return ret;
 	}
@@ -74,19 +74,23 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", attr.fill]);
 			glyphs
-				.attr("x", function (e: Edge) {
-					return e.x;
+				// .attr("x", function (e: Edge) {
+				// 	return e.x;
+				// })
+				// .attr("y", function (e: Edge) {
+				// 	return e.y;
+				// })
+				// .attr("width", attr.width)
+				// .attr("height", attr.height)
+				.attr("d", function (d: Node): string {
+					return "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + attr.height) + " L " + (d.x + attr.width) + " " + (d.y + attr.height)
+						+ " L " + (d.x + attr.width) + " " + d.y + " Z";
 				})
-				.attr("y", function (e: Edge) {
-					return e.y;
-				})
+				.attr("stroke", attr.stroke)
+				.attr("stroke-width", attr.stroke_width)
 				.attr("fill", function (d: Edge) {
 					return colorMap(d.weight);
-				})
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("stroke", attr.stroke)
-				.attr("stroke-width", attr.stroke_width);
+				});
 		} catch (err) {
 			console.log("No edges!");
 		}
@@ -126,7 +130,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param attr 
 	 */
 	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
-		let rects = rectG.selectAll("rect")
+		let rects = rectG.selectAll("path")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
 		let enter = this.initDraw(rects.enter(), data, timeStampIndex);
