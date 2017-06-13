@@ -6,7 +6,7 @@ import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
 import { Shape } from "./Shape";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import "d3-transition";
-import { interpolate } from "flubber";
+//import { interpolate } from "flubber";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
