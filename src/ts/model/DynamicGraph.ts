@@ -315,8 +315,24 @@ export class DynamicGraph {
 			for (let n of g.nodes) {
 				this._metaNodes.push(new MetaNode(n.id, n.index, n.type, n.label, n.timestamp));
 			}
+		}
+		for (let g of timesteps) {
+			let sourceHold: MetaNode = undefined;
+			let targetHold: MetaNode = undefined;
 			for (let e of g.edges) {
-				this._metaEdges.push(new MetaEdge(e.id, null, null, e.weight, e.timestamp));
+				while (sourceHold === undefined || targetHold === undefined) {
+					for (let n of this.metaNodes) {
+						if (e.source.id === n.id && e.source.timestamp === n.timestamp) {
+							sourceHold = n;
+						}
+						if (e.target.id === n.id && e.target.timestamp === n.timestamp) {
+							targetHold = n;
+						}
+					}
+				}
+				this._metaEdges.push(new MetaEdge(e.id, sourceHold, targetHold, e.weight, e.timestamp));
+				sourceHold = undefined;
+				targetHold = undefined;
 			}
 		}
 	}
