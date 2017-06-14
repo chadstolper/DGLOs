@@ -28,17 +28,15 @@ export class DGLOsWill extends DGLOsMatt {
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
 
-			let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(this._edgeG);
-			let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
-			let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
+			let flubberEdgeG: Selection<any, {}, any, {}> = this.currentEdgeShape.init(this._edgeG);
+			// let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
+			// let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
 
-			this._edgeGlyphMap.set(this.rectShape, edgeRectG);
-			this._edgeGlyphMap.set(this.gestaltShape, edgeGestaltG);
-			this._edgeGlyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
+			this._edgeGlyphMap.set(this.rectShape, flubberEdgeG);
+			this._edgeGlyphMap.set(this.gestaltShape, flubberEdgeG);
+			this._edgeGlyphMap.set(this.sourceTargetLineShape, flubberEdgeG);
 
-			edgeRectG.style("display", "none");
-			edgeGestaltG.style("display", "none");
-			edgeSTLineG.style("display", "none");
+			flubberEdgeG.style("display", "none");
 		}
 	}
 	/**
