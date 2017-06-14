@@ -73,6 +73,7 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
+			let length = data.timesteps[TimeStampIndex].nodes.length;
 			let colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", attr.fill]);
@@ -87,8 +88,8 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 				// .attr("height", attr.height)
 				.transition()
 				.attrTween("d", function (d: Edge) {
-					let h = 1000;
-					let w = 1000;
+					let h = 1000 / length;
+					let w = 1000 / length;
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
 					// TODO: MAKE attr.width and attr.height DEFINED
