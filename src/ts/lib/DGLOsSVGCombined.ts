@@ -9,19 +9,18 @@ import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import { SVGAttrOpts } from "./DGLOsSVG";
 import { VoronoiLayout } from "d3-voronoi";
-import * as d3 from "d3"; //TODO: replace later with module
+import * as d3 from "d3"; //TODO: replace later with module for voronoi
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
+	/**
+	 * Current timestep of the data.
+	 */
 	protected _timeStampIndex = 0;
-
-
 	/**
 	 * The overarching <g> tag holding the shape glyph selections
 	 */
 	protected _nodeG: Selection<any, {}, any, {}>;
-	protected _nodeCircleGlyphs: Selection<any, {}, any, {}>;
-	protected _nodeLabelGlyphs: Selection<any, {}, any, {}>;
 	/**
 	 * A map linking NodeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. CircleNodes, LabelNodes etc).
 	 */
@@ -42,22 +41,42 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
 	 */
 	protected _groupGlyphMap: Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>> = new Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>>();
-	protected _colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	/**
-	 * The physics simulation used to direct froce-directed visualizations.
+	 * The physics simulation used to direct force-directed visualizations.
 	 */
 	protected _simulation: Simulation<any, undefined>;
+	/**
+	 * Boolean representing whether the simulation is enabled.
+	 * Primarily for Gestalt and Matrix positioning.
+	 */
 	protected _simulationEnabled: boolean = false;
+	/**
+	 * Boolean representing the existance of multiple SVG elements needing to be updated by timestep.
+	 */
 	protected _multipleTimestepsEnabled: boolean = false;
+	/**
+	 * Boolean representing the current DGLO visualization being displayed.
+	 * Extended to Gestalt.
+	 */
 	protected _matrixViewEnabled: boolean = false;
+	/**
+	 * Holders for current shapes being used in the visualization.
+	 */
 	protected _currentEdgeShape: EdgeGlyphShape = this.rectShape;
 	protected _currentNodeShape: NodeGlyphShape = this.circleShape;
 	protected _currentGroupGlyph: GroupGlyph = this.voronoiGroupGlyph;
-	protected _voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]]) //set dimensions of voronoi
+	/**
+	 * Voronoi Tesselation mechanic holders.
+	 * DO NOT MODIFY.
+	 */
+	private readonly _voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]]) //set dimensions of voronoi
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
-	protected _cardinalPoints: [number, number][] = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
-	protected _noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", "", 0), new Node("noise1", this._cardinalPoints.length + 1, "noise", "", 0), new Node("noise2", this._cardinalPoints.length + 2, "noise", "", 0), new Node("noise3", this._cardinalPoints.length + 3, "noise", "", 0), new Node("noise4", this._cardinalPoints.length + 4, "noise", "", 0), new Node("noise5", this._cardinalPoints.length + 5, "noise", "", 0), new Node("noise6", this._cardinalPoints.length + 6, "noise", "", 0), new Node("noise7", this._cardinalPoints.length + 7, "noise", "", 0)];
+	protected readonly _cardinalPoints: [number, number][] = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
+	protected readonly _noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", "", 0), new Node("noise1", this._cardinalPoints.length + 1, "noise", "", 0), new Node("noise2", this._cardinalPoints.length + 2, "noise", "", 0), new Node("noise3", this._cardinalPoints.length + 3, "noise", "", 0), new Node("noise4", this._cardinalPoints.length + 4, "noise", "", 0), new Node("noise5", this._cardinalPoints.length + 5, "noise", "", 0), new Node("noise6", this._cardinalPoints.length + 6, "noise", "", 0), new Node("noise7", this._cardinalPoints.length + 7, "noise", "", 0)];
+	/**
+	 * see comment by will
+	 */
 	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
 	protected _groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
 	/**
@@ -84,8 +103,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _centralNodeArray: Array<Node>;
 
-
-	//TODO: MAKE ALL THE GETTERS! MAKE ALL THE SETTERS!
 	set timeStampIndex(newTime: number) {
 		this._timeStampIndex = newTime;
 	}
@@ -100,12 +117,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	}
 	get groupGlyphMap(): Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>> {
 		return this._groupGlyphMap;
-	}
-	set colorScheme(colorScheme: ScaleOrdinal<string | number, string>) {
-		this._colorScheme = colorScheme;
-	}
-	get colorScheme(): ScaleOrdinal<string | number, string> {
-		return this._colorScheme;
 	}
 	set simulation(newSim: Simulation<any, undefined>) {
 		this._simulation = newSim;
@@ -146,6 +157,10 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	get voronoi(): VoronoiLayout<Node> {
 		return this._voronoi;
 	}
+	/**
+	 * Returns the noisePoints[Node] with x and y positions provided by cardinalPoints[Number][].
+	 * Used in GMap(Voronoi) visualization.
+	 */
 	get noisePoints(): Node[] {
 		//give noisenodes (x, y) of cardinalPoints
 		for (let i = 0; i < this._cardinalPoints.length; i++) {

@@ -26,7 +26,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	public drawNodeGlyphs() {
 		this.drawNodeGlyphsAt(this.loc);
 	}
-
+	/**
+	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none"
+	* @param loc: Selection<any, {}, any, {}>
+	*/
 	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>) {
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		// if (this._nodeG === undefined) {
@@ -47,7 +50,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._nodeGlyphMap.set(this._timeStampIndex, glyphMap);
 		// }
 	}
-
+	/**
+	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
+	*/
 	public drawRegions() {
 		// this.voronoiInit();
 
@@ -71,7 +76,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
 		});
 
-		this._currentGroupGlyph = this.voronoiGroupGlyph;
+		this._currentGroupGlyph = this.voronoiGroupGlyph; //TODO: assign possibly somewhere else
 	}
 
 	/**
@@ -85,7 +90,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		});
 
 		this._currentNodeShape = shape;
-		// this.runSimulation(true);
 	}
 
 	/**
@@ -96,6 +100,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._attrOpts = attr;
 	}
 
+	/**
+	 * Resets the visual attributes of the GroupGlyphShape.
+	 * Also sets NodeGlyph and EdgeGlyph attributes to correspond with GroupGlyph visualization.
+	 * @param attr 
+	 */
 	public setRegionGlyphAttrs(attr: SVGAttrOpts) {
 		this._groupAttrOpts = attr;
 		this._attrOpts = new SVGAttrOpts("black", null, 0.5);
@@ -121,7 +130,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							if (self.currentNodeShape.shapeType === "Label") {
 								let ret: number;
 								d.nodes.forEach(function (n: Node) {
-									ret = n.label.length * 2; //TODO: replace 4 with font related function
+									ret = n.label.length * 2; //TODO: replace # with font related function
 								});
 								return ret;
 							}
@@ -152,10 +161,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		}
 	}
 
+	/**
+	 * "Super tick" called during simulation
+	 * @param self
+	 */
 	private ticked(self: DGLOsMatt) {
 		return () => self.tick();
 	}
 
+	/**
+	 *  Tick called during simulation updating x and y positions of DOM elements
+	 */
 	private tick() {
 		let self = this; //d3 scope this issue
 
@@ -208,19 +224,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					shape.draw(glyphs, self.data, timestep, self._attrOpts);
 				});
 			});
-		}
-	}
-	/**
-	 * @Deprecated Might not be needed
-	 */
-	private voronoiInit() {
-		this._cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
-		this._noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", "", 0), new Node("noise1", this._cardinalPoints.length + 1, "noise", "", 0), new Node("noise2", this._cardinalPoints.length + 2, "noise", "", 0), new Node("noise3", this._cardinalPoints.length + 3, "noise", "", 0), new Node("noise4", this._cardinalPoints.length + 4, "noise", "", 0), new Node("noise5", this._cardinalPoints.length + 5, "noise", "", 0), new Node("noise6", this._cardinalPoints.length + 6, "noise", "", 0), new Node("noise7", this._cardinalPoints.length + 7, "noise", "", 0)];
-
-		//give noisenodes (x, y) of cardinalPoints
-		for (let i = 0; i < this._cardinalPoints.length; i++) {
-			this._noisePoints[i].x = this._cardinalPoints[i][0];
-			this._noisePoints[i].y = this._cardinalPoints[i][1];
 		}
 	}
 }

@@ -136,7 +136,7 @@ export class Edge {
 }
 
 /**
- * Static Graph, not Dynamic (yet)
+ * Static Graph, not Dynamic.
  */
 export class Graph {
 	private _nodes: Array<Node>;
@@ -161,6 +161,10 @@ export class Graph {
 	}
 }
 
+/**
+ * Object containing the whole of Node data for simulation.
+ * Nodes held in Set<Node>.
+ */
 export class MetaNode implements SimulationNodeDatum {
 	private readonly _origID: number | string;
 	private _id: string | number;
@@ -247,6 +251,10 @@ export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
 	}
 }
 
+/**
+ * Object containing the whole of Edge data for simulation.
+ * Edge data held in Set<Edge>.
+ */
 export class MetaEdge {
 	private _id: string;
 	private _edges: Set<Edge> = new Set<Edge>();
@@ -316,25 +324,19 @@ export class DynamicGraph {
 	get metaNodes(): Map<string | number, MetaNode> {
 		return this._metaNodes;
 	}
-
+	/**
+	 * Converts MetaNode Set<Node> to Array<MetaNode>.
+	 * Returns MetaNode[].
+	 */
 	get metaNodesAsArray(): Array<MetaNode> {
-		// let ret: Array<Node> = new Array<Node>();
-		let arr = Array.from(this.metaNodes.values());
-		return arr;
-		// this.metaNodes.forEach(function (mn: MetaNode, id: string | number) {
-		// 	mn.nodes.forEach(v => ret.push(v));
-		// })
-		// return ret;
+		return Array.from(this.metaNodes.values());
 	}
-
+	/**
+	 * Converts MetaEdge Set<Edge> to Array<MetaEdge>.
+	 * Returns MetaEdge[].
+	 */
 	get metaEdgesAsArray(): Array<MetaEdge> {
-		let arr = Array.from(this.metaEdges.values());
-		return arr;
-		// let ret: Array<Edge> = new Array<Edge>();
-		// this.metaEdges.forEach(function (me: MetaEdge, id: string | number) {
-		// 	me.edges.forEach(v => ret.push(v));
-		// });
-		// return ret;
+		return Array.from(this.metaEdges.values());
 	}
 
 	get metaEdges(): DynamicGraphMetaEdgeMap {

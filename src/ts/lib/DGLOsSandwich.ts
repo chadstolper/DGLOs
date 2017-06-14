@@ -20,6 +20,11 @@ import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsSandwich extends DGLOsWill {
 
+	/**
+	 * Append and SVG element to the body per timestep in the DynammicGraph dataset.
+	 * Elements will be classed as SVG_Timestamp:#.
+	 * Initial drawNodeGlyphs() and drawEdgesGlyphs() must be called prior to calling drawTimesteps().
+	 */
 	public drawTimesteps() {
 		this._timeStampIndex++;
 		if (this.data.timesteps.length > 1) {
