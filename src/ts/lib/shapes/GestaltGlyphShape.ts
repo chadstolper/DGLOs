@@ -98,6 +98,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 			return glyphs;
 		}
+		catch (err) {
+			console.log("gestalt update error");
+		}
+	}
 
 	/**
 	 * Transform the current EdgeGlyphShape to given EdgeGlyphShape
@@ -121,7 +125,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
-		};
+		}
 		super.transformTo(sourceG, targetShape, targetG);
 	}
 
