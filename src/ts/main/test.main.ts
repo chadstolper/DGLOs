@@ -30,9 +30,10 @@ json("data/dummy/dummy.json", function (response: any) {
 	let lib: DGLOs = new DGLOsSVG(g, svg);
 
 	//------------------------------------------------------------//
-	// let vis: Technique = new ForceDirectedAnimated(lib, {});
+	let vis: Technique = new ForceDirectedAnimated(lib, {});
 	// let vis: Technique = new GMap(lib, {});
-	let vis: Technique = new ForceDirectedTimeline(lib, {});
+	// let vis: Technique = new 
+	// let vis: Technique = new ForceDirectedTimeline(lib, {});
 	// let vis: Technique = new MatrixTimeline(lib, {});
 	//------------------------------------------------------------//
 

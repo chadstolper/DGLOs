@@ -122,6 +122,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
+				//CHECK GOES HERE!
 				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self._timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				self.runSimulation(true);
 			});
