@@ -32,7 +32,7 @@ export class DGLOsSandwich extends DGLOsWill {
 				this._timeStampIndex++;
 			}
 			this._timeStampIndex = 0; //reset to 0;
-			this._simulationMap.set(1, this._metaSimulation);
+			this._multipleTimestepsEnabled = true;
 		}
 	}
 }

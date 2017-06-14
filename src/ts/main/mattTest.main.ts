@@ -7,6 +7,7 @@ import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
 import { GMap } from "../specs/GMap";
 import { ForceDirectedTimeline } from "../specs/ForceDirectedTimeline";
 import { MatrixTimeline } from "../specs/MatrixTimeline";
+import { MatrixAnimated } from "../specs/MatrixAnimated";
 import { select, Selection } from "d3-selection";
 import { json } from "d3-request";
 import { DGLOs } from "../lib/DGLOs";
@@ -31,9 +32,10 @@ json("data/dummy/dummy.json", function (response: any) {
 
 	//------------------------------------------------------------//
 	// let vis: Technique = new ForceDirectedAnimated(lib, {});
-	// let vis: Technique = new GMap(lib, {});
-	let vis: Technique = new ForceDirectedTimeline(lib, {});
+	let vis: Technique = new GMap(lib, {});
+	// let vis: Technique = new ForceDirectedTimeline(lib, {});
 	// let vis: Technique = new MatrixTimeline(lib, {});
+	// let vis: Technique = new MatrixAnimated(lib, {});
 	//------------------------------------------------------------//
 
 

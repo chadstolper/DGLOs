@@ -92,6 +92,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * DGLO, and then positions the rectangles to form a matrix (heatmap).
 	 */
 	public positionEdgeGlyphsMatrix() {
+		this._matrixViewEnabled = true;
 		let h = this._height;
 		let w = this._width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
@@ -122,9 +123,12 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
-				//CHECK GOES HERE!
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self._timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
-				self.runSimulation(true);
+				if (!self._multipleTimestepsEnabled) {
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts); //TODO: change matrixattropts?
+				}
+				if (!self._matrixViewEnabled) {
+					self.runSimulation(true);
+				}
 			});
 
 		let nextButton = buttonDiv.append("button")
@@ -132,8 +136,12 @@ export class DGLOsWill extends DGLOsMatt {
 			.on("click", function () {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
-				self.currentEdgeShape.draw(self._edgeGlyphMap.get(self._timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
-				self.runSimulation(true);
+				if (!self._multipleTimestepsEnabled) {
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+				}
+				if (!self._matrixViewEnabled) {
+					self.runSimulation(true);
+				}
 			});
 	}
 	/**

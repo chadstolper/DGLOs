@@ -30,11 +30,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>) {
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		// if (this._nodeG === undefined) {
-		let nodeG = loc.append("g").classed("nodeG", true);
+		this._nodeG = loc.append("g").classed("nodeG", true);
 
 		//create child "g" in parent for NodeGlyphs
-		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(nodeG);
-		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(nodeG);
+		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(this._nodeG);
+		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(this._nodeG);
 
 		nodeLabelG.style("display", "none");
 		nodeCircleG.style("display", "none");
@@ -49,7 +49,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public drawRegions() {
-		this.voronoiInit();
+		// this.voronoiInit();
 
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
@@ -68,7 +68,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		let self = this;
 		this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
-			self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), this.voronoiGroupGlyph, groupMap.get(this.voronoiGroupGlyph));
+			self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
 		});
 
 		this._currentGroupGlyph = this.voronoiGroupGlyph;
@@ -112,21 +112,26 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//Check simulation exists
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
-					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
-					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
+					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id })) //push applied to NodeGlyphs
+					.force("charge", d3force.forceManyBody().strength(-50)) //pull applied to all things from center
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
-					// .force("collide", d3force.forceCollide().radius(function (d: MetaNode) {
-					// 	try {
-					// 		if (self.currentNodeShape.shapeType === "Label") {
-					// 			return d.label.length * 4; //TODO: replace 4 with font related function
-					// 		}
-					// 		else return self._attrOpts.radius;
-					// 	}
-					// 	catch (err) {
-					// 		return null;
-					// 	}
-					// })
-					// 	.iterations(2))
+					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
+						try {
+							console.log(self.currentNodeShape.shapeType)
+							if (self.currentNodeShape.shapeType === "Label") {
+								let ret: number;
+								d.nodes.forEach(function (n: Node) {
+									ret = n.label.length * 2; //TODO: replace 4 with font related function
+								});
+								return ret;
+							}
+							else return self._attrOpts.radius;
+						}
+						catch (err) {
+							return null;
+						}
+					})
+						.iterations(2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
 						// console.log(self.data.metaNodes)
@@ -154,49 +159,58 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		// this.communicateNodePositions();
-
-		this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
-			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-				// self.metaTick();
-				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-			})
-		});
-
-		//update edges in map; run update of simulation on all edges
-		this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-				// self.metaTick();
-				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-			})
-		});
-
-		//update nodes in map; run update of simulation on all NodeGlyphs
-		this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-				// console.log(self._nodeGlyphMap)
-				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-			})
-		});
-	}
-
-	/**
-	 * @deprecated Use metanodes instead!
-	 */
-	private communicateNodePositions() {
-		let self = this;
-		for (let t of this.data.timesteps) {
-			for (let node of t.nodes) {
-				this.data.metaNodes.get(node.origID).nodes.forEach(function (metaNode: Node) {
-					console.log(metaNode.x)
-					console.log(node.x)
-					node.x = metaNode.x;
-					node.y = metaNode.y;
+		if (!this._multipleTimestepsEnabled) {
+			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
+					// self.metaTick();
+					shape.draw(glyphs, self.data, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
-			}
+			});
+
+			//update edges in map; run update of simulation on all edges
+			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+					// self.metaTick();
+					shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
+				});
+			});
+
+			//update nodes in map; run update of simulation on all NodeGlyphs
+			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+					// console.log(self._nodeGlyphMap)
+					shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
+				});
+			});
+		}
+		else {
+			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
+					// self.metaTick();
+					shape.draw(glyphs, self.data, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
+				});
+			});
+
+			//update edges in map; run update of simulation on all edges
+			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+					// self.metaTick();
+					shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
+				});
+			});
+
+			//update nodes in map; run update of simulation on all NodeGlyphs
+			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+					// console.log(self._nodeGlyphMap)
+					shape.draw(glyphs, self.data, timestep, self._attrOpts);
+				});
+			});
 		}
 	}
-
+	/**
+	 * @Deprecated Might not be needed
+	 */
 	private voronoiInit() {
 		this._cardinalPoints = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
 		this._noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", "", 0), new Node("noise1", this._cardinalPoints.length + 1, "noise", "", 0), new Node("noise2", this._cardinalPoints.length + 2, "noise", "", 0), new Node("noise3", this._cardinalPoints.length + 3, "noise", "", 0), new Node("noise4", this._cardinalPoints.length + 4, "noise", "", 0), new Node("noise5", this._cardinalPoints.length + 5, "noise", "", 0), new Node("noise6", this._cardinalPoints.length + 6, "noise", "", 0), new Node("noise7", this._cardinalPoints.length + 7, "noise", "", 0)];
