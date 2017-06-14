@@ -49,17 +49,17 @@ export interface DGLOs {
 
 
 	/**
-	 * Draw entering Nodes from another timestep. Acts as an update to an existing graphic.
+	 * Draws all of the node glyphs of a certain shape for every timestep.
 	 * Returns void.
 	 */
-	drawNewNodeGlyphs(): void;
+	drawAllNodeGlyphs(): void;
 
 
 	/**
-	 * Draw entering Edges from another timestep. Acts as an update to an existing graphic.
-	 * Returns void.
+	 * Draws all of the edge glyphs of a certain shape for every timestep.
+	 * returns void.
 	 */
-	drawNewEdgeGlyphs(): void;
+	drawAllEdgeGlyphs(): void;
 
 
 	/**

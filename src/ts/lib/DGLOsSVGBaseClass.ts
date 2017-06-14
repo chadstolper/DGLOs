@@ -100,8 +100,8 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
-	drawNewNodeGlyphs(): void { };
-	drawNewEdgeGlyphs(): void { };
+	drawAllNodeGlyphs(): void { };
+	drawAllEdgeGlyphs(): void { };
 	drawRegions(): void { }; //take an attr for color in draw method
 
 

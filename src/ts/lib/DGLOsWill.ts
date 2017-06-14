@@ -70,13 +70,11 @@ export class DGLOsWill extends DGLOsMatt {
 		this.redraw(); //TODO: need redraw in transform?
 	}
 	public positionEdgeGlyphsGestalt() {
-
+		this.redraw();
 	}
 	//TODO
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
-		console.log(this._currentNodeShape);
-		console.log(this._nodeGlyphMap.get(this._timeStampIndex).get(this.currentNodeShape));
 		let h = this._height;
 		let w = this._width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
@@ -186,6 +184,12 @@ export class DGLOsWill extends DGLOsMatt {
 		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
 		//console.log(this._neighboringNodesMap)
 		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
+	}
+	public drawAllEdgeGlyphs() {
+		let index = 0;
+		for (let step of this.data.timesteps[index].edges) {
+
+		}
 	}
 	/**
 	 * Redraws the graph.
