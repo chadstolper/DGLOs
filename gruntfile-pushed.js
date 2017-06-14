@@ -11,7 +11,11 @@ module.exports = function (grunt) {
 
 	//////////////////    Main File    /////////////////////////
 	////////////////////////////////////////////////////////////
-	mainfile = 'out/src/ts/matrixHeatmapAnimated.js';
+	mainfile = 'test.main';
+	// mainfile = 'EgographTest';
+	// mainfile = 'mainFD';
+	// mainfile = 'LesMiserablesTest';
+	// mainfile = 'RadoslawTest';
 	////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////
 
@@ -37,7 +41,7 @@ module.exports = function (grunt) {
 			},
 			files: {
 				dest: 'js/bundle.js',
-				src: mainfile
+				src: 'out/src/ts/main/' + mainfile + '.js'
 			},
 		},
 		connect: {
@@ -53,7 +57,7 @@ module.exports = function (grunt) {
 				tsconfig: true
 			},
 			options: {
-				fast: "always",
+				fast: "never",
 				target: 'es6'
 			}
 		},
