@@ -84,10 +84,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					})
 					.attr("y2", function (d: Edge) {
 						if (Math.tan(weightScale(d.weight)) < 0) {
-							console.log("negative");
+							// console.log("negative");
 							return 75 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
 						} else {
-							console.log("positive");
+							// console.log("positive");
 							return 75 * (d.target.index) + (Math.tan(weightScale(d.weight)));
 						}
 					})
@@ -99,7 +99,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			return glyphs;
 		}
 		catch (err) {
-			console.log("gestalt update error");
+			// console.log("gestalt update error");
 		}
 	}
 
@@ -136,7 +136,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param timeStepIndex 
 	 */
 	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
-		console.log("drawingGestalt");
+		// console.log("drawingGestalt");
 		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
