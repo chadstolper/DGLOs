@@ -26,6 +26,13 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 		let ret: Selection<any, Node, any, {}> = glyphs.append("path")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
+			//TODO: the x and y here are a hardcoded bandaid. These need to half of the SVG width and height,
+			// but at this time initDraw does not have access to width and height
+			.attr("initPos", function (d: Node) {
+				d.x = 500;
+				d.y = 500;
+				return "true";
+			})
 			.on("click", function (d: Node) {
 				self.lib.setCenterNode(d.origID);
 				if (self.lib.onClickRedraw) {
@@ -46,10 +53,6 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 			.attr("d", function (d: Node) {
 				return self.circlePath(10, 10, attrOpts.radius);
 			})
-		// .attr("init", function (d: Node): string {
-		// 	//toCircle("M 10", d.x, d.y, attrOpts.radius);
-		// 	return "complete";
-		// })
 
 
 		switch (attrOpts.fill) {
