@@ -72,7 +72,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			.attrTween("d", function (d: Edge) {
 				let elem: HTMLElement = this;
 				let oldD: string = elem.getAttribute("d");
-				let newD = "M " + d.source.x + "," + d.source.y + " L " + (d.target.x / 2) + "," + (d.target.y / 2) + " L " + d.target.x + "," + d.target.y;
+				let newD = "M " + d.source.x + "," + d.source.y + " L " + (d.target.x / 2) + "," + (d.target.y / 2) + " L " + d.target.x + "," + d.target.y + "Z";
 				return interpolate(oldD, newD, { maxSegmentLength: 0.0 });
 				//, { maxSegmentLength: 0.0 }
 			})

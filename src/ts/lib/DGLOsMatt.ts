@@ -128,9 +128,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		});
 
 		//update edges in map; run update of simulation on all edges
-		this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-			shape.draw(edges, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
-		});
+		// this._edgeGlyphMap.forEach(function (edges: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+		// 	shape.draw(edges, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
+		// });
+		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
+
+
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
