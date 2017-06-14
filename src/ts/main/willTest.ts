@@ -12,7 +12,7 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 import { GestaltGlyphs } from "../specs/GestaltGlyphs"
 import { DynamicNewcombGraph } from "../data/NewcombGraph"
 
-json("data/dummy/dummy2.json", function (response: any) {
+json("data/dummy/dummy.json", function (response: any) {
 	let width: number, height: number;
 	width = height = 1000;
 	let g: DynamicGraph = new DynamicDrinkGraph(response);
