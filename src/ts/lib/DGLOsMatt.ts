@@ -154,7 +154,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		this.communicateNodePositions();
+		// this.communicateNodePositions();
 
 		this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {

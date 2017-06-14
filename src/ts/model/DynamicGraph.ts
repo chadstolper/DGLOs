@@ -196,6 +196,7 @@ export class MetaNode implements SimulationNodeDatum {
 		this._nodes.forEach(function (n: Node) {
 			n.x = num;
 		});
+		this._x = num;
 	}
 	get x(): number {
 		return this._x;
@@ -204,6 +205,7 @@ export class MetaNode implements SimulationNodeDatum {
 		this._nodes.forEach(function (n: Node) {
 			n.y = num;
 		});
+		this._y = num;
 	}
 	get y(): number {
 		return this._y;
