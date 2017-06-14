@@ -317,20 +317,24 @@ export class DynamicGraph {
 		return this._metaNodes;
 	}
 
-	get metaNodesAsArray(): Array<Node> {
-		let ret: Array<Node> = new Array<Node>();
-		this.metaNodes.forEach(function (mn: MetaNode, id: string | number) {
-			mn.nodes.forEach(v => ret.push(v));
-		})
-		return ret;
+	get metaNodesAsArray(): Array<MetaNode> {
+		// let ret: Array<Node> = new Array<Node>();
+		let arr = Array.from(this.metaNodes.values());
+		return arr;
+		// this.metaNodes.forEach(function (mn: MetaNode, id: string | number) {
+		// 	mn.nodes.forEach(v => ret.push(v));
+		// })
+		// return ret;
 	}
 
-	get metaEdgesAsArray(): Array<Edge> {
-		let ret: Array<Edge> = new Array<Edge>();
-		this.metaEdges.forEach(function (me: MetaEdge, id: string | number) {
-			me.edges.forEach(v => ret.push(v));
-		});
-		return ret;
+	get metaEdgesAsArray(): Array<MetaEdge> {
+		let arr = Array.from(this.metaEdges.values());
+		return arr;
+		// let ret: Array<Edge> = new Array<Edge>();
+		// this.metaEdges.forEach(function (me: MetaEdge, id: string | number) {
+		// 	me.edges.forEach(v => ret.push(v));
+		// });
+		// return ret;
 	}
 
 	get metaEdges(): DynamicGraphMetaEdgeMap {

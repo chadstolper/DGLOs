@@ -129,16 +129,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					// 	.iterations(2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
-						console.log(self.data.metaNodes)
+						// console.log(self.data.metaNodes)
 						console.log("SIMULATION DONE HALLELUJAH!");
 					});
 			}
 			if (this._simulation !== undefined) {
 				this._simulation.nodes(self.data.metaNodesAsArray);
-				(this._simulation.force("link") as d3force.ForceLink<Node, Edge>).links(self.data.metaEdgesAsArray);
+				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>).links(self.data.metaEdgesAsArray);
 
 				this._simulation.alpha(.5).restart();
-				console.log(this.data.metaNodesAsArray)
+				// console.log(this.data.metaNodesAsArray)
 			}
 
 		} else {
@@ -180,6 +180,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		});
 	}
 
+	/**
+	 * @deprecated Use metanodes instead!
+	 */
 	private communicateNodePositions() {
 		let self = this;
 		for (let t of this.data.timesteps) {
