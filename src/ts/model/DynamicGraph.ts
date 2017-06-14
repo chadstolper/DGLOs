@@ -144,8 +144,8 @@ export class MetaNode implements SimulationNodeDatum {
 	private _index: number;
 	private _type: string;
 	private _label: string;
-	public x?: number;
-	public y?: number;
+	public _x?: number;
+	public _y?: number;
 	public vx?: number;
 	public vy?: number;
 	public _fx?: number;
@@ -194,6 +194,13 @@ export class MetaNode implements SimulationNodeDatum {
 		this._index = index;
 	}
 
+	get x(): number {
+		return this._x;
+	}
+	set x(newX: number) {
+		this._x = newX;
+		this.
+	}
 	set fx(num: number) {
 		this._fx = num;
 	}

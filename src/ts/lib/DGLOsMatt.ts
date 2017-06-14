@@ -113,7 +113,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id })) //Pull applied to NodeGlyphs // change node to metanode? run simulation only based on meta?// label becomes complicated
-					.force("charge", d3force.forceManyBody().strength(-50)) //Push applied to all things from center
+					.force("charge", d3force.forceManyBody().strength(-100)) //Push applied to all things from center
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					// .force("collide", d3force.forceCollide().radius(function (d: MetaNode) {
 					// 	try {
@@ -156,25 +156,22 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-				// self.metaTick();
 				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-			})
+			});
 		});
 
 		//update edges in map; run update of simulation on all edges
 		this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-				// self.metaTick();
 				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-			})
+			});
 		});
 
 		//update nodes in map; run update of simulation on all NodeGlyphs
 		this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-				// console.log(self._nodeGlyphMap)
 				shape.draw(glyphs, self.data, timestep, self._attrOpts);
-			})
+			});
 		});
 	}
 
@@ -184,9 +181,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			for (let i = 0; i < t.nodes.length; i++) {
 				for (let n of this.data.metaNodes) {
 					if ((t.nodes[i].id === n.id) && (t.nodes[i].timestamp === n.timestamp)) {
-						console.log("set")
-						console.log(n)
-						console.log(t.nodes[i])
 						t.nodes[i].x = n.x;
 						t.nodes[i].y = n.y;
 					}
