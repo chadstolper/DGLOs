@@ -118,7 +118,7 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+	public transformTo(targetShape: EdgeGlyphShape): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
 				break;
@@ -130,7 +130,7 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
 		console.log("rectTransformTo: " + targetShape.shapeType);
-		super.transformTo(sourceG, targetShape, targetG);
+		super.transformTo(targetShape);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.

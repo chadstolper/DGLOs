@@ -7,7 +7,7 @@ export class FlubberEdgeShape extends EdgeShape {
 	constructor(lib: DGLOsSVGBaseClass) {
 		super(lib);
 	}
-	protected transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
-		super.transformTo(sourceSelection, shape, targetSelection);
+	protected transformTo(shape: NodeGlyphShape | EdgeGlyphShape) {
+		super.transformTo(shape);
 	}
 } 

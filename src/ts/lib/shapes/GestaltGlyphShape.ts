@@ -102,7 +102,7 @@ export class GestaltGlyphShape extends FlubberEdgeShape implements EdgeGlyphShap
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+	public transformTo(targetShape: EdgeGlyphShape): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
 				console.log("Gestalt-->Rect");
@@ -119,7 +119,7 @@ export class GestaltGlyphShape extends FlubberEdgeShape implements EdgeGlyphShap
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		};
-		super.transformTo(sourceG, targetShape, targetG);
+		super.transformTo(targetShape);
 	}
 
 	/**

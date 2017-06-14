@@ -70,7 +70,6 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 		glyphs
 			.transition()
 			.attrTween("d", function (d: Edge) {
-				console.log("tweening");
 				let elem: HTMLElement = this;
 				let oldD: string = elem.getAttribute("d");
 				let newD = "M " + d.source.x + "," + d.source.y + " L " + (d.target.x / 2) + "," + (d.target.y / 2) + " L " + d.target.x + "," + d.target.y;
@@ -102,7 +101,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+	public transformTo(targetShape: EdgeGlyphShape): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
 				console.log("STLine-->Rect");
@@ -119,7 +118,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			default:
 				console.log(targetShape.shapeType + " is undefined");
 		};
-		super.transformTo(sourceG, targetShape, targetG);
+		super.transformTo(targetShape);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.

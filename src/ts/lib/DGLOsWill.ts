@@ -52,7 +52,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
 	 */
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		this.currentEdgeShape.transformTo(this._edgeGlyphMap.get(this.currentEdgeShape), shape, this._edgeGlyphMap.get(shape));
+		this.currentEdgeShape.transformTo(shape);
 		this.currentEdgeShape = shape;
 		this.redraw();
 	}
