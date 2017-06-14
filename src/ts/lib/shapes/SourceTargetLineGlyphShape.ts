@@ -51,7 +51,8 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
 			})
-			.attr("d", "M 500,500 L 501,501 L 502,502 L 503,503 Z");
+			//TODO: this path should be the middle of any sized SVG, not just 1000x1000
+			.attr("d", "M 500,500 L 501,501 L 502,502 L 503,503");
 		return ret;
 	}
 
@@ -72,8 +73,8 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 			.attrTween("d", function (d: Edge) {
 				let elem: HTMLElement = this;
 				let oldD: string = elem.getAttribute("d");
-				let newD = "M " + d.source.x + "," + d.source.y + " L " + (d.target.x / 2) + "," + (d.target.y / 2) + " L " + d.target.x + "," + d.target.y + "Z";
-				return interpolate(oldD, newD, { maxSegmentLength: 0.0 });
+				let newD = "M " + d.source.x + "," + d.source.y + " L " + (d.target.x / 4) + "," + (d.target.y / 4) + " L " + (d.target.x / 2) + "," + (d.target.y / 2) + " L " + d.target.x + "," + d.target.y;
+				return interpolate(oldD, newD);
 				//, { maxSegmentLength: 0.0 }
 			})
 
