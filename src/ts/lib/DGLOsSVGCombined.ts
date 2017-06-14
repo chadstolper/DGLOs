@@ -47,8 +47,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * The physics simulation used to direct froce-directed visualizations.
 	 */
 	_simulation: Simulation<any, undefined>
-	_currentEdgeShape: EdgeGlyphShape;
-	_currentNodeShape: NodeGlyphShape;
+	private _currentEdgeShape: EdgeGlyphShape;
+	private _currentNodeShape: NodeGlyphShape;
 	_currentGroupGlyph: GroupGlyph;
 	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]]) //set dimensions of voronoi
 		.x(function (d: Node) { return d.x; })

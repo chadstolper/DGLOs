@@ -24,7 +24,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none"
 	 */
 	public drawNodeGlyphs() {
-		this._currentNodeShape = this.circleShape;
+		this.currentNodeShape = this.circleShape;
 
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		if (this._nodeG === undefined) {
@@ -71,8 +71,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
-		this._currentNodeShape.transformTo(this._nodeGlyphMap.get(this._currentNodeShape), shape, this._nodeGlyphMap.get(shape));
-		this._currentNodeShape = shape;
+		this.currentNodeShape.transformTo(this._nodeGlyphMap.get(this.currentNodeShape), shape, this._nodeGlyphMap.get(shape));
+		this.currentNodeShape = shape;
 	}
 
 	/**
