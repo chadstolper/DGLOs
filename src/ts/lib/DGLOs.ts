@@ -138,7 +138,7 @@ export interface DGLOs {
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
-	replicateTimesteps(): void;
+	drawTimesteps(): void;
 
 
 	/**
