@@ -27,16 +27,11 @@ export class DGLOsWill extends DGLOsMatt {
 		this.currentEdgeShape = this.rectShape;
 		if (this._edgeG === undefined) {
 			this._edgeG = this.loc.append("g").classed("edgeG", true);
-
 			let flubberEdgeG: Selection<any, {}, any, {}> = this.currentEdgeShape.init(this._edgeG);
-			// let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(this._edgeG);
-			// let edgeSTLineG: Selection<any, {}, any, {}> = this.sourceTargetLineShape.init(this._edgeG);
-
 			this._edgeGlyphMap.set(this.rectShape, flubberEdgeG);
 			this._edgeGlyphMap.set(this.gestaltShape, flubberEdgeG);
 			this._edgeGlyphMap.set(this.sourceTargetLineShape, flubberEdgeG);
-
-			flubberEdgeG.style("display", "none");
+			flubberEdgeG.style("display", null);
 		}
 	}
 	/**

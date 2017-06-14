@@ -30,7 +30,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return location.append("g").classed("STLineEdges", true);
+		return location.append("g").classed("FlubberEdges", true);
 	}
 
 	/**

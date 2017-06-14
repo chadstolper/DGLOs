@@ -30,7 +30,7 @@ export class GestaltGlyphShape extends FlubberEdgeShape implements EdgeGlyphShap
  	* @param location
  	*/
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
-		return location.append("g").classed("GestaltGlyphs", true);
+		return location.append("g").classed("FlubberEdges", true);
 	}
 	/**
 	 * The initDraw method is a requirement of the __EdgeGlyphShape__ interface.
