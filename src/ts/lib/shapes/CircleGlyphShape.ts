@@ -52,7 +52,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 		let self = this;
 		glyphs
 			.attr("d", function (d: Node) {
-				return self.circlePath(0, 0, attrOpts.radius);
+				return self.generatePath(0, 0, attrOpts.radius);
 			})
 
 
@@ -136,7 +136,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 
 	//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
 	//I kind of jacked this guys code
-	private circlePath(cx: number, cy: number, r: number) {
+	private generatePath(cx: number, cy: number, r: number) {
 		return 'M ' + cx + ' ' + cy + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
 

@@ -71,7 +71,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 		let self = this;
 		glyphs
 			.attr("d", function (d: Edge) {
-				return self.getLine(d);
+				return self.generatePath(d);
 			})
 		// .transition()
 		// .attrTween("d", function (d: Edge) {
@@ -144,7 +144,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 
 		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex);
 	}
-	private getLine(edge: Edge): string {
+	private generatePath(edge: Edge): string {
 		// console.log(edge);
 		// console.log(edge.source)
 		return "M " + edge.source.x + "," + edge.source.y + " L " + edge.target.x + "," + edge.target.y;

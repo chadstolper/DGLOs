@@ -72,22 +72,20 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	 * @param TimeStampIndex 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+		let self = this;
 		try {
-			let length = data.timesteps[TimeStampIndex].nodes.length;
 			let colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", attr.fill]);
 			glyphs
 				.transition()
 				.attrTween("d", function (d: Edge) {
-					let h = 1000 / length;
-					let w = 1000 / length;
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
-					let newD = "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " +
-						(d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
+					// let newD = "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " +
+					// 	(d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
+					let newD = self.generatePath(d, data, TimeStampIndex);
 					return interpolate(oldD, newD);
-
 				})
 				.attr("stroke", attr.stroke)
 				.attr("stroke-width", attr.stroke_width)
@@ -111,7 +109,7 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 	public transformTo(sourceSelection: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
-				break;
+				sourceSelection
 			case "STLine":
 				break;
 			case "Gestalt":
@@ -139,6 +137,11 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 		let enter = this.initDraw(rects.enter(), data, timeStampIndex);
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
 		this.updateDraw(rects, attr, data, timeStampIndex);
+	}
+	public generatePath(edge: Edge, data: DynamicGraph, TimeStampIndex: number): string {
+		let h = this.lib.height / data.timesteps[TimeStampIndex].nodes.length;
+		let w = this.lib.width / data.timesteps[TimeStampIndex].nodes.length;
+		return "M " + edge.x + " " + edge.y + " L " + edge.x + " " + (edge.y + h) + " L " + (edge.x + w) + " " + (edge.y + h) + " L " + (edge.x + w) + " " + edge.y + " Z";
 	}
 
 	/**
