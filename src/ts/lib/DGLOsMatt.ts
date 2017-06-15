@@ -120,8 +120,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._simulationEnabled = setRunning;
 		if (this._simulationEnabled) {
 			let self = this;
+			console.log(self.data.metaNodesAsArray);
+			console.log(self.data.metaEdgesAsArray);
 			//Check simulation exists
 			if (this._simulation === undefined) {
+				console.log(self.data.metaNodesAsArray);
+				console.log(self.data.metaEdgesAsArray);
 				this._simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
 					.force("charge", d3force.forceManyBody().strength(-40))
@@ -188,6 +192,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	private tick() {
 		let self = this; //d3 scope this issue
+		console.log(self.data.metaNodesAsArray);
+		console.log(self.data.metaEdgesAsArray);
 		if (!this._multipleTimestepsEnabled) {
 
 			//update groups in map; run update of simulation on all groups
@@ -204,8 +210,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			// 		shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
 			// 	});
 			// });
-			this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
+			this.currentNodeShape.draw(this.nodeGlyphMap.get(this.timeStampIndex).get(this.currentNodeShape), this.data, this.timeStampIndex,
+				this._attrOpts);
+			this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape), this.data, this.timeStampIndex, this._edgeAttrOpts);
 
+			console.log(self.data.metaNodesAsArray);
+			console.log(self.data.metaEdgesAsArray);
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			// this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
@@ -214,8 +224,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			// 		shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
 			// 	});
 			// });
-			this.currentNodeShape.draw(this.nodeGlyphMap.get(this.timeStampIndex).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex,
-				this._attrOpts);
 		}
 		else {
 

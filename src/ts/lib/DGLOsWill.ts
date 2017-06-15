@@ -70,7 +70,7 @@ export class DGLOsWill extends DGLOsMatt {
 		});
 
 		this.currentEdgeShape = shape;
-		this.redraw(); //TODO: need redraw in transform?
+		// this.redraw(); //TODO: need redraw in transform?
 	}
 
 	public positionEdgeGlyphsGestalt() {

@@ -29,6 +29,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 			//TODO: the x and y here are a hardcoded bandaid. These need to half of the SVG width and height,
 			// but at this time initDraw does not have access to width and height
 			.attr("initPos", function (d: Node) {
+				console.log(d)
 				d.x = 500;
 				d.y = 500;
 				return "true";
@@ -84,6 +85,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 			.attr("stroke", attrOpts.stroke)
 			.attr("stroke", attrOpts.stroke_width)
 			.attr("transform", function (d: Node): string {
+				console.log(d)
 				return "translate(" + (d.x - (attrOpts.radius)) + ", " + (d.y - (attrOpts.radius)) + ")";
 			})
 		return glyphs;
@@ -135,6 +137,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 	//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
 	//I kind of jacked this guys code
 	private circlePath(cx: number, cy: number, r: number) {
+		console.log(cx, cy, r)
 		return 'M ' + cx + ' ' + cy + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
 
