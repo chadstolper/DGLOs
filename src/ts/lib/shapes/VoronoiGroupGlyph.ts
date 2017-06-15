@@ -58,7 +58,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 			}
 		}
 		catch (err) {
-			console.log("attrOpts Circle undefined");
+			console.log("attrOpts undefined");
 		}
 
 		try {

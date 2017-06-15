@@ -109,6 +109,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
+		console.log("Circle --> " + shape.shapeType)
 		super.transformTo(sourceSelection, null, targetSelection);
 	}
 

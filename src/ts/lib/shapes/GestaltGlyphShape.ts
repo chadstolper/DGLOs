@@ -129,6 +129,7 @@ export class GestaltGlyphShape extends FlubberEdgeShape implements EdgeGlyphShap
 	 * @param timeStepIndex 
 	 */
 	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
+		// console.log("drawingGestalt");
 		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 

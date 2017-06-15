@@ -107,21 +107,20 @@ export class LabelGlyphShape extends LabelShape implements NodeGlyphShape {
 	* @param shape 
 	* @param targetSelection 
  	*/
-	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape, targetG: Selection<any, {}, any, {}>) {
-		console.log(sourceG, targetG)
+	public transformTo(sourceSelection: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		switch (targetShape.shapeType) {
 			case "Circle":
-				console.log("Label-->Circle")
+				// console.log("Label-->Circle")
 				break;
 
 			case "Label":
-				console.log("Label-->Label Catch");
+				// console.log("Label-->Label Catch");
 				break;
 
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
-		super.transformTo(sourceG, targetShape, targetG);
+		super.transformTo(sourceSelection, targetShape, targetSelection);
 	}
 	/**
 	 * Draw and create new visualizations of nodes, initial update included
