@@ -102,26 +102,20 @@ export class GestaltGlyphShape extends FlubberEdgeShape implements EdgeGlyphShap
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(targetShape: EdgeGlyphShape): void {
+	public transformTo(sourceSelection: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
-				console.log("Gestalt-->Rect");
 				break;
-
 			case "STLine":
-				console.log("Gestalt-->STLine");
 				break;
-
 			case "Gestalt":
-				console.log("Gestalt-->Gestalt Catch");
 				break;
-
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
-		};
-		super.transformTo(targetShape);
+		}
+		console.log("rectTransformTo: " + targetShape.shapeType);
+		super.transformTo(sourceSelection, targetShape, targetSelection);
 	}
-
 	/**
 	 * Draw and create new visualizations of edges, initial update included
 	 * @param gestaltG Should be the gestaltG

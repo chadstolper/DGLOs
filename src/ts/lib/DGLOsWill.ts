@@ -66,7 +66,7 @@ export class DGLOsWill extends DGLOsMatt {
 	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
 		let self = this;
 		this._edgeGlyphMap.forEach(function (edgeMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-			self.currentEdgeShape.transformTo(shape);
+			self.currentEdgeShape.transformTo(self.edgeGlyphMap.get(self.timeStampIndex).get(shape), shape, self.edgeGlyphMap.get(self.timeStampIndex).get(shape));
 		});
 
 		this.currentEdgeShape = shape;
@@ -110,7 +110,6 @@ export class DGLOsWill extends DGLOsMatt {
 			g.edges.forEach(function (e: Edge) {
 				e.x = (+e.source.index / g.nodes.length) * w;
 				e.y = (+e.target.index / g.nodes.length) * h;
-				console.log(e.x);
 			});
 		});
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
@@ -191,8 +190,6 @@ export class DGLOsWill extends DGLOsMatt {
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
 		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
-		//console.log(this._neighboringNodesMap)
-		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
 	}
 	public drawAllEdgeGlyphs() {
 		let index = 0;
