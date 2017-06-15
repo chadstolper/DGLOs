@@ -10,7 +10,7 @@ export class GMap extends Technique {
 		this.lib.drawRegions();
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("grey", null, 1));
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "grey", null, 1));
-		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("type"));
+		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("type", "black"));
 		this.lib.enableStepping();
 		this.lib.runSimulation(true);
 	}

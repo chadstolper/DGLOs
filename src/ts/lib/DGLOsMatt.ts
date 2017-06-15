@@ -56,7 +56,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
 	public drawRegions() {
-		// this.voronoiInit();
+		// this.setNoisePoints();
 
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
@@ -124,15 +124,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(-40))
+					.force("charge", d3force.forceManyBody().strength(-50))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
 							if (self.currentNodeShape.shapeType === "Label") {
-								console.log("its a label!")
 								let ret: number;
 								d.nodes.forEach(function (n: Node) {
-									ret = n.label.length * 2.5; //TODO: replace # with font related function
+									ret = n.label.length * 4; //TODO: replace # with font related function
 								});
 								return ret;
 							}
@@ -141,12 +140,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							}
 						}
 						catch (err) {
-							console.log("I'm happening!")
+							console.log("unreachable error catch, how did you...?")
 							return null;
 						}
 					})
-					// .iterations(2)
-					)
+						.iterations(2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
 						console.log("SIMULATION DONE HALLELUJAH!");
@@ -154,16 +152,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			}
 			if (this._simulation !== undefined) {
 				this._simulation.nodes(self.data.metaNodesAsArray);
-				console.log(self.data.metaNodesAsArray);
-				console.log(self.data.metaEdgesAsArray);
 				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>)
 					.links(self.data.metaEdgesAsArray)
 					.strength(function (d: MetaEdge): number {
-						// let ret: number;
-						// d.edges.forEach(function (e: Edge) {
-						// 	ret = e.weight * 0.1;
-						// });
-						// return ret
 						return d.weight * 0.05;
 					});
 				this._simulation.alpha(.3).restart();
@@ -189,7 +180,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		console.log("ticking")
+		// console.log("ticking")
+		// alert("tick")
 
 		if (!this._multipleTimestepsEnabled) {
 
