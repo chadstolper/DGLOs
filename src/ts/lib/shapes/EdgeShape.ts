@@ -10,7 +10,7 @@ export class EdgeShape {
 	get lib(): DGLOsSVGBaseClass {
 		return this._lib
 	}
-	protected transformTo(shape: NodeGlyphShape | EdgeGlyphShape) {
+	protected transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
 		console.log("EdgeShape transfromTo");
 	}
 }
