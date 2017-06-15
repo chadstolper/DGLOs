@@ -108,19 +108,24 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(sourceSelection: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>): void {
+	public transformTo(targetShape: EdgeGlyphShape): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
+				console.log("STLine-->Rect");
 				break;
+
 			case "STLine":
+				console.log("STLine-->STLine Catch");
 				break;
+
 			case "Gestalt":
+				console.log("STLline-->Gestalt");
 				break;
+
 			default:
-				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
-		}
-		console.log("rectTransformTo: " + targetShape.shapeType);
-		super.transformTo(sourceSelection, targetShape, targetSelection);
+				console.log(targetShape.shapeType + " is undefined");
+		};
+		super.transformTo(targetShape);
 	}
 	/**
 	 * The draw method is a requirement of the __EdgeGlyphShape__ interface.
