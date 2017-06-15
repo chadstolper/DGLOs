@@ -40,7 +40,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(this._nodeG);
 
 		nodeLabelG.style("display", "none");
-		nodeCircleG.style("display", "none");
+		nodeCircleG.style("display", null);
 
 		//add nodeselections to new map and map map
 		let glyphMap = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
@@ -174,9 +174,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	private tick() {
 		let self = this; //d3 scope this issue
-
-		console.log("ticking")
-
 		if (!this._multipleTimestepsEnabled) {
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
@@ -186,20 +183,24 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			});
 
 			//update edges in map; run update of simulation on all edges
-			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					// self.metaTick();
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
-				});
-			});
+			// this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			// 	GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+			// 		// self.metaTick();
+			// 		shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
+			// 	});
+			// });
+			this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
+
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
-			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					// console.log(self._nodeGlyphMap)
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
-				});
-			});
+			// this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			// 	GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+			// 		// console.log(self._nodeGlyphMap)
+			// 		shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
+			// 	});
+			// });
+			this.currentNodeShape.draw(this.nodeGlyphMap.get(this.timeStampIndex).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex,
+				this._attrOpts);
 		}
 		else {
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
@@ -210,21 +211,23 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			});
 
 			//update edges in map; run update of simulation on all edges
-			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					// self.metaTick();
-					shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
-				});
-			});
+			// this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			// 	GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+			// 		// self.metaTick();
+			// 		shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
+			// 	});
+			this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
+			//});
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
-			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					// console.log(self._nodeGlyphMap)
-					shape.draw(glyphs, self.data, timestep, self._attrOpts);
-				});
-			});
-
+			// this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			// 	GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+			// 		// console.log(self._nodeGlyphMap)
+			// 		shape.draw(glyphs, self.data, timestep, self._attrOpts);
+			// 	});
+			// });
+			this.currentNodeShape.draw(this.nodeGlyphMap.get(this.timeStampIndex).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex,
+				this._attrOpts);
 		}
 	}
 }
