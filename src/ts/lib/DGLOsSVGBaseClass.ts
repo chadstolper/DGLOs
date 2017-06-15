@@ -23,6 +23,12 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	protected _width = 500;
 	protected _dataToDraw: model.DynamicGraph;
 
+	public get height(): number {
+		return this._height;
+	}
+	public get width(): number {
+		return this._width;
+	}
 	public get data(): model.DynamicGraph {
 		return this._data;
 	}
