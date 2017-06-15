@@ -130,6 +130,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * A method that appends buttons to the webpage which allow the user to move through 
 	 * the dynamic graph's timesteps.
 	 */
+	//TODO: fix the timestep issue
 	public enableStepping() {
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._attrOpts.radius, this._edgeAttrOpts.stroke_width,
 			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
