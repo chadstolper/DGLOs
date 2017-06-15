@@ -68,17 +68,21 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	 * @param TimeStampIndex 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+		let self = this;
 		glyphs
-			.transition()
-			.attrTween("d", function (d: Edge) {
-				let elem: HTMLElement = this;
-				let oldD: string = elem.getAttribute("d");
-				let newD = "M " + d.x + "," + d.y + " L " + (d.x / 4) + "," + (d.y / 4) + " L " + (d.x / 2) + "," + (d.y / 2) + " L " + d.x + "," + d.y;
-				console.log(oldD);
-				console.log(newD);
-				return interpolate(oldD, newD);
-				//, { maxSegmentLength: 0.0 }
+			.attr("d", function (d: Edge) {
+				return self.getLine(d);
 			})
+		// .transition()
+		// .attrTween("d", function (d: Edge) {
+		// 	let elem: HTMLElement = this;
+		// 	let oldD: string = elem.getAttribute("d");
+		// 	let newD = "M " + d.x + "," + d.y + " L " + (d.x / 4) + "," + (d.y / 4) + " L " + (d.x / 2) + "," + (d.y / 2) + " L " + d.x + "," + d.y;
+		// 	console.log(oldD);
+		// 	console.log(newD);
+		// 	return interpolate(oldD, newD);
+		// 	//, { maxSegmentLength: 0.0 }
+		// })
 
 
 		if (attrOpts.stroke_width === "weight") {
@@ -144,6 +148,10 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
 
 		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex);
+	}
+	private getLine(edge: Edge): string {
+		console.log(edge);
+		return "M " + edge.source.x + "," + edge.source.y + " L " + edge.target.x + "," + edge.target.y;
 	}
 
 	get shapeType(): string {

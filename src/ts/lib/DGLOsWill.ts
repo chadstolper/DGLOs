@@ -28,7 +28,13 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".
 	 * @param loc: Selection<any, {}, any, {}> 
 	 */
-	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>) {
+	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, timestep?: number) {
+		let internalTime = 0;
+		if (timestep !== undefined) {
+			internalTime = timestep;
+		}
+
+		let edgeG = loc.append("g").classed("edgeG", true);
 
 		if (this._edgeG === undefined) {
 			let edgeG = loc.append("g").classed("edgeG", true);
@@ -42,10 +48,9 @@ export class DGLOsWill extends DGLOsMatt {
 			glyphMap.set(this.gestaltShape, flubberEdgeG);
 			glyphMap.set(this.sourceTargetLineShape, flubberEdgeG);
 
-			this._edgeGlyphMap.set(this._timeStampIndex, glyphMap);
+			this._edgeGlyphMap.set(internalTime, glyphMap);
 		}
 	}
-
 	/**
 	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This object
 	 * determines the attributes that are used when drawing edges (e.g. color, thickness, etc..). 
@@ -139,7 +144,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts); //TODO: change matrixattropts as needed?
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts); //TODO: change matrixattropts as needed?
 				}
 				if (!self._matrixViewEnabled) {
 					self.runSimulation(true);
@@ -152,7 +157,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				}
 				if (!self._matrixViewEnabled) {
 					self.runSimulation(true);
