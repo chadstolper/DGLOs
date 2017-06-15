@@ -30,29 +30,12 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>) {
 
-		// if (this._edgeG === undefined) {
-		// 	this._edgeG = this.loc.append("g").classed("edgeG", true);
-		// 	let flubberEdgeG: Selection<any, {}, any, {}> = this.currentEdgeShape.init(this._edgeG);
-		// 	this._edgeGlyphMap.set(this.timeStampIndex, this.rectShape, flubberEdgeG);
-		// 	this._edgeGlyphMap.set(this.gestaltShape, flubberEdgeG);
-		// 	this._edgeGlyphMap.set(this.sourceTargetLineShape, flubberEdgeG);
-
-		// 	let glyphMap = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
-		// 	glyphMap.set(this.rectShape, flubberEdgeG);
-		// 	glyphMap.set(this.gestaltShape, flubberEdgeG);
-		// 	glyphMap.set(this.sourceTargetLineShape, flubberEdgeG);
-
-		// 	this._edgeGlyphMap.set(this._timeStampIndex, glyphMap);
-
-		// 	flubberEdgeG.style("display", null);
-		// }
-
 		if (this._edgeG === undefined) {
 			let edgeG = loc.append("g").classed("edgeG", true);
 
 			let flubberEdgeG: Selection<any, {}, any, {}> = this.currentEdgeShape.init(edgeG);
 
-			flubberEdgeG.style("display", "none");
+			flubberEdgeG.style("display", null);
 
 			let glyphMap = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
 			glyphMap.set(this.rectShape, flubberEdgeG);
@@ -122,6 +105,7 @@ export class DGLOsWill extends DGLOsMatt {
 			g.edges.forEach(function (e: Edge) {
 				e.x = (+e.source.index / g.nodes.length) * w;
 				e.y = (+e.target.index / g.nodes.length) * h;
+				console.log(e.x);
 			});
 		});
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
@@ -218,8 +202,12 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log(this._edgeAttrOpts);
 		//this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
 		//this.currentNodeShape.draw(this._nodeGlyphMap.get(this.currentNodeShape), this.data, this._timeStampIndex, this._edgeAttrOpts);
-		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
+		this.currentEdgeShape.draw(this.edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
+		this.edgeGlyphMap.get(this.timeStampIndex).get(this.currentEdgeShape)
+			.attr("display", null);
 		this.currentNodeShape.draw(this.nodeGlyphMap.get(this.timeStampIndex).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this._attrOpts);
+		this.nodeGlyphMap.get(this.timeStampIndex).get(this.currentNodeShape)
+			.attr("display", null);
 	}
 	/**
 	 * _emptyArrays clears _nbrNodes, _nbrEdges, _neighboringNodesMap, and _centralNodeArray. It also

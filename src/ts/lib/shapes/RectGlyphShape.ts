@@ -78,25 +78,14 @@ export class RectGlyphShape extends FlubberEdgeShape implements EdgeGlyphShape {
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", attr.fill]);
 			glyphs
-				// .attr("x", function (e: Edge) {
-				// 	return e.x;
-				// })
-				// .attr("y", function (e: Edge) {
-				// 	return e.y;
-				// })
-				// .attr("width", attr.width)
-				// .attr("height", attr.height)
 				.transition()
 				.attrTween("d", function (d: Edge) {
 					let h = 1000 / length;
 					let w = 1000 / length;
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
-					// TODO: MAKE attr.width and attr.height DEFINED
-					// let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
-					// 	(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
-					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + h) + " L " + (d.source.x + w) + " " +
-						(d.source.y + h) + " L " + (d.source.x + w) + " " + d.source.y + " Z";
+					let newD = "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " +
+						(d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
 					return interpolate(oldD, newD);
 
 				})
