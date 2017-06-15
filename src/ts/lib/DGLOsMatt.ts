@@ -87,11 +87,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
 		let self = this;
-		this._nodeGlyphMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-			self._currentNodeShape.transformTo(nodeGlyphMap.get(self._currentNodeShape), shape, nodeGlyphMap.get(shape));
+		this.nodeGlyphMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			self.currentNodeShape.transformTo(nodeGlyphMap.get(self.currentNodeShape), shape, nodeGlyphMap.get(shape));
 		});
 
-		this._currentNodeShape = shape;
+		this.currentNodeShape = shape;
 	}
 
 	/**
@@ -123,16 +123,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//Check simulation exists
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
-					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id })) //push applied to NodeGlyphs
+					.force("link", d3force.forceLink().id(function (d: Node): string { return "" + d.id })) //push applied to NodeGlyphs
 					.force("charge", d3force.forceManyBody().strength(-50)) //pull applied to all things from center
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
-							console.log(self.currentNodeShape.shapeType)
 							if (self.currentNodeShape.shapeType === "Label") {
+								console.log("its a label!")
 								let ret: number;
 								d.nodes.forEach(function (n: Node) {
-									ret = n.label.length * 2; //TODO: replace # with font related function
+									ret = n.label.length * 2.5; //TODO: replace # with font related function
 								});
 								return ret;
 							}
@@ -145,16 +145,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 						.iterations(2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
-						// console.log(self.data.metaNodes)
 						console.log("SIMULATION DONE HALLELUJAH!");
 					});
 			}
 			if (this._simulation !== undefined) {
 				this._simulation.nodes(self.data.metaNodesAsArray);
-				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>).links(self.data.metaEdgesAsArray);
-
+				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>)
+					.links(self.data.metaEdgesAsArray)
+					.strength(function (d: MetaEdge): number {
+						let ret: number;
+						d.edges.forEach(function (e: Edge) {
+							ret = e.weight * 0.05;
+						});
+						return ret
+					});
 				this._simulation.alpha(.3).restart();
-				// console.log(this.data.metaNodesAsArray)
 			}
 
 		} else {
@@ -180,9 +185,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		console.log("ticking")
 
 		if (!this._multipleTimestepsEnabled) {
+
+			//update groups in map; run update of simulation on all groups
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					// self.metaTick();
 					shape.draw(glyphs, self.data, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
@@ -190,7 +196,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					// self.metaTick();
 					shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
 				});
 			});
@@ -198,15 +203,15 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					// console.log(self._nodeGlyphMap)
 					shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
 				});
 			});
 		}
 		else {
+
+			//update groups in map; run update of simulation on all groups
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					// self.metaTick();
 					shape.draw(glyphs, self.data, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
@@ -214,7 +219,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					// self.metaTick();
 					shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
 				});
 			});
@@ -222,7 +226,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					// console.log(self._nodeGlyphMap)
 					shape.draw(glyphs, self.data, timestep, self._attrOpts);
 				});
 			});
