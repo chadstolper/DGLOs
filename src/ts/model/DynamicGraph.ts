@@ -272,7 +272,8 @@ export class MetaEdge {
 
 	constructor(id: string, source: MetaNode, target: MetaNode) {
 		this._source = source;
-		this._target = target; this._id = id;
+		this._target = target;
+		this._id = id;
 	}
 
 	get id(): string {
@@ -331,6 +332,7 @@ export class DynamicGraph {
 				this._metaEdges.add(e);
 			}
 		}
+		console.log(this)
 	}
 
 	get timesteps(): Array<Graph> {

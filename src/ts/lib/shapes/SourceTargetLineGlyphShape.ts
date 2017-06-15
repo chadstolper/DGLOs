@@ -151,7 +151,7 @@ export class SourceTargetLineGlyphShape extends FlubberEdgeShape implements Edge
 	}
 	private getLine(edge: Edge): string {
 		// console.log(edge);
-		console.log(edge.source)
+		// console.log(edge.source)
 		return "M " + edge.source.x + "," + edge.source.y + " L " + edge.target.x + "," + edge.target.y;
 	}
 
