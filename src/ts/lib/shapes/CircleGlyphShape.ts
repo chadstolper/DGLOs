@@ -86,7 +86,7 @@ export class CircleGlyphShape extends FlubberNodeShape implements NodeGlyphShape
 			.attr("stroke", attrOpts.stroke_width)
 			.attr("transform", function (d: Node): string {
 				// console.log(d)
-				return "translate(" + (d.x - (attrOpts.radius)) + ", " + (d.y - (attrOpts.radius)) + ")";
+				return "translate(" + d.x + ", " + d.y + ")";
 			})
 		return glyphs;
 	}
