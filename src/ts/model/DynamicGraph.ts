@@ -241,11 +241,17 @@ export class MetaNode implements SimulationNodeDatum {
 }
 
 export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
+	private _metaNodes: Map<string | number, MetaNode>;
+
+	constructor(metaNodes: Map<string | number, MetaNode>) {
+		super();
+		this._metaNodes = metaNodes;
+	}
 
 	public add(e: Edge) {
 		let key = e.origSource.origID + ":::" + e.origTarget.origID;
 		if (!this.has(key)) {
-			this.set(key, new MetaEdge(key, new MetaNode(e.source.id), new MetaNode(e.target.id)));
+			this.set(key, new MetaEdge(key, this._metaNodes.get(e.source.origID), this._metaNodes.get(e.target.origID)));
 		}
 		this.get(key).add(e);
 	}
@@ -258,6 +264,7 @@ export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
 export class MetaEdge {
 	private _id: string;
 	private _edges: Set<Edge> = new Set<Edge>();
+	private _totalWeight: number = 0;
 	private _source: MetaNode;
 	private _target: MetaNode;
 	public x?: number;
@@ -274,6 +281,14 @@ export class MetaEdge {
 
 	public add(data: Edge) {
 		this._edges.add(data);
+		this._totalWeight += data.weight;
+	}
+
+	/**
+	 * Average weight of this edge across all timesteps
+	 */
+	get weight(): number {
+		return this._totalWeight / this._edges.size;
 	}
 
 	get edges(): Set<Edge> {
@@ -300,9 +315,10 @@ export class MetaEdge {
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
 	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
-	private _metaEdges: DynamicGraphMetaEdgeMap = new DynamicGraphMetaEdgeMap();
+	private _metaEdges: DynamicGraphMetaEdgeMap;
 
 	public constructor(timesteps: Array<Graph>) {
+		this._metaEdges = new DynamicGraphMetaEdgeMap(this._metaNodes);
 		this._timesteps = timesteps;
 		for (let g of timesteps) {
 			for (let n of g.nodes) {
