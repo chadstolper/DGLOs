@@ -30,9 +30,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none"
 	* @param loc: Selection<any, {}, any, {}>
 	*/
-	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>) {
+	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, timestep?: number) {
+		let internalTime = 0;
+		if (timestep !== undefined) {
+			internalTime = timestep;
+		}
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
-		// if (this._nodeG === undefined) {
 		this._nodeG = loc.append("g").classed("nodeG", true);
 
 		//create child "g" in parent for NodeGlyphs
@@ -47,8 +50,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		glyphMap.set(this.labelShape, nodeLabelG);
 		glyphMap.set(this.circleShape, nodeCircleG);
 
-		this._nodeGlyphMap.set(this._timeStampIndex, glyphMap);
-		// }
+		this._nodeGlyphMap.set(internalTime, glyphMap);
 	}
 	/**
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
@@ -151,7 +153,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				this._simulation.nodes(self.data.metaNodesAsArray);
 				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>).links(self.data.metaEdgesAsArray);
 
-				this._simulation.alpha(.5).restart();
+				this._simulation.alpha(.3).restart();
 				// console.log(this.data.metaNodesAsArray)
 			}
 
