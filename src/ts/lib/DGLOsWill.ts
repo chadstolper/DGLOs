@@ -208,6 +208,8 @@ export class DGLOsWill extends DGLOsMatt {
 		this._getEdges();
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
+		console.log(this._nbrEdges);
+		console.log(this._nbrNodes);
 		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
 		//console.log(this._neighboringNodesMap)
 		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
@@ -217,12 +219,8 @@ export class DGLOsWill extends DGLOsMatt {
  	* __ _centralNodeArray ___.
  	*/
 	protected _getCentralNodes() {
-		for (let step of this.dataToDraw.timesteps) {
-			for (let node of step.nodes) {
-				if (node.origID === this.centralNodeID) {
-					this._centralNodeArray.push(node);
-				}
-			}
+		for (let node of this.data.metaNodesAsArray[this.centralNodeID as number].nodes) {
+			this._centralNodeArray.push(node);
 		}
 	}
 	/**
