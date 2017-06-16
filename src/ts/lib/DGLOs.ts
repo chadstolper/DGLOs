@@ -150,15 +150,7 @@ export interface DGLOs {
 	/**
 	 * Starts running a node positioning simulation.
 	 */
-	runSimulation(setRunning: boolean): void;
-
-
-	/**
-	 * Ends the current node positioning simulation.
-	 */
-	stopSimulation(): void;
-
-
+	positionNodesAndEdgesForceDirected(setRunning: boolean): void;
 
 	/**
 	 * Sets the central node for a Dynamic Graph. This is used 
