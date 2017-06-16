@@ -87,7 +87,7 @@ export class StaticDrinkGraph extends Graph {
 
 			let id: string = "" + source.id + ":" + target.id;
 
-			let de: DrinkEdge = new DrinkEdge(id, source, target, e.consumption, e.preference, timestep);
+			let de: DrinkEdge = new DrinkEdge(id, source, target, +e.consumption, +e.preference, timestep);
 			edgeData.push(de);
 		}
 
