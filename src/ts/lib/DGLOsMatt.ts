@@ -153,9 +153,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				this._simulation.nodes(self.data.metaNodesAsArray);
 				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>)
 					.links(self.data.metaEdgesAsArray)
-					.strength(function (d: MetaEdge): number {
-						return d.weight * 0.05;
-					});
+				// .strength(function (d: MetaEdge): number {
+				// 	return d.weight * 0.05;
+				// });
 				this._simulation.alpha(.3).restart();
 			}
 
