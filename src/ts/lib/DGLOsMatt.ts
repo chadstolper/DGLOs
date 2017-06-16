@@ -116,9 +116,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	/**
 	 * Begins the force simulation, calls internal tick().
 	 */
-	public runSimulation(setRunning: boolean) {
-		this._simulationEnabled = setRunning;
-		if (this._simulationEnabled) {
+	public positionNodesAndEdgesForceDirected(setRunning: boolean) {
+		if (setRunning) {
 			let self = this;
 			//Check simulation exists
 			if (this._simulation === undefined) {
@@ -162,7 +161,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		} else {
 			this._simulation.stop();
-			this._simulationEnabled = false;
 		}
 	}
 
