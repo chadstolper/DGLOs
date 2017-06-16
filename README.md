@@ -8,7 +8,7 @@
 - Copy the gruntfile-pushed.js to a new file called gruntfile.js
 - Put your main typescript (.ts) file in `src/ts/main`
 - Set the mainfile variable in your gruntfile.js to the the filename without the .ts extension
-
+- If you are using Visual Studio Code: cmd/ctrl-shift-b to start the webserver and autobuilder and open index.html
 
 ## Examples
 - Specifying techniques using dGLOs examples be found in `src/ts/specs` directory.
