@@ -12,7 +12,7 @@ export class Ranking extends Edge {
 
 	public constructor(numStudents: number, source: Node, target: Node, rank: number, timestamp: number) {
 		super(source.id + ":" + target.id, source, target, numStudents - rank, timestamp);
-		this._rank = rank;
+		this._rank = +rank;
 	}
 
 	get rank(): number {
@@ -43,6 +43,30 @@ export class StaticNewcombGraph extends Graph {
 	}
 }
 
+export class StaticNewcombTopFiveGraph extends Graph {
+	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestamp: number) {
+		let nodeData = new Array<NewcombStudent>();
+		let edgeData = new Array<Ranking>();
+
+		for (let n of rawNodeData) {
+			let student = new NewcombStudent(n, timestamp);
+			nodeData.push(student);
+		}
+
+		for (let e of rawEdgeData) {
+			e.rank = +e.rank;
+			let source = nodeData[+e.ranker]
+			let target = nodeData[+e.rankee]
+			if (e.ranker !== e.rankee && e.rank <= 5) {
+				let ranking = new Ranking(nodeData.length, source, target, e.rank, timestamp);
+				edgeData.push(ranking);
+			}
+		}
+
+		super(nodeData, edgeData, timestamp);
+	}
+}
+
 export class DynamicNewcombGraph extends DynamicGraph {
 	public constructor(response: Array<any>) {
 		let graphs: Array<StaticNewcombGraph> = new Array<StaticNewcombGraph>();
@@ -51,6 +75,20 @@ export class DynamicNewcombGraph extends DynamicGraph {
 			let rawEdgeData: Array<any> = timestep.edges;
 			let timestamp: number = timestep.timestamp;
 			let g: StaticNewcombGraph = new StaticNewcombGraph(rawNodeData, rawEdgeData, timestamp);
+			graphs.push(g);
+		}
+		super(graphs);
+	}
+}
+
+export class DynamicNewcombTopFiveGraph extends DynamicGraph {
+	public constructor(response: Array<any>) {
+		let graphs: Array<StaticNewcombGraph> = new Array<StaticNewcombGraph>();
+		for (let timestep of response) {
+			let rawNodeData: Array<any> = timestep.nodes;
+			let rawEdgeData: Array<any> = timestep.edges;
+			let timestamp: number = timestep.timestamp;
+			let g: StaticNewcombGraph = new StaticNewcombTopFiveGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}
 		super(graphs);

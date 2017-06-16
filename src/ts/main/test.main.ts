@@ -1,7 +1,7 @@
 import { DynamicDrinkGraph } from "../data/DummyGraph";
 import { DynamicGraph } from "../model/DynamicGraph";
 import { DynamicRadoslawGraph } from "../data/EmailGraph";
-import { DynamicNewcombGraph } from "../data/NewcombGraph";
+import { DynamicNewcombGraph, DynamicNewcombTopFiveGraph } from "../data/NewcombGraph";
 import { DynamicLesMiserablesGraph } from "../data/MiserablesGraph";
 import { Technique } from "../specs/Technique";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
@@ -26,7 +26,8 @@ json("data/newcomb/newcomb.json", function (response: any) {
 	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
 	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
-	let g: DynamicGraph = new DynamicNewcombGraph(response);
+	// let g: DynamicGraph = new DynamicNewcombGraph(response);
+	let g: DynamicGraph = new DynamicNewcombTopFiveGraph(response);
 	//------------------------------------------------------------//
 
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
