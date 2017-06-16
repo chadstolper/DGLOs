@@ -12,6 +12,6 @@ export class Egograph extends Technique {
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.setNodeGlyphAttrs(attr);
 		this.lib.setEdgeGlyphAttrs(attr);
-		this.lib.runSimulation(true);
+		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
 }

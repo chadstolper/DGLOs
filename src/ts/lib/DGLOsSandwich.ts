@@ -34,7 +34,7 @@ export class DGLOsSandwich extends DGLOsWill {
 				this.drawEdgeGlyphsAt(newSVG, i);
 				this.drawNodeGlyphsAt(newSVG, i);
 			}
-			this._multipleTimestepsEnabled = true;
+			this.multipleTimestepsEnabled = true;
 		}
 	}
 }
