@@ -146,7 +146,10 @@ export class DGLOsWill extends DGLOsMatt {
 					self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts); //TODO: change matrixattropts as needed?
 				}
 				if (!self._matrixViewEnabled) {
-					self.runSimulation(true);
+					self.simulationEnabled = true;
+				}
+				else {
+					self.simulationEnabled = false;
 				}
 			});
 
@@ -159,7 +162,10 @@ export class DGLOsWill extends DGLOsMatt {
 					self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				}
 				if (!self._matrixViewEnabled) {
-					self.runSimulation(true);
+					self.simulationEnabled = true;
+				}
+				else {
+					self.simulationEnabled = false;
 				}
 			});
 	}

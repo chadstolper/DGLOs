@@ -73,7 +73,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
 	protected readonly _cardinalPoints: [number, number][] = [[0, 0], [this._width / 2, 0], [this._width, 0], [0, this._height / 2], [this._width, this._height / 2], [0, this._height], [this._width / 2, this._height], [this._height, this._width]];
-	protected readonly _noisePoints = [new Node("noise0", this._cardinalPoints.length + 0, "noise", "", 0), new Node("noise1", this._cardinalPoints.length + 1, "noise", "", 0), new Node("noise2", this._cardinalPoints.length + 2, "noise", "", 0), new Node("noise3", this._cardinalPoints.length + 3, "noise", "", 0), new Node("noise4", this._cardinalPoints.length + 4, "noise", "", 0), new Node("noise5", this._cardinalPoints.length + 5, "noise", "", 0), new Node("noise6", this._cardinalPoints.length + 6, "noise", "", 0), new Node("noise7", this._cardinalPoints.length + 7, "noise", "", 0)];
+	protected _noisePoints: Node[] = this.setNoisePoints();// = [new Node("noise0", this._cardinalPoints.length + 0, "noise", "", 0), new Node("noise1", this._cardinalPoints.length + 1, "noise", "", 0), new Node("noise2", this._cardinalPoints.length + 2, "noise", "", 0), new Node("noise3", this._cardinalPoints.length + 3, "noise", "", 0), new Node("noise4", this._cardinalPoints.length + 4, "noise", "", 0), new Node("noise5", this._cardinalPoints.length + 5, "noise", "", 0), new Node("noise6", this._cardinalPoints.length + 6, "noise", "", 0), new Node("noise7", this._cardinalPoints.length + 7, "noise", "", 0)];
 	/**
 	 * see comment by will
 	 */
@@ -162,11 +162,39 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * Used in GMap(Voronoi) visualization.
 	 */
 	get noisePoints(): Node[] {
-		//give noisenodes (x, y) of cardinalPoints
-		for (let i = 0; i < this._cardinalPoints.length; i++) {
-			this._noisePoints[i].x = this._cardinalPoints[i][0];
-			this._noisePoints[i].y = this._cardinalPoints[i][1];
-		}
+		// this.setNoisePoints();
+		// for (let i = 0; i < this._noisePoints.length; i++) {
+		// 	this._noisePoints[i].x = this._cardinalPoints[i][0];
+		// 	this._noisePoints[i].y = this._cardinalPoints[i][1];
+		// }
 		return this._noisePoints;
+	}
+
+	/**
+	 * Initializes the noiseNodes. Random new nodes assigned with fixed x and y values along border.
+	 */
+	protected setNoisePoints(): Node[] {
+		let turnUpTheNoise: Node[] = new Array<Node>();
+		let iterator = 0;
+		let limit = ((this._width + this._height) / 2) / 100 * 5;
+		while (iterator < limit) {
+			turnUpTheNoise.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
+			turnUpTheNoise[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);
+			turnUpTheNoise[iterator + 0].y = 0;
+
+			turnUpTheNoise.push(new Node("NoiseNode" + (iterator + 1), iterator + 1, "noise", "", 0)); //bottom
+			turnUpTheNoise[iterator + 1].x = Math.floor((Math.random() * this._width) + 1);
+			turnUpTheNoise[iterator + 1].y = this._height;
+
+			turnUpTheNoise.push(new Node("NoiseNode" + (iterator + 2), iterator + 2, "noise", "", 0)); //left
+			turnUpTheNoise[iterator + 2].x = 0;
+			turnUpTheNoise[iterator + 2].y = Math.floor((Math.random() * this._height) + 1);
+
+			turnUpTheNoise.push(new Node("NoiseNode" + (iterator + 3), iterator + 3, "noise", "", 0)); //right
+			turnUpTheNoise[iterator + 3].x = this._width;
+			turnUpTheNoise[iterator + 3].y = Math.floor((Math.random() * this._height) + 1);
+			iterator += 4;
+		}
+		return turnUpTheNoise;
 	}
 }

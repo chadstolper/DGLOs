@@ -37,7 +37,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
-			switch (attrOpts.fill) {
+			switch (attrOpts.fill) { //TODO: set default color of all voronoi to none
 				case "id":
 					paths
 						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
@@ -60,7 +60,6 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		catch (err) {
 			console.log("attrOpts undefined");
 		}
-
 		try {
 			paths
 				.attr("d", function (d: any): string {
@@ -78,31 +77,25 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		switch (key) {
 			case "id":
 				return function (d: VoronoiPolygon<Node>, i: number): string {
-					// if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
 					if (d.data.type === "noise") {
 						return "white";
 					}
-					// return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].id);
 					return colorScheme(d.data.id);
 				}
 
 			case "label":
 				return function (d: VoronoiPolygon<Node>, i: number): string {
-					// if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
 					if (d.data.type === "noise") {
 						return "white";
 					}
-					// return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].label);
 					return colorScheme(d.data.label);
 				}
 
 			case "type":
 				return function (d: VoronoiPolygon<Node>, i: number): string {
-					// if (data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type === "noise") {
 					if (d.data.type === "noise") {
 						return "white";
 					}
-					// return colorScheme(data.timesteps[timeStampIndex].nodes.concat(noisePoints)[i].type);
 					return colorScheme(d.data.type);
 				}
 		}
@@ -142,7 +135,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 					ret = "" + d.data.id;
 					return ret;
 				} catch (err) {
-					console.log(i, vData);
+					// console.log(i, vData);
 					// throw err;
 				}
 				return "empty";
