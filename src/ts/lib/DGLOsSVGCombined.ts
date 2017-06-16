@@ -46,11 +46,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _simulation: Simulation<any, undefined>;
 	/**
-	 * Boolean representing whether the simulation is enabled.
-	 * Primarily for Gestalt and Matrix positioning.
-	 */
-	protected _simulationEnabled: boolean = false;
-	/**
 	 * Boolean representing the existance of multiple SVG elements needing to be updated by timestep.
 	 */
 	protected _multipleTimestepsEnabled: boolean = false;
@@ -123,12 +118,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	}
 	get simulation(): Simulation<any, undefined> {
 		return this._simulation;
-	}
-	set simulationEnabled(boo: boolean) {
-		this._simulationEnabled = boo;
-	}
-	get simulationEnabled(): boolean {
-		return this._simulationEnabled;
 	}
 	set multipleTimestepsEnabled(boo: boolean) {
 		this._multipleTimestepsEnabled = boo;
