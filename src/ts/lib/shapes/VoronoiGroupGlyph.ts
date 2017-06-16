@@ -35,70 +35,99 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param paths 
 	 */
 	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
-		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-		try {
-			paths.attr("fill", "none").attr("stroke", "none");
-			switch (attrOpts.fill) {
-				case "id":
-					paths
-						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
-						.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "id"));
-					break;
+		paths.attr("fill", "none").attr("stroke", "none");
+		switch (attrOpts.fill) { //TODO: update positionnodeandedge....to include ability to start, stop, and restart the simulation
+			case "id":
+				paths
+					.attr("fill", this.enterCheck(data, timeStampIndex, noisePoints, "id")).transition().attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
+					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "id"));
+				break;
 
-				case "label":
-					paths
-						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "label"))
-						.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "label"));
-					break;
+			case "label":
+				paths
+					.attr("fill", this.fill(data, timeStampIndex, noisePoints, "label"))
+					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "label"));
+				break;
 
-				case "type":
-					paths
-						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "type"))
-						.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "type"));
-					break;
-			}
+			case "type":
+				paths
+					.attr("fill", this.fill(data, timeStampIndex, noisePoints, "type"))
+					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "type"));
+				break;
 		}
-		catch (err) {
-			console.log("attrOpts undefined");
-		}
-		try {
-			paths
-				.attr("d", function (d: any): string {
-					return d ? "M" + d.join("L") + "Z" : null;
-				});
-		} catch (err) {
-			console.log("No paths!");
-		}
+		paths
+			.attr("d", function (d: any): string {
+				return d ? "M" + d.join("L") + "Z" : null;
+			});
 
 		return paths;
 	}
-	//TODO: figure out how to parse
+
+	private enterCheck(data: DynamicGraph, timeStampIndex: number, noisePoints: Node[], key: string) {
+		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+		return function (d: VoronoiPolygon<Node>, i: number): string {
+			if (timeStampIndex === 0) {
+				if (d.data.type === "noise") {
+					return "none";
+				}
+				return "green";
+			}
+			try {
+				if (d.data.origID === data.timesteps[timeStampIndex - 1].nodes[i].origID) {
+					console.log(d.data.origID, data.timesteps[timeStampIndex - 1].nodes[i].origID)
+					if (d.data.type === "noise") {
+						return "none";
+					}
+					switch (key) {
+						case "id":
+							return colorScheme(d.data.origID);
+
+						case "label":
+							return colorScheme(d.data.label);
+
+						case "type":
+							return colorScheme(d.data.type);
+
+						default:
+							return key;
+					}
+				}
+				else {
+					console.log(d.data.origID, data.timesteps[timeStampIndex - 1].nodes[i].origID)
+
+					return "green";
+				}
+			}
+			catch (err) {
+				if (d.data.type === "noise") {
+					return "none";
+				} console.log(d.data.origID, data.timesteps[timeStampIndex - 1].nodes[i].origID)
+
+				return "green";
+			}
+		}
+	}
+
+	//TODO: figure out how to parse so as to not compare by strings only
 	private fill(data: DynamicGraph, timeStampIndex: number, noisePoints: Node[], key: string) {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-		switch (key) {
-			case "id":
-				return function (d: VoronoiPolygon<Node>, i: number): string {
-					if (d.data.type === "noise") {
-						return "white";
-					}
-					return colorScheme(d.data.id);
-				}
+		return function (d: VoronoiPolygon<Node>, i: number): string {
+			if (d.data.type === "noise") {
+				return "none";
+			}
+			switch (key) {
+				case "id":
+					return colorScheme(d.data.origID);
 
-			case "label":
-				return function (d: VoronoiPolygon<Node>, i: number): string {
-					if (d.data.type === "noise") {
-						return "white";
-					}
+				case "label":
 					return colorScheme(d.data.label);
-				}
 
-			case "type":
-				return function (d: VoronoiPolygon<Node>, i: number): string {
-					if (d.data.type === "noise") {
-						return "white";
-					}
+				case "type":
 					return colorScheme(d.data.type);
-				}
+
+				default:
+					return key;
+			}
 		}
 	}
 
@@ -122,10 +151,13 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	 * Draw and create new visualizations of regions, initial update included
+	 * Draw and create new visualizations of regions, initial update included.
 	 * @param voronoiG Should be the vonornoiG
 	 * @param data 
 	 * @param timeStepIndex 
+	 * @param attrOpts
+	 * @param noisePoints
+	 * @param voronoi
 	 */
 	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>): void {
 		let vData = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
