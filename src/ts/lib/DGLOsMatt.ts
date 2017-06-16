@@ -188,21 +188,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
 
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
 				});
 			});
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts);
 				});
 			});
 		}
@@ -211,21 +211,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.data, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
 
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts);
 				});
 			});
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.data, timestep, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts);
 				});
 			});
 		}
