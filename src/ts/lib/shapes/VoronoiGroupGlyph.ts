@@ -39,7 +39,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		switch (attrOpts.fill) { //TODO: update positionnodeandedge....to include ability to start, stop, and restart the simulation
 			case "id":
 				paths
-					.attr("fill", this.enterCheck(data, timeStampIndex, noisePoints, "id")).transition().attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
+					.attr("fill", this.enterCheck(data, timeStampIndex, noisePoints, "id")).transition().delay(3000).attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
 					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "id"));
 				break;
 
