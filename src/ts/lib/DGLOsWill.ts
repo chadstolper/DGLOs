@@ -143,7 +143,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts); //TODO: change matrixattropts as needed?
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts); //TODO: change matrixattropts as needed?
 				}
 				if (!self._matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);
@@ -156,7 +156,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(self.timeStampIndex).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
 				}
 				if (!self._matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);
@@ -201,7 +201,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public redraw(): void {
 		console.log("redrawing");
-		this.currentEdgeShape.draw(this._edgeGlyphMap.get(this._timeStampIndex).get(this.currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts); //re organize anyways
+		this.currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.data, this._timeStampIndex, this._edgeAttrOpts); //re organize anyways
 		//this._currentNodeShape.draw(this._nodeGlyphMap.get(this._currentNodeShape), this.data, this._timeStampIndex, this._attrOpts);
 	}
 	/**
