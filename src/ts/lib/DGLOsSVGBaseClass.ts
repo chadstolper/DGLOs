@@ -121,8 +121,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	removeTimesteps(): void { };
 
 
-	runSimulation(setRunning: boolean): void { };
-	stopSimulation(): void { };
+	positionNodesAndEdgesForceDirected(setRunning: boolean): void { };
 
 	setCenterNode(centerNodeID: number | string): void { };
 
