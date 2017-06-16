@@ -2,9 +2,11 @@ import { DynamicDrinkGraph } from "../data/DummyGraph";
 import { DynamicGraph } from "../model/DynamicGraph";
 import { DynamicRadoslawGraph } from "../data/EmailGraph";
 import { DynamicLesMiserablesGraph } from "../data/MiserablesGraph";
+import { DynamicNewcombGraph } from "../data/newcombGraph";
 import { Technique } from "../specs/Technique";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
 import { GMap } from "../specs/GMap";
+import { Egograph } from "../specs/Egograph";
 import { ForceDirectedTimeline } from "../specs/ForceDirectedTimeline";
 import { MatrixTimeline } from "../specs/MatrixTimeline";
 import { MatrixAnimated } from "../specs/MatrixAnimated";
@@ -15,13 +17,15 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 
 // json("data/dummy/dummy.json", function (response: any) {
 // json("data/miserables/miserables.json", function (response: any) {
-json("data/radoslaw/emails.json", function (response: any) {
+// json("data/radoslaw/emails.json", function (response: any) {
+json("data/newcomb/newcomb.json", function (response: any) {
 
 	let width: number, height: number;
 	width = height = 1000;
 
 	//------------------------------------------------------------//
-	let g: DynamicGraph = new DynamicRadoslawGraph(response);
+	let g: DynamicGraph = new DynamicNewcombGraph(response);
+	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
 	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
 	//------------------------------------------------------------//
@@ -35,6 +39,7 @@ json("data/radoslaw/emails.json", function (response: any) {
 	let vis: Technique = new ForceDirectedAnimated(lib, {});
 	// let vis: Technique = new MatrixTimeline(lib, {});
 	// let vis: Technique = new GMap(lib, {});
+	// let vis: Technique = new Egograph(lib, {});
 	// let vis: Technique = new MatrixAnimated(lib, {});
 	//------------------------------------------------------------//
 

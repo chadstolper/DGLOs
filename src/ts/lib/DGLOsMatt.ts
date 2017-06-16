@@ -136,7 +136,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 								return ret;
 							}
 							else {
-								return self._attrOpts.radius;
+								return self._attrOpts.radius * 1.5;
 							}
 						}
 						catch (err) {
@@ -180,7 +180,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		// console.log("ticking")
+		console.log("ticking")
 		// alert("tick")
 
 		if (!this._multipleTimestepsEnabled) {
