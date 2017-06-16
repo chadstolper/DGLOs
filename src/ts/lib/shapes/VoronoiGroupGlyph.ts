@@ -37,7 +37,8 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
-			switch (attrOpts.fill) { //TODO: set default color of all voronoi to none
+			paths.attr("fill", "none").attr("stroke", "none");
+			switch (attrOpts.fill) {
 				case "id":
 					paths
 						.attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
