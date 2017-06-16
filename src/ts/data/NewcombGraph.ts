@@ -10,8 +10,8 @@ export class NewcombStudent extends Node {
 export class Ranking extends Edge {
 	private _rank: number;
 
-	public constructor(source: Node, target: Node, rank: number, timestamp: number) {
-		super(source.id + ":" + target.id, source, target, rank, timestamp);
+	public constructor(numStudents: number, source: Node, target: Node, rank: number, timestamp: number) {
+		super(source.id + ":" + target.id, source, target, numStudents - rank, timestamp);
 		this._rank = rank;
 	}
 
@@ -33,7 +33,7 @@ export class StaticNewcombGraph extends Graph {
 		for (let e of rawEdgeData) {
 			let source = nodeData[+e.ranker]
 			let target = nodeData[+e.rankee]
-			let ranking = new Ranking(source, target, e.rank, timestamp);
+			let ranking = new Ranking(nodeData.length, source, target, e.rank, timestamp);
 			edgeData.push(ranking);
 		}
 
