@@ -70,7 +70,6 @@ export class DGLOsWill extends DGLOsMatt {
 		});
 
 		this.currentEdgeShape = shape;
-		//this.redraw(); //TODO: need redraw in transform?
 	}
 
 	public positionEdgeGlyphsGestalt() {
@@ -193,20 +192,25 @@ export class DGLOsWill extends DGLOsMatt {
 	 * node in every timestep.
 	 */
 	protected _calculateNeighborsAndIncidentEdges() {
-		this.dataToDraw = this.data;
+		//this.dataToDraw = this.data;
 		this._getCentralNodes();
 		this._setCentralNodeFixedPositions();
-		for (let node of this._centralNodeArray) {
-			console.log(node.label + ": " + node.fx + " " + node.fy);
-		}
 		this._getEdges();
 		this._getNeighboringNodes();
 		this._mergeNodeLists();
-		console.log(this._nbrEdges);
-		console.log(this._nbrNodes);
-		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
-		//console.log(this._neighboringNodesMap)
-		//console.log(this._nbrEdges, this._nbrNodes, this._centralNodeArray);
+		//if (this.onClickRedraw) {
+		console.log("yore in here");
+		let g = new Graph(this._nbrNodes, this._nbrEdges, 0);
+		let dynamic = new Array<Graph>();
+		for (let node of this._centralNodeArray) {
+			dynamic.push(new Graph([node], this._nbrEdges, 0));
+		}
+		dynamic.push(g);
+		let dataToDraw = dynamic;
+		console.log(dataToDraw);
+		//}
+		// this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
+		// console.log(this.dataToDraw);
 	}
 	/**
 	 * collects a list of nodes with the same _origID across all timesteps and places them into
@@ -238,7 +242,6 @@ export class DGLOsWill extends DGLOsMatt {
 				node.fy = null;
 			}
 		}
-		console.log(this._centralNodeArray);
 	}
 	public drawAllEdgeGlyphs() {
 		let index = 0;
@@ -303,7 +306,7 @@ export class DGLOsWill extends DGLOsMatt {
 		console.log("redrawing");
 		//this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
 		//this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this._attrOpts);
-		this.runSimulation(true);
+		this.positionNodesAndEdgesForceDirected(true);
 	}
 	/**
 	 * A DGLO that decides if central nodes should have fixed positions, and then
@@ -312,6 +315,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
 		this.onClickRedraw = newOnClickRedraw;
+		console.log(this.onClickRedraw);
+		console.log(newOnClickRedraw);
 		this._setCentralNodeFixedPositions();
 		this.redraw();
 	}
