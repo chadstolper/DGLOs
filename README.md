@@ -1,4 +1,4 @@
-# dGLOs: Dynamic Graph Visualization
+# DGLOs: A Dynamic Graph Visualization Library
 
 ## To set up workspace:
 - install [yarn](https://yarnpkg.com) (if haven't already)
