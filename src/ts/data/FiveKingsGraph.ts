@@ -50,6 +50,5 @@ export class DynamicFiveKingsGraph extends DynamicGraph {
 			graphs.push(g);
 		}
 		super(graphs);
-		console.log(this)
 	}
 }

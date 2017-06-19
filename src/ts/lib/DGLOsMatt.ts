@@ -121,8 +121,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		if (setRunning) {
 			let self = this;
 			//Check simulation exists
-			if (this._simulation === undefined) {
-				this._simulation = d3force.forceSimulation()
+			if (this.simulation === undefined) {
+				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
 					.force("charge", d3force.forceManyBody().strength(-50))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
@@ -150,18 +150,18 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 						console.log("SIMULATION DONE HALLELUJAH!");
 					});
 			}
-			if (this._simulation !== undefined) {
-				this._simulation.nodes(self.data.metaNodesAsArray);
-				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>)
+			if (this.simulation !== undefined) {
+				this.simulation.nodes(self.data.metaNodesAsArray);
+				(this.simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>)
 					.links(self.data.metaEdgesAsArray)
 					.strength(function (d: MetaEdge): number {
 						return d.weight * 0.05;
 					});
-				this._simulation.alpha(.3).restart();
+				this.simulation.alpha(.3).restart();
 			}
 
 		} else {
-			this._simulation.stop();
+			this.simulation.stop();
 		}
 	}
 

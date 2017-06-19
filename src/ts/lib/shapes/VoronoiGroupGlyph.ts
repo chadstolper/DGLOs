@@ -39,25 +39,44 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param paths 
 	 */
 	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
-		paths.attr("fill", "none").attr("stroke", "none");
+		paths.style("fill", "none").attr("stroke", "none");
 		let self = this;
 		switch (attrOpts.fill) {
 			case "id":
 				paths
-					.attr("fill", this.enterCheck(data, timeStampIndex, "id")).transition().on("end", function () { paths.transition().duration(2000).attr("fill", self.exitCheck(data, timeStampIndex, "id")); })
-					.attr("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, "id"); });
+					.style("fill", this.enterCheck(data, timeStampIndex, "id")).transition().on("end", function () {
+						paths.transition().duration(1000).style("fill", function (d: VoronoiPolygon<Node>): string {
+							return self.fill(d, attrOpts.fill);
+						});
+						// paths.transition().duration(2000).style("fill", self.exitCheck(data, timeStampIndex, "id"));
+					})
+					.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, "id"); });
+
+				paths.transition().on("end", function () {
+					paths.transition().delay(5000).duration(1000).style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill));
+				})
 				break;
 
 			case "label":
 				paths
-					.attr("fill", this.enterCheck(data, timeStampIndex, "label")).transition().on("end", function () { paths.transition().duration(2000).attr("fill", self.exitCheck(data, timeStampIndex, "label")); })
-					.attr("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "label"); });
+					.style("fill", this.enterCheck(data, timeStampIndex, "label")).transition().on("end", function () {
+						paths.transition().duration(1000).style("fill", function (d: VoronoiPolygon<Node>): string {
+							return self.fill(d, attrOpts.fill)
+						});
+						paths.transition().delay(5000).duration(1000).style("fill", self.exitCheck(data, timeStampIndex, "label"));
+					})
+					.style("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "label"); });
 				break;
 
 			case "type":
 				paths
-					.attr("fill", this.enterCheck(data, timeStampIndex, "type")).transition().on("end", function () { paths.transition().duration(2000).attr("fill", self.exitCheck(data, timeStampIndex, "type")); })
-					.attr("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "type"); });
+					.style("fill", this.enterCheck(data, timeStampIndex, "type")).transition().on("end", function () {
+						paths.transition().duration(1000).style("fill", function (d: VoronoiPolygon<Node>): string {
+							return self.fill(d, attrOpts.fill);
+						})
+						paths.transition().delay(5000).duration(1000).style("fill", self.exitCheck(data, timeStampIndex, "type"));
+					})
+					.style("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "type"); });
 				break;
 		}
 		paths
@@ -83,20 +102,15 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 				}
 				return self._exitColor;
 			}
-			try {
-				if (d.data.origID === data.timesteps[timeStampIndex + 1].nodes[i].origID) {
-					return self.fill(d, key);
-				}
-				else {
-					return self._exitColor;
-				}
-			}
-			catch (err) {
+			for (let n of data.timesteps[timeStampIndex + 1].nodes) {
 				if (d.data.type === "noise") {
 					return self._noiseDefaultColor;
 				}
-				return self._exitColor;
+				if (d.data.origID === n.origID) {
+					return self.fill(d, key);
+				}
 			}
+			return self._exitColor;
 		}
 	}
 	/**
@@ -116,23 +130,17 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 				}
 				return self._enterColor;
 			}
-			try {
-				if (d.data.origID === data.timesteps[timeStampIndex - 1].nodes[i].origID) {
-					return self.fill(d, key);
-				}
-				else {
-					return self._enterColor;
-				}
-			}
-			catch (err) {
+			for (let n of data.timesteps[timeStampIndex - 1].nodes) {
 				if (d.data.type === "noise") {
 					return self._noiseDefaultColor;
 				}
-				return self._enterColor;
+				if (d.data.origID === n.origID) {
+					return self.fill(d, key);
+				}
 			}
+			return self._enterColor;
 		}
 	}
-
 	/**
 	 * Fill the VoronoiPolygon path selection color. Returns hexCode as string.
 	 * @param d : current path object

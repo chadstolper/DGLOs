@@ -2,6 +2,7 @@ import { DynamicDrinkGraph } from "../data/DummyGraph";
 import { DynamicGraph } from "../model/DynamicGraph";
 import { DynamicRadoslawGraph } from "../data/EmailGraph";
 import { DynamicLesMiserablesGraph } from "../data/MiserablesGraph";
+import { DynamicFiveKingsGraph } from "../data/FiveKingsGraph";
 import { Technique } from "../specs/Technique";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
 import { GMap } from "../specs/GMap";
@@ -13,7 +14,8 @@ import { json } from "d3-request";
 import { DGLOs } from "../lib/DGLOs";
 import { DGLOsSVG } from "../lib/DGLOsSVG";
 
-json("data/dummy/dummy.json", function (response: any) {
+// json("data/dummy/dummy.json", function (response: any) {
+json("data/fivekings/fivekings.json", function (response: any) {
 	// json("data/miserables/miserables.json", function (response: any) {
 	// json("data/radoslaw/emails.json", function (response: any) {
 
@@ -22,7 +24,8 @@ json("data/dummy/dummy.json", function (response: any) {
 
 	//------------------------------------------------------------//
 	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
-	let g: DynamicGraph = new DynamicDrinkGraph(response);
+	let g: DynamicGraph = new DynamicFiveKingsGraph(response);
+	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
 	//------------------------------------------------------------//
 
