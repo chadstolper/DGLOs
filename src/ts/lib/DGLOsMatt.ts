@@ -21,13 +21,13 @@ import { DGLOsWill } from "./DGLOsWill";
 export class DGLOsMatt extends DGLOsSVGCombined {
 
 	/**
-	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none"
+	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawNodeGlyphs() {
 		this.drawNodeGlyphsAt(this.loc);
 	}
 	/**
-	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none"
+	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none".
 	* @param loc: Selection<any, {}, any, {}>
 	*/
 	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, timestep?: number) {
@@ -56,8 +56,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
 	public drawRegions() {
-		// this.setNoisePoints();
-
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
 
@@ -82,7 +80,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Transforms/makes visible the target NodeGlyphShape
+	 * Transforms/makes visible the target NodeGlyphShape //TODO: update description for flubber
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
@@ -95,7 +93,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Resets the visual attributes of the NodeGlyphShape
+	 * (Re)sets the visual attributes of the NodeGlyphShape
 	 * @param attr 
 	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
@@ -103,7 +101,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Resets the visual attributes of the GroupGlyphShape.
+	 * (Re)sets the visual attributes of the GroupGlyphShape.
 	 * Also sets NodeGlyph and EdgeGlyph attributes to correspond with GroupGlyph visualization.
 	 * @param attr 
 	 */
@@ -114,7 +112,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Begins the force simulation, calls internal tick().
+	 * Begins the force simulation for positioning Nodes and Edges, calls internal tick().
+	 * True initializes simulation, if already exisits assigns data for Nodes and Edges and restarts simulation.
+	 * False stops the simulation internal tick. Returns simulation at that point.
+	 * @param setRunning: boolean
 	 */
 	public positionNodesAndEdgesForceDirected(setRunning: boolean) {
 		if (setRunning) {
@@ -178,26 +179,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		// console.log("ticking")
-		// alert("tick")
-
-		if (!this._multipleTimestepsEnabled) {
-
-			//update groups in map; run update of simulation on all groups
+		if (!this._multipleTimestepsEnabled) { //check if small multiples are enabled.
+			//update groups in map; run update of simulation on all groups at the current timestep
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
 					shape.draw(glyphs, self.data, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
-
-			//update edges in map; run update of simulation on all edges
+			//update edges in map; run update of simulation on all edges at the current timestep
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
 					shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
 				});
 			});
-
-			//update nodes in map; run update of simulation on all NodeGlyphs
+			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 					shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
@@ -205,22 +200,19 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			});
 		}
 		else {
-
-			//update groups in map; run update of simulation on all groups
+			//update groups in map; run update of simulation on all groups accross multiple SVG elements
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
 					shape.draw(glyphs, self.data, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
-
-			//update edges in map; run update of simulation on all edges
+			//update edges in map; run update of simulation on all edges accross multiple SVG elements
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
 					shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
 				});
 			});
-
-			//update nodes in map; run update of simulation on all NodeGlyphs
+			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
 					shape.draw(glyphs, self.data, timestep, self._attrOpts);

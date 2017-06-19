@@ -311,7 +311,10 @@ export class MetaEdge {
 	}
 
 }
-
+/**
+ * Graph with timesteps of data. MetaNodes and Edges is instance of data at all timesteps.
+ * Meta Map Key: origID, v: MetaNode/MetaEdge
+ */
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
 	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
