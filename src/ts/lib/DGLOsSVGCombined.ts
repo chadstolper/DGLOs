@@ -19,11 +19,13 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _nodeG: Selection<any, {}, any, {}>;//TODO: still needed?
 	/**
-	 * A map linking NodeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. CircleNodes, LabelNodes etc).
+	 * A map of SVG related maps with pointers to their respective <g> tag selection by NodeGlyphShape.
+	 * <SVG#, Map<NodeGlyphShape, Selection<any, {}, any, {}>>.
 	 */
 	protected _nodeGlyphMap: Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>>();
 	/**
-	 * A map linking EdgeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. rectEdges, STLineEdges etc).
+	 * A map of SVG related maps with pointers to their respective <g> tag selection by EdgeGlyphShape.
+	 * <SVG#, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>.
 	 */
 	protected _edgeGlyphMap: Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>>();
 	/**
@@ -35,7 +37,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	*/
 	protected _groupGlyphG: Selection<any, {}, any, {}>; //TODO: still needed?
 	/**
-	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
+	 * A map of SVG related maps with pointers to their respective <g> tag selection by GroupGlyph.
+	 * <SVG#, Map<GroupGlyph, Selection<any, {}, any, {}>>.
 	 */
 	protected _groupGlyphMap: Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>> = new Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>>();
 	/**

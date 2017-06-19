@@ -27,6 +27,7 @@ json("data/dummy/dummy.json", function (response: any) {
 	//------------------------------------------------------------//
 
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
+		.classed("SVG_0", true) // there to make my life easier
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
 

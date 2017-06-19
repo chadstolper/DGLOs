@@ -27,13 +27,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this.drawNodeGlyphsAt(this.loc);
 	}
 	/**
-	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none".
+	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
 	* @param loc: Selection<any, {}, any, {}>
 	*/
-	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, timestep?: number) {
-		let internalTime = 0;
-		if (timestep !== undefined) {
-			internalTime = timestep;
+	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
+		let SVGPosition = 0;
+		if (SVGNum !== undefined) {
+			SVGPosition = SVGNum;
 		}
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		this._nodeG = loc.append("g").classed("nodeG", true);
@@ -50,12 +50,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		glyphMap.set(this.labelShape, nodeLabelG);
 		glyphMap.set(this.circleShape, nodeCircleG);
 
-		this._nodeGlyphMap.set(internalTime, glyphMap);
+		this._nodeGlyphMap.set(SVGPosition, glyphMap);
 	}
 	/**
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
-	public drawRegions() {
+	public drawRegions() { //TODO: expand drawregions to accept multiple timestep-svg drawing scheme?
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
 

@@ -24,13 +24,13 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	/**
-	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".
+	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".  //TODO: update description for flubber
 	 * @param loc: Selection<any, {}, any, {}> 
 	 */
-	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, timestep?: number) {
-		let internalTime = 0;
-		if (timestep !== undefined) {
-			internalTime = timestep;
+	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
+		let SVGPosition = 0;
+		if (SVGNum !== undefined) {
+			SVGPosition = SVGNum;
 		}
 
 		let edgeG = loc.append("g").classed("edgeG", true);
@@ -48,7 +48,7 @@ export class DGLOsWill extends DGLOsMatt {
 		glyphMap.set(this.gestaltShape, edgeGestaltG);
 		glyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
 
-		this._edgeGlyphMap.set(internalTime, glyphMap);
+		this._edgeGlyphMap.set(SVGPosition, glyphMap);
 	}
 
 	/**
