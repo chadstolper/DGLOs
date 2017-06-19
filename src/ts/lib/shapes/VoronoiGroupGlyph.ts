@@ -10,6 +10,10 @@ import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
 
 export class VoronoiGroupGlyph implements GroupGlyph {
 	readonly _groupType = "Voronoi";
+	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	private _enterColor = "#00D50F"; /* Value used for initial enterNode color transition. */
+	private _exitColor = "#D90000"; /* Value used for exitNode color transition. */
+	private _noiseDefaultColor = "#FFFFFF"; /* Default color of NoiseNodes. */
 
 	/**
 	 * Make new <g>
@@ -36,23 +40,24 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 */
 	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		paths.attr("fill", "none").attr("stroke", "none");
-		switch (attrOpts.fill) { //TODO: update positionnodeandedge....to include ability to start, stop, and restart the simulation
+		let self = this;
+		switch (attrOpts.fill) {
 			case "id":
 				paths
-					.attr("fill", this.enterCheck(data, timeStampIndex, noisePoints, "id")).transition().delay(3000).attr("fill", this.fill(data, timeStampIndex, noisePoints, "id"))
-					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "id"));
+					.attr("fill", this.enterCheck(data, timeStampIndex, "id")).transition().on("end", function () { paths.transition().duration(2000).attr("fill", self.exitCheck(data, timeStampIndex, "id")); })
+					.attr("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, "id"); });
 				break;
 
 			case "label":
 				paths
-					.attr("fill", this.fill(data, timeStampIndex, noisePoints, "label"))
-					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "label"));
+					.attr("fill", this.enterCheck(data, timeStampIndex, "label")).transition().on("end", function () { paths.transition().duration(2000).attr("fill", self.exitCheck(data, timeStampIndex, "label")); })
+					.attr("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "label"); });
 				break;
 
 			case "type":
 				paths
-					.attr("fill", this.fill(data, timeStampIndex, noisePoints, "type"))
-					.attr("stroke", this.fill(data, timeStampIndex, noisePoints, "type"));
+					.attr("fill", this.enterCheck(data, timeStampIndex, "type")).transition().on("end", function () { paths.transition().duration(2000).attr("fill", self.exitCheck(data, timeStampIndex, "type")); })
+					.attr("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "type"); });
 				break;
 		}
 		paths
@@ -62,72 +67,93 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 		return paths;
 	}
-
-	private enterCheck(data: DynamicGraph, timeStampIndex: number, noisePoints: Node[], key: string) {
-		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	/**
+	 * Check to see if the VoronoiPolygon path object will be present in the next timestep data. If not present, the path will transition
+	 * to the exit color. Timestep[n] will default all data to be exitNodes. See _exitColor.
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param key 
+	 */
+	private exitCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+		let self = this;
 		return function (d: VoronoiPolygon<Node>, i: number): string {
-			if (timeStampIndex === 0) {
+			if (timeStampIndex === data.timesteps.length - 1) {
 				if (d.data.type === "noise") {
-					return "none";
+					return self._noiseDefaultColor;
 				}
-				return "green";
+				return self._exitColor;
 			}
 			try {
-				if (d.data.origID === data.timesteps[timeStampIndex - 1].nodes[i].origID) {
-					console.log(d.data.origID, data.timesteps[timeStampIndex - 1].nodes[i].origID)
-					if (d.data.type === "noise") {
-						return "none";
-					}
-					switch (key) {
-						case "id":
-							return colorScheme(d.data.origID);
-
-						case "label":
-							return colorScheme(d.data.label);
-
-						case "type":
-							return colorScheme(d.data.type);
-
-						default:
-							return key;
-					}
+				if (d.data.origID === data.timesteps[timeStampIndex + 1].nodes[i].origID) {
+					return self.fill(d, key);
 				}
 				else {
-					console.log(d.data.origID, data.timesteps[timeStampIndex - 1].nodes[i].origID)
-
-					return "green";
+					return self._exitColor;
 				}
 			}
 			catch (err) {
 				if (d.data.type === "noise") {
-					return "none";
-				} console.log(d.data.origID, data.timesteps[timeStampIndex - 1].nodes[i].origID)
-
-				return "green";
+					return self._noiseDefaultColor;
+				}
+				return self._exitColor;
+			}
+		}
+	}
+	/**
+	 * Check to see if the VoronoiPolygon path object was present in the previous timestep data. If not present, the path 
+	 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and 
+	 * cycles back to timestep[0] defualt to enterNodes. See _enterColor.
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param key 
+	 */
+	private enterCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+		let self = this;
+		return function (d: VoronoiPolygon<Node>, i: number): string {
+			if (timeStampIndex === 0) {
+				if (d.data.type === "noise") {
+					return self._noiseDefaultColor;
+				}
+				return self._enterColor;
+			}
+			try {
+				if (d.data.origID === data.timesteps[timeStampIndex - 1].nodes[i].origID) {
+					return self.fill(d, key);
+				}
+				else {
+					return self._enterColor;
+				}
+			}
+			catch (err) {
+				if (d.data.type === "noise") {
+					return self._noiseDefaultColor;
+				}
+				return self._enterColor;
 			}
 		}
 	}
 
-	//TODO: figure out how to parse so as to not compare by strings only
-	private fill(data: DynamicGraph, timeStampIndex: number, noisePoints: Node[], key: string) {
-		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-		return function (d: VoronoiPolygon<Node>, i: number): string {
-			if (d.data.type === "noise") {
-				return "none";
-			}
-			switch (key) {
-				case "id":
-					return colorScheme(d.data.origID);
+	/**
+	 * Fill the VoronoiPolygon path selection color. Returns hexCode as string.
+	 * @param d : current path object
+	 * @param key 
+	 */
+	private fill(d: VoronoiPolygon<Node>, key: string) {
+		if (d.data.type === "noise") {
+			return this._noiseDefaultColor;
+		}
+		switch (key) {
+			case "id":
+				return this._colorScheme(d.data.origID);
 
-				case "label":
-					return colorScheme(d.data.label);
+			case "label":
+				return this._colorScheme(d.data.label);
 
-				case "type":
-					return colorScheme(d.data.type);
+			case "type":
+				return this._colorScheme(d.data.type);
 
-				default:
-					return key;
-			}
+			default:
+				return key;
 		}
 	}
 
