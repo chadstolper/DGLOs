@@ -28,9 +28,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 			.on("click", function (d: Node) {
-				self.lib.setCenterNode(d.origID);
 				if (self.lib.onClickRedraw) {
-					self.lib.redraw();
+					self.lib.setCenterNode(d.origID);
 				}
 			});
 		return ret;
@@ -113,7 +112,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
-		console.log("Circle --> " + shape.shapeType)
+		//console.log("Circle --> " + shape.shapeType)
 		super.transformTo(sourceSelection, null, targetSelection);
 	}
 

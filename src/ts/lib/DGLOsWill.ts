@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node, Edge, Graph, DynamicGraph } from "../model/dynamicgraph";
+import { Node, Edge, Graph, DynamicGraph, MetaNode } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
@@ -68,7 +68,6 @@ export class DGLOsWill extends DGLOsMatt {
 		this._edgeGlyphMap.forEach(function (edgeMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			self.currentEdgeShape.transformTo(edgeMap.get(self.currentEdgeShape), shape, edgeMap.get(shape));
 		});
-
 		this.currentEdgeShape = shape;
 	}
 
@@ -192,25 +191,27 @@ export class DGLOsWill extends DGLOsMatt {
 	 * node in every timestep.
 	 */
 	protected _calculateNeighborsAndIncidentEdges() {
-		//this.dataToDraw = this.data;
 		this._getCentralNodes();
 		this._setCentralNodeFixedPositions();
 		this._getEdges();
 		this._getNeighboringNodes();
-		this._mergeNodeLists();
-		//if (this.onClickRedraw) {
-		console.log("yore in here");
-		let g = new Graph(this._nbrNodes, this._nbrEdges, 0);
-		let dynamic = new Array<Graph>();
 		for (let node of this._centralNodeArray) {
-			dynamic.push(new Graph([node], this._nbrEdges, 0));
+			console.log("central node: " + node.label);
 		}
-		dynamic.push(g);
-		let dataToDraw = dynamic;
-		console.log(dataToDraw);
-		//}
-		// this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
-		// console.log(this.dataToDraw);
+		console.log("----------------------------");
+		for (let edge of this._nbrEdges) {
+			console.log("neighboring edge: " + edge.source.label + ":" + edge.target.label);
+		}
+		console.log("----------------------------");
+		for (let node of this._nbrNodes) {
+			console.log("neighboring node: " + node.label);
+		}
+		console.log("----------------------------");
+		this._mergeNodeLists();
+		let dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)], this.onClickRedraw);
+		//this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), dataToDraw, 0, this._edgeAttrOpts);
+		//this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), dataToDraw, 0, this._attrOpts);
+
 	}
 	/**
 	 * collects a list of nodes with the same _origID across all timesteps and places them into
@@ -303,11 +304,22 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Redraws the graph.
 	 */
 	public redraw(): void {
-		console.log("redrawing");
-		//this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
-		//this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this._attrOpts);
+		this.currentEdgeShape = this.sourceTargetLineShape;
+		for (let i = 0; i < 3; i++) {
+			console.log(this.edgeGlyphMap.get(1).get(this.currentEdgeShape));
+		}
+		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts);
+		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this._attrOpts);
 		this.positionNodesAndEdgesForceDirected(true);
 	}
+	/**
+ 	* Redraws the graph.
+ 	*/
+	// public redraw(): void {
+	// 	console.log("redrawing");
+	// 	this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
+	// 	this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this._attrOpts);
+	// }
 	/**
 	 * A DGLO that decides if central nodes should have fixed positions, and then
 	 * redraws.	
@@ -315,10 +327,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
 		this.onClickRedraw = newOnClickRedraw;
-		console.log(this.onClickRedraw);
-		console.log(newOnClickRedraw);
 		this._setCentralNodeFixedPositions();
-		this.redraw();
+		//this.redraw();
 	}
 
 }
