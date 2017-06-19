@@ -123,7 +123,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(-750))
+					.force("charge", d3force.forceManyBody().strength(-100))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
