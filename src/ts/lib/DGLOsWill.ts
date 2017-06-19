@@ -72,7 +72,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public positionEdgeGlyphsGestalt() {
-		this.redraw();
+		this.redrawEgo();
 	}
 	/**
 	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix
@@ -195,30 +195,45 @@ export class DGLOsWill extends DGLOsMatt {
 		this._setCentralNodeFixedPositions();
 		this._getEdges();
 		this._getNeighboringNodes();
-		for (let node of this._centralNodeArray) {
-			console.log("central node: " + node.label);
-		}
-		console.log("----------------------------");
-		for (let edge of this._nbrEdges) {
-			console.log("neighboring edge: " + edge.source.label + ":" + edge.target.label);
-		}
-		console.log("----------------------------");
-		for (let node of this._nbrNodes) {
-			console.log("neighboring node: " + node.label);
-		}
-		console.log("----------------------------");
 		this._mergeNodeLists();
-		let dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)], this.onClickRedraw);
-		//this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), dataToDraw, 0, this._edgeAttrOpts);
-		//this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), dataToDraw, 0, this._attrOpts);
-
+		this.dataToDraw = new DynamicGraph([new Graph(this._nbrNodes, this._nbrEdges, 0)]);
+		let self = this;
+		let yScale = scaleLinear()
+			.domain(extent(this._centralNodeArray, function (d: Node): number {
+				return d.timestamp as number;
+			}))
+			.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+		for (let node of this._centralNodeArray) {
+			node.fx = this._width / 2;
+			node.fy = yScale(node.timestamp);
+		}
+		let check = 0;
+		for (let node of this.dataToDraw.metaNodes.get(this.centralNodeID).nodes) {
+			let meta = new MetaNode(node.id);
+			console.log(node.fx);
+			meta.fx = self._width / 2;//node.fx;
+			console.log(node.label + ": " + node.timestamp);
+			meta.fy = yScale(node.timestamp);//node.fy;
+			meta.add(node);
+			this.dataToDraw.metaNodes.set(node.label + ":" + node.timestamp, meta);
+			check++;
+		}
+		check = 0;
+		this.dataToDraw.metaNodes.delete(this.centralNodeID);
+		if (this.onClickRedraw) {
+			this.redrawEgo();
+		}
 	}
+
+
+
 	/**
 	 * collects a list of nodes with the same _origID across all timesteps and places them into
  	* __ _centralNodeArray ___.
  	*/
 	protected _getCentralNodes() {
-		for (let node of this.data.metaNodesAsArray[this.centralNodeID as number].nodes) {
+		this.dataToDraw = this.data;
+		for (let node of this.data.metaNodes.get(this.centralNodeID).nodes) {
 			this._centralNodeArray.push(node);
 		}
 	}
@@ -303,23 +318,13 @@ export class DGLOsWill extends DGLOsMatt {
 	/**
 	 * Redraws the graph.
 	 */
-	public redraw(): void {
-		this.currentEdgeShape = this.sourceTargetLineShape;
-		for (let i = 0; i < 3; i++) {
-			console.log(this.edgeGlyphMap.get(1).get(this.currentEdgeShape));
-		}
+	public redrawEgo(): void {
 		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts);
 		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this._attrOpts);
-		this.positionNodesAndEdgesForceDirected(true);
+		if (this.onClickRedraw) {
+			this.positionNodesAndEdgesForceDirected(true);
+		}
 	}
-	/**
- 	* Redraws the graph.
- 	*/
-	// public redraw(): void {
-	// 	console.log("redrawing");
-	// 	this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this._edgeAttrOpts);
-	// 	this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this._attrOpts);
-	// }
 	/**
 	 * A DGLO that decides if central nodes should have fixed positions, and then
 	 * redraws.	
