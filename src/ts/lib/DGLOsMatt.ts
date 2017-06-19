@@ -123,7 +123,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this._simulation === undefined) {
 				this._simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(-50))
+					.force("charge", d3force.forceManyBody().strength(-100))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
@@ -150,12 +150,22 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					});
 			}
 			if (this._simulation !== undefined) {
-				this._simulation.nodes(self.data.metaNodesAsArray);
-				(this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>)
-					.links(self.data.metaEdgesAsArray)
-					.strength(function (d: MetaEdge): number {
-						return d.weight * 0.05;
-					});
+				if (this.onClickRedraw) {//Egograph
+					this._simulation.nodes(this.dataToDraw.metaNodesAsArray);
+				} else {
+					this._simulation.nodes(self.data.metaNodesAsArray);
+				}
+
+
+				let linkForce = (this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>);
+				if (this.onClickRedraw) {//Egograph
+					linkForce.links(self.dataToDraw.metaEdgesAsArray)
+				} else {
+					linkForce.links(self.data.metaEdgesAsArray)
+				}
+				linkForce.strength(function (d: MetaEdge): number {
+					return d.weight * 0.05;
+				});
 				this._simulation.alpha(.3).restart();
 			}
 
@@ -186,21 +196,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
 
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
 				});
 			});
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.data, self._timeStampIndex, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts);
 				});
 			});
 		}
@@ -209,21 +219,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.data, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
 				});
 			});
 
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.data, timestep, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts);
 				});
 			});
 
 			//update nodes in map; run update of simulation on all NodeGlyphs
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.data, timestep, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts);
 				});
 			});
 		}
