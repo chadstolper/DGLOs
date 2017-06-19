@@ -17,7 +17,7 @@ with open('fivekings.csv','r') as fivekings:
 		if line["year"] != year:
 			timestep = {}
 			timesteps.append(timestep)
-			timestep["year"] = line["year"]
+			year = timestep["year"] = line["year"]
 			edges = timestep["edges"] = dd(int)
 			edges_joint = timestep["edges_joint"] = {}
 			nodes = timestep["nodes"] = set()
@@ -50,6 +50,7 @@ for ts in timesteps:
 		edge["party2"] = parts[1]
 		edge["count"] = v
 		edges_joint.append(edge)
+	ts["year"] = int(ts["year"])
 	ts["edges"] = edges
 	ts["edges_joint"] = edges_joint
 	ts["nodes"] = list(ts["nodes"])

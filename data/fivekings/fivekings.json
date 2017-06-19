@@ -2,22 +2,375 @@
   {
     "edges_joint": [
       {
-        "party2": "Clement Piper",
+        "party2": "Addam Marbrand",
+        "count": 1,
+        "party1": "Halys Hornwood"
+      },
+      {
+        "party2": "Edmure Tully",
         "count": 1,
         "party1": "Jaime Lannister"
+      },
+      {
+        "party2": "Kevan Lannister",
+        "count": 1,
+        "party1": "Halys Hornwood"
+      },
+      {
+        "party2": "Kevan Lannister",
+        "count": 1,
+        "party1": "Roose Bolton"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Wylis Manderly"
+      },
+      {
+        "party2": "Addam Marbrand",
+        "count": 1,
+        "party1": "Wylis Manderly"
+      },
+      {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Roose Bolton"
+      },
+      {
+        "party2": "Jaime Lannister",
+        "count": 1,
+        "party1": "Brynden Tully"
+      },
+      {
+        "party2": "Addam Marbrand",
+        "count": 1,
+        "party1": "Roose Bolton"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Harrion Karstark"
+      },
+      {
+        "party2": "Addam Marbrand",
+        "count": 1,
+        "party1": "Harrion Karstark"
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Andros Brax"
       },
       {
         "party2": "Vance",
         "count": 1,
         "party1": "Jaime Lannister"
+      },
+      {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Wylis Manderly"
+      },
+      {
+        "party2": "Forley Prester",
+        "count": 1,
+        "party1": "Robb Stark"
+      },
+      {
+        "party2": "Forley Prester",
+        "count": 1,
+        "party1": "Tytos Blackwood"
+      },
+      {
+        "party2": "Lord Andros Brax",
+        "count": 1,
+        "party1": "Tytos Blackwood"
+      },
+      {
+        "party2": "Forley Prester",
+        "count": 1,
+        "party1": "Brynden Tully"
+      },
+      {
+        "party2": "Lord Andros Brax",
+        "count": 1,
+        "party1": "Brynden Tully"
+      },
+      {
+        "party2": "Beric Dondarrion",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Kevan Lannister",
+        "count": 1,
+        "party1": "Medger Cerwyn"
+      },
+      {
+        "party2": "Kevan Lannister",
+        "count": 1,
+        "party1": "Harrion Karstark"
+      },
+      {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Harrion Karstark"
+      },
+      {
+        "party2": "Lyman Darry",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Halys Hornwood"
+      },
+      {
+        "party2": "Addam Marbrand",
+        "count": 1,
+        "party1": "Medger Cerwyn"
+      },
+      {
+        "party2": "Tytos Blackwood",
+        "count": 1,
+        "party1": "Jaime Lannister"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Roose Bolton"
+      },
+      {
+        "party2": "Tytos Blackwood",
+        "count": 1,
+        "party1": "Andros Brax"
+      },
+      {
+        "party2": "Kevan Lannister",
+        "count": 1,
+        "party1": "Wylis Manderly"
+      },
+      {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Halys Hornwood"
+      },
+      {
+        "party2": "Lord Andros Brax",
+        "count": 1,
+        "party1": "Robb Stark"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Medger Cerwyn"
+      },
+      {
+        "party2": "Clement Piper",
+        "count": 1,
+        "party1": "Jaime Lannister"
+      },
+      {
+        "party2": "Jaime Lannister",
+        "count": 1,
+        "party1": "Robb Stark"
+      },
+      {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Medger Cerwyn"
       }
     ],
     "nodes": [
       "Clement Piper",
       "Vance",
+      "Halys Hornwood",
+      "Brynden Tully",
+      "Wylis Manderly",
+      "Medger Cerwyn",
+      "Tywin Lannister",
+      "Edmure Tully",
+      "Lord Andros Brax",
+      "Roose Bolton",
+      "Forley Prester",
+      "Beric Dondarrion",
+      "Lyman Darry",
+      "Andros Brax",
+      "Robb Stark",
+      "Harrion Karstark",
+      "Kevan Lannister",
+      "Gregor Clegane",
+      "Tytos Blackwood",
+      "Addam Marbrand",
       "Jaime Lannister"
     ],
     "edges": [
+      {
+        "count": 1,
+        "attacker": "Halys Hornwood",
+        "defender": "Addam Marbrand"
+      },
+      {
+        "count": 1,
+        "attacker": "Jaime Lannister",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Halys Hornwood",
+        "defender": "Kevan Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Roose Bolton",
+        "defender": "Kevan Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Wylis Manderly",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Wylis Manderly",
+        "defender": "Addam Marbrand"
+      },
+      {
+        "count": 1,
+        "attacker": "Roose Bolton",
+        "defender": "Gregor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Brynden Tully",
+        "defender": "Jaime Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Roose Bolton",
+        "defender": "Addam Marbrand"
+      },
+      {
+        "count": 1,
+        "attacker": "Harrion Karstark",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Harrion Karstark",
+        "defender": "Addam Marbrand"
+      },
+      {
+        "count": 1,
+        "attacker": "Andros Brax",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Jaime Lannister",
+        "defender": "Vance"
+      },
+      {
+        "count": 1,
+        "attacker": "Wylis Manderly",
+        "defender": "Gregor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Robb Stark",
+        "defender": "Forley Prester"
+      },
+      {
+        "count": 1,
+        "attacker": "Tytos Blackwood",
+        "defender": "Forley Prester"
+      },
+      {
+        "count": 1,
+        "attacker": "Tytos Blackwood",
+        "defender": "Lord Andros Brax"
+      },
+      {
+        "count": 1,
+        "attacker": "Brynden Tully",
+        "defender": "Forley Prester"
+      },
+      {
+        "count": 1,
+        "attacker": "Brynden Tully",
+        "defender": "Lord Andros Brax"
+      },
+      {
+        "count": 1,
+        "attacker": "Gregor Clegane",
+        "defender": "Beric Dondarrion"
+      },
+      {
+        "count": 1,
+        "attacker": "Medger Cerwyn",
+        "defender": "Kevan Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Harrion Karstark",
+        "defender": "Kevan Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Harrion Karstark",
+        "defender": "Gregor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Gregor Clegane",
+        "defender": "Lyman Darry"
+      },
+      {
+        "count": 1,
+        "attacker": "Halys Hornwood",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Medger Cerwyn",
+        "defender": "Addam Marbrand"
+      },
+      {
+        "count": 1,
+        "attacker": "Jaime Lannister",
+        "defender": "Tytos Blackwood"
+      },
+      {
+        "count": 1,
+        "attacker": "Roose Bolton",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Andros Brax",
+        "defender": "Tytos Blackwood"
+      },
+      {
+        "count": 1,
+        "attacker": "Wylis Manderly",
+        "defender": "Kevan Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Halys Hornwood",
+        "defender": "Gregor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Robb Stark",
+        "defender": "Lord Andros Brax"
+      },
+      {
+        "count": 1,
+        "attacker": "Medger Cerwyn",
+        "defender": "Tywin Lannister"
+      },
       {
         "count": 1,
         "attacker": "Jaime Lannister",
@@ -25,991 +378,134 @@
       },
       {
         "count": 1,
-        "attacker": "Jaime Lannister",
-        "defender": "Vance"
-      }
-    ],
-    "year": "298"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Beric Dondarrion",
-        "count": 1,
-        "party1": "Gregor Clegane"
-      }
-    ],
-    "nodes": [
-      "Beric Dondarrion",
-      "Gregor Clegane"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Beric Dondarrion"
-      }
-    ],
-    "year": "298"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Jaime Lannister"
-      },
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Andros Brax"
-      },
-      {
-        "party2": "Tytos Blackwood",
-        "count": 1,
-        "party1": "Jaime Lannister"
-      },
-      {
-        "party2": "Tytos Blackwood",
-        "count": 1,
-        "party1": "Andros Brax"
-      }
-    ],
-    "nodes": [
-      "Tytos Blackwood",
-      "Andros Brax",
-      "Edmure Tully",
-      "Jaime Lannister"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Jaime Lannister",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Andros Brax",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Jaime Lannister",
-        "defender": "Tytos Blackwood"
-      },
-      {
-        "count": 1,
-        "attacker": "Andros Brax",
-        "defender": "Tytos Blackwood"
-      }
-    ],
-    "year": "298"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Harrion Karstark"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Halys Hornwood"
-      },
-      {
-        "party2": "Addam Marbrand",
-        "count": 1,
-        "party1": "Medger Cerwyn"
-      },
-      {
-        "party2": "Addam Marbrand",
-        "count": 1,
-        "party1": "Harrion Karstark"
-      },
-      {
-        "party2": "Addam Marbrand",
-        "count": 1,
-        "party1": "Halys Hornwood"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Roose Bolton"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Medger Cerwyn"
-      },
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Wylis Manderly"
-      },
-      {
-        "party2": "Kevan Lannister",
-        "count": 1,
-        "party1": "Halys Hornwood"
-      },
-      {
-        "party2": "Kevan Lannister",
-        "count": 1,
-        "party1": "Wylis Manderly"
-      },
-      {
-        "party2": "Addam Marbrand",
-        "count": 1,
-        "party1": "Wylis Manderly"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Harrion Karstark"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Wylis Manderly"
-      },
-      {
-        "party2": "Kevan Lannister",
-        "count": 1,
-        "party1": "Roose Bolton"
-      },
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Roose Bolton"
-      },
-      {
-        "party2": "Addam Marbrand",
-        "count": 1,
-        "party1": "Roose Bolton"
-      },
-      {
-        "party2": "Kevan Lannister",
-        "count": 1,
-        "party1": "Medger Cerwyn"
-      },
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Medger Cerwyn"
-      },
-      {
-        "party2": "Kevan Lannister",
-        "count": 1,
-        "party1": "Harrion Karstark"
-      },
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Halys Hornwood"
-      }
-    ],
-    "nodes": [
-      "Halys Hornwood",
-      "Wylis Manderly",
-      "Tywin Lannister",
-      "Roose Bolton",
-      "Medger Cerwyn",
-      "Kevan Lannister",
-      "Gregor Clegane",
-      "Addam Marbrand",
-      "Harrion Karstark"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Harrion Karstark",
-        "defender": "Gregor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Halys Hornwood",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Medger Cerwyn",
-        "defender": "Addam Marbrand"
-      },
-      {
-        "count": 1,
-        "attacker": "Harrion Karstark",
-        "defender": "Addam Marbrand"
-      },
-      {
-        "count": 1,
-        "attacker": "Halys Hornwood",
-        "defender": "Addam Marbrand"
-      },
-      {
-        "count": 1,
-        "attacker": "Roose Bolton",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Medger Cerwyn",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Wylis Manderly",
-        "defender": "Gregor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Halys Hornwood",
-        "defender": "Kevan Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Wylis Manderly",
-        "defender": "Kevan Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Wylis Manderly",
-        "defender": "Addam Marbrand"
-      },
-      {
-        "count": 1,
-        "attacker": "Harrion Karstark",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Wylis Manderly",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Roose Bolton",
-        "defender": "Kevan Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Roose Bolton",
-        "defender": "Gregor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Roose Bolton",
-        "defender": "Addam Marbrand"
-      },
-      {
-        "count": 1,
-        "attacker": "Medger Cerwyn",
-        "defender": "Kevan Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Medger Cerwyn",
-        "defender": "Gregor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Harrion Karstark",
-        "defender": "Kevan Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Halys Hornwood",
-        "defender": "Gregor Clegane"
-      }
-    ],
-    "year": "298"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Jaime Lannister",
-        "count": 1,
-        "party1": "Brynden Tully"
-      },
-      {
-        "party2": "Jaime Lannister",
-        "count": 1,
-        "party1": "Robb Stark"
-      }
-    ],
-    "nodes": [
-      "Robb Stark",
-      "Brynden Tully",
-      "Jaime Lannister"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Brynden Tully",
-        "defender": "Jaime Lannister"
-      },
-      {
-        "count": 1,
         "attacker": "Robb Stark",
         "defender": "Jaime Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Medger Cerwyn",
+        "defender": "Gregor Clegane"
       }
     ],
-    "year": "298"
+    "year": 298
   },
   {
     "edges_joint": [
       {
-        "party2": "Lord Andros Brax",
+        "party2": "Jacelyn Bywater",
         "count": 1,
-        "party1": "Robb Stark"
+        "party1": "Davos Seaworth"
       },
       {
-        "party2": "Forley Prester",
+        "party2": "Jason Mallister",
         "count": 1,
-        "party1": "Robb Stark"
+        "party1": "Walder Frey"
       },
       {
-        "party2": "Forley Prester",
-        "count": 1,
-        "party1": "Brynden Tully"
-      },
-      {
-        "party2": "Lord Andros Brax",
-        "count": 1,
-        "party1": "Brynden Tully"
-      },
-      {
-        "party2": "Lord Andros Brax",
-        "count": 1,
-        "party1": "Tytos Blackwood"
-      },
-      {
-        "party2": "Forley Prester",
-        "count": 1,
-        "party1": "Tytos Blackwood"
-      }
-    ],
-    "nodes": [
-      "Forley Prester",
-      "Tytos Blackwood",
-      "Robb Stark",
-      "Lord Andros Brax",
-      "Brynden Tully"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Robb Stark",
-        "defender": "Lord Andros Brax"
-      },
-      {
-        "count": 1,
-        "attacker": "Robb Stark",
-        "defender": "Forley Prester"
-      },
-      {
-        "count": 1,
-        "attacker": "Brynden Tully",
-        "defender": "Forley Prester"
-      },
-      {
-        "count": 1,
-        "attacker": "Brynden Tully",
-        "defender": "Lord Andros Brax"
-      },
-      {
-        "count": 1,
-        "attacker": "Tytos Blackwood",
-        "defender": "Lord Andros Brax"
-      },
-      {
-        "count": 1,
-        "attacker": "Tytos Blackwood",
-        "defender": "Forley Prester"
-      }
-    ],
-    "year": "298"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Lyman Darry",
+        "party2": "Jason Mallister",
         "count": 1,
         "party1": "Gregor Clegane"
-      }
-    ],
-    "nodes": [
-      "Lyman Darry",
-      "Gregor Clegane"
-    ],
-    "edges": [
+      },
       {
+        "party2": "Mace Tyrell",
         "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Lyman Darry"
-      }
-    ],
-    "year": "298"
-  },
-  {
-    "edges_joint": [
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Mace Tyrell",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Sandor Clegane",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Mathis Rowan",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Robb Stark",
+        "count": 1,
+        "party1": "Walder Rivers"
+      },
+      {
+        "party2": "Loras Tyrell",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Tyrion Lannister",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Cortnay Penrose",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Cley Cerwyn",
+        "count": 1,
+        "party1": "Ramsay Snow"
+      },
+      {
+        "party2": "Leobald Tallhart",
+        "count": 1,
+        "party1": "Ramsay Snow"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 1,
+        "party1": "Robertt Glover"
+      },
+      {
+        "party2": "Garlan Tyrell",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Jacelyn Bywater",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Jason Mallister",
+        "count": 1,
+        "party1": "Tywin Lannister"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Leobald Tallhart",
+        "count": 1,
+        "party1": "Theon Greyjoy "
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Dagmer Cleftjaw",
+        "count": 1,
+        "party1": "Rodrik Cassel"
+      },
       {
         "party2": "Dagmer Cleftjaw",
         "count": 1,
         "party1": "Cley Cerwyn"
       },
       {
-        "party2": "Dagmer Cleftjaw",
+        "party2": "Tyrion Lannister",
         "count": 1,
-        "party1": "Rodrik Cassel"
-      }
-    ],
-    "nodes": [
-      "Rodrik Cassel",
-      "Cley Cerwyn",
-      "Dagmer Cleftjaw"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Cley Cerwyn",
-        "defender": "Dagmer Cleftjaw"
-      },
-      {
-        "count": 1,
-        "attacker": "Rodrik Cassel",
-        "defender": "Dagmer Cleftjaw"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Bran Stark",
-        "count": 1,
-        "party1": "Theon Greyjoy"
-      }
-    ],
-    "nodes": [
-      "Theon Greyjoy",
-      "Bran Stark"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Theon Greyjoy",
-        "defender": "Bran Stark"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Rodrik Cassel",
-        "count": 1,
-        "party1": "Theon Greyjoy "
-      },
-      {
-        "party2": "Cley Cerwyn",
-        "count": 1,
-        "party1": "Ramsay Snow"
-      },
-      {
-        "party2": "Leobald Tallhart",
-        "count": 1,
-        "party1": "Ramsay Snow"
-      },
-      {
-        "party2": "Leobald Tallhart",
-        "count": 1,
-        "party1": "Theon Greyjoy "
-      },
-      {
-        "party2": "Cley Cerwyn",
-        "count": 1,
-        "party1": "Theon Greyjoy "
-      },
-      {
-        "party2": "Rodrik Cassel",
-        "count": 1,
-        "party1": "Ramsay Snow"
-      }
-    ],
-    "nodes": [
-      "Theon Greyjoy ",
-      "Ramsay Snow",
-      "Cley Cerwyn",
-      "Leobald Tallhart",
-      "Rodrik Cassel"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Theon Greyjoy ",
-        "defender": "Rodrik Cassel"
-      },
-      {
-        "count": 1,
-        "attacker": "Ramsay Snow",
-        "defender": "Cley Cerwyn"
-      },
-      {
-        "count": 1,
-        "attacker": "Ramsay Snow",
-        "defender": "Leobald Tallhart"
-      },
-      {
-        "count": 1,
-        "attacker": "Theon Greyjoy ",
-        "defender": "Leobald Tallhart"
-      },
-      {
-        "count": 1,
-        "attacker": "Theon Greyjoy ",
-        "defender": "Cley Cerwyn"
-      },
-      {
-        "count": 1,
-        "attacker": "Ramsay Snow",
-        "defender": "Rodrik Cassel"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Stafford Lannister",
-        "count": 1,
-        "party1": "Robb Stark"
-      },
-      {
-        "party2": "Stafford Lannister",
-        "count": 1,
-        "party1": "Brynden Tully"
-      },
-      {
-        "party2": "Antario Jast",
-        "count": 1,
-        "party1": "Brynden Tully"
-      },
-      {
-        "party2": "Roland Crakehall",
-        "count": 1,
-        "party1": "Brynden Tully"
-      },
-      {
-        "party2": "Antario Jast",
-        "count": 1,
-        "party1": "Robb Stark"
-      },
-      {
-        "party2": "Roland Crakehall",
-        "count": 1,
-        "party1": "Robb Stark"
-      }
-    ],
-    "nodes": [
-      "Antario Jast",
-      "Roland Crakehall",
-      "Robb Stark",
-      "Brynden Tully",
-      "Stafford Lannister"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Robb Stark",
-        "defender": "Stafford Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Brynden Tully",
-        "defender": "Stafford Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Brynden Tully",
-        "defender": "Antario Jast"
-      },
-      {
-        "count": 1,
-        "attacker": "Brynden Tully",
-        "defender": "Roland Crakehall"
-      },
-      {
-        "count": 1,
-        "attacker": "Robb Stark",
-        "defender": "Antario Jast"
-      },
-      {
-        "count": 1,
-        "attacker": "Robb Stark",
-        "defender": "Roland Crakehall"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Loras Tyrell",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Loras Tyrell",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Mathis Rowan",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Renly Baratheon",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Renly Baratheon",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Cortnay Penrose",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Mathis Rowan",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Cortnay Penrose",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      }
-    ],
-    "nodes": [
-      "Cortnay Penrose",
-      "Loras Tyrell",
-      "Mathis Rowan",
-      "Davos Seaworth",
-      "Renly Baratheon",
-      "Stannis Baratheon",
-      "Randyll Tarly"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Loras Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Loras Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Mathis Rowan"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Renly Baratheon"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Renly Baratheon"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Cortnay Penrose"
+        "party1": "Imry Florent"
       },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Mathis Rowan"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Cortnay Penrose"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Tywin Lannister"
-      },
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Tywin Lannister"
-      },
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Leo Lefford"
-      },
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Gregor Clegane"
-      },
-      {
-        "party2": "Karyl Vance",
-        "count": 1,
-        "party1": "Lyle Crakehall"
-      },
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Gregor Clegane"
-      },
-      {
-        "party2": "Karyl Vance",
-        "count": 1,
-        "party1": "Tywin Lannister"
-      },
-      {
-        "party2": "Karyl Vance",
-        "count": 1,
-        "party1": "Leo Lefford"
-      },
-      {
-        "party2": "Karyl Vance",
-        "count": 1,
-        "party1": "Flement Brax"
-      },
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Flement Brax"
-      },
-      {
-        "party2": "Karyl Vance",
-        "count": 1,
-        "party1": "Gregor Clegane"
-      },
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Lyle Crakehall"
-      },
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Leo Lefford"
-      },
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Lyle Crakehall"
-      },
-      {
-        "party2": "Edmure Tully",
-        "count": 1,
-        "party1": "Addam Marbrand"
-      },
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Addam Marbrand"
-      },
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Flement Brax"
-      },
-      {
-        "party2": "Karyl Vance",
-        "count": 1,
-        "party1": "Addam Marbrand"
-      }
-    ],
-    "nodes": [
-      "Leo Lefford",
-      "Lyle Crakehall",
-      "Tywin Lannister",
-      "Edmure Tully",
-      "Jason Mallister",
-      "Gregor Clegane",
-      "Addam Marbrand",
-      "Karyl Vance",
-      "Flement Brax"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Tywin Lannister",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Tywin Lannister",
-        "defender": "Jason Mallister"
-      },
-      {
-        "count": 1,
-        "attacker": "Leo Lefford",
-        "defender": "Jason Mallister"
-      },
-      {
-        "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Jason Mallister"
-      },
-      {
-        "count": 1,
-        "attacker": "Lyle Crakehall",
-        "defender": "Karyl Vance"
-      },
-      {
-        "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Tywin Lannister",
-        "defender": "Karyl Vance"
-      },
-      {
-        "count": 1,
-        "attacker": "Leo Lefford",
-        "defender": "Karyl Vance"
-      },
-      {
-        "count": 1,
-        "attacker": "Flement Brax",
-        "defender": "Karyl Vance"
-      },
-      {
-        "count": 1,
-        "attacker": "Flement Brax",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Karyl Vance"
-      },
-      {
-        "count": 1,
-        "attacker": "Lyle Crakehall",
-        "defender": "Jason Mallister"
-      },
-      {
-        "count": 1,
-        "attacker": "Leo Lefford",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Lyle Crakehall",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Addam Marbrand",
-        "defender": "Edmure Tully"
-      },
-      {
-        "count": 1,
-        "attacker": "Addam Marbrand",
-        "defender": "Jason Mallister"
-      },
-      {
-        "count": 1,
-        "attacker": "Flement Brax",
-        "defender": "Jason Mallister"
-      },
-      {
-        "count": 1,
-        "attacker": "Addam Marbrand",
-        "defender": "Karyl Vance"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Amory Lorch",
-        "count": 1,
-        "party1": "Robett Glover"
-      },
-      {
-        "party2": "Amory Lorch",
-        "count": 1,
-        "party1": "Vargo Hoat"
-      },
-      {
-        "party2": "Amory Lorch",
-        "count": 1,
-        "party1": "Roose Bolton"
-      }
-    ],
-    "nodes": [
-      "Robett Glover",
-      "Amory Lorch",
-      "Vargo Hoat",
-      "Roose Bolton"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Robett Glover",
-        "defender": "Amory Lorch"
-      },
-      {
-        "count": 1,
-        "attacker": "Vargo Hoat",
-        "defender": "Amory Lorch"
-      },
-      {
-        "count": 1,
-        "attacker": "Roose Bolton",
-        "defender": "Amory Lorch"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
       {
         "party2": "Rolph Spicer",
         "count": 1,
@@ -1021,18 +517,549 @@
         "party1": "Robb Stark"
       },
       {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Helman Tallhart"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Garlan Tyrell",
+        "count": 1,
+        "party1": "Imry Florent"
+      },
+      {
+        "party2": "Jacelyn Bywater",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 2,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Amory Lorch",
+        "count": 1,
+        "party1": "Vargo Hoat"
+      },
+      {
         "party2": "Rolph Spicer",
         "count": 1,
         "party1": "Smalljon Umber"
+      },
+      {
+        "party2": "Garlan Tyrell",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Karyl Vance",
+        "count": 1,
+        "party1": "Addam Marbrand"
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Tywin Lannister"
+      },
+      {
+        "party2": "Loras Tyrell",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Robb Stark",
+        "count": 1,
+        "party1": "Roose Bolton"
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Leo Lefford"
+      },
+      {
+        "party2": "Mace Tyrell",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Jacelyn Bywater",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Karyl Vance",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Bran Stark",
+        "count": 1,
+        "party1": "Theon Greyjoy"
+      },
+      {
+        "party2": "Tyrion Lannister",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Gregor Clegane",
+        "count": 1,
+        "party1": "Robertt Glover"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 1,
+        "party1": "Imry Florent"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 1,
+        "party1": "Helman Tallhart"
+      },
+      {
+        "party2": "Vargo Hoat",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Sandor Clegane",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Antario Jast",
+        "count": 1,
+        "party1": "Robb Stark"
+      },
+      {
+        "party2": "Mace Tyrell",
+        "count": 1,
+        "party1": "Imry Florent"
+      },
+      {
+        "party2": "Wylis Manderly",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Stafford Lannister",
+        "count": 1,
+        "party1": "Brynden Tully"
+      },
+      {
+        "party2": "Karyl Vance",
+        "count": 1,
+        "party1": "Flement Brax"
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Flement Brax"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Roland Crakehall",
+        "count": 1,
+        "party1": "Robb Stark"
+      },
+      {
+        "party2": "Amory Lorch",
+        "count": 1,
+        "party1": "Robett Glover"
+      },
+      {
+        "party2": "Mace Tyrell",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Renly Baratheon",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 1,
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Tywin Lannister",
+        "count": 1,
+        "party1": "Imry Florent"
+      },
+      {
+        "party2": "Sandor Clegane",
+        "count": 1,
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Amory Lorch",
+        "count": 1,
+        "party1": "Roose Bolton"
+      },
+      {
+        "party2": "Cley Cerwyn",
+        "count": 1,
+        "party1": "Theon Greyjoy "
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Lyle Crakehall"
+      },
+      {
+        "party2": "Tyrion Lannister",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Jason Mallister",
+        "count": 1,
+        "party1": "Flement Brax"
+      },
+      {
+        "party2": "Sandor Clegane",
+        "count": 1,
+        "party1": "Imry Florent"
+      },
+      {
+        "party2": "Karyl Vance",
+        "count": 1,
+        "party1": "Lyle Crakehall"
+      },
+      {
+        "party2": "Stafford Lannister",
+        "count": 1,
+        "party1": "Robb Stark"
+      },
+      {
+        "party2": "Rodrik Cassel",
+        "count": 1,
+        "party1": "Ramsay Snow"
+      },
+      {
+        "party2": "Roland Crakehall",
+        "count": 1,
+        "party1": "Brynden Tully"
+      },
+      {
+        "party2": "Garlan Tyrell",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 1,
+        "party1": "Salladhor Saan"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 2,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Garlan Tyrell",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Jacelyn Bywater",
+        "count": 1,
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Jason Mallister",
+        "count": 1,
+        "party1": "Lyle Crakehall"
+      },
+      {
+        "party2": "Jacelyn Bywater",
+        "count": 1,
+        "party1": "Imry Florent"
+      },
+      {
+        "party2": "Jason Mallister",
+        "count": 1,
+        "party1": "Leo Lefford"
+      },
+      {
+        "party2": "Tyrion Lannister",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Karyl Vance",
+        "count": 1,
+        "party1": "Leo Lefford"
+      },
+      {
+        "party2": "Renly Baratheon",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Cortnay Penrose",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Roose Bolton",
+        "count": 1,
+        "party1": "Gregor Clegane"
+      },
+      {
+        "party2": "Jason Mallister",
+        "count": 1,
+        "party1": "Addam Marbrand"
+      },
+      {
+        "party2": "Robb Stark",
+        "count": 1,
+        "party1": "Walder Frey"
+      },
+      {
+        "party2": "Karyl Vance",
+        "count": 1,
+        "party1": "Tywin Lannister"
+      },
+      {
+        "party2": "Sandor Clegane",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Mathis Rowan",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Mace Tyrell",
+        "count": 1,
+        "party1": "Davos Seaworth"
+      },
+      {
+        "party2": "Randyll Tarly",
+        "count": 1,
+        "party1": "Rolland Storm"
+      },
+      {
+        "party2": "Rodrik Cassel",
+        "count": 1,
+        "party1": "Theon Greyjoy "
+      },
+      {
+        "party2": "Sandor Clegane",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Tyrion Lannister",
+        "count": 1,
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Antario Jast",
+        "count": 1,
+        "party1": "Brynden Tully"
+      },
+      {
+        "party2": "Garlan Tyrell",
+        "count": 1,
+        "party1": "Guyard Morrigen"
+      },
+      {
+        "party2": "Edmure Tully",
+        "count": 1,
+        "party1": "Addam Marbrand"
       }
     ],
     "nodes": [
+      "Loras Tyrell",
+      "Dagmer Cleftjaw",
+      "Antario Jast",
+      "Cley Cerwyn",
+      "Black Walder Frey",
+      "Mathis Rowan",
+      "Garlan Tyrell",
+      "Jacelyn Bywater",
+      "Theon Greyjoy ",
+      "Tyrion Lannister",
+      "Rolland Storm",
+      "Leobald Tallhart",
+      "Theon Greyjoy",
+      "Tywin Lannister",
+      "Robertt Glover",
+      "Salladhor Saan",
+      "Walder Frey",
+      "Mace Tyrell",
+      "Davos Seaworth",
+      "Stafford Lannister",
+      "Bran Stark",
+      "Flement Brax",
+      "Cortnay Penrose",
+      "Imry Florent",
+      "Gregor Clegane",
+      "Amory Lorch",
+      "Rolph Spicer",
+      "Roose Bolton",
+      "Rodrik Cassel",
+      "Walder Rivers",
+      "Jason Mallister",
+      "Helman Tallhart",
+      "Stannis Baratheon",
+      "Vargo Hoat",
+      "Leo Lefford",
+      "Brynden Tully",
+      "Wylis Manderly",
+      "Lyle Crakehall",
+      "Robett Glover",
+      "Ramsay Snow",
+      "Roland Crakehall",
+      "Edmure Tully",
+      "Guyard Morrigen",
       "Smalljon Umber",
       "Robb Stark",
-      "Rolph Spicer",
-      "Black Walder Frey"
+      "Renly Baratheon",
+      "Addam Marbrand",
+      "Karyl Vance",
+      "Sandor Clegane",
+      "Randyll Tarly"
     ],
     "edges": [
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Jacelyn Bywater"
+      },
+      {
+        "count": 1,
+        "attacker": "Walder Frey",
+        "defender": "Jason Mallister"
+      },
+      {
+        "count": 1,
+        "attacker": "Gregor Clegane",
+        "defender": "Jason Mallister"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Mace Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Mace Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Sandor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Mathis Rowan"
+      },
+      {
+        "count": 1,
+        "attacker": "Walder Rivers",
+        "defender": "Robb Stark"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Loras Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Salladhor Saan",
+        "defender": "Tyrion Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Cortnay Penrose"
+      },
+      {
+        "count": 1,
+        "attacker": "Ramsay Snow",
+        "defender": "Cley Cerwyn"
+      },
+      {
+        "count": 1,
+        "attacker": "Ramsay Snow",
+        "defender": "Leobald Tallhart"
+      },
+      {
+        "count": 1,
+        "attacker": "Robertt Glover",
+        "defender": "Randyll Tarly"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Garlan Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Salladhor Saan",
+        "defender": "Jacelyn Bywater"
+      },
+      {
+        "count": 1,
+        "attacker": "Tywin Lannister",
+        "defender": "Jason Mallister"
+      },
+      {
+        "count": 1,
+        "attacker": "Salladhor Saan",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Theon Greyjoy ",
+        "defender": "Leobald Tallhart"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Rodrik Cassel",
+        "defender": "Dagmer Cleftjaw"
+      },
+      {
+        "count": 1,
+        "attacker": "Cley Cerwyn",
+        "defender": "Dagmer Cleftjaw"
+      },
+      {
+        "count": 1,
+        "attacker": "Imry Florent",
+        "defender": "Tyrion Lannister"
+      },
       {
         "count": 1,
         "attacker": "Black Walder Frey",
@@ -1045,290 +1072,38 @@
       },
       {
         "count": 1,
+        "attacker": "Helman Tallhart",
+        "defender": "Gregor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Imry Florent",
+        "defender": "Garlan Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Jacelyn Bywater"
+      },
+      {
+        "count": 2,
+        "attacker": "Davos Seaworth",
+        "defender": "Randyll Tarly"
+      },
+      {
+        "count": 1,
+        "attacker": "Vargo Hoat",
+        "defender": "Amory Lorch"
+      },
+      {
+        "count": 1,
         "attacker": "Smalljon Umber",
         "defender": "Rolph Spicer"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Jacelyn Bywater",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Mace Tyrell",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Garlan Tyrell",
-        "count": 1,
-        "party1": "Rolland Storm"
-      },
-      {
-        "party2": "Garlan Tyrell",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Jacelyn Bywater",
-        "count": 1,
-        "party1": "Rolland Storm"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Jacelyn Bywater",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Mace Tyrell",
-        "count": 1,
-        "party1": "Rolland Storm"
-      },
-      {
-        "party2": "Garlan Tyrell",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Jacelyn Bywater",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Jacelyn Bywater",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Rolland Storm"
-      },
-      {
-        "party2": "Tyrion Lannister",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Tyrion Lannister",
-        "count": 1,
-        "party1": "Rolland Storm"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Sandor Clegane",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Tyrion Lannister",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Garlan Tyrell",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Sandor Clegane",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Sandor Clegane",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Jacelyn Bywater",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Mace Tyrell",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Mace Tyrell",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Mace Tyrell",
-        "count": 1,
-        "party1": "Davos Seaworth"
-      },
-      {
-        "party2": "Tyrion Lannister",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Sandor Clegane",
-        "count": 1,
-        "party1": "Rolland Storm"
-      },
-      {
-        "party2": "Garlan Tyrell",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Sandor Clegane",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Mace Tyrell",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Tyrion Lannister",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Sandor Clegane",
-        "count": 1,
-        "party1": "Salladhor Saan"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Garlan Tyrell",
-        "count": 1,
-        "party1": "Guyard Morrigen"
-      },
-      {
-        "party2": "Tyrion Lannister",
-        "count": 1,
-        "party1": "Imry Florent"
-      },
-      {
-        "party2": "Tywin Lannister",
-        "count": 1,
-        "party1": "Rolland Storm"
-      }
-    ],
-    "nodes": [
-      "Rolland Storm",
-      "Sandor Clegane",
-      "Mace Tyrell",
-      "Tywin Lannister",
-      "Guyard Morrigen",
-      "Salladhor Saan",
-      "Imry Florent",
-      "Davos Seaworth",
-      "Garlan Tyrell",
-      "Jacelyn Bywater",
-      "Randyll Tarly",
-      "Stannis Baratheon",
-      "Tyrion Lannister"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Jacelyn Bywater"
-      },
-      {
-        "count": 1,
-        "attacker": "Imry Florent",
-        "defender": "Mace Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Garlan Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Imry Florent",
-        "defender": "Garlan Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Jacelyn Bywater"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Jacelyn Bywater"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Mace Tyrell"
       },
       {
         "count": 1,
@@ -1337,200 +1112,72 @@
       },
       {
         "count": 1,
-        "attacker": "Imry Florent",
+        "attacker": "Addam Marbrand",
+        "defender": "Karyl Vance"
+      },
+      {
+        "count": 1,
+        "attacker": "Tywin Lannister",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Loras Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Roose Bolton",
+        "defender": "Robb Stark"
+      },
+      {
+        "count": 1,
+        "attacker": "Gregor Clegane",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Leo Lefford",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Mace Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
         "defender": "Jacelyn Bywater"
       },
       {
         "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Jacelyn Bywater"
+        "attacker": "Gregor Clegane",
+        "defender": "Karyl Vance"
       },
       {
         "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Salladhor Saan",
-        "defender": "Tyrion Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Tyrion Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Sandor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Imry Florent",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Tyrion Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Garlan Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Sandor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Imry Florent",
-        "defender": "Sandor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Salladhor Saan",
-        "defender": "Jacelyn Bywater"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Mace Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Salladhor Saan",
-        "defender": "Mace Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Salladhor Saan",
-        "defender": "Tywin Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Davos Seaworth",
-        "defender": "Mace Tyrell"
+        "attacker": "Theon Greyjoy",
+        "defender": "Bran Stark"
       },
       {
         "count": 1,
         "attacker": "Stannis Baratheon",
         "defender": "Tyrion Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Sandor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Garlan Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Imry Florent",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Salladhor Saan",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Sandor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Mace Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Tyrion Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Salladhor Saan",
-        "defender": "Sandor Clegane"
-      },
-      {
-        "count": 1,
-        "attacker": "Stannis Baratheon",
-        "defender": "Randyll Tarly"
-      },
-      {
-        "count": 1,
-        "attacker": "Guyard Morrigen",
-        "defender": "Garlan Tyrell"
-      },
-      {
-        "count": 1,
-        "attacker": "Imry Florent",
-        "defender": "Tyrion Lannister"
-      },
-      {
-        "count": 1,
-        "attacker": "Rolland Storm",
-        "defender": "Tywin Lannister"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Helman Tallhart"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Robertt Glover"
-      },
-      {
-        "party2": "Randyll Tarly",
-        "count": 1,
-        "party1": "Helman Tallhart"
-      },
-      {
-        "party2": "Gregor Clegane",
-        "count": 1,
-        "party1": "Robertt Glover"
-      }
-    ],
-    "nodes": [
-      "Gregor Clegane",
-      "Robertt Glover",
-      "Helman Tallhart",
-      "Randyll Tarly"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Helman Tallhart",
-        "defender": "Gregor Clegane"
       },
       {
         "count": 1,
         "attacker": "Robertt Glover",
+        "defender": "Gregor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Imry Florent",
         "defender": "Randyll Tarly"
       },
       {
@@ -1540,31 +1187,24 @@
       },
       {
         "count": 1,
-        "attacker": "Robertt Glover",
-        "defender": "Gregor Clegane"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Wylis Manderly",
-        "count": 1,
-        "party1": "Gregor Clegane"
+        "attacker": "Gregor Clegane",
+        "defender": "Vargo Hoat"
       },
       {
-        "party2": "Roose Bolton",
         "count": 1,
-        "party1": "Gregor Clegane"
-      }
-    ],
-    "nodes": [
-      "Wylis Manderly",
-      "Roose Bolton",
-      "Gregor Clegane"
-    ],
-    "edges": [
+        "attacker": "Salladhor Saan",
+        "defender": "Sandor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Robb Stark",
+        "defender": "Antario Jast"
+      },
+      {
+        "count": 1,
+        "attacker": "Imry Florent",
+        "defender": "Mace Tyrell"
+      },
       {
         "count": 1,
         "attacker": "Gregor Clegane",
@@ -1572,346 +1212,241 @@
       },
       {
         "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Roose Bolton"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Vargo Hoat",
-        "count": 1,
-        "party1": "Gregor Clegane"
-      }
-    ],
-    "nodes": [
-      "Vargo Hoat",
-      "Gregor Clegane"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Gregor Clegane",
-        "defender": "Vargo Hoat"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Robb Stark",
-        "count": 1,
-        "party1": "Walder Rivers"
-      },
-      {
-        "party2": "Robb Stark",
-        "count": 1,
-        "party1": "Walder Frey"
-      },
-      {
-        "party2": "Robb Stark",
-        "count": 1,
-        "party1": "Roose Bolton"
-      }
-    ],
-    "nodes": [
-      "Walder Frey",
-      "Walder Rivers",
-      "Robb Stark",
-      "Roose Bolton"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Walder Rivers",
-        "defender": "Robb Stark"
+        "attacker": "Brynden Tully",
+        "defender": "Stafford Lannister"
       },
       {
         "count": 1,
-        "attacker": "Walder Frey",
-        "defender": "Robb Stark"
+        "attacker": "Flement Brax",
+        "defender": "Karyl Vance"
+      },
+      {
+        "count": 1,
+        "attacker": "Flement Brax",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Robb Stark",
+        "defender": "Roland Crakehall"
+      },
+      {
+        "count": 1,
+        "attacker": "Robett Glover",
+        "defender": "Amory Lorch"
+      },
+      {
+        "count": 1,
+        "attacker": "Salladhor Saan",
+        "defender": "Mace Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Renly Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Randyll Tarly"
+      },
+      {
+        "count": 1,
+        "attacker": "Imry Florent",
+        "defender": "Tywin Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Sandor Clegane"
       },
       {
         "count": 1,
         "attacker": "Roose Bolton",
-        "defender": "Robb Stark"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Jason Mallister",
-        "count": 1,
-        "party1": "Walder Frey"
-      }
-    ],
-    "nodes": [
-      "Walder Frey",
-      "Jason Mallister"
-    ],
-    "edges": [
+        "defender": "Amory Lorch"
+      },
       {
         "count": 1,
-        "attacker": "Walder Frey",
+        "attacker": "Theon Greyjoy ",
+        "defender": "Cley Cerwyn"
+      },
+      {
+        "count": 1,
+        "attacker": "Lyle Crakehall",
+        "defender": "Edmure Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Tyrion Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Flement Brax",
         "defender": "Jason Mallister"
-      }
-    ],
-    "year": "299"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Cotter Pyke",
-        "count": 1,
-        "party1": "Tormund Giantsbane"
-      },
-      {
-        "party2": "Stannis Baratheon",
-        "count": 1,
-        "party1": "Mance Rayder"
-      },
-      {
-        "party2": "Cotter Pyke",
-        "count": 1,
-        "party1": "Mance Rayder"
-      },
-      {
-        "party2": "Donal Noye",
-        "count": 1,
-        "party1": "Tormund Giantsbane"
-      },
-      {
-        "party2": "Jon Snow",
-        "count": 1,
-        "party1": "Mance Rayder"
-      },
-      {
-        "party2": "Donal Noye",
-        "count": 1,
-        "party1": "Magnar Styr"
-      },
-      {
-        "party2": "Jon Snow",
-        "count": 1,
-        "party1": "Harma Dogshead"
-      },
-      {
-        "party2": "Cotter Pyke",
-        "count": 1,
-        "party1": "Varamyr"
-      },
-      {
-        "party2": "Cotter Pyke",
-        "count": 1,
-        "party1": "Magnar Styr"
-      },
-      {
-        "party2": "Donal Noye",
-        "count": 1,
-        "party1": "Varamyr"
-      },
-      {
-        "party2": "Jon Snow",
-        "count": 1,
-        "party1": "Varamyr"
-      },
-      {
-        "party2": "Stannis Baratheon",
-        "count": 1,
-        "party1": "Tormund Giantsbane"
-      },
-      {
-        "party2": "Jon Snow",
-        "count": 1,
-        "party1": "Tormund Giantsbane"
-      },
-      {
-        "party2": "Stannis Baratheon",
-        "count": 1,
-        "party1": "Harma Dogshead"
-      },
-      {
-        "party2": "Stannis Baratheon",
-        "count": 1,
-        "party1": "Varamyr"
-      },
-      {
-        "party2": "Cotter Pyke",
-        "count": 1,
-        "party1": "Harma Dogshead"
-      },
-      {
-        "party2": "Stannis Baratheon",
-        "count": 1,
-        "party1": "Magnar Styr"
-      },
-      {
-        "party2": "Jon Snow",
-        "count": 1,
-        "party1": "Magnar Styr"
-      },
-      {
-        "party2": "Donal Noye",
-        "count": 1,
-        "party1": "Mance Rayder"
-      },
-      {
-        "party2": "Donal Noye",
-        "count": 1,
-        "party1": "Harma Dogshead"
-      }
-    ],
-    "nodes": [
-      "Mance Rayder",
-      "Magnar Styr",
-      "Tormund Giantsbane",
-      "Donal Noye",
-      "Harma Dogshead",
-      "Cotter Pyke",
-      "Stannis Baratheon",
-      "Jon Snow",
-      "Varamyr"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Tormund Giantsbane",
-        "defender": "Cotter Pyke"
       },
       {
         "count": 1,
-        "attacker": "Mance Rayder",
-        "defender": "Stannis Baratheon"
+        "attacker": "Imry Florent",
+        "defender": "Sandor Clegane"
       },
       {
         "count": 1,
-        "attacker": "Mance Rayder",
-        "defender": "Cotter Pyke"
+        "attacker": "Lyle Crakehall",
+        "defender": "Karyl Vance"
       },
       {
         "count": 1,
-        "attacker": "Tormund Giantsbane",
-        "defender": "Donal Noye"
+        "attacker": "Robb Stark",
+        "defender": "Stafford Lannister"
       },
       {
         "count": 1,
-        "attacker": "Mance Rayder",
-        "defender": "Jon Snow"
+        "attacker": "Ramsay Snow",
+        "defender": "Rodrik Cassel"
       },
       {
         "count": 1,
-        "attacker": "Magnar Styr",
-        "defender": "Donal Noye"
+        "attacker": "Brynden Tully",
+        "defender": "Roland Crakehall"
       },
-      {
-        "count": 1,
-        "attacker": "Harma Dogshead",
-        "defender": "Jon Snow"
-      },
-      {
-        "count": 1,
-        "attacker": "Varamyr",
-        "defender": "Cotter Pyke"
-      },
-      {
-        "count": 1,
-        "attacker": "Magnar Styr",
-        "defender": "Cotter Pyke"
-      },
-      {
-        "count": 1,
-        "attacker": "Varamyr",
-        "defender": "Donal Noye"
-      },
-      {
-        "count": 1,
-        "attacker": "Varamyr",
-        "defender": "Jon Snow"
-      },
-      {
-        "count": 1,
-        "attacker": "Tormund Giantsbane",
-        "defender": "Stannis Baratheon"
-      },
-      {
-        "count": 1,
-        "attacker": "Tormund Giantsbane",
-        "defender": "Jon Snow"
-      },
-      {
-        "count": 1,
-        "attacker": "Harma Dogshead",
-        "defender": "Stannis Baratheon"
-      },
-      {
-        "count": 1,
-        "attacker": "Varamyr",
-        "defender": "Stannis Baratheon"
-      },
-      {
-        "count": 1,
-        "attacker": "Harma Dogshead",
-        "defender": "Cotter Pyke"
-      },
-      {
-        "count": 1,
-        "attacker": "Magnar Styr",
-        "defender": "Stannis Baratheon"
-      },
-      {
-        "count": 1,
-        "attacker": "Magnar Styr",
-        "defender": "Jon Snow"
-      },
-      {
-        "count": 1,
-        "attacker": "Mance Rayder",
-        "defender": "Donal Noye"
-      },
-      {
-        "count": 1,
-        "attacker": "Harma Dogshead",
-        "defender": "Donal Noye"
-      }
-    ],
-    "year": "300"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Asha Greyjoy",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      },
-      {
-        "party2": "Asha Greyjoy",
-        "count": 1,
-        "party1": "Alysane Mormot"
-      }
-    ],
-    "nodes": [
-      "Asha Greyjoy",
-      "Alysane Mormot",
-      "Stannis Baratheon"
-    ],
-    "edges": [
       {
         "count": 1,
         "attacker": "Stannis Baratheon",
-        "defender": "Asha Greyjoy"
+        "defender": "Garlan Tyrell"
       },
       {
         "count": 1,
-        "attacker": "Alysane Mormot",
-        "defender": "Asha Greyjoy"
+        "attacker": "Salladhor Saan",
+        "defender": "Randyll Tarly"
+      },
+      {
+        "count": 2,
+        "attacker": "Stannis Baratheon",
+        "defender": "Randyll Tarly"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Garlan Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Jacelyn Bywater"
+      },
+      {
+        "count": 1,
+        "attacker": "Lyle Crakehall",
+        "defender": "Jason Mallister"
+      },
+      {
+        "count": 1,
+        "attacker": "Imry Florent",
+        "defender": "Jacelyn Bywater"
+      },
+      {
+        "count": 1,
+        "attacker": "Leo Lefford",
+        "defender": "Jason Mallister"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Tyrion Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Leo Lefford",
+        "defender": "Karyl Vance"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Renly Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Cortnay Penrose"
+      },
+      {
+        "count": 1,
+        "attacker": "Gregor Clegane",
+        "defender": "Roose Bolton"
+      },
+      {
+        "count": 1,
+        "attacker": "Addam Marbrand",
+        "defender": "Jason Mallister"
+      },
+      {
+        "count": 1,
+        "attacker": "Walder Frey",
+        "defender": "Robb Stark"
+      },
+      {
+        "count": 1,
+        "attacker": "Tywin Lannister",
+        "defender": "Karyl Vance"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Sandor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Mathis Rowan"
+      },
+      {
+        "count": 1,
+        "attacker": "Davos Seaworth",
+        "defender": "Mace Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Rolland Storm",
+        "defender": "Randyll Tarly"
+      },
+      {
+        "count": 1,
+        "attacker": "Theon Greyjoy ",
+        "defender": "Rodrik Cassel"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Sandor Clegane"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Tyrion Lannister"
+      },
+      {
+        "count": 1,
+        "attacker": "Brynden Tully",
+        "defender": "Antario Jast"
+      },
+      {
+        "count": 1,
+        "attacker": "Guyard Morrigen",
+        "defender": "Garlan Tyrell"
+      },
+      {
+        "count": 1,
+        "attacker": "Addam Marbrand",
+        "defender": "Edmure Tully"
       }
     ],
-    "year": "300"
+    "year": 299
   },
   {
     "edges_joint": [
@@ -1921,66 +1456,127 @@
         "party1": "Mace Tyrell"
       },
       {
-        "party2": "Gilbert Farring",
+        "party2": "Cotter Pyke",
         "count": 1,
-        "party1": "Mathis Rowan"
-      }
-    ],
-    "nodes": [
-      "Mathis Rowan",
-      "Mace Tyrell",
-      "Gilbert Farring"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Mace Tyrell",
-        "defender": "Gilbert Farring"
+        "party1": "Varamyr"
       },
       {
+        "party2": "Donal Noye",
         "count": 1,
-        "attacker": "Mathis Rowan",
-        "defender": "Gilbert Farring"
-      }
-    ],
-    "year": "300"
-  },
-  {
-    "edges_joint": [
+        "party1": "Magnar Styr"
+      },
+      {
+        "party2": "Stannis Baratheon",
+        "count": 1,
+        "party1": "Tormund Giantsbane"
+      },
+      {
+        "party2": "Stannis Baratheon",
+        "count": 1,
+        "party1": "Harma Dogshead"
+      },
       {
         "party2": "Rolland Storm",
         "count": 1,
         "party1": "Loras Tyrell"
       },
       {
+        "party2": "Cotter Pyke",
+        "count": 1,
+        "party1": "Tormund Giantsbane"
+      },
+      {
+        "party2": "Donal Noye",
+        "count": 1,
+        "party1": "Tormund Giantsbane"
+      },
+      {
+        "party2": "Tytos Blackwood",
+        "count": 1,
+        "party1": "Jonos Bracken"
+      },
+      {
+        "party2": "Jon Snow",
+        "count": 1,
+        "party1": "Varamyr"
+      },
+      {
         "party2": "Rolland Storm",
         "count": 1,
         "party1": "Raxter Redwyne"
-      }
-    ],
-    "nodes": [
-      "Rolland Storm",
-      "Loras Tyrell",
-      "Raxter Redwyne"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Loras Tyrell",
-        "defender": "Rolland Storm"
       },
       {
+        "party2": "Jon Snow",
         "count": 1,
-        "attacker": "Raxter Redwyne",
-        "defender": "Rolland Storm"
-      }
-    ],
-    "year": "300"
-  },
-  {
-    "edges_joint": [
+        "party1": "Tormund Giantsbane"
+      },
+      {
+        "party2": "Donal Noye",
+        "count": 1,
+        "party1": "Harma Dogshead"
+      },
+      {
+        "party2": "Gilbert Farring",
+        "count": 1,
+        "party1": "Mathis Rowan"
+      },
+      {
+        "party2": "Cotter Pyke",
+        "count": 1,
+        "party1": "Mance Rayder"
+      },
+      {
+        "party2": "Jon Snow",
+        "count": 1,
+        "party1": "Harma Dogshead"
+      },
+      {
+        "party2": "Jon Snow",
+        "count": 1,
+        "party1": "Mance Rayder"
+      },
       {
         "party2": "Brynden Tully",
+        "count": 1,
+        "party1": "Daven Lannister"
+      },
+      {
+        "party2": "Cotter Pyke",
+        "count": 1,
+        "party1": "Harma Dogshead"
+      },
+      {
+        "party2": "Stannis Baratheon",
+        "count": 1,
+        "party1": "Varamyr"
+      },
+      {
+        "party2": "Asha Greyjoy",
+        "count": 1,
+        "party1": "Alysane Mormot"
+      },
+      {
+        "party2": "Donal Noye",
+        "count": 1,
+        "party1": "Mance Rayder"
+      },
+      {
+        "party2": "Asha Greyjoy",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Brynden Tully",
+        "count": 1,
+        "party1": "Jaime Lannister"
+      },
+      {
+        "party2": "Stannis Baratheon",
+        "count": 1,
+        "party1": "Mance Rayder"
+      },
+      {
+        "party2": "Tytos Blackwood",
         "count": 1,
         "party1": "Jaime Lannister"
       },
@@ -1990,22 +1586,187 @@
         "party1": "Ryman Fey"
       },
       {
-        "party2": "Brynden Tully",
+        "party2": "Cotter Pyke",
         "count": 1,
-        "party1": "Daven Lannister"
+        "party1": "Magnar Styr"
+      },
+      {
+        "party2": "Donal Noye",
+        "count": 1,
+        "party1": "Varamyr"
+      },
+      {
+        "party2": "Roose Bolton",
+        "count": 1,
+        "party1": "Stannis Baratheon"
+      },
+      {
+        "party2": "Stannis Baratheon",
+        "count": 1,
+        "party1": "Magnar Styr"
+      },
+      {
+        "party2": "Jon Snow",
+        "count": 1,
+        "party1": "Magnar Styr"
       }
     ],
     "nodes": [
+      "Mance Rayder",
+      "Mace Tyrell",
+      "Harma Dogshead",
+      "Mathis Rowan",
+      "Jonos Bracken",
+      "Jaime Lannister",
+      "Asha Greyjoy",
       "Daven Lannister",
+      "Rolland Storm",
+      "Magnar Styr",
+      "Stannis Baratheon",
+      "Alysane Mormot",
+      "Tormund Giantsbane",
+      "Roose Bolton",
+      "Donal Noye",
+      "Varamyr",
       "Ryman Fey",
       "Brynden Tully",
-      "Jaime Lannister"
+      "Raxter Redwyne",
+      "Loras Tyrell",
+      "Gilbert Farring",
+      "Tytos Blackwood",
+      "Cotter Pyke",
+      "Jon Snow"
     ],
     "edges": [
       {
         "count": 1,
+        "attacker": "Mace Tyrell",
+        "defender": "Gilbert Farring"
+      },
+      {
+        "count": 1,
+        "attacker": "Varamyr",
+        "defender": "Cotter Pyke"
+      },
+      {
+        "count": 1,
+        "attacker": "Magnar Styr",
+        "defender": "Donal Noye"
+      },
+      {
+        "count": 1,
+        "attacker": "Tormund Giantsbane",
+        "defender": "Stannis Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Harma Dogshead",
+        "defender": "Stannis Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Loras Tyrell",
+        "defender": "Rolland Storm"
+      },
+      {
+        "count": 1,
+        "attacker": "Tormund Giantsbane",
+        "defender": "Cotter Pyke"
+      },
+      {
+        "count": 1,
+        "attacker": "Tormund Giantsbane",
+        "defender": "Donal Noye"
+      },
+      {
+        "count": 1,
+        "attacker": "Jonos Bracken",
+        "defender": "Tytos Blackwood"
+      },
+      {
+        "count": 1,
+        "attacker": "Varamyr",
+        "defender": "Jon Snow"
+      },
+      {
+        "count": 1,
+        "attacker": "Raxter Redwyne",
+        "defender": "Rolland Storm"
+      },
+      {
+        "count": 1,
+        "attacker": "Tormund Giantsbane",
+        "defender": "Jon Snow"
+      },
+      {
+        "count": 1,
+        "attacker": "Harma Dogshead",
+        "defender": "Donal Noye"
+      },
+      {
+        "count": 1,
+        "attacker": "Mathis Rowan",
+        "defender": "Gilbert Farring"
+      },
+      {
+        "count": 1,
+        "attacker": "Mance Rayder",
+        "defender": "Cotter Pyke"
+      },
+      {
+        "count": 1,
+        "attacker": "Harma Dogshead",
+        "defender": "Jon Snow"
+      },
+      {
+        "count": 1,
+        "attacker": "Mance Rayder",
+        "defender": "Jon Snow"
+      },
+      {
+        "count": 1,
+        "attacker": "Daven Lannister",
+        "defender": "Brynden Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Harma Dogshead",
+        "defender": "Cotter Pyke"
+      },
+      {
+        "count": 1,
+        "attacker": "Varamyr",
+        "defender": "Stannis Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Alysane Mormot",
+        "defender": "Asha Greyjoy"
+      },
+      {
+        "count": 1,
+        "attacker": "Mance Rayder",
+        "defender": "Donal Noye"
+      },
+      {
+        "count": 1,
+        "attacker": "Stannis Baratheon",
+        "defender": "Asha Greyjoy"
+      },
+      {
+        "count": 1,
         "attacker": "Jaime Lannister",
         "defender": "Brynden Tully"
+      },
+      {
+        "count": 1,
+        "attacker": "Mance Rayder",
+        "defender": "Stannis Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Jaime Lannister",
+        "defender": "Tytos Blackwood"
       },
       {
         "count": 1,
@@ -2014,63 +1775,30 @@
       },
       {
         "count": 1,
-        "attacker": "Daven Lannister",
-        "defender": "Brynden Tully"
-      }
-    ],
-    "year": "300"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Tytos Blackwood",
-        "count": 1,
-        "party1": "Jaime Lannister"
-      },
-      {
-        "party2": "Tytos Blackwood",
-        "count": 1,
-        "party1": "Jonos Bracken"
-      }
-    ],
-    "nodes": [
-      "Jonos Bracken",
-      "Tytos Blackwood",
-      "Jaime Lannister"
-    ],
-    "edges": [
-      {
-        "count": 1,
-        "attacker": "Jaime Lannister",
-        "defender": "Tytos Blackwood"
+        "attacker": "Magnar Styr",
+        "defender": "Cotter Pyke"
       },
       {
         "count": 1,
-        "attacker": "Jonos Bracken",
-        "defender": "Tytos Blackwood"
-      }
-    ],
-    "year": "300"
-  },
-  {
-    "edges_joint": [
-      {
-        "party2": "Roose Bolton",
-        "count": 1,
-        "party1": "Stannis Baratheon"
-      }
-    ],
-    "nodes": [
-      "Stannis Baratheon",
-      "Roose Bolton"
-    ],
-    "edges": [
+        "attacker": "Varamyr",
+        "defender": "Donal Noye"
+      },
       {
         "count": 1,
         "attacker": "Stannis Baratheon",
         "defender": "Roose Bolton"
+      },
+      {
+        "count": 1,
+        "attacker": "Magnar Styr",
+        "defender": "Stannis Baratheon"
+      },
+      {
+        "count": 1,
+        "attacker": "Magnar Styr",
+        "defender": "Jon Snow"
       }
     ],
-    "year": "300"
+    "year": 300
   }
 ]
