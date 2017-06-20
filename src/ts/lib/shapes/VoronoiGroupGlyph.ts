@@ -15,7 +15,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
 	private _noiseDefaultColor = "#FFFFFF"; /* Default color of NoiseNodes. Default #FFFFFF. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
-	private _transitionDelay: number = 8000; /* Time between animation from standard view to exitview. Default 8000ms. */
+	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
 
 	/**
 	 * Make new <g>
@@ -70,25 +70,25 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		return function (d: VoronoiPolygon<Node>, i: number): string {
 			if (timeStampIndex === data.timesteps.length - 1) {
 				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
+					return self.noiseColor;
 				}
-				return self._exitColor;
+				return self.exitColor;
 			}
 			for (let n of data.timesteps[timeStampIndex + 1].nodes) {
 				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
+					return self.noiseColor;
 				}
 				if (d.data.origID === n.origID) {
 					return self.fill(d, key);
 				}
 			}
-			return self._exitColor;
+			return self.exitColor;
 		}
 	}
 	/**
 	 * Check to see if the VoronoiPolygon path object was present in the previous timestep data. If not present, the path 
 	 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and 
-	 * cycles back to timestep[0] defualt to enterNodes. See _enterColor.
+	 * cycles back to timestep[0] default to enterNodes. See _enterColor.
 	 * @param data 
 	 * @param timeStampIndex 
 	 * @param key 
@@ -98,19 +98,19 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		return function (d: VoronoiPolygon<Node>, i: number): string {
 			if (timeStampIndex === 0) {
 				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
+					return self.noiseColor;
 				}
-				return self._enterColor;
+				return self.enterColor;
 			}
 			for (let n of data.timesteps[timeStampIndex - 1].nodes) {
 				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
+					return self.noiseColor;
 				}
 				if (d.data.origID === n.origID) {
 					return self.fill(d, key);
 				}
 			}
-			return self._enterColor;
+			return self.enterColor;
 		}
 	}
 	/**
@@ -213,6 +213,12 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 	get exitColor(): string {
 		return this._exitColor;
+	}
+	set noiseColor(c: string) {
+		this._noiseDefaultColor = c;
+	}
+	get noiseColor(): string {
+		return this._noiseDefaultColor;
 	}
 	set transitionDuration(duration: number) {
 		this._transitionDuration = duration;

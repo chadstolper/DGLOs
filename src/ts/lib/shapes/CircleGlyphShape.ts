@@ -10,6 +10,12 @@ import "d3-transition";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
+	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
+	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
+	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+
 	/**
 	 * Make new <g>
 	 * @param location
@@ -36,11 +42,11 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Assign and/or update node circle attributes and (cx,cy) positions
+	 * Assign and/or update node circle attributes and (cx,cy) positions. Assigns enter and exit transitions.
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
+		let self = this;
 		try {
 			glyphs
 				.attr("cx", function (d: Node) {
@@ -52,46 +58,82 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
-		try {
-			switch (attrOpts.fill) {
-				case "id":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.origID);
-						});
-					break;
 
-				case "label":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.label);
-						});
-					break;
-
-				case "type":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.type);
-						});
-					break;
-				default:
-					glyphs
-						.attr("fill", attrOpts.fill);
-			}
-
-			glyphs
-				.attr("stroke", attrOpts.stroke)
-				.attr("r", attrOpts.radius)
-				.attr("stroke-width", attrOpts.stroke_width)
-				.attr("opacity", attrOpts.opacity);
-		}
-		catch (err) {
-			console.log("attropts Circle undefined");
-		}
+		glyphs
+			.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
+				glyphs.transition().style("fill", function (d: Node): string {
+					return self.fill(d, attrOpts.fill);
+				}).duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
+					glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration);
+				});
+			})
+			.style("stroke", attrOpts.stroke)
+			.attr("r", attrOpts.radius)
+			.attr("stroke-width", attrOpts.stroke_width)
+			.style("opacity", attrOpts.opacity);
 
 		return glyphs;
 	}
-
+	/**
+ * Check to see if the CircleGlyph object will be present in the next timestep data. If not present, the CircleGlyph will transition
+ * to the exit color. Timestep[n] will default all data to be exitNodes. See _exitColor.
+ * @param data 
+ * @param timeStampIndex 
+ * @param key 
+ */
+	private exitCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+		let self = this;
+		return function (d: Node, i: number): string {
+			if (timeStampIndex === data.timesteps.length - 1) {
+				return self.exitColor;
+			}
+			for (let n of data.timesteps[timeStampIndex + 1].nodes) {
+				if (d.origID === n.origID) {
+					return self.fill(d, key);
+				}
+			}
+			return self.exitColor;
+		}
+	}
+	/**
+	 * Check to see if the VoronoiPolygon path object was present in the previous timestep data. If not present, the path 
+	 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and 
+	 * cycles back to timestep[0] default to enterNodes. See _enterColor.
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param key 
+	 */
+	private enterCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+		let self = this;
+		return function (d: Node, i: number): string {
+			if (timeStampIndex === 0) {
+				return self.enterColor;
+			}
+			for (let n of data.timesteps[timeStampIndex - 1].nodes) {
+				if (d.origID === n.origID) {
+					return self.fill(d, key);
+				}
+			}
+			return self.enterColor;
+		}
+	}
+	/**
+	 * Fill the CircleGlyph selection color. Returns hexCode as string.
+	 * @param d : current CircleGlyph
+	 * @param key 
+	 */
+	private fill(d: Node, key: string) {
+		switch (key) {
+			case "id":
+				return this.colorScheme(d.origID);
+			case "label":
+				return this.colorScheme(d.label);
+			case "type":
+				return this.colorScheme(d.type);
+			default:
+				return key;
+		}
+	}
 	/**
 	 * Transform the current NodeGlyphShapes to given NodeGlyphShape
 	 * @param sourceSelection 
@@ -137,5 +179,39 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 
 	get shapeType(): string {
 		return this._shapeType;
+	}
+	/**
+	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
+	 * @param scheme
+	 */
+	set colorScheme(scheme: ScaleOrdinal<string | number, string>) {
+		this._colorScheme = scheme;
+	}
+	get colorScheme(): ScaleOrdinal<string | number, string> {
+		return this._colorScheme;
+	}
+	set enterColor(c: string) {
+		this._enterColor = c;
+	}
+	get enterColor(): string {
+		return this._enterColor;
+	}
+	set exitColor(c: string) {
+		this._exitColor = c;
+	}
+	get exitColor(): string {
+		return this._exitColor;
+	}
+	set transitionDuration(duration: number) {
+		this._transitionDuration = duration;
+	}
+	get transitionDuration(): number {
+		return this._transitionDuration;
+	}
+	set transitionDelay(delay: number) {
+		this._transitionDelay = delay;
+	}
+	get transitionDelay(): number {
+		return this._transitionDelay;
 	}
 }
