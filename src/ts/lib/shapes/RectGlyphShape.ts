@@ -87,9 +87,11 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		if (this.enterExitEnabled) {
 			glyphs
 				.style("fill", this.enterCheck(data, timeStampIndex, attr)).transition().call(function () {
-					glyphs.transition().delay(2000).style("fill", function (d: Edge): string {
+					glyphs.transition()/*.delay(2000)*/.style("fill", function (d: Edge): string {
+						console.log("bond")
 						return self.colorMap(d.weight);
 					}).duration(self.transitionDuration).transition().delay(self.transitionDelay).call(function () {
+						console.log("james bond")
 						glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
 					});
 				});
@@ -198,8 +200,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExitTransitions?: boolean): void {
-		this.enterExitEnabled = enterExitTransitions;
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExit?: boolean): void {
+		this.enterExitEnabled = enterExit;
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();

@@ -88,12 +88,12 @@ export class DGLOsWill extends DGLOsMatt {
 			});
 		});
 		if (!this.multipleTimestepsEnabled) {
-			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
+			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts, this.enterExitTransitionEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, self._attrOpts);
+				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, self._attrOpts, self.enterExitTransitionEnabled);
 			});
 		}
 	}
@@ -114,12 +114,12 @@ export class DGLOsWill extends DGLOsMatt {
 			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
-			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts);
+			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.enterExitTransitionEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this._edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, _matrixAttrOpts);
+				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, _matrixAttrOpts, self.enterExitTransitionEnabled);
 			});
 		}
 	}
@@ -141,7 +141,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.enterExitTransitionEnabled);
 				}
 				if (!self._matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);
@@ -154,7 +154,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts);
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.enterExitTransitionEnabled);
 				}
 				if (!self._matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);
