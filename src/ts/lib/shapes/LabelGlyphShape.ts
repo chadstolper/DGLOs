@@ -35,9 +35,8 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			.style("text-anchor", this._textAnchor)
 			.style("user-select", "none")
 			.on("click", function (d: Node) {
-				self.lib.setCenterNode(d.origID);
 				if (self.lib.onClickRedraw) {
-					self.lib.redraw();
+					self.lib.setCenterNode(d.origID);
 				}
 			});
 		return ret;
