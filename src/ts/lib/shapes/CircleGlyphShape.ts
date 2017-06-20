@@ -15,6 +15,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+	private _enterExitEnabled: boolean = false;
 
 	/**
 	 * Make new <g>
@@ -58,15 +59,22 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
-
-		glyphs
-			.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
-				glyphs.transition().style("fill", function (d: Node): string {
-					return self.fill(d, attrOpts.fill);
-				}).duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
-					glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration);
+		if (this.enterExitEnabled) {
+			glyphs
+				.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
+					glyphs.transition().style("fill", function (d: Node): string {
+						return self.fill(d, attrOpts.fill);
+					}).duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
+						glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration);
+					});
 				});
-			})
+		}
+		else {
+			glyphs.style("fill", function (d: Node): string {
+				return self.fill(d, attrOpts.fill);
+			});
+		}
+		glyphs
 			.style("stroke", attrOpts.stroke)
 			.attr("r", attrOpts.radius)
 			.attr("stroke-width", attrOpts.stroke_width)
@@ -164,7 +172,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit?: boolean): void {
+		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("circle.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
@@ -213,5 +222,11 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	get transitionDelay(): number {
 		return this._transitionDelay;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }

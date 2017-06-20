@@ -28,6 +28,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	private _minGradientColor: string = "#FFFFFF"; /* Value used for min gradient color showing edge weight. Default #FFFFFF. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+	private _enterExitEnabled: boolean = false;
 
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -83,15 +84,22 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		} catch (err) {
 			console.log("No edges!");
 		}
-		glyphs
-			.style("fill", this.enterCheck(data, timeStampIndex, attr)).transition().call(function () {
-				glyphs.transition().delay(2000).style("fill", function (d: Edge): string {
-					console.log("so uncivilized")
-					return self.colorMap(d.weight);
-				}).duration(self.transitionDuration).transition().delay(self.transitionDelay).call(function () {
-					glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
+		if (this.enterExitEnabled) {
+			glyphs
+				.style("fill", this.enterCheck(data, timeStampIndex, attr)).transition().call(function () {
+					glyphs.transition().delay(2000).style("fill", function (d: Edge): string {
+						return self.colorMap(d.weight);
+					}).duration(self.transitionDuration).transition().delay(self.transitionDelay).call(function () {
+						glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
+					});
 				});
-			})
+		}
+		else {
+			glyphs.style("fill", function (d: Edge): string {
+				return self.colorMap(d.weight);
+			});
+		}
+		glyphs
 			.style("stroke", attr.stroke)
 			.attr("stroke-width", attr.stroke_width)
 			.attr("width", attr.width)
@@ -151,7 +159,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 */
 	private initColorMap(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
 		if (this.colorMap === undefined) {
-			console.log("thats no moon")
 			this.maxGradientColor = attr.fill;
 			this.colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[timeStampIndex].edges))
@@ -191,7 +198,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExitTransitions?: boolean): void {
+		this.enterExitEnabled = enterExitTransitions;
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
@@ -257,5 +265,11 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	}
 	get transitionDelay(): number {
 		return this._transitionDelay;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }

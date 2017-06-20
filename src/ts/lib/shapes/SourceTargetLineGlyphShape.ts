@@ -26,6 +26,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+	private _enterExitEnabled: boolean = false;
 
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -81,14 +82,19 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		} catch (err) {
 			console.log("No STLines links!");
 		}
-
+		if (this.enterExitEnabled) {
+			edges
+				.style("stroke", this.enterCheck(data, timeStampIndex, attrOpts)).transition().on("end", function () {
+					edges.transition().style("stroke", attrOpts.stroke)
+						.duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
+							edges.transition().style("stroke", self.exitCheck(data, timeStampIndex, attrOpts)).duration(self.transitionDuration);
+						});
+				});
+		}
+		else {
+			edges.style("stroke", attrOpts.stroke);
+		}
 		edges
-			.style("stroke", this.enterCheck(data, timeStampIndex, attrOpts)).transition().on("end", function () {
-				edges.transition().style("stroke", attrOpts.stroke)
-					.duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
-						edges.transition().style("stroke", self.exitCheck(data, timeStampIndex, attrOpts)).duration(self.transitionDuration);
-					});
-			})
 			.attr("stroke-width", function (d: Edge): number {
 				if (attrOpts.stroke_width === "weight") {
 					return d.weight;
@@ -182,7 +188,8 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, enterExit?: boolean): void {
+		this.enterExitEnabled = enterExit;
 		let sTLineEdges = sTLineG.selectAll("line.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
@@ -221,5 +228,11 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 	get transitionDelay(): number {
 		return this._transitionDelay;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }

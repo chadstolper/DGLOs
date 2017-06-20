@@ -117,6 +117,8 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	enableStepping(): void { };
 	disableStepping(): void { };
+	enableEnterExitTransitions(): void { };
+	disableEnterExitTransitions(): void { };
 	drawTimesteps(): void { };
 	removeTimesteps(): void { };
 
