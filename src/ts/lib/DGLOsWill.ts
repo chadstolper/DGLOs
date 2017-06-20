@@ -1,6 +1,6 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
-import { Node, Edge, Graph, DynamicGraph, MetaNode } from "../model/dynamicgraph";
+import { Node, Edge, Graph, DynamicGraph, MetaNode, MetaEdge } from "../model/dynamicgraph";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
@@ -72,7 +72,30 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public positionEdgeGlyphsGestalt() {
-		this.redrawEgo();
+		this._matrixViewEnabled = true;
+		let h = this._height;
+		let w = this._width;
+
+		// this.dataToDraw.timesteps.forEach(function (g: Graph) {
+		// 	g.edges.forEach(function (e: Edge) {
+		// 		e.x = (+e.source.index / g.nodes.length) * w;
+		// 		e.y = (+e.target.index / g.nodes.length) * h;
+		// 	});
+		// });
+		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
+			console.log(meta);
+			let yScale = scaleLinear()
+				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+					return d.timestep;
+				}))
+				.range([0, 10])
+			meta.edges.forEach(function (e: Edge) {
+				console.log(e);
+				e.x = (+e.source.index / 15) * w;
+				e.y = yScale(e.timestep) + (+e.target.index / 15) * h;
+			})
+		})
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
 	}
 	/**
 	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix
