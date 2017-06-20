@@ -3,6 +3,7 @@ import { DynamicGraph } from "../model/DynamicGraph";
 import { DynamicRadoslawGraph } from "../data/EmailGraph";
 import { DynamicLesMiserablesGraph } from "../data/MiserablesGraph";
 import { DynamicFiveKingsGraph } from "../data/FiveKingsGraph";
+import { DynamicNewcombGraph } from "../data/NewcombGraph";
 import { Technique } from "../specs/Technique";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
 import { GMap } from "../specs/GMap";
@@ -18,6 +19,7 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 json("data/fivekings/fivekings.json", function (response: any) {
 	// json("data/miserables/miserables.json", function (response: any) {
 	// json("data/radoslaw/emails.json", function (response: any) {
+	// json("data/newcomb/newcomb.json", function (response: any) {
 
 	let width: number, height: number;
 	width = height = 1000;
@@ -27,6 +29,7 @@ json("data/fivekings/fivekings.json", function (response: any) {
 	let g: DynamicGraph = new DynamicFiveKingsGraph(response);
 	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
+	// let g: DynamicGraph = new DynamicNewcombGraph(response);
 	//------------------------------------------------------------//
 
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")

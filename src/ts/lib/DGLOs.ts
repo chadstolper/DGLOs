@@ -135,6 +135,19 @@ export interface DGLOs {
 
 
 	/**
+	 * Enables animation showing entering and exiting data at a given timestep.
+	 * Returns void.
+	 */
+	enableEnterExitTransitions(): void;
+
+
+	/**
+	 * Disables animation of entering and exiting data.
+	 */
+	disableEnterExitTransitions(): void;
+
+
+	/**
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
