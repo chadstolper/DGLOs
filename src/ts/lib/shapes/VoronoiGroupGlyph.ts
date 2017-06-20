@@ -11,9 +11,11 @@ import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
 export class VoronoiGroupGlyph implements GroupGlyph {
 	readonly _groupType = "Voronoi";
 	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-	private _enterColor = "#00D50F"; /* Value used for initial enterNode color transition. */
-	private _exitColor = "#D90000"; /* Value used for exitNode color transition. */
-	private _noiseDefaultColor = "#FFFFFF"; /* Default color of NoiseNodes. */
+	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
+	private _noiseDefaultColor = "#FFFFFF"; /* Default color of NoiseNodes. Default #FFFFFF. */
+	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
+	private _transitionDelay: number = 8000; /* Time between animation from standard view to exitview. Default 8000ms. */
 
 	/**
 	 * Make new <g>
@@ -35,55 +37,25 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	 * Assign and/or update voronoi path attributes and draw paths
+	 * Assign and/or update voronoi path attributes and draw paths. Assigns transitions for entering and exiting elements.
 	 * @param paths 
 	 */
 	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		paths.style("fill", "none").attr("stroke", "none");
 		let self = this;
-		switch (attrOpts.fill) {
-			case "id":
-				paths
-					.style("fill", this.enterCheck(data, timeStampIndex, "id")).transition().on("end", function () {
-						paths.transition().duration(1000).style("fill", function (d: VoronoiPolygon<Node>): string {
-							return self.fill(d, attrOpts.fill);
-						});
-						// paths.transition().duration(2000).style("fill", self.exitCheck(data, timeStampIndex, "id"));
-					})
-					.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, "id"); });
-
-				paths.transition().on("end", function () {
-					paths.transition().delay(5000).duration(1000).style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill));
-				})
-				break;
-
-			case "label":
-				paths
-					.style("fill", this.enterCheck(data, timeStampIndex, "label")).transition().on("end", function () {
-						paths.transition().duration(1000).style("fill", function (d: VoronoiPolygon<Node>): string {
-							return self.fill(d, attrOpts.fill)
-						});
-						paths.transition().delay(5000).duration(1000).style("fill", self.exitCheck(data, timeStampIndex, "label"));
-					})
-					.style("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "label"); });
-				break;
-
-			case "type":
-				paths
-					.style("fill", this.enterCheck(data, timeStampIndex, "type")).transition().on("end", function () {
-						paths.transition().duration(1000).style("fill", function (d: VoronoiPolygon<Node>): string {
-							return self.fill(d, attrOpts.fill);
-						})
-						paths.transition().delay(5000).duration(1000).style("fill", self.exitCheck(data, timeStampIndex, "type"));
-					})
-					.style("stroke", function (d: VoronoiPolygon<Node>): string { return this.fill(d, "type"); });
-				break;
-		}
+		paths
+			.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
+				paths.transition().style("fill", function (d: VoronoiPolygon<Node>): string {
+					return self.fill(d, attrOpts.fill);
+				}).duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
+					paths.transition().style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration)
+				});
+			})
+			.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); })
 		paths
 			.attr("d", function (d: any): string {
 				return d ? "M" + d.join("L") + "Z" : null;
 			});
-
 		return paths;
 	}
 	/**
@@ -152,13 +124,13 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		}
 		switch (key) {
 			case "id":
-				return this._colorScheme(d.data.origID);
+				return this.colorScheme(d.data.origID);
 
 			case "label":
-				return this._colorScheme(d.data.label);
+				return this.colorScheme(d.data.label);
 
 			case "type":
-				return this._colorScheme(d.data.type);
+				return this.colorScheme(d.data.type);
 
 			default:
 				return key;
@@ -219,5 +191,39 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 	get groupType(): string {
 		return this._groupType;
+	}
+	/**
+	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
+	 * @param scheme
+	 */
+	set colorScheme(scheme: ScaleOrdinal<string | number, string>) {
+		this._colorScheme = scheme;
+	}
+	get colorScheme(): ScaleOrdinal<string | number, string> {
+		return this._colorScheme;
+	}
+	set enterColor(c: string) {
+		this._enterColor = c;
+	}
+	get enterColor(): string {
+		return this._enterColor;
+	}
+	set exitColor(c: string) {
+		this._exitColor = c;
+	}
+	get exitColor(): string {
+		return this._exitColor;
+	}
+	set transitionDuration(duration: number) {
+		this._transitionDuration = duration;
+	}
+	get transitionDuration(): number {
+		return this._transitionDuration;
+	}
+	set transitionDelay(delay: number) {
+		this._transitionDelay = delay;
+	}
+	get transitionDelay(): number {
+		return this._transitionDelay;
 	}
 }
