@@ -52,11 +52,9 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			.attr("weight", function (d: Edge): string {
 				return d.weight + "";
 			})
-		// FIX
-		// .on("click", function (d: Node) {
-		// 	console.log(d.origID);
-		// 	self._lib._centralNodeID = d.origID;
-		// });
+			.attr("timestep", function (e: Edge): string {
+				return e.timestep + "";
+			})
 		return ret;
 	}
 
@@ -71,11 +69,12 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 				.range([0, 45])
 			let steps = data.timesteps.length;
 			glyphs
+				//TODO: make 1000 the width. height of the SVG
 				.attr("x1", function (d: Edge) {
-					return d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
+					return d.x;//d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
 				})
 				.attr("y1", function (d: Edge) {
-					return (d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
+					return d.y;//(d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
 				})
 				.attr("x2", function (d: Edge) {
 					return (d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 50;

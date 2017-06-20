@@ -83,18 +83,39 @@ export class DGLOsWill extends DGLOsMatt {
 		// 	});
 		// });
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
-			console.log(meta);
 			let yScale = scaleLinear()
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 					return d.timestep;
 				}))
 				.range([0, 10])
 			meta.edges.forEach(function (e: Edge) {
-				console.log(e);
+				//TODO: replace 15 with the number of nodes in the current graph
 				e.x = (+e.source.index / 15) * w;
 				e.y = yScale(e.timestep) + (+e.target.index / 15) * h;
 			})
 		})
+		let edgeList = new Array<Edge>();
+		for (let step of this.dataToDraw.timesteps) {
+			//console.log(step.edges);
+			edgeList = edgeList.concat(step.edges);
+			// this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
+			// this._timeStampIndex = (this._timeStampIndex + 1) % this.dataToDraw.timesteps.length;
+		}
+		//TODO: make the node list the entire set of nodes that exist within the graph
+		let nodeList = new Array<Node>();
+		let getNode = true;
+		for (let key of this.dataToDraw.metaNodes.keys()) {
+			for (let key2 of this.dataToDraw.metaNodes.get(key).nodes) {//.keys()){
+				if (getNode) {
+					nodeList = nodeList.concat(key2);
+					getNode = false;
+				}
+
+			}
+			getNode = true;
+			console.log(nodeList);
+		}
+		this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
 		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
 	}
 	/**
