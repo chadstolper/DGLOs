@@ -104,10 +104,9 @@ export class DGLOsWill extends DGLOsMatt {
 
 			}
 			getNode = true;
-			console.log(nodeList);
 		}
 		this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts);
 	}
 	/**
 	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix

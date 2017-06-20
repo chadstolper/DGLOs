@@ -63,29 +63,30 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param edges 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+		console.log(TimeStampIndex);
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
-				.range([0, 45])
+				.range([0, 20])
 			let steps = data.timesteps.length;
 			let self = this;
 			glyphs
-				//TODO: make 1000 the width. height of the SVG
 				.attr("x1", function (d: Edge) {
 					return d.x;//d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
 				})
 				.attr("y1", function (d: Edge) {
-					//let source = d.source.origID;
-					//let target = d.target;
 					let yPos = 0
 					for (let edge of data.timesteps[TimeStampIndex].edges) {
-						if (edge.target.label === d.source.label) {
+						if (edge.target === d.source && edge.source === d.target) {
+							//TODO: fix this so that yPos isn't 0
 							let yPos = weightScale(d.weight);
 						}
 					}
+					console.log(yPos);
 					return yPos + d.y;//d.y;//(d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
 				})
 				.attr("x2", function (d: Edge) {
+					//TODO: make 1000 the width of the SVG
 					return (d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 50;
 				})
 				.attr("y2", function (d: Edge) {
@@ -98,10 +99,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					// }
 					let yPos = 0
 					for (let edge of data.timesteps[TimeStampIndex].edges) {
-						if (edge.source.label === d.target.label) {
+						if (edge.source === d.target && edge.target === d.source) {
 							let yPos = weightScale(edge.weight);
 						}
 					}
+					console.log(yPos);
 					return yPos + d.y;
 
 				})
