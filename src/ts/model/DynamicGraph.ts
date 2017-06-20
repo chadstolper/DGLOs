@@ -243,7 +243,9 @@ export class MetaNode implements SimulationNodeDatum {
 		return this._fy;
 	}
 }
-
+/**
+ * the key for an edge is e.origSource.origID + ":::" + e.origTarget.origID
+ */
 export class DynamicGraphMetaEdgeMap extends Map<string, MetaEdge>{
 	private _metaNodes: Map<string | number, MetaNode>;
 

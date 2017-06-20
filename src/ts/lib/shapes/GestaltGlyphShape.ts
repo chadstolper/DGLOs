@@ -68,25 +68,42 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
 				.range([0, 45])
 			let steps = data.timesteps.length;
+			let self = this;
 			glyphs
 				//TODO: make 1000 the width. height of the SVG
 				.attr("x1", function (d: Edge) {
 					return d.x;//d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
 				})
 				.attr("y1", function (d: Edge) {
-					return d.y;//(d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
+					//let source = d.source.origID;
+					//let target = d.target;
+					let yPos = 0
+					for (let edge of data.timesteps[TimeStampIndex].edges) {
+						if (edge.target.label === d.source.label) {
+							let yPos = weightScale(d.weight);
+						}
+					}
+					return yPos + d.y;//d.y;//(d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
 				})
 				.attr("x2", function (d: Edge) {
 					return (d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 50;
 				})
 				.attr("y2", function (d: Edge) {
-					if (Math.tan(weightScale(d.weight)) < 0) {
-						// console.log("negative");
-						return 75 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
-					} else {
-						// console.log("positive");
-						return 75 * (d.target.index) + (Math.tan(weightScale(d.weight)));
+					// if (Math.tan(weightScale(d.weight)) < 0) {
+					// 	// console.log("negative");
+					// 	return 75 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
+					// } else {
+					// 	// console.log("positive");
+					// 	return 75 * (d.target.index) + (Math.tan(weightScale(d.weight)));
+					// }
+					let yPos = 0
+					for (let edge of data.timesteps[TimeStampIndex].edges) {
+						if (edge.source.label === d.target.label) {
+							let yPos = weightScale(edge.weight);
+						}
 					}
+					return yPos + d.y;
+
 				})
 				.attr("stroke", attrOpts.stroke)
 				.attr("stroke-width", attrOpts.stroke_width);

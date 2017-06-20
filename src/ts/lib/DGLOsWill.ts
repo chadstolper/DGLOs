@@ -75,13 +75,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this._matrixViewEnabled = true;
 		let h = this._height;
 		let w = this._width;
-
-		// this.dataToDraw.timesteps.forEach(function (g: Graph) {
-		// 	g.edges.forEach(function (e: Edge) {
-		// 		e.x = (+e.source.index / g.nodes.length) * w;
-		// 		e.y = (+e.target.index / g.nodes.length) * h;
-		// 	});
-		// });
+		let self = this;
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 			let yScale = scaleLinear()
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
@@ -90,22 +84,19 @@ export class DGLOsWill extends DGLOsMatt {
 				.range([0, 10])
 			meta.edges.forEach(function (e: Edge) {
 				//TODO: replace 15 with the number of nodes in the current graph
-				e.x = (+e.source.index / 15) * w;
-				e.y = yScale(e.timestep) + (+e.target.index / 15) * h;
+				e.x = (+e.source.index / self.dataToDraw.metaNodes.size) * w;
+				e.y = yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * h;
 			})
 		})
 		let edgeList = new Array<Edge>();
 		for (let step of this.dataToDraw.timesteps) {
-			//console.log(step.edges);
 			edgeList = edgeList.concat(step.edges);
-			// this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, this._edgeAttrOpts);
-			// this._timeStampIndex = (this._timeStampIndex + 1) % this.dataToDraw.timesteps.length;
 		}
 		//TODO: make the node list the entire set of nodes that exist within the graph
 		let nodeList = new Array<Node>();
 		let getNode = true;
 		for (let key of this.dataToDraw.metaNodes.keys()) {
-			for (let key2 of this.dataToDraw.metaNodes.get(key).nodes) {//.keys()){
+			for (let key2 of this.dataToDraw.metaNodes.get(key).nodes) {
 				if (getNode) {
 					nodeList = nodeList.concat(key2);
 					getNode = false;
