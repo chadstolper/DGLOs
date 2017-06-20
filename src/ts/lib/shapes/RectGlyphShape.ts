@@ -7,9 +7,6 @@ import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
 import { Shape } from "./Shape"
-
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
-
 /**
  * The __RectGlyphsShape__ class contains all of the methods required to draw and position a rectangle on screen.
  * The only attribute in the class is its __ _shapeType __ which is readonly. Shape types are used to coordinate 
@@ -24,9 +21,13 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  */
 export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	readonly _shapeType = "Rect";
-	get shapeType(): string {
-		return this._shapeType;
-	}
+	private _colorMap: d3Scale.ScaleLinear<string, string>;
+	private _enterColor: string = "#00D50F"; /* Value used for initial enterEdge color transition. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for exitEdge color transition. Default #D90000. */
+	private _maxGradientColor: string = "#000000"; /* Value used for max gradient color showing edge weight. Default #000000. */
+	private _minGradientColor: string = "#FFFFFF"; /* Value used for min gradient color showing edge weight. Default #FFFFFF. */
+	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
+	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
 
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -68,11 +69,10 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
+		let self = this;
+		this.initColorMap(data, timeStampIndex, attr);
 		try {
-			let colorMap = d3Scale.scaleLinear<string>()
-				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
-				.range(["white", attr.fill]);
 			glyphs
 				.attr("x", function (e: Edge) {
 					return e.x;
@@ -80,17 +80,83 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				.attr("y", function (e: Edge) {
 					return e.y;
 				})
-				.attr("fill", function (d: Edge) {
-					return colorMap(d.weight);
-				})
-				.attr("width", attr.width)
-				.attr("height", attr.height)
-				.attr("stroke", attr.stroke)
-				.attr("stroke-width", attr.stroke_width);
 		} catch (err) {
 			console.log("No edges!");
 		}
+		glyphs
+			.style("fill", this.enterCheck(data, timeStampIndex, attr)).transition().call(function () {
+				glyphs.transition().delay(2000).style("fill", function (d: Edge): string {
+					console.log("so uncivilized")
+					return self.colorMap(d.weight);
+				}).duration(self.transitionDuration).transition().delay(self.transitionDelay).call(function () {
+					glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
+				});
+			})
+			.style("stroke", attr.stroke)
+			.attr("stroke-width", attr.stroke_width)
+			.attr("width", attr.width)
+			.attr("height", attr.height)
+			.style("opacity", attr.opacity);
+
 		return glyphs;
+	}
+	/**
+	 * Check to see if the RectGlyph object will be present in the next timestep data. If not present, the RectGlyph will transition
+	 * to the exit color. Timestep[n] will default all data to be exitEdges. See _exitColor.
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param attr 
+	 */
+	private exitCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+		let self = this;
+		return function (d: Edge, i: number): string {
+			if (timeStampIndex === data.timesteps.length - 1) {
+				return self.exitColor;
+			}
+			for (let e of data.timesteps[timeStampIndex + 1].edges) {
+				if (d.id === e.id) {
+					return self.colorMap(d.weight);
+				}
+			}
+			return self.exitColor;
+		}
+	}
+	/**
+		 * Check to see if the RectGlyph object was present in the previous timestep data. If not present, the object
+		 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and
+		 * cycles back to timestep[0] default to enterNodes. See _enterColor.
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param attr 
+	 */
+	private enterCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+		let self = this;
+		return function (d: Edge, i: number): string {
+			if (timeStampIndex === 0) {
+				return self.enterColor;
+			}
+			for (let e of data.timesteps[timeStampIndex - 1].edges) {
+				if (d.id === e.id) {
+					return self.colorMap(d.weight);
+				}
+			}
+			return self.enterColor;
+		}
+	}
+	/**
+	 * Initialize the colorscheme used for shading based on weights of edge data at that timestep.
+	 * @param data 
+	 * @param timeStampIndex 
+	 * @param attr 
+	 */
+	private initColorMap(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+		if (this.colorMap === undefined) {
+			console.log("thats no moon")
+			this.maxGradientColor = attr.fill;
+			this.colorMap = d3Scale.scaleLinear<string>()
+				.domain(this.createColorDomain(data.timesteps[timeStampIndex].edges))
+				.range([this.minGradientColor, this.maxGradientColor]);
+		}
 	}
 	/**
 	 * The transformTo is a requirement of the __EdgeGlyphShape__ interface.
@@ -142,5 +208,54 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		return extent(edges, function (d: Edge): number {
 			return d.weight;
 		});
+	}
+	get shapeType(): string {
+		return this._shapeType;
+	}
+	/**
+	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
+	 * @param scheme
+	 */
+	set colorMap(scheme: d3Scale.ScaleLinear<string, string>) {
+		this._colorMap = scheme;
+	}
+	get colorMap(): d3Scale.ScaleLinear<string, string> {
+		return this._colorMap;
+	}
+	set enterColor(c: string) {
+		this._enterColor = c;
+	}
+	get enterColor(): string {
+		return this._enterColor;
+	}
+	set exitColor(c: string) {
+		this._exitColor = c;
+	}
+	get exitColor(): string {
+		return this._exitColor;
+	}
+	set maxGradientColor(c: string) {
+		this._maxGradientColor = c;
+	}
+	get maxGradientColor(): string {
+		return this._maxGradientColor;
+	}
+	set minGradientColor(c: string) {
+		this._minGradientColor = c;
+	}
+	get minGradientColor(): string {
+		return this._minGradientColor;
+	}
+	set transitionDuration(duration: number) {
+		this._transitionDuration = duration;
+	}
+	get transitionDuration(): number {
+		return this._transitionDuration;
+	}
+	set transitionDelay(delay: number) {
+		this._transitionDelay = delay;
+	}
+	get transitionDelay(): number {
+		return this._transitionDelay;
 	}
 }
