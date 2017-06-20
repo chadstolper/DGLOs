@@ -78,6 +78,7 @@ export class Edge {
 	private _y?: number;
 	private readonly _origSource: Node;
 	private readonly _origTarget: Node;
+	private readonly _timestep: number;
 	public constructor(id: number | string, source: Node, target: Node, weight: number, timestamp: number) {
 		this._id = id;
 		this._source = source;
@@ -85,8 +86,11 @@ export class Edge {
 		this._weight = weight;
 		this._origSource = source;
 		this._origTarget = target;
+		this._timestep = timestamp;
 	}
-
+	get timestep(): number {
+		return this._timestep;
+	}
 	get origSource(): Node {
 		return this._origSource;
 	}
