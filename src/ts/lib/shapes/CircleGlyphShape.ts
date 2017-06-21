@@ -59,16 +59,36 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
-
+		let n = 0;
 		if (this.enterExitEnabled) {
 			glyphs
-				.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
-					glyphs.transition().style("fill", function (d: Node): string {
-						return self.fill(d, attrOpts.fill);
-					}).duration(self.transitionDuration).transition().on("end", function () {
-						glyphs.transition().delay(self.transitionDelay).style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration);
-					});
-				});
+				.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill))
+				.transition()
+				.on("end", function () {
+					glyphs
+						// .transition()
+						.style("fill", self.timeCheck(data, timeStampIndex, attrOpts.fill))
+					// .duration(this.transitionDuration);
+				})
+
+			// glyphs
+			// 	.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill))
+			// 	.transition().on("end", function () {
+			// 		// n++;
+			// 		glyphs.transition().style("fill", function (d: Node): string {
+			// 			// n++;
+			// 			// console.log(n);
+			// 			return self.fill(d, attrOpts.fill);
+			// 		}).duration(self.transitionDuration)
+			// 			.on("end", function () {
+			// 				// n++;
+			// 				// console.log(n);
+			// 				glyphs.transition()
+			// 				.delay(self.transitionDelay)
+			// 				.style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill))
+			// 				.duration(self.transitionDuration);
+			// 			});
+			// 	});
 		}
 		else {
 			glyphs.style("fill", function (d: Node): string {
@@ -83,6 +103,49 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 
 		return glyphs;
 	}
+	private timeCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+		let self = this;
+		return function (d: Node, i: number): string {
+			if (timeStampIndex === 0) {//timestep 0
+				for (let n of data.timesteps[timeStampIndex + 1].nodes) {
+					if (d.origID === n.origID) //check if entering and staying
+					{
+						return self.enterColor; //green
+					}
+				}
+				//else entering and leaving
+				return "yellow";
+			}
+			if (timeStampIndex === data.timesteps.length - 1) { //timestep n
+				for (let n of data.timesteps[timeStampIndex - 1].nodes) {
+					if (d.origID === n.origID)// been and leaving
+					{
+						return self.exitColor;
+					}
+				}
+				//else entering and leaving
+				return "yellow";
+			}
+			for (let i of data.timesteps[timeStampIndex - 1].nodes) {
+				for (let j of data.timesteps[timeStampIndex + 1].nodes) {
+					if (d.origID === i.origID && d.origID === j.origID) //been and leaving
+					{
+						return self.exitColor;
+					}
+					if (d.origID !== j.origID && d.origID === i.origID) { //entering and leaving
+						return "yellow";
+					}
+					if (d.origID === j.origID && !(d.origID === i.origID)) //been and staying
+					{
+						return "blue";
+					}
+				}
+			}
+			return self.enterColor;
+		}
+	}
+
+
 	/**
  * Check to see if the CircleGlyph object will be present in the next timestep data. If not present, the CircleGlyph will transition
  * to the exit color. Timestep[n] will default all data to be exitNodes. See _exitColor.
@@ -120,7 +183,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			}
 			for (let n of data.timesteps[timeStampIndex - 1].nodes) {
 				if (d.origID === n.origID) {
-					return self.fill(d, key);
+					return "blue";
 				}
 			}
 			return self.enterColor;
