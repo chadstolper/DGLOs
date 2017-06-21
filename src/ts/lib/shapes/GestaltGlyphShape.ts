@@ -62,12 +62,11 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * Assign and/or update edge attributes
 	 * @param edges 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		console.log(TimeStampIndex);
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			let weightScale = scaleLinear<number>()
-				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
-				.range([0, 20])
+				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
+				.range([-10, 10])
 			let steps = data.timesteps.length;
 			let self = this;
 			glyphs
@@ -76,18 +75,21 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 				})
 				.attr("y1", function (d: Edge) {
 					let yPos = 0
-					for (let edge of data.timesteps[TimeStampIndex].edges) {
-						if (edge.target === d.source && edge.source === d.target) {
+					for (let edge of data.timesteps[timeStampIndex].edges) {
+						if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
 							//TODO: fix this so that yPos isn't 0
+							console.log(weightScale(d.weight));
+							//console.log(weightScale(edge.weight));
 							let yPos = weightScale(d.weight);
+							d.y = yPos + d.y;
+							break;
 						}
 					}
-					console.log(yPos);
 					return yPos + d.y;//d.y;//(d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
 				})
 				.attr("x2", function (d: Edge) {
 					//TODO: make 1000 the width of the SVG
-					return (d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 50;
+					return (d.source.index / data.timesteps[timeStampIndex].nodes.length * 1000) + 50;
 				})
 				.attr("y2", function (d: Edge) {
 					// if (Math.tan(weightScale(d.weight)) < 0) {
@@ -98,12 +100,14 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					// 	return 75 * (d.target.index) + (Math.tan(weightScale(d.weight)));
 					// }
 					let yPos = 0
-					for (let edge of data.timesteps[TimeStampIndex].edges) {
-						if (edge.source === d.target && edge.target === d.source) {
+					for (let edge of data.timesteps[timeStampIndex].edges) {
+						if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
 							let yPos = weightScale(edge.weight);
+							d.y = yPos + d.y;
+							break;
 						}
 					}
-					console.log(yPos);
+					//console.log(yPos);
 					return yPos + d.y;
 
 				})
