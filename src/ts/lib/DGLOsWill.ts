@@ -120,16 +120,28 @@ export class DGLOsWill extends DGLOsMatt {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
 		let h = this._height;
 		let w = this._width;
-		let scale = scaleLinear<number, number>()
-			.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
-			.range([h / 8, (99 * h) / 100]);
-		//TODO: use a ordinal scale to position the nodes
-		this.dataToDraw.timesteps.forEach(function (g: Graph) {
-			g.nodes.forEach(function (d: Node) {
-				d.x = w / 8 - 30;
-				d.y = scale(d.index);
+		let vertical = false;
+		if (vertical) {
+			let scale = scaleLinear<number, number>()
+				.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
+				.range([h / 8, (99 * h) / 100]);
+			this.dataToDraw.timesteps.forEach(function (g: Graph) {
+				g.nodes.forEach(function (d: Node) {
+					d.x = w / 8 - (3 * w / 100);
+					d.y = scale(d.index);
+				});
 			});
-		});
+		} else {
+			let scale = scaleLinear<number, number>()
+				.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
+				.range([w / 8, (99 * w) / 100]);
+			this.dataToDraw.timesteps.forEach(function (g: Graph) {
+				g.nodes.forEach(function (d: Node) {
+					d.x = scale(d.index);
+					d.y = w / 8 - (3 * h / 100);
+				});
+			});
+		}
 		if (!this.multipleTimestepsEnabled) {
 			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts);
 		}
