@@ -12,7 +12,7 @@ import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import * as d3 from "d3-selection";
-import { scaleLinear, scaleOrdinal } from "d3-scale";
+import { scaleLinear, scaleOrdinal, scalePoint } from "d3-scale";
 import { extent } from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
@@ -76,17 +76,18 @@ export class DGLOsWill extends DGLOsMatt {
 		let h = this._height;
 		let w = this._width;
 		let self = this;
+		this.dataToDraw.timesteps
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 			let yScale = scaleLinear()
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 					return d.timestep;
 				}))
 				//TODO: Make 50 a variable, something like cellHeight
-				.range([0, 50])
+				.range([0, h / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length])
 			meta.edges.forEach(function (e: Edge) {
 				//e.x = (+e.source.index / self.dataToDraw.metaNodes.size) * w;
 				e.x = (w / 8) + (+e.source.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
-				e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
+				e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8) + 10;
 			})
 		})
 		let edgeList = new Array<Edge>();
@@ -120,21 +121,26 @@ export class DGLOsWill extends DGLOsMatt {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
 		let h = this._height;
 		let w = this._width;
-		let vertical = false;
+		let vertical = true;
 		if (vertical) {
-			let scale = scaleLinear<number, number>()
-				.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
-				.range([h / 8, (99 * h) / 100]);
+			let scale = scalePoint<number>()
+				.domain(this.dataToDraw.timesteps[this.timeStampIndex].nodes.map(function (d) { return d.index; }))
+				.range([h / 8, h])
+				.padding(0.5);
 			this.dataToDraw.timesteps.forEach(function (g: Graph) {
 				g.nodes.forEach(function (d: Node) {
 					d.x = w / 8 - (3 * w / 100);
 					d.y = scale(d.index);
 				});
 			});
+			//.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
+			//.range([h / 8, (99 * h) / 100]);
+			//.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
 		} else {
-			let scale = scaleLinear<number, number>()
-				.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
-				.range([w / 8, (99 * w) / 100]);
+			let scale = scalePoint<number>()
+				.domain(this.dataToDraw.timesteps[this.timeStampIndex].nodes.map(function (d) { return d.index; }))
+				.range([w / 8, w])
+				.padding(0.5);
 			this.dataToDraw.timesteps.forEach(function (g: Graph) {
 				g.nodes.forEach(function (d: Node) {
 					d.x = scale(d.index);
