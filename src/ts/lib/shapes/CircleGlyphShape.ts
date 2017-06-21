@@ -11,8 +11,10 @@ import "d3-transition";
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
 	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
-	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
+	private _enterColor: string = "#00D50F"; /* Value used for entering and non-exiting nodes. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
+	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
+	private _stableColor: string = "404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
 	private _enterExitEnabled: boolean = false;
@@ -59,36 +61,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
-		let n = 0;
 		if (this.enterExitEnabled) {
-			glyphs
-				.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill))
-				.transition()
-				.on("end", function () {
-					glyphs
-						// .transition()
-						.style("fill", self.timeCheck(data, timeStampIndex, attrOpts.fill))
-					// .duration(this.transitionDuration);
-				})
-
-			// glyphs
-			// 	.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill))
-			// 	.transition().on("end", function () {
-			// 		// n++;
-			// 		glyphs.transition().style("fill", function (d: Node): string {
-			// 			// n++;
-			// 			// console.log(n);
-			// 			return self.fill(d, attrOpts.fill);
-			// 		}).duration(self.transitionDuration)
-			// 			.on("end", function () {
-			// 				// n++;
-			// 				// console.log(n);
-			// 				glyphs.transition()
-			// 				.delay(self.transitionDelay)
-			// 				.style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill))
-			// 				.duration(self.transitionDuration);
-			// 			});
-			// 	});
+			glyphs.style("fill", this.enterExitCheck(data, timeStampIndex, attrOpts.fill));
 		}
 		else {
 			glyphs.style("fill", function (d: Node): string {
@@ -103,90 +77,30 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 
 		return glyphs;
 	}
-	private timeCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
-		let self = this;
-		return function (d: Node, i: number): string {
-			if (timeStampIndex === 0) {//timestep 0
-				for (let n of data.timesteps[timeStampIndex + 1].nodes) {
-					if (d.origID === n.origID) //check if entering and staying
-					{
-						return self.enterColor; //green
-					}
-				}
-				//else entering and leaving
-				return "yellow";
-			}
-			if (timeStampIndex === data.timesteps.length - 1) { //timestep n
-				for (let n of data.timesteps[timeStampIndex - 1].nodes) {
-					if (d.origID === n.origID)// been and leaving
-					{
-						return self.exitColor;
-					}
-				}
-				//else entering and leaving
-				return "yellow";
-			}
-			for (let i of data.timesteps[timeStampIndex - 1].nodes) {
-				for (let j of data.timesteps[timeStampIndex + 1].nodes) {
-					if (d.origID === i.origID && d.origID === j.origID) //been and leaving
-					{
-						return self.exitColor;
-					}
-					if (d.origID !== j.origID && d.origID === i.origID) { //entering and leaving
-						return "yellow";
-					}
-					if (d.origID === j.origID && !(d.origID === i.origID)) //been and staying
-					{
-						return "blue";
-					}
-				}
-			}
-			return self.enterColor;
-		}
-	}
-
-
 	/**
- * Check to see if the CircleGlyph object will be present in the next timestep data. If not present, the CircleGlyph will transition
- * to the exit color. Timestep[n] will default all data to be exitNodes. See _exitColor.
- * @param data 
- * @param timeStampIndex 
- * @param key 
- */
-	private exitCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
-		let self = this;
-		return function (d: Node, i: number): string {
-			if (timeStampIndex === data.timesteps.length - 1) {
-				return self.exitColor;
-			}
-			for (let n of data.timesteps[timeStampIndex + 1].nodes) {
-				if (d.origID === n.origID) {
-					return self.fill(d, key);
-				}
-			}
-			return self.exitColor;
-		}
-	}
-	/**
-	 * Check to see if the VoronoiPolygon path object was present in the previous timestep data. If not present, the path 
-	 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and 
-	 * cycles back to timestep[0] default to enterNodes. See _enterColor.
+	 * Returns the correct color relating to the Enter/Exit of data in each timestep.
+	 * Green: Node entering and present in next timestep; Red: Node was present already and exiting;
+	 * Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
 	 * @param data 
 	 * @param timeStampIndex 
 	 * @param key 
 	 */
-	private enterCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+	private enterExitCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
 		let self = this;
-		return function (d: Node, i: number): string {
-			if (timeStampIndex === 0) {
+		return function (d: Node): string {
+			console.log(d.isEnter, d.isExit, timeStampIndex)
+			if (d.isEnter) {
+				if (d.isExit) {
+					return self.enterExitColor;
+				}
 				return self.enterColor;
 			}
-			for (let n of data.timesteps[timeStampIndex - 1].nodes) {
-				if (d.origID === n.origID) {
-					return "blue";
+			else { //isEnter=false
+				if (d.isExit) {
+					return self.exitColor;
 				}
+				return self.stableColor;
 			}
-			return self.enterColor;
 		}
 	}
 	/**
@@ -274,6 +188,18 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	get exitColor(): string {
 		return this._exitColor;
+	}
+	set enterExitColor(c: string) {
+		this._enterExitColor = c;
+	}
+	get enterExitColor(): string {
+		return this._enterExitColor;
+	}
+	set stableColor(c: string) {
+		this._stableColor = c;
+	}
+	get stableColor(): string {
+		return this._stableColor;
 	}
 	set transitionDuration(duration: number) {
 		this._transitionDuration = duration;

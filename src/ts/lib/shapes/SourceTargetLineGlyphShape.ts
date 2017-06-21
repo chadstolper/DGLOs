@@ -83,14 +83,23 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			console.log("No STLines links!");
 		}
 
-		if (this.enterExitEnabled) {
+		if (!this.enterExitEnabled) {
 			edges
-				.style("stroke", this.enterCheck(data, timeStampIndex, attrOpts)).transition().on("end", function () {
-					edges.transition().style("stroke", attrOpts.stroke)
-						.duration(self.transitionDuration).transition().on("end", function () {
-							edges.transition().delay(self.transitionDelay).style("stroke", self.exitCheck(data, timeStampIndex, attrOpts)).duration(self.transitionDuration);
-						});
-				});
+				.style("stroke", this.enterCheck(data, timeStampIndex, attrOpts))
+				.transition()
+				.on("end", function () {
+					edges
+						// .transition()
+						.style("stroke", self.timeCheck(data, timeStampIndex, attrOpts))
+					// .duration(self.transitionDuration);
+				})
+			// edges
+			// 	.style("stroke", this.enterCheck(data, timeStampIndex, attrOpts)).transition().on("end", function () {
+			// 		edges.transition().style("stroke", attrOpts.stroke)
+			// 			.duration(self.transitionDuration).transition().on("end", function () {
+			// 				edges.transition().delay(self.transitionDelay).style("stroke", self.exitCheck(data, timeStampIndex, attrOpts)).duration(self.transitionDuration);
+			// 			});
+			// 	});
 		}
 		else {
 			edges.style("stroke", attrOpts.stroke);
@@ -105,6 +114,49 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			.attr("opacity", attrOpts.opacity);
 		return edges;
 	}
+
+	private timeCheck(data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts) {
+		let self = this;
+		return function (d: Edge, i: number): string {
+			if (timeStampIndex === 0) {//timestep 0
+				for (let n of data.timesteps[timeStampIndex + 1].edges) {
+					if (d.id === n.id) //check if entering and staying
+					{
+						return self.enterColor; //green
+					}
+				}
+				//else entering and leaving
+				return "yellow";
+			}
+			if (timeStampIndex === data.timesteps.length - 1) { //timestep n
+				for (let n of data.timesteps[timeStampIndex - 1].edges) {
+					if (d.id === n.id)// been and leaving
+					{
+						return self.exitColor;
+					}
+				}
+				//else entering and leaving
+				return "yellow";
+			}
+			for (let i of data.timesteps[timeStampIndex - 1].edges) {
+				for (let j of data.timesteps[timeStampIndex + 1].edges) {
+					if (d.id === i.id && d.id === j.id) //been and leaving
+					{
+						return self.exitColor;
+					}
+					if (d.id !== j.id && d.id === i.id) { //entering and leaving
+						return "yellow";
+					}
+					if (d.id === j.id && !(d.id === i.id)) //been and staying
+					{
+						return "blue";
+					}
+				}
+			}
+			return self.enterColor;
+		}
+	}
+
 	/**
 	 * Check to see if the STLine element will be present in the next timestep data. If not present, the STLine
 	 * will transition to the exit color. Timestep[n], returns to timestep[n], and
@@ -143,7 +195,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			}
 			for (let e of data.timesteps[timeStampIndex - 1].edges) {
 				if (d.id === e.id) {
-					return attrOpts.stroke;
+					return "blue";
 				}
 			}
 			return self.enterColor;
