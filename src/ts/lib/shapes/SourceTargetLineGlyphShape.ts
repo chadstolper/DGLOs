@@ -82,12 +82,13 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		} catch (err) {
 			console.log("No STLines links!");
 		}
+
 		if (this.enterExitEnabled) {
 			edges
 				.style("stroke", this.enterCheck(data, timeStampIndex, attrOpts)).transition().on("end", function () {
 					edges.transition().style("stroke", attrOpts.stroke)
-						.duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
-							edges.transition().style("stroke", self.exitCheck(data, timeStampIndex, attrOpts)).duration(self.transitionDuration);
+						.duration(self.transitionDuration).transition().on("end", function () {
+							edges.transition().delay(self.transitionDelay).style("stroke", self.exitCheck(data, timeStampIndex, attrOpts)).duration(self.transitionDuration);
 						});
 				});
 		}

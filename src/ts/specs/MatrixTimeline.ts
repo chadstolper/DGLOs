@@ -3,7 +3,6 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG";
 
 export class MatrixTimeline extends Technique {
 	public draw(): void {
-		this.lib.enableEnterExitTransitions();
 		this.lib.drawNodeGlyphs();
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawTimesteps();

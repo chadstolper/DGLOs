@@ -26,7 +26,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	private _exitColor: string = "#D90000"; /* Value used for exitEdge color transition. Default #D90000. */
 	private _maxGradientColor: string = "#000000"; /* Value used for max gradient color showing edge weight. Default #000000. */
 	private _minGradientColor: string = "#FFFFFF"; /* Value used for min gradient color showing edge weight. Default #FFFFFF. */
-	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
+	private _transitionDuration: number = 2000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
 	private _enterExitEnabled: boolean = false;
 
@@ -87,12 +87,10 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		if (this.enterExitEnabled) {
 			glyphs
 				.style("fill", this.enterCheck(data, timeStampIndex, attr)).transition().call(function () {
-					glyphs.transition()/*.delay(2000)*/.style("fill", function (d: Edge): string {
-						console.log("bond")
+					glyphs.transition().style("fill", function (d: Edge): string {
 						return self.colorMap(d.weight);
-					}).duration(self.transitionDuration).transition().delay(self.transitionDelay).call(function () {
-						console.log("james bond")
-						glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
+					}).delay(self.transitionDuration).duration(self.transitionDuration).transition().call(function () {
+						glyphs.transition().delay(self.transitionDelay).style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
 					});
 				});
 		}

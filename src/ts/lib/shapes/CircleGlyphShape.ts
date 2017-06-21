@@ -59,13 +59,14 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
+
 		if (this.enterExitEnabled) {
 			glyphs
 				.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
 					glyphs.transition().style("fill", function (d: Node): string {
 						return self.fill(d, attrOpts.fill);
-					}).duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
-						glyphs.transition().style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration);
+					}).duration(self.transitionDuration).transition().on("end", function () {
+						glyphs.transition().delay(self.transitionDelay).style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration);
 					});
 				});
 		}
