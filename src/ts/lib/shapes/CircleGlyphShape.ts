@@ -14,7 +14,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	private _enterColor: string = "#00D50F"; /* Value used for entering and non-exiting nodes. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
 	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
-	private _stableColor: string = "404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
 	private _enterExitEnabled: boolean = false;
@@ -62,7 +62,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			console.log("No circle nodes!");
 		}
 		if (this.enterExitEnabled) {
-			glyphs.style("fill", this.enterExitCheck(data, timeStampIndex, attrOpts.fill));
+			glyphs.style("fill", this.enterExitCheck());
 		}
 		else {
 			glyphs.style("fill", function (d: Node): string {
@@ -81,14 +81,10 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * Returns the correct color relating to the Enter/Exit of data in each timestep.
 	 * Green: Node entering and present in next timestep; Red: Node was present already and exiting;
 	 * Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
-	 * @param data 
-	 * @param timeStampIndex 
-	 * @param key 
 	 */
-	private enterExitCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+	private enterExitCheck() {
 		let self = this;
 		return function (d: Node): string {
-			console.log(d.isEnter, d.isExit, timeStampIndex)
 			if (d.isEnter) {
 				if (d.isExit) {
 					return self.enterExitColor;
@@ -201,6 +197,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	get stableColor(): string {
 		return this._stableColor;
 	}
+	//TODO: transistions needed?
 	set transitionDuration(duration: number) {
 		this._transitionDuration = duration;
 	}
