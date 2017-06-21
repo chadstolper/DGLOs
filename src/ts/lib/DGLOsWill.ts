@@ -83,7 +83,6 @@ export class DGLOsWill extends DGLOsMatt {
 				}))
 				.range([0, 10])
 			meta.edges.forEach(function (e: Edge) {
-				//TODO: replace 15 with the number of nodes in the current graph
 				e.x = (+e.source.index / self.dataToDraw.metaNodes.size) * w;
 				e.y = yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * h;
 			})
@@ -92,7 +91,6 @@ export class DGLOsWill extends DGLOsMatt {
 		for (let step of this.dataToDraw.timesteps) {
 			edgeList = edgeList.concat(step.edges);
 		}
-		//TODO: make the node list the entire set of nodes that exist within the graph
 		let nodeList = new Array<Node>();
 		let getNode = true;
 		for (let key of this.dataToDraw.metaNodes.keys()) {

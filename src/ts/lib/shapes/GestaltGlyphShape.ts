@@ -66,39 +66,32 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
-				.range([-10, 10])
+				.range([-10, 10]);
+			let thicknessScale = scaleLinear<number>()
+				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
+				.range([.25, 1.5]);
 			let steps = data.timesteps.length;
 			let self = this;
 			glyphs
 				.attr("x1", function (d: Edge) {
-					return d.x;//d.source.index / data.timesteps[TimeStampIndex].nodes.length * 1000;
+					return d.x;
 				})
 				.attr("y1", function (d: Edge) {
 					let yPos = 0
 					for (let edge of data.timesteps[timeStampIndex].edges) {
 						if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
-							//TODO: fix this so that yPos isn't 0
-							console.log(weightScale(d.weight));
-							//console.log(weightScale(edge.weight));
 							let yPos = weightScale(d.weight);
 							d.y = yPos + d.y;
 							break;
 						}
 					}
-					return yPos + d.y;//d.y;//(d.target.index / data.timesteps[TimeStampIndex].nodes.length * 1000) + 25;
+					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
 					//TODO: make 1000 the width of the SVG
 					return (d.source.index / data.timesteps[timeStampIndex].nodes.length * 1000) + 50;
 				})
 				.attr("y2", function (d: Edge) {
-					// if (Math.tan(weightScale(d.weight)) < 0) {
-					// 	// console.log("negative");
-					// 	return 75 * (d.target.index) + (-1 * Math.tan(weightScale(d.weight)));
-					// } else {
-					// 	// console.log("positive");
-					// 	return 75 * (d.target.index) + (Math.tan(weightScale(d.weight)));
-					// }
 					let yPos = 0
 					for (let edge of data.timesteps[timeStampIndex].edges) {
 						if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
@@ -107,12 +100,13 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 							break;
 						}
 					}
-					//console.log(yPos);
 					return yPos + d.y;
 
 				})
 				.attr("stroke", attrOpts.stroke)
-				.attr("stroke-width", attrOpts.stroke_width);
+				.attr("stroke-width", function (d: Edge) {
+					return thicknessScale(d.weight);
+				});
 
 
 
