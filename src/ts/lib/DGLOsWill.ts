@@ -138,7 +138,7 @@ export class DGLOsWill extends DGLOsMatt {
 			this.dataToDraw.timesteps.forEach(function (g: Graph) {
 				g.nodes.forEach(function (d: Node) {
 					d.x = scale(d.index);
-					d.y = w / 8 - (3 * h / 100);
+					d.y = h / 8 - (3 * h / 100);
 				});
 			});
 		}
