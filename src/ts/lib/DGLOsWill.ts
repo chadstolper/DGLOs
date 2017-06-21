@@ -12,7 +12,7 @@ import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import * as d3 from "d3-selection";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear, scaleOrdinal } from "d3-scale";
 import { extent } from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
@@ -81,10 +81,12 @@ export class DGLOsWill extends DGLOsMatt {
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 					return d.timestep;
 				}))
-				.range([0, 10])
+				//TODO: Make 50 a variable, something like cellHeight
+				.range([0, 50])
 			meta.edges.forEach(function (e: Edge) {
-				e.x = (+e.source.index / self.dataToDraw.metaNodes.size) * w;
-				e.y = yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * h;
+				//e.x = (+e.source.index / self.dataToDraw.metaNodes.size) * w;
+				e.x = (w / 8) + (+e.source.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
+				e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
 			})
 		})
 		let edgeList = new Array<Edge>();
@@ -105,7 +107,11 @@ export class DGLOsWill extends DGLOsMatt {
 		}
 		this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
 		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts);
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts);
+	}
+	public getNodeMatrixDomain(nodeList: Array<Node>): Array<number> {
+		return extent(nodeList, function (d: Node): number {
+			return d.index;
+		});
 	}
 	/**
 	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix
@@ -114,10 +120,14 @@ export class DGLOsWill extends DGLOsMatt {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
 		let h = this._height;
 		let w = this._width;
+		let scale = scaleLinear<number, number>()
+			.domain(this.getNodeMatrixDomain(this.dataToDraw.timesteps[this.timeStampIndex].nodes))
+			.range([h / 8, (99 * h) / 100]);
+		//TODO: use a ordinal scale to position the nodes
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.nodes.forEach(function (d: Node) {
-				d.x = w / 10;
-				d.y = d.index / curGraph.nodes.length * h;
+				d.x = w / 8 - 30;
+				d.y = scale(d.index);
 			});
 		});
 		if (!this.multipleTimestepsEnabled) {

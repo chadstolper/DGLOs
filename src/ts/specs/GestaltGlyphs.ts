@@ -11,6 +11,6 @@ export class GestaltGlyphs extends Technique {
 		this.lib.positionEdgeGlyphsGestalt();
 		this.lib.positionNodeGlyphsMatrix();
 		this.lib.setNodeGlyphAttrs(this.opts);
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 100, 20, 20, null));
+		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 100, 50, 50, null));
 	}
 }
