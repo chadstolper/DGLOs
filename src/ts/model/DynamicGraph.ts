@@ -353,9 +353,6 @@ export class DynamicGraph {
 	private _metaEdges: DynamicGraphMetaEdgeMap;
 
 	public constructor(timesteps: Array<Graph>, onClickRedraw?: boolean) {
-		if (onClickRedraw) {
-			//TODO: construct metaNodes using id instead of origID
-		}
 		this._metaEdges = new DynamicGraphMetaEdgeMap(this._metaNodes);
 		this._timesteps = timesteps;
 		for (let g of timesteps) {
@@ -370,59 +367,67 @@ export class DynamicGraph {
 			}
 		}
 		//Assign enter and exit attributes to Nodes
-		for (let timeStep = 0; timeStep < this.timesteps.length; timeStep++) {
-			if (timeStep === 0) {
-				for (let n1 of this.timesteps[0].nodes) {
-					for (let n2 of this.timesteps[timeStep + 1].nodes) {
-						if (n1.origID === n2.origID) //present in next step
-						{
-							n1.isExit = false;
-							n2.isEnter = false;
-							break;
+		if (this.timesteps.length > 1) {
+			for (let timeStep = 0; timeStep < this.timesteps.length; timeStep++) {
+				if (timeStep === 0) {
+					for (let n1 of this.timesteps[0].nodes) {
+						for (let n2 of this.timesteps[timeStep + 1].nodes) {
+							if (n1.origID === n2.origID) //present in next step
+							{
+								n1.isExit = false;
+								n2.isEnter = false;
+								break;
+							}
+							else {
+								n1.isExit = true;
+								n2.isEnter = true;
+							}
 						}
-						else {
-							n1.isExit = true;
-							n2.isEnter = true;
+						n1.isEnter = true;
+					}
+				}
+				if (timeStep === this.timesteps.length - 1) {
+					for (let n1 of this.timesteps[timeStep].nodes) {
+						for (let n3 of this.timesteps[timeStep - 1].nodes) {
+							if (n1.origID === n3.origID) { //present in previous step
+								n1.isEnter = false;
+								break;
+							}
+							else {
+								n1.isEnter = true;
+							}
+						}
+						n1.isExit = true;
+					}
+				}
+				if (timeStep !== 0 && timeStep !== this.timesteps.length - 1) {
+					for (let n1 of this.timesteps[timeStep].nodes) {
+						for (let n2 of this.timesteps[timeStep + 1].nodes) {
+							if (n1.origID === n2.origID) { //present in next step
+								n1.isExit = false;
+								break;
+							}
+							else {
+								n1.isExit = true;
+							}
+						}
+						for (let n3 of this.timesteps[timeStep - 1].nodes) {
+							if (n1.origID === n3.origID) { //present in previous step
+								n1.isEnter = false;
+								break;
+							}
+							else {
+								n1.isEnter = true;
+							}
 						}
 					}
-					n1.isEnter = true;
 				}
 			}
-			if (timeStep === this.timesteps.length - 1) {
-				for (let n1 of this.timesteps[timeStep].nodes) {
-					for (let n3 of this.timesteps[timeStep - 1].nodes) {
-						if (n1.origID === n3.origID) { //present in previous step
-							n1.isEnter = false;
-							break;
-						}
-						else {
-							n1.isEnter = true;
-						}
-					}
-					n1.isExit = true;
-				}
-			}
-			if (timeStep !== 0 && timeStep !== this.timesteps.length - 1) {
-				for (let n1 of this.timesteps[timeStep].nodes) {
-					for (let n2 of this.timesteps[timeStep + 1].nodes) {
-						if (n1.origID === n2.origID) { //present in next step
-							n1.isExit = false;
-							break;
-						}
-						else {
-							n1.isExit = true;
-						}
-					}
-					for (let n3 of this.timesteps[timeStep - 1].nodes) {
-						if (n1.origID === n3.origID) { //present in previous step
-							n1.isEnter = false;
-							break;
-						}
-						else {
-							n1.isEnter = true;
-						}
-					}
-				}
+		}
+		else {
+			for (let n of this.timesteps[0].nodes) {
+				n.isEnter = true;
+				n.isExit = true;
 			}
 		}
 	}
