@@ -8,7 +8,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "d3": "^4.9.1",
-    "flubber": "^0.2.5"
+    "flubber": "^0.2.5",
+    "ts-jsdoc": "^2.0.3"
   },
   "devDependencies": {
     "@types/d3": "^4.8.0",
