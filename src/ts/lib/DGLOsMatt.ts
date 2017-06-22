@@ -71,13 +71,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._groupGlyphG = loc.append("g").classed("groupG", true).lower();
 
 		//create child "g" in parent for GroupGlyphs
-		let voronoiG: Selection<any, {}, any, {}> = this.voronoiGroupGlyph.init(this._groupGlyphG);
+		let voronoiG: Selection<any, {}, any, {}> = this.voronoiShape.init(this._groupGlyphG);
 
 		voronoiG.style("display", "none");
 
 		//add voronoi regions to map
 		let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
-		glyphMap.set(this.voronoiGroupGlyph, voronoiG);
+		glyphMap.set(this.voronoiShape, voronoiG);
 
 		this._groupGlyphMap.set(SVGPosition, glyphMap);
 
@@ -86,6 +86,16 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		// 	self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
 		// });
 
+	}
+	/**
+	 * Transforms/makes visible the target GroupGlyph. //TODO: update descriptiong for flubber
+	 * @param shape 
+	 */
+	public transformGroupGlyphsTo(shape: GroupGlyph) {
+		let self = this;
+		this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+			self._currentGroupGlyph.transformTo(glyphMap.get(self._currentGroupGlyph), shape, glyphMap.get(shape));
+		});
 	}
 
 	/**

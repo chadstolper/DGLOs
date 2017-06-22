@@ -63,7 +63,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _currentEdgeShape: EdgeGlyphShape = this.rectShape;
 	protected _currentNodeShape: NodeGlyphShape = this.circleShape;
-	protected _currentGroupGlyph: GroupGlyph = this.voronoiGroupGlyph;
+	protected _currentGroupGlyph: GroupGlyph = this.voronoiShape;
 	/**
 	 * Voronoi Tesselation mechanic holders.
 	 * In case of rendering error, modify extent to larger values for calculations and Voronoi constraints.

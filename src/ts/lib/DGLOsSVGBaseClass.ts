@@ -1,6 +1,7 @@
 import { DGLOs, AttrOpts } from "./DGLOs";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
@@ -96,7 +97,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	 * The __only instance__ of VoronoiGroupGlyph in the entire code. Used to coordinate transitions
 	 * as well as to draw regions when needed.
 	 */
-	readonly voronoiGroupGlyph: VoronoiGroupGlyph = new VoronoiGroupGlyph();
+	readonly voronoiShape: VoronoiGroupGlyph = new VoronoiGroupGlyph();
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
@@ -107,6 +108,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void { };
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void { };
+	transformGroupGlyphsTo(shape: GroupGlyph): void { };
 
 	removeNodeGlyphs(): void { };
 	removeExitNodeGlyphs(): void { };
