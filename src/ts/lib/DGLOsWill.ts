@@ -82,12 +82,22 @@ export class DGLOsWill extends DGLOsMatt {
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 					return d.timestep;
 				}))
-				//TODO: Make 50 a variable, something like cellHeight
-				.range([0, h / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length])
+				.range([0, h / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length]);
+
+
+			let gridScale = scalePoint<number>()
+				.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
+					return d.target.index;
+				}))
+				.range([h / 8, h]);
+
+
 			meta.edges.forEach(function (e: Edge) {
-				//e.x = (+e.source.index / self.dataToDraw.metaNodes.size) * w;
 				e.x = (w / 8) + (+e.source.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
-				e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
+				//Take a scale of this
+				//e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
+				//e.y = (h / 8) + yScale(e.timestep) + gridScale(+e.target.index); /// self.dataToDraw.metaNodes.size) * (7 * h / 8);
+				e.y = yScale(e.timestep) + gridScale(+e.target.index);
 			})
 		})
 		let edgeList = new Array<Edge>();
