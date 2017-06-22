@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Dynamic Graph Visualization Libary",
   "main": "index.html",
-  "repository": "https://github.com/chadstolper/dGLOs.git",
+  "repository": "https://github.com/chadstolper/DGLOs.git",
   "author": "Chad Stolper, Matt Sanford, Will Price",
   "license": "Apache-2.0",
   "dependencies": {
