@@ -3,7 +3,6 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG";
 
 export class ForceDirectedTimeline extends Technique {
 	public draw() {
-		this.lib.enableEnterExitTransitions();
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
 		this.lib.drawTimesteps();

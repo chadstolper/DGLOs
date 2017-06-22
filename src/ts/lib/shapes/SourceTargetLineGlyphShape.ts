@@ -102,10 +102,10 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		return edges;
 	}
 	/**
-		 * Returns the correct color relating to the Enter/Exit of data in each timestep.
-		 * Green: Edge entering and present in next timestep; Red: Edge was present already and exiting;
-		 * Yellow: Edge entering and exiting in same timestep; Blue: Edge present in previous and next timestep.
-		 */
+	* Returns the correct color relating to the Enter/Exit of data in each timestep.
+	* Green: Edge entering and present in next timestep; Red: Edge was present already and exiting;
+	* Yellow: Edge entering and exiting in same timestep; Blue: Edge present in previous and next timestep.
+	*/
 	private enterExitCheck() {
 		let self = this;
 		return function (d: Edge): string {
