@@ -3,7 +3,7 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { AttrOpts } from "../DGLOs";
 import { extent } from "d3-array";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGEdgeAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
 import { Shape } from "./Shape"
@@ -70,7 +70,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGEdgeAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
 		let self = this;
 		this.initColorMap(data, timeStampIndex, attr);
 		try {
@@ -115,7 +115,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	private exitCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+	private exitCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGEdgeAttrOpts) {
 		let self = this;
 		return function (d: Edge, i: number): string {
 			if (timeStampIndex === data.timesteps.length - 1) {
@@ -137,7 +137,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	private enterCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+	private enterCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGEdgeAttrOpts) {
 		let self = this;
 		return function (d: Edge, i: number): string {
 			if (timeStampIndex === 0) {
@@ -157,7 +157,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	private initColorMap(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+	private initColorMap(data: DynamicGraph, timeStampIndex: number, attr: SVGEdgeAttrOpts) {
 		if (this.colorMap === undefined) {
 			this.maxGradientColor = attr.fill;
 			this.colorMap = d3Scale.scaleLinear<string>()
@@ -198,7 +198,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExit?: boolean): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGEdgeAttrOpts, enterExit?: boolean): void {
 		this.enterExitEnabled = enterExit;
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);

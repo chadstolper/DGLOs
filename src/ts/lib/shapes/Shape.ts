@@ -1,4 +1,3 @@
-import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
 import { DGLOsSVGBaseClass } from "../DGLOsSVGBaseClass";
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";

@@ -15,7 +15,7 @@ import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape"
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGEdgeAttrOpts, SVGNodeAttrOpts } from "./DGLOsSVG";
 import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
@@ -115,7 +115,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * (Re)sets the visual attributes of the NodeGlyphShape
 	 * @param attr 
 	 */
-	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
+	public setNodeGlyphAttrs(attr: SVGNodeAttrOpts) {
 		this._attrOpts = attr;
 	}
 
@@ -124,10 +124,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * Also sets NodeGlyph and EdgeGlyph attributes to correspond with GroupGlyph visualization.
 	 * @param attr 
 	 */
-	public setRegionGlyphAttrs(attr: SVGAttrOpts) {
+	public setRegionGlyphAttrs(attr: SVGNodeAttrOpts) {
 		this._groupAttrOpts = attr;
-		this._attrOpts = new SVGAttrOpts("black", null, 0.5);
-		this._edgeAttrOpts = new SVGAttrOpts(null, "grey", null, 0.25);
+		this._attrOpts = new SVGNodeAttrOpts("black", null, null, .5);
+		this._edgeAttrOpts = new SVGEdgeAttrOpts(null, "grey", 0.25);
 	}
 
 	/**

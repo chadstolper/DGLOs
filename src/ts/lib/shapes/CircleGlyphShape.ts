@@ -2,7 +2,7 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
+import { SVGNodeAttrOpts, DGLOsSVG } from "../DGLOsSVG";
 import { Shape } from "./Shape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
@@ -48,7 +48,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * Assign and/or update node circle attributes and (cx,cy) positions. Assigns enter and exit coloring.
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGNodeAttrOpts): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			glyphs
@@ -136,7 +136,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			default: console.log("new NodeShape is undefined");
 				break;
 		};
-		//console.log("Circle --> " + shape.shapeType)
+		console.log("Circle --> " + shape.shapeType)
 		super.transformTo(sourceSelection, null, targetSelection);
 	}
 
@@ -146,7 +146,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit?: boolean): void {
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGNodeAttrOpts, enterExit?: boolean): void {
 		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("circle.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });

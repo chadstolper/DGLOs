@@ -15,7 +15,6 @@ import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape"
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { SVGAttrOpts } from "./DGLOsSVG";
 import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsSandwich extends DGLOsWill {

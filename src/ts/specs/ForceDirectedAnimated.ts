@@ -1,5 +1,5 @@
 import { Technique } from "./Technique";
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGEdgeAttrOpts, SVGNodeAttrOpts } from "../lib/DGLOsSVG";
 
 export class ForceDirectedAnimated extends Technique {
 	public draw() {
@@ -7,8 +7,8 @@ export class ForceDirectedAnimated extends Technique {
 		this.lib.drawNodeGlyphs();
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
-		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("id", "grey", 10, 2, null, null));
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, "1"));
+		this.lib.setNodeGlyphAttrs(new SVGNodeAttrOpts("id", "grey", 2, 0, 10));
+		this.lib.setEdgeGlyphAttrs(new SVGEdgeAttrOpts(null, "black", 1));
 		this.lib.positionNodesAndEdgesForceDirected(true);
 		this.lib.enableStepping();
 	}

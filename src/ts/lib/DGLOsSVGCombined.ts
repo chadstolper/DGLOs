@@ -5,7 +5,7 @@ import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGNodeAttrOpts, SVGEdgeAttrOpts } from "./DGLOsSVG";
 import { VoronoiLayout, voronoi } from "d3-voronoi";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
@@ -75,15 +75,15 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * see comment by will //TODO: rewrite, see comment in edgeattropts
 	 */
-	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
-	protected _groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
+	protected _attrOpts: SVGNodeAttrOpts = new SVGNodeAttrOpts("id", "grey", 2, 0, 10);
+	protected _groupAttrOpts: SVGNodeAttrOpts = new SVGNodeAttrOpts("id", null, null); //TODO: does this ever get used?
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
 	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and
 	 * an NodeAttrOpts class. TODO.
 	 */
-	protected _edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts("black", "black", null, 1, null, null, null);
-	protected _willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
+	protected _edgeAttrOpts: SVGEdgeAttrOpts = new SVGEdgeAttrOpts("black", "black", 1);
+	protected _willTestAttrOpts: SVGEdgeAttrOpts = new SVGEdgeAttrOpts("blue", "pink", 1, 20, 20);
 	/**
 	 * A map used for constructing an Egograph.
 	 */

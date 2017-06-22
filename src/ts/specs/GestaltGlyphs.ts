@@ -1,5 +1,5 @@
 import { Technique } from "./Technique";
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGNodeAttrOpts, SVGEdgeAttrOpts } from "../lib/DGLOsSVG";
 
 export class GestaltGlyphs extends Technique {
 	public draw() {
@@ -11,6 +11,6 @@ export class GestaltGlyphs extends Technique {
 		//this.lib.positionEdgeGlyphsMatrix();
 		//this.lib.positionNodeGlyphsMatrix();
 		//this.lib.setNodeGlyphAttrs(this.opts);
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 100, 20, 20, null));
+		this.lib.setEdgeGlyphAttrs(new SVGEdgeAttrOpts("blue", "black", 100, 20, 20)); //TODO: Will this might break your code.... -matt
 	}
 }

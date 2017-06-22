@@ -3,7 +3,7 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection, select } from "d3-selection";
 import * as d3 from "d3"
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGNodeAttrOpts } from "../DGLOsSVG";
 import { Shape } from "./Shape"
 
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
@@ -46,7 +46,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * Assign and/or update node label data and (x,y) positions
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGNodeAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 		try {
 			glyphs
@@ -90,7 +90,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs
 				.attr("stroke", attrOpts.stroke)
 				.attr("r", attrOpts.radius)
-				.attr("stroke-width", attrOpts.stroke_width)
+				.attr("stroke-width", attrOpts.stroke_width_label)
 				.attr("opacity", attrOpts.opacity);
 		}
 		catch (err) {
@@ -128,7 +128,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGNodeAttrOpts): void {
 		let labelGlyphs = labelG.selectAll("text.label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 

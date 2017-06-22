@@ -5,7 +5,7 @@ import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGEdgeAttrOpts } from "../lib/DGLOsSVG";
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
@@ -56,7 +56,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * determines the attributes that are used when drawing edges (e.g. color, thickness, etc..). 
 	 * @param attr: SVGAttrOpts
 	 */
-	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
+	public setEdgeGlyphAttrs(attr: SVGEdgeAttrOpts) {
 		this._edgeAttrOpts = attr;
 	}
 	/**
@@ -110,9 +110,8 @@ export class DGLOsWill extends DGLOsMatt {
 				e.y = (+e.target.index / g.nodes.length) * h;
 			});
 		});
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
-			this._edgeAttrOpts.opacity)
+		let _matrixAttrOpts = new SVGEdgeAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._edgeAttrOpts.stroke_width,
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1))
 		if (!this.multipleTimestepsEnabled) {
 			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.enterExitColorEnabled);
 		}
@@ -128,9 +127,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 * the dynamic graph's timesteps.
 	 */
 	public enableStepping() {
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
-			this._edgeAttrOpts.opacity)
+		let _matrixAttrOpts = new SVGEdgeAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._edgeAttrOpts.stroke_width,
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1))
 
 		let self = this;
 

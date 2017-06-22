@@ -1,5 +1,5 @@
 import { Technique } from "./Technique";
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGNodeAttrOpts } from "../lib/DGLOsSVG";
 
 export class GMap extends Technique {
 	public draw() {
@@ -7,7 +7,7 @@ export class GMap extends Technique {
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawRegions();
 		this.lib.drawTimesteps();
-		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("id", "black"));
+		this.lib.setRegionGlyphAttrs(new SVGNodeAttrOpts("id", "black", 1));
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.transformGroupGlyphsTo(this.lib.voronoiShape);

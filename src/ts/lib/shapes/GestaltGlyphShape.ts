@@ -4,7 +4,7 @@ import { Selection } from "d3-selection";
 import { extent } from "d3-array";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { LineGlyphShape } from "./LineGlyphShape";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGEdgeAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear } from "d3-scale";
 
 /**
@@ -64,7 +64,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * Assign and/or update edge attributes
 	 * @param edges 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGEdgeAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[TimeStampIndex].edges))
@@ -135,7 +135,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGEdgeAttrOpts): void {
 		// console.log("drawingGestalt");
 		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });

@@ -3,7 +3,7 @@ import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { GroupGlyph } from "../GroupGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGNodeAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
 
@@ -44,7 +44,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param paths
 	 * @param attrOpts
 	 */
-	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
+	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGNodeAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		paths.style("fill", "none").attr("stroke", "none");
 		let self = this;
 		if (this.enterExitEnabled) {
@@ -140,7 +140,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param noisePoints
 	 * @param voronoi
 	 */
-	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit?: boolean): void {
+	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGNodeAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit?: boolean): void {
 		this.enterExitEnabled = enterExit;
 		let vData = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
 		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = voronoiG.selectAll("path.voronoi")

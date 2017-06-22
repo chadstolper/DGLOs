@@ -1,7 +1,7 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGEdgeAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 
 import { LineGlyphShape } from "./LineGlyphShape";
@@ -73,7 +73,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGEdgeAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			edges
@@ -162,7 +162,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, enterExit?: boolean): void {
+	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGEdgeAttrOpts, enterExit?: boolean): void {
 		this.enterExitEnabled = enterExit;
 		let sTLineEdges = sTLineG.selectAll("line.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
