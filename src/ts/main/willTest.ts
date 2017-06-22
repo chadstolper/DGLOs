@@ -23,7 +23,7 @@ json("data/newcomb/newcomb.json", function (response: any) {
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);
-	let vis: Technique = new GestaltGlyphs(lib, {});
+	let vis: Technique = new MatrixAnimated(lib, {});
 	vis.draw();
 })
 
