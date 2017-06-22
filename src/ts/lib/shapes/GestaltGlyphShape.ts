@@ -62,7 +62,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * Assign and/or update edge attributes
 	 * @param edges 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
@@ -88,8 +88,8 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
-					//TODO: make 50 a variable, like cellWidth
-					return d.x + ((1000 / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
+					//TODO: make 1000 the width of the SVG
+					return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
 				})
 				.attr("y2", function (d: Edge) {
 					let yPos = 0
@@ -149,7 +149,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
 		// console.log("drawingGestalt");
 		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
@@ -160,7 +160,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 		gestaltGlyphs = gestaltGlyphs.merge(gestaltEnter as Selection<any, Edge, any, {}>);
 
-		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex);
+		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
 	}
 	get shapeType(): string {
 		return this._shapeType;

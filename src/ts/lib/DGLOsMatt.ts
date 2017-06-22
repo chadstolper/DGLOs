@@ -203,7 +203,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts, self._width, self._height);
 				});
 			});
 
@@ -226,7 +226,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts, self._width, self._height);
 				});
 			});
 

@@ -68,7 +68,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		try {
 			let colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
@@ -125,13 +125,13 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
 		let enter = this.initDraw(rects.enter(), data, timeStampIndex);
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
-		this.updateDraw(rects, attr, data, timeStampIndex);
+		this.updateDraw(rects, attr, data, timeStampIndex, svgWidth, svgHeight);
 	}
 
 	/**

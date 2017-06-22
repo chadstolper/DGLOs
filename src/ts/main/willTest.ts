@@ -16,7 +16,7 @@ json("data/newcomb/newcomb.json", function (response: any) {
 	let width: number, height: number;
 	width = height = 1000;
 	//width = 1000;
-	//height = 500;
+	height = 500;
 	let g: DynamicGraph = new DynamicNewcombGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
