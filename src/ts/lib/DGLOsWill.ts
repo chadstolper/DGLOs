@@ -181,6 +181,7 @@ export class DGLOsWill extends DGLOsMatt {
 				e.y = (h / 8) + (+e.target.index / g.nodes.length) * (7 * h / 8);
 			});
 		});
+		//TODO: _martixAttrOpts is what is making this code work, but it is an ugly solution imo. not very flexible.
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
 			(7 / 8) * (this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
 			(7 / 8) * (this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._edgeAttrOpts.opacity)
@@ -199,8 +200,9 @@ export class DGLOsWill extends DGLOsMatt {
 	 * the dynamic graph's timesteps.
 	 */
 	public enableStepping() {
+		//TODO: _matrixAttrOpts shouldnt always be called here, this is a very hardcoded solution.
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
+			(7 / 8) * (this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), (7 / 8) * (this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
 			this._edgeAttrOpts.opacity)
 
 		let self = this;
