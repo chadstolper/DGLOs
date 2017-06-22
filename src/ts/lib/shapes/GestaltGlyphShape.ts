@@ -88,7 +88,6 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
-					//TODO: make 1000 the width of the SVG
 					return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
 				})
 				.attr("y2", function (d: Edge) {
