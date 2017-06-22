@@ -48,3 +48,6 @@ js/bundle.js
 
 # gruntfile
 gruntfile.js
+
+# generated docs
+documentation
