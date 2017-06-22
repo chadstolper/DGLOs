@@ -77,7 +77,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return d.x;
 				})
 				.attr("y1", function (d: Edge) {
-					let yPos = 0
+					let yPos = 0;
 					for (let edge of data.timesteps[timeStampIndex].edges) {
 						if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
 							let yPos = weightScale(d.weight);
