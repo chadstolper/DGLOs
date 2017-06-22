@@ -347,9 +347,6 @@ export class DynamicGraph {
 	private _metaEdges: DynamicGraphMetaEdgeMap;
 
 	public constructor(timesteps: Array<Graph>, onClickRedraw?: boolean) {
-		if (onClickRedraw) {
-			//TODO: construct metaNodes using id instead of origID
-		}
 		this._metaEdges = new DynamicGraphMetaEdgeMap(this._metaNodes);
 		this._timesteps = timesteps;
 		for (let g of timesteps) {
