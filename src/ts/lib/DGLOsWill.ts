@@ -182,15 +182,15 @@ export class DGLOsWill extends DGLOsMatt {
 			});
 		});
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length), this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length),
-			this._edgeAttrOpts.opacity)
+			(7 / 8) * (this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
+			(7 / 8) * (this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._edgeAttrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
 			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.width, this.height, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this._edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, _matrixAttrOpts, this._width, this._height, self.enterExitColorEnabled);
+				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, _matrixAttrOpts, this.width, this.height, self.enterExitColorEnabled);
 			});
 		}
 	}
