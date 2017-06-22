@@ -18,4 +18,4 @@
 ## While developing:
 - `yarn add _____` to install dependencies
 - `yarn add _____ -dev` to install developer tools
-- `grunt compile` to re-generate documentation
+- `grunt gen_docs` to re-generate documentation

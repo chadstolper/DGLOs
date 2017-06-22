@@ -139,7 +139,8 @@ module.exports = function (grunt) {
 		}
 	});
 	// grunt.registerTask('build', ['tslint', 'ts', 'clean', 'rollup', 'typedoc']);
-	grunt.registerTask('compile', ['tslint', 'ts', 'clean', 'rollup', 'exec:gen_docs']);
+	grunt.registerTask('compile', ['tslint', 'ts', 'clean', 'rollup']);
+	grunt.registerTask('gen_docs', ['compile', 'exec:gen_docs'])
 	grunt.registerTask('default', ['connect', 'open', 'watch']);
 	// grunt.registerTask('default', 'compile');
 };
