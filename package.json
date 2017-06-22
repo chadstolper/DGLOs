@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Dynamic Graph Visualization Libary",
   "main": "index.html",
-  "repository": "https://github.com/chadstolper/dGLOs.git",
+  "repository": "https://github.com/chadstolper/DGLOs.git",
   "author": "Chad Stolper, Matt Sanford, Will Price",
   "license": "Apache-2.0",
   "dependencies": {
@@ -12,12 +12,14 @@
   },
   "devDependencies": {
     "@types/d3": "^4.8.0",
+    "compodoc": "^0.0.41",
     "eslint": "^3.19.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-connect": "^1.0.2",
     "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^2.0.0",
     "grunt-open": "^0.2.3",
     "grunt-rollup": "^1.0.1",
     "grunt-ts": "^6.0.0-beta.15",
