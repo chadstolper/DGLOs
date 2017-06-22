@@ -90,7 +90,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs
 				.attr("stroke", attrOpts.stroke)
 				.attr("r", attrOpts.radius)
-				.attr("stroke-width", attrOpts.stroke_width)
+				.attr("stroke-width", attrOpts.stroke_width_label)
 				.attr("opacity", attrOpts.opacity);
 		}
 		catch (err) {
