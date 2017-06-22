@@ -12,7 +12,6 @@ import { GestaltGlyphShape } from "../lib/shapes/GestaltGlyphShape";
 
 export class MatrixAnimated extends Technique {
 	public draw(): void {
-		console.log("MatrixAnimated");
 		this.lib.drawNodeGlyphs();
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 1, 1500 / (this._library.data.timesteps[0].nodes.length - 1), 1500 / (this._library.data.timesteps[0].nodes.length - 1), null));
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);

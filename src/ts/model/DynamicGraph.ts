@@ -13,6 +13,8 @@ export class Node implements SimulationNodeDatum {
 	public _fy?: number;
 	private readonly _origID: string | number;
 	private readonly _timestamp: number;
+	private _isEnter: boolean;
+	private _isExit: boolean;
 
 	public constructor(id: number | string, index: number, type: string, label: string, timestamp: number) {
 		this._id = id;
@@ -67,10 +69,22 @@ export class Node implements SimulationNodeDatum {
 	get fy(): number {
 		return this._fy;
 	}
+	set isEnter(v: boolean) {
+		this._isEnter = v;
+	}
+	get isEnter(): boolean {
+		return this._isEnter;
+	}
+	set isExit(v: boolean) {
+		this._isExit = v;
+	}
+	get isExit(): boolean {
+		return this._isExit;
+	}
 }
 
 export class Edge {
-	private _id: string | number;
+	private _id: string | number; //TODO: If edge id is ever changed via another operation, make OrigID attribute.
 	private _source: Node;
 	private _target: Node;
 	private _weight: number;
@@ -79,6 +93,8 @@ export class Edge {
 	private readonly _origSource: Node;
 	private readonly _origTarget: Node;
 	private readonly _timestep: number;
+	private _isEnter: boolean;
+	private _isExit: boolean;
 	public constructor(id: number | string, source: Node, target: Node, weight: number, timestamp: number) {
 		this._id = id;
 		this._source = source;
@@ -135,8 +151,18 @@ export class Edge {
 	set y(newY: number) {
 		this._y = newY;
 	}
-
-
+	set isEnter(v: boolean) {
+		this._isEnter = v;
+	}
+	get isEnter(): boolean {
+		return this._isEnter;
+	}
+	set isExit(v: boolean) {
+		this._isExit = v;
+	}
+	get isExit(): boolean {
+		return this._isExit;
+	}
 }
 
 /**
@@ -317,7 +343,10 @@ export class MetaEdge {
 	}
 
 }
-
+/**
+ * Graph with timesteps of data. MetaNodes and Edges is instance of data at all timesteps.
+ * Meta Map Key: origID, v: MetaNode/MetaEdge
+ */
 export class DynamicGraph {
 	private _timesteps: Array<Graph>;
 	private _metaNodes: Map<string | number, MetaNode> = new Map<string | number, MetaNode>();
@@ -340,8 +369,63 @@ export class DynamicGraph {
 				this._metaEdges.add(e);
 			}
 		}
+		//Assign enter and exit attributes to Nodes
+		for (let timeStep = 0; timeStep < this.timesteps.length; timeStep++) {
+			if (timeStep === 0) {
+				for (let n1 of this.timesteps[0].nodes) {
+					for (let n2 of this.timesteps[timeStep + 1].nodes) {
+						if (n1.origID === n2.origID) //present in next step
+						{
+							n1.isExit = false;
+							n2.isEnter = false;
+							break;
+						}
+						else {
+							n1.isExit = true;
+							n2.isEnter = true;
+						}
+					}
+					n1.isEnter = true;
+				}
+			}
+			if (timeStep === this.timesteps.length - 1) {
+				for (let n1 of this.timesteps[timeStep].nodes) {
+					for (let n3 of this.timesteps[timeStep - 1].nodes) {
+						if (n1.origID === n3.origID) { //present in previous step
+							n1.isEnter = false;
+							break;
+						}
+						else {
+							n1.isEnter = true;
+						}
+					}
+					n1.isExit = true;
+				}
+			}
+			if (timeStep !== 0 && timeStep !== this.timesteps.length - 1) {
+				for (let n1 of this.timesteps[timeStep].nodes) {
+					for (let n2 of this.timesteps[timeStep + 1].nodes) {
+						if (n1.origID === n2.origID) { //present in next step
+							n1.isExit = false;
+							break;
+						}
+						else {
+							n1.isExit = true;
+						}
+					}
+					for (let n3 of this.timesteps[timeStep - 1].nodes) {
+						if (n1.origID === n3.origID) { //present in previous step
+							n1.isEnter = false;
+							break;
+						}
+						else {
+							n1.isEnter = true;
+						}
+					}
+				}
+			}
+		}
 	}
-
 	get timesteps(): Array<Graph> {
 		return this._timesteps;
 	}

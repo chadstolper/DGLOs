@@ -21,19 +21,19 @@ import { DGLOsWill } from "./DGLOsWill";
 export class DGLOsMatt extends DGLOsSVGCombined {
 
 	/**
-	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none"
+	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawNodeGlyphs() {
 		this.drawNodeGlyphsAt(this.loc);
 	}
 	/**
-	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none"
+	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
 	* @param loc: Selection<any, {}, any, {}>
 	*/
-	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, timestep?: number) {
-		let internalTime = 0;
-		if (timestep !== undefined) {
-			internalTime = timestep;
+	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
+		let SVGPosition = 0;
+		if (SVGNum !== undefined) {
+			SVGPosition = SVGNum;
 		}
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
 		this._nodeG = loc.append("g").classed("nodeG", true);
@@ -50,14 +50,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		glyphMap.set(this.labelShape, nodeLabelG);
 		glyphMap.set(this.circleShape, nodeCircleG);
 
-		this._nodeGlyphMap.set(internalTime, glyphMap);
+		this._nodeGlyphMap.set(SVGPosition, glyphMap);
 	}
 	/**
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
-	public drawRegions() {
-		// this.setNoisePoints();
-
+	public drawRegions() { //TODO: expand drawregions to accept multiple timestep-svg drawing scheme?
 		if (this._groupGlyphG === undefined) {
 			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
 
@@ -82,7 +80,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Transforms/makes visible the target NodeGlyphShape
+	 * Transforms/makes visible the target NodeGlyphShape //TODO: update description for flubber
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
@@ -95,7 +93,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Resets the visual attributes of the NodeGlyphShape
+	 * (Re)sets the visual attributes of the NodeGlyphShape
 	 * @param attr 
 	 */
 	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
@@ -103,7 +101,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Resets the visual attributes of the GroupGlyphShape.
+	 * (Re)sets the visual attributes of the GroupGlyphShape.
 	 * Also sets NodeGlyph and EdgeGlyph attributes to correspond with GroupGlyph visualization.
 	 * @param attr 
 	 */
@@ -114,14 +112,31 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Begins the force simulation, calls internal tick().
+	 * Enables enter and exit coloring between timestep visualizations.
+	 */
+	public enableEnterExitColoring() {
+		this.enterExitColorEnabled = true;
+	}
+
+	/**
+	 * Disables enter and exit coloring between timestep visualizations.
+	 */
+	public disableEnterExitColoring() {
+		this.enterExitColorEnabled = false;
+	}
+
+	/**
+	 * Begins the force simulation for positioning Nodes and Edges, calls internal tick().
+	 * True initializes simulation, if already exisits assigns data for Nodes and Edges and restarts simulation.
+	 * False stops the simulation internal tick. Returns simulation at that point.
+	 * @param setRunning: boolean
 	 */
 	public positionNodesAndEdgesForceDirected(setRunning: boolean) {
 		if (setRunning) {
 			let self = this;
 			//Check simulation exists
-			if (this._simulation === undefined) {
-				this._simulation = d3force.forceSimulation()
+			if (this.simulation === undefined) {
+				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
 					.force("charge", d3force.forceManyBody().strength(-100))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
@@ -170,7 +185,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			}
 
 		} else {
-			this._simulation.stop();
+			this.simulation.stop();
 		}
 	}
 
@@ -188,52 +203,43 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tick() {
 		let self = this; //d3 scope this issue
 
-		// console.log("ticking")
-		// alert("tick")
-
-		if (!this._multipleTimestepsEnabled) {
-
-			//update groups in map; run update of simulation on all groups
+		if (!this._multipleTimestepsEnabled) { //check if small multiples are enabled.
+			//update groups in map; run update of simulation on all groups at the current timestep
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
-
-			//update edges in map; run update of simulation on all edges
+			//update edges in map; run update of simulation on all edges at the current timestep
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts, self._width, self._height);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts, self._width, self._height, self.enterExitColorEnabled);
 				});
 			});
-
-			//update nodes in map; run update of simulation on all NodeGlyphs
+			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, self.enterExitColorEnabled);
 				});
 			});
 		}
 		else {
-
-			//update groups in map; run update of simulation on all groups
+			//update groups in map; run update of simulation on all groups accross multiple SVG elements
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
-
-			//update edges in map; run update of simulation on all edges
+			//update edges in map; run update of simulation on all edges accross multiple SVG elements
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts, self._width, self._height);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts, self._width, self._height, self.enterExitColorEnabled);
 				});
 			});
-
-			//update nodes in map; run update of simulation on all NodeGlyphs
+			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, self.enterExitColorEnabled);
 				});
 			});
 		}

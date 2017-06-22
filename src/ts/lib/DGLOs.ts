@@ -135,6 +135,19 @@ export interface DGLOs {
 
 
 	/**
+	 * Enables coloring showing entering and exiting data at a given timestep.
+	 * Returns void.
+	 */
+	enableEnterExitColoring(): void;
+
+
+	/**
+	 * Disables coloring of entering and exiting data.
+	 */
+	disableEnterExitColoring(): void;
+
+
+	/**
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
