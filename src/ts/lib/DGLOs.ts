@@ -135,16 +135,16 @@ export interface DGLOs {
 
 
 	/**
-	 * Enables animation showing entering and exiting data at a given timestep.
+	 * Enables coloring showing entering and exiting data at a given timestep.
 	 * Returns void.
 	 */
-	enableEnterExitTransitions(): void;
+	enableEnterExitColoring(): void;
 
 
 	/**
-	 * Disables animation of entering and exiting data.
+	 * Disables coloring of entering and exiting data.
 	 */
-	disableEnterExitTransitions(): void;
+	disableEnterExitColoring(): void;
 
 
 	/**

@@ -57,7 +57,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * Boolean representing wheter enter exit animation is enabled on the current visualization.
 	 */
-	protected _enterExitTransitionEnabled: boolean = false;
+	protected _enterExitColorEnabled: boolean = false;
 	/**
 	 * Holders for current shapes being used in the visualization.
 	 */
@@ -134,11 +134,11 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	get matrixViewEnabled(): boolean {
 		return this._matrixViewEnabled;
 	}
-	set enterExitTransitionEnabled(boo: boolean) {
-		this._enterExitTransitionEnabled = boo;
+	set enterExitColorEnabled(boo: boolean) {
+		this._enterExitColorEnabled = boo;
 	}
-	get enterExitTransitionEnabled(): boolean {
-		return this._enterExitTransitionEnabled;
+	get enterExitColorEnabled(): boolean {
+		return this._enterExitColorEnabled;
 	}
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;

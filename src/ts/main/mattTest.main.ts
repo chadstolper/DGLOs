@@ -40,10 +40,10 @@ json("data/fivekings/fivekings.json", function (response: any) {
 
 	//------------------------------------------------------------//
 	// let vis: Technique = new ForceDirectedAnimated(lib, {});
-	let vis: Technique = new GMap(lib, {});
+	// let vis: Technique = new GMap(lib, {});
 	// let vis: Technique = new ForceDirectedTimeline(lib, {});
 	// let vis: Technique = new MatrixTimeline(lib, {});
-	// let vis: Technique = new MatrixAnimated(lib, {});
+	let vis: Technique = new MatrixAnimated(lib, {});
 	//------------------------------------------------------------//
 
 

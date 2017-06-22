@@ -11,7 +11,7 @@ export class GMap extends Technique {
 		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("grey", null, 1));
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "grey", null, 1));
 		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("id", "black"));
-		this.lib.enableEnterExitTransitions();
+		this.lib.enableEnterExitColoring();
 		this.lib.enableStepping();
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
