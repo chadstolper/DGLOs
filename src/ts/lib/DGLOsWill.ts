@@ -12,7 +12,7 @@ import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import * as d3 from "d3-selection";
-import { scaleLinear, scaleOrdinal, scalePoint } from "d3-scale";
+import { scaleLinear, scaleOrdinal, scalePoint, scaleBand } from "d3-scale";
 import { extent } from "d3-array";
 
 export class DGLOsWill extends DGLOsMatt {
@@ -82,14 +82,15 @@ export class DGLOsWill extends DGLOsMatt {
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 					return d.timestep;
 				}))
-				.range([0, h / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length]);
+				.range([0, 10]);
 
 
-			let gridScale = scalePoint<number>()
+			let gridScale = scaleBand<number>()
 				.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
 					return d.target.index;
 				}))
-				.range([h / 8, h]);
+				.range([h / 8, h])
+				.paddingInner(1);
 
 
 			meta.edges.forEach(function (e: Edge) {
@@ -97,7 +98,7 @@ export class DGLOsWill extends DGLOsMatt {
 				//Take a scale of this
 				//e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
 				//e.y = (h / 8) + yScale(e.timestep) + gridScale(+e.target.index); /// self.dataToDraw.metaNodes.size) * (7 * h / 8);
-				e.y = yScale(e.timestep) + gridScale(+e.target.index);
+				e.y = gridScale(+e.target.index) + yScale(e.timestep); //+ gridScale(+e.target.index);
 			})
 		})
 		let edgeList = new Array<Edge>();
