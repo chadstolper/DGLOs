@@ -77,27 +77,47 @@ export class DGLOsWill extends DGLOsMatt {
 		let w = this.width;
 		let self = this;
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
-			let yScale = scaleLinear()
+
+
+			// let yScale = scaleLinear()
+			// 	.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+			// 		return d.timestep;
+			// 	}))
+			// 	.range([1, 50]);
+
+			// let yScale = scaleBand<number>()
+			// 	.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
+			// 		console.log(d.timestamp);
+			// 		return d.timestep;
+			// 	}))
+			// 	.range([1, 50]);
+
+			//TODO: center Gestalt Glyphs in the middle of their respective row
+			let yScale = scaleBand<number>()
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+					if (d.timestep === undefined) {
+						console.log(d);
+					}
 					return d.timestep;
 				}))
-				.range([1, 10]);
-
+				.range([1, 20]);
 
 			let gridScale = scaleBand<number>()
 				.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
 					return d.source.index;
 				}))
-				.range([h / 8 + 10, h - 10])//[h / 8, h])
-			//.paddingInner(1);
-
+				.range([h / 8 + 10, h - 10]);
 
 			meta.edges.forEach(function (e: Edge) {
 				e.x = (w / 8) + (+e.source.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
 				//Take a scale of this
 				//e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
 				//e.y = (h / 8) + yScale(e.timestep) + gridScale(+e.target.index); /// self.dataToDraw.metaNodes.size) * (7 * h / 8);
-				e.y = gridScale(+e.target.index) + yScale(e.timestep); //+ gridScale(+e.target.index);
+				if (yScale(+e.target.index) === undefined) {
+					console.log(e);
+				}
+				console.log(e.timestep);
+				e.y = gridScale(+e.target.index) //+ yScale(e.timestep); //+ gridScale(+e.target.index);
 			})
 		})
 		let edgeList = new Array<Edge>();

@@ -3,6 +3,7 @@ import { DynamicRadoslawGraph } from "../data/EmailGraph";
 import { DynamicGraph } from "../model/DynamicGraph";
 import { Technique } from "../specs/Technique";
 import { MatrixAnimated } from "../specs/MatrixAnimated";
+import { MatrixTimeline } from "../specs/MatrixTimeline";
 import { Egograph } from "../specs/Egograph";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
 import { select, Selection } from "d3-selection";
@@ -14,7 +15,8 @@ import { DynamicNewcombGraph, DynamicNewcombTopFiveGraph } from "../data/Newcomb
 
 json("data/newcomb/newcomb.json", function (response: any) {
 	let width: number, height: number;
-	width = height = 1000;
+	//width = height = 1000;
+	width = height = 2000;
 	//height = 2000;
 	//width = 1000;
 	let g: DynamicGraph = new DynamicNewcombGraph(response);
