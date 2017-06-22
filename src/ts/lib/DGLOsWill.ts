@@ -76,7 +76,6 @@ export class DGLOsWill extends DGLOsMatt {
 		let h = this.height;
 		let w = this.width;
 		let self = this;
-		this.dataToDraw.timesteps
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 			let yScale = scaleLinear()
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
@@ -178,12 +177,12 @@ export class DGLOsWill extends DGLOsMatt {
 		let w = this.width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.edges.forEach(function (e: Edge) {
-				e.x = (+e.source.index / g.nodes.length) * w;
-				e.y = (+e.target.index / g.nodes.length) * h;
+				e.x = (w / 8) + (+e.source.index / g.nodes.length) * (7 * w / 8);
+				e.y = (h / 8) + (+e.target.index / g.nodes.length) * (7 * h / 8);
 			});
 		});
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
+			this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length), this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length),
 			this._edgeAttrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
 			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.width, this.height, this.enterExitColorEnabled);
