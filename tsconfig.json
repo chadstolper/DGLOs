@@ -18,6 +18,7 @@
         "src/ts/**/*.ts"
     ],
     "exclude": [
+        "out",
         "node_modules",
         "src/ts/.baseDir.ts",
         "src/archive"

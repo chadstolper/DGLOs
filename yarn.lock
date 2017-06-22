@@ -1658,6 +1658,10 @@ grunt-contrib-watch@^1.0.0:
     lodash "^3.10.1"
     tiny-lr "^0.2.1"
 
+grunt-exec@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/grunt-exec/-/grunt-exec-2.0.0.tgz#a575a620b1da4416c292c01df564c9296b80ab23"
+
 grunt-known-options@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/grunt-known-options/-/grunt-known-options-1.1.0.tgz#a4274eeb32fa765da5a7a3b1712617ce3b144149"
