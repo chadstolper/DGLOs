@@ -55,28 +55,37 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	/**
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
-	public drawRegions() { //TODO: expand drawregions to accept multiple timestep-svg drawing scheme?
-		if (this._groupGlyphG === undefined) {
-			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
-
-			//create child "g" in parent for GroupGlyphs
-			let voronoiG: Selection<any, {}, any, {}> = this.voronoiGroupGlyph.init(this._groupGlyphG);
-
-			voronoiG.style("display", "none");
-
-			//add voronoi regions to map
-			let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
-			glyphMap.set(this.voronoiGroupGlyph, voronoiG);
-
-			this._groupGlyphMap.set(this._timeStampIndex, glyphMap);
+	public drawRegions() {
+		this.drawRegionsAt(this.loc);
+	}
+	/**
+	 * Initialize and draw all GroupGlyphShapes at a specified Selection, adds them to Map and sets display to "none" 
+	 * @param loc 
+	 * @param SVGNum 
+	 */
+	protected drawRegionsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
+		let SVGPosition = 0;
+		if (SVGNum !== undefined) {
+			SVGPosition = SVGNum;
 		}
+		this._groupGlyphG = loc.append("g").classed("groupG", true).lower();
 
-		let self = this;
-		this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
-			self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
-		});
+		//create child "g" in parent for GroupGlyphs
+		let voronoiG: Selection<any, {}, any, {}> = this.voronoiGroupGlyph.init(this._groupGlyphG);
 
-		this._currentGroupGlyph = this.voronoiGroupGlyph; //TODO: assign possibly somewhere else
+		voronoiG.style("display", "none");
+
+		//add voronoi regions to map
+		let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
+		glyphMap.set(this.voronoiGroupGlyph, voronoiG);
+
+		this._groupGlyphMap.set(SVGPosition, glyphMap);
+
+		// let self = this;
+		// this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+		// 	self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
+		// });
+
 	}
 
 	/**
