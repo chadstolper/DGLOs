@@ -112,6 +112,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
+	 * Enables enter and exit coloring between timestep visualizations.
+	 */
+	public enableEnterExitColoring() {
+		this.enterExitColorEnabled = true;
+	}
+
+	/**
+	 * Disables enter and exit coloring between timestep visualizations.
+	 */
+	public disableEnterExitColoring() {
+		this.enterExitColorEnabled = false;
+	}
+
+	/**
 	 * Begins the force simulation for positioning Nodes and Edges, calls internal tick().
 	 * True initializes simulation, if already exisits assigns data for Nodes and Edges and restarts simulation.
 	 * False stops the simulation internal tick. Returns simulation at that point.
@@ -193,19 +207,19 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups at the current timestep
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._groupAttrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges at the current timestep
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts, self.enterExitColorEnabled);
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, self.enterExitColorEnabled);
 				});
 			});
 		}
@@ -213,19 +227,19 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups accross multiple SVG elements
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._groupAttrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts, self.enterExitColorEnabled);
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, self.enterExitColorEnabled);
 				});
 			});
 		}

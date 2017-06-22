@@ -14,8 +14,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
 	private _noiseDefaultColor = "#FFFFFF"; /* Default color of NoiseNodes. Default #FFFFFF. */
+	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
-	private _transitionDelay: number = 8000; /* Time between animation from standard view to exitview. Default 8000ms. */
+	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+	private _enterExitEnabled: boolean = false;
 
 	/**
 	 * Make new <g>
@@ -26,10 +29,10 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	 * Create selection of paths. Returns new selection
+	 * Creates selection of paths. Returns new selection.
 	 * @param paths
 	 */
-	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, VoronoiPolygon<Node>, any, {}> {
+	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		let ret: Selection<any, VoronoiPolygon<Node>, any, {}> = paths.insert("path")
 			.classed("voronoi", true)
 			.attr("id", function (d: VoronoiPolygon<Node>): string | number { return d.data.id; })
@@ -37,21 +40,23 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	 * Assign and/or update voronoi path attributes and draw paths. Assigns transitions for entering and exiting elements.
-	 * @param paths 
+	 * Assign and/or update voronoi path attributes and draw paths. Assigns coloring for entering and exiting elements.
+	 * @param paths
+	 * @param attrOpts
 	 */
-	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, noisePoints?: Node[]): Selection<any, VoronoiPolygon<Node>, any, {}> {
+	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		paths.style("fill", "none").attr("stroke", "none");
 		let self = this;
-		paths
-			.style("fill", this.enterCheck(data, timeStampIndex, attrOpts.fill)).transition().on("end", function () {
-				paths.transition().style("fill", function (d: VoronoiPolygon<Node>): string {
-					return self.fill(d, attrOpts.fill);
-				}).duration(self.transitionDuration).transition().delay(self.transitionDelay).on("end", function () {
-					paths.transition().style("fill", self.exitCheck(data, timeStampIndex, attrOpts.fill)).duration(self.transitionDuration)
-				});
-			})
-			.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); })
+		if (this.enterExitEnabled) {
+			paths
+				.style("fill", this.enterExitCheck())
+				.style("stroke", this.enterExitCheck());
+		}
+		else {
+			paths
+				.style("fill", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); })
+				.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); });
+		}
 		paths
 			.attr("d", function (d: any): string {
 				return d ? "M" + d.join("L") + "Z" : null;
@@ -59,58 +64,28 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		return paths;
 	}
 	/**
-	 * Check to see if the VoronoiPolygon path object will be present in the next timestep data. If not present, the path will transition
-	 * to the exit color. Timestep[n] will default all data to be exitNodes. See _exitColor.
-	 * @param data 
-	 * @param timeStampIndex 
-	 * @param key 
-	 */
-	private exitCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
+	* Returns the correct color relating to the Enter/Exit of data in each timestep.
+	* Green: Node entering and present in next timestep; Red: Node was present already and exiting;
+	* Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
+	*/
+	private enterExitCheck() {
 		let self = this;
-		return function (d: VoronoiPolygon<Node>, i: number): string {
-			if (timeStampIndex === data.timesteps.length - 1) {
-				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
-				}
-				return self._exitColor;
+		return function (d: VoronoiPolygon<Node>): string {
+			if (d.data.type === "noise") {
+				return self.noiseColor;
 			}
-			for (let n of data.timesteps[timeStampIndex + 1].nodes) {
-				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
+			if (d.data.isEnter) {
+				if (d.data.isExit) {
+					return self.enterExitColor;
 				}
-				if (d.data.origID === n.origID) {
-					return self.fill(d, key);
-				}
+				return self.enterColor;
 			}
-			return self._exitColor;
-		}
-	}
-	/**
-	 * Check to see if the VoronoiPolygon path object was present in the previous timestep data. If not present, the path 
-	 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and 
-	 * cycles back to timestep[0] defualt to enterNodes. See _enterColor.
-	 * @param data 
-	 * @param timeStampIndex 
-	 * @param key 
-	 */
-	private enterCheck(data: DynamicGraph, timeStampIndex: number, key: string) {
-		let self = this;
-		return function (d: VoronoiPolygon<Node>, i: number): string {
-			if (timeStampIndex === 0) {
-				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
+			else {
+				if (d.data.isExit) {
+					return self.exitColor;
 				}
-				return self._enterColor;
+				return self.stableColor;
 			}
-			for (let n of data.timesteps[timeStampIndex - 1].nodes) {
-				if (d.data.type === "noise") {
-					return self._noiseDefaultColor;
-				}
-				if (d.data.origID === n.origID) {
-					return self.fill(d, key);
-				}
-			}
-			return self._enterColor;
 		}
 	}
 	/**
@@ -165,7 +140,8 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param noisePoints
 	 * @param voronoi
 	 */
-	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>): void {
+	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit?: boolean): void {
+		this.enterExitEnabled = enterExit;
 		let vData = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
 		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = voronoiG.selectAll("path.voronoi")
 			.data(vData, function (d: VoronoiPolygon<Node>, i: number): string {
@@ -182,11 +158,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 		voronoiPaths.exit().remove();
 
-		let voronoiEnter: Selection<any, VoronoiPolygon<Node>, any, {}> = this.initDraw(voronoiPaths.enter(), data, timeStepIndex);
+		let voronoiEnter: Selection<any, VoronoiPolygon<Node>, any, {}> = this.initDraw(voronoiPaths.enter());
 
 		voronoiPaths = voronoiPaths.merge(voronoiEnter);
 
-		this.updateDraw(voronoiPaths, attrOpts, data, timeStepIndex, noisePoints);
+		this.updateDraw(voronoiPaths, attrOpts);
 	}
 
 	get groupType(): string {
@@ -214,6 +190,24 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	get exitColor(): string {
 		return this._exitColor;
 	}
+	set noiseColor(c: string) {
+		this._noiseDefaultColor = c;
+	}
+	get noiseColor(): string {
+		return this._noiseDefaultColor;
+	}
+	set enterExitColor(c: string) {
+		this._enterExitColor = c;
+	}
+	get enterExitColor(): string {
+		return this._enterExitColor;
+	}
+	set stableColor(c: string) {
+		this._stableColor = c;
+	}
+	get stableColor(): string {
+		return this._stableColor;
+	}
 	set transitionDuration(duration: number) {
 		this._transitionDuration = duration;
 	}
@@ -225,5 +219,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 	get transitionDelay(): number {
 		return this._transitionDelay;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }

@@ -10,6 +10,15 @@ import "d3-transition";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Circle";
+	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	private _enterColor: string = "#00D50F"; /* Value used for entering and non-exiting nodes. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
+	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
+	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
+	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+	private _enterExitEnabled: boolean = false;
+
 	/**
 	 * Make new <g>
 	 * @param location
@@ -22,7 +31,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * Create selection of nodes. Returns new selection
 	 * @param glyphs
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number, ): Selection<any, Node, any, {}> {
+	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
 		let self = this;
 		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
 			.classed("node", true)
@@ -36,11 +45,11 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Assign and/or update node circle attributes and (cx,cy) positions
+	 * Assign and/or update node circle attributes and (cx,cy) positions. Assigns enter and exit coloring.
 	 * @param glyphs 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+		let self = this;
 		try {
 			glyphs
 				.attr("cx", function (d: Node) {
@@ -52,46 +61,61 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No circle nodes!");
 		}
-		try {
-			switch (attrOpts.fill) {
-				case "id":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.origID);
-						});
-					break;
-
-				case "label":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.label);
-						});
-					break;
-
-				case "type":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.type);
-						});
-					break;
-				default:
-					glyphs
-						.attr("fill", attrOpts.fill);
-			}
-
-			glyphs
-				.attr("stroke", attrOpts.stroke)
-				.attr("r", attrOpts.radius)
-				.attr("stroke-width", attrOpts.stroke_width)
-				.attr("opacity", attrOpts.opacity);
+		if (this.enterExitEnabled) {
+			glyphs.style("fill", this.enterExitCheck());
 		}
-		catch (err) {
-			console.log("attropts Circle undefined");
+		else {
+			glyphs.style("fill", function (d: Node): string {
+				return self.fill(d, attrOpts.fill);
+			});
 		}
+		glyphs
+			.style("stroke", attrOpts.stroke)
+			.attr("r", attrOpts.radius)
+			.attr("stroke-width", attrOpts.stroke_width)
+			.style("opacity", attrOpts.opacity);
 
 		return glyphs;
 	}
-
+	/**
+	 * Returns the correct color relating to the Enter/Exit of data in each timestep.
+	 * Green: Node entering and present in next timestep; Red: Node was present already and exiting;
+	 * Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
+	 */
+	private enterExitCheck() {
+		let self = this;
+		return function (d: Node): string {
+			if (d.isEnter) {
+				if (d.isExit) {
+					return self.enterExitColor;
+				}
+				return self.enterColor;
+			}
+			else { //isEnter=false
+				if (d.isExit) {
+					return self.exitColor;
+				}
+				return self.stableColor;
+			}
+		}
+	}
+	/**
+	 * Fill the CircleGlyph selection color. Returns hexCode as string.
+	 * @param d : current CircleGlyph
+	 * @param key 
+	 */
+	private fill(d: Node, key: string) {
+		switch (key) {
+			case "id":
+				return this.colorScheme(d.origID);
+			case "label":
+				return this.colorScheme(d.label);
+			case "type":
+				return this.colorScheme(d.type);
+			default:
+				return key;
+		}
+	}
 	/**
 	 * Transform the current NodeGlyphShapes to given NodeGlyphShape
 	 * @param sourceSelection 
@@ -122,20 +146,74 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit?: boolean): void {
+		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("circle.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
 		circleGlyphs.exit().remove();
 
-		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter(), data, timeStepIndex);
+		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 
 		circleGlyphs = circleGlyphs.merge(circleEnter);
 
-		this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
+		this.updateDraw(circleGlyphs, attrOpts);
 	}
 
 	get shapeType(): string {
 		return this._shapeType;
+	}
+	/**
+	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
+	 * @param scheme
+	 */
+	set colorScheme(scheme: ScaleOrdinal<string | number, string>) {
+		this._colorScheme = scheme;
+	}
+	get colorScheme(): ScaleOrdinal<string | number, string> {
+		return this._colorScheme;
+	}
+	set enterColor(c: string) {
+		this._enterColor = c;
+	}
+	get enterColor(): string {
+		return this._enterColor;
+	}
+	set exitColor(c: string) {
+		this._exitColor = c;
+	}
+	get exitColor(): string {
+		return this._exitColor;
+	}
+	set enterExitColor(c: string) {
+		this._enterExitColor = c;
+	}
+	get enterExitColor(): string {
+		return this._enterExitColor;
+	}
+	set stableColor(c: string) {
+		this._stableColor = c;
+	}
+	get stableColor(): string {
+		return this._stableColor;
+	}
+	//TODO: transistions needed?
+	set transitionDuration(duration: number) {
+		this._transitionDuration = duration;
+	}
+	get transitionDuration(): number {
+		return this._transitionDuration;
+	}
+	set transitionDelay(delay: number) {
+		this._transitionDelay = delay;
+	}
+	get transitionDelay(): number {
+		return this._transitionDelay;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }
