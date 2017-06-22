@@ -29,10 +29,10 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	 * Create selection of paths. Returns new selection
+	 * Creates selection of paths. Returns new selection.
 	 * @param paths
 	 */
-	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, VoronoiPolygon<Node>, any, {}> {
+	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		let ret: Selection<any, VoronoiPolygon<Node>, any, {}> = paths.insert("path")
 			.classed("voronoi", true)
 			.attr("id", function (d: VoronoiPolygon<Node>): string | number { return d.data.id; })
@@ -40,14 +40,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	 * Assign and/or update voronoi path attributes and draw paths. Assigns transitions for entering and exiting elements.
+	 * Assign and/or update voronoi path attributes and draw paths. Assigns coloring for entering and exiting elements.
 	 * @param paths
 	 * @param attrOpts
-	 * @param data
-	 * @param timeStampIndex
-	 * @param noisePoints?
 	 */
-	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, VoronoiPolygon<Node>, any, {}> {
+	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		paths.style("fill", "none").attr("stroke", "none");
 		let self = this;
 		if (this.enterExitEnabled) {
@@ -161,11 +158,11 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 		voronoiPaths.exit().remove();
 
-		let voronoiEnter: Selection<any, VoronoiPolygon<Node>, any, {}> = this.initDraw(voronoiPaths.enter(), data, timeStepIndex);
+		let voronoiEnter: Selection<any, VoronoiPolygon<Node>, any, {}> = this.initDraw(voronoiPaths.enter());
 
 		voronoiPaths = voronoiPaths.merge(voronoiEnter);
 
-		this.updateDraw(voronoiPaths, attrOpts, data, timeStepIndex);
+		this.updateDraw(voronoiPaths, attrOpts);
 	}
 
 	get groupType(): string {

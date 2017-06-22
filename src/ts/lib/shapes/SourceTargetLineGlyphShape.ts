@@ -25,7 +25,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
 	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
-	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */ //TODO: still need transitision timing?
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
 	private _enterExitEnabled: boolean = false;

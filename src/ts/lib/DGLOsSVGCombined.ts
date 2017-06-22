@@ -55,7 +55,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _matrixViewEnabled: boolean = false;
 	/**
-	 * Boolean representing wheter enter exit animation is enabled on the current visualization.
+	 * Boolean representing wheter enter exit coloring is enabled on the current visualization.
 	 */
 	protected _enterExitColorEnabled: boolean = false;
 	/**

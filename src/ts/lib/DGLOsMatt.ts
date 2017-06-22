@@ -112,10 +112,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Enables enter and exit animation transions between timestep visualizations.
+	 * Enables enter and exit coloring between timestep visualizations.
 	 */
 	public enableEnterExitColoring() {
 		this.enterExitColorEnabled = true;
+	}
+
+	/**
+	 * Disables enter and exit coloring between timestep visualizations.
+	 */
+	public disableEnterExitColoring() {
+		this.enterExitColorEnabled = false;
 	}
 
 	/**
