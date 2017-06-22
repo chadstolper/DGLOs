@@ -10,6 +10,7 @@ export class GMap extends Technique {
 		this.lib.setRegionGlyphAttrs(new SVGAttrOpts("id", "black"));
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
+		this.lib.transformGroupGlyphsTo(this.lib.voronoiShape);
 		// this.lib.enableEnterExitColoring();
 		this.lib.enableStepping();
 		this.lib.positionNodesAndEdgesForceDirected(true);
