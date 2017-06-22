@@ -139,7 +139,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
 					.force("charge", d3force.forceManyBody().strength(-100))
-					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
+					.force("center", d3force.forceCenter(self.width / 2, self.height / 2))
 					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
 							if (self.currentNodeShape.shapeType === "Label") {
@@ -213,7 +213,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges at the current timestep
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts, self._width, self._height, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._edgeAttrOpts, self.width, self.height, self.enterExitColorEnabled);
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
@@ -233,7 +233,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts, self._width, self._height, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._edgeAttrOpts, self.width, self.height, self.enterExitColorEnabled);
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
