@@ -80,17 +80,17 @@ export class DGLOsWill extends DGLOsMatt {
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 			let yScale = scaleLinear()
 				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
-					return d.timestep;
+					return d.timestep + 1;
 				}))
-				.range([0, 10]);
+				.range([1, 10]);
 
 
 			let gridScale = scaleBand<number>()
 				.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
 					return d.target.index;
 				}))
-				.range([h / 8, h])
-				.paddingInner(1);
+				.range([h / 8 + 10, h - 10])//[h / 8, h])
+			//.paddingInner(1);
 
 
 			meta.edges.forEach(function (e: Edge) {
