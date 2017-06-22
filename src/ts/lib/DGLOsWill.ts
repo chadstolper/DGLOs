@@ -73,8 +73,8 @@ export class DGLOsWill extends DGLOsMatt {
 
 	public positionEdgeGlyphsGestalt() {
 		this._matrixViewEnabled = true;
-		let h = this._height;
-		let w = this._width;
+		let h = this.height;
+		let w = this.width;
 		let self = this;
 		this.dataToDraw.timesteps
 		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
@@ -118,7 +118,7 @@ export class DGLOsWill extends DGLOsMatt {
 			getNode = true;
 		}
 		this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this._width, this._height);
+		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
 	}
 	public getNodeMatrixDomain(nodeList: Array<Node>): Array<number> {
 		return extent(nodeList, function (d: Node): number {
@@ -130,8 +130,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public positionNodeGlyphsMatrix() {
 		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
-		let h = this._height;
-		let w = this._width;
+		let h = this.height;
+		let w = this.width;
 		let vertical = true;
 		if (vertical) {
 			let scale = scalePoint<number>()
@@ -174,8 +174,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public positionEdgeGlyphsMatrix() {
 		this._matrixViewEnabled = true;
-		let h = this._height;
-		let w = this._width;
+		let h = this.height;
+		let w = this.width;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.edges.forEach(function (e: Edge) {
 				e.x = (+e.source.index / g.nodes.length) * w;
@@ -183,10 +183,10 @@ export class DGLOsWill extends DGLOsMatt {
 			});
 		});
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
+			this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
-			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this._width, this._height, this.enterExitColorEnabled);
+			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.width, this.height, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
@@ -201,7 +201,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public enableStepping() {
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
+			this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 
 		let self = this;
@@ -213,7 +213,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self._width, self._height, self.enterExitColorEnabled); //TODO: change matrixattropts as needed?	
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.width, self.height, self.enterExitColorEnabled); //TODO: change matrixattropts as needed?	
 				}
 				if (!self._matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);
@@ -226,7 +226,7 @@ export class DGLOsWill extends DGLOsMatt {
 				console.log("clicked");
 				self._timeStampIndex = (self._timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self._width, self._height, self.enterExitColorEnabled);
+					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.width, self.height, self.enterExitColorEnabled);
 				}
 				if (!self._matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);
@@ -274,16 +274,16 @@ export class DGLOsWill extends DGLOsMatt {
 			.domain(extent(this._centralNodeArray, function (d: Node): number {
 				return d.timestamp as number;
 			}))
-			.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+			.range([0 + (this.height * .15), this.height - (this.height * 0.15)])
 		for (let node of this._centralNodeArray) {
-			node.fx = this._width / 2;
+			node.fx = this.width / 2;
 			node.fy = yScale(node.timestamp);
 		}
 		let check = 0;
 		for (let node of this.dataToDraw.metaNodes.get(this.centralNodeID).nodes) {
 			let meta = new MetaNode(node.id);
 			console.log(node.fx);
-			meta.fx = self._width / 2;//node.fx;
+			meta.fx = self.width / 2;//node.fx;
 			console.log(node.label + ": " + node.timestamp);
 			meta.fy = yScale(node.timestamp);//node.fy;
 			meta.add(node);
@@ -318,9 +318,9 @@ export class DGLOsWill extends DGLOsMatt {
 				.domain(extent(this._centralNodeArray, function (d: Node): number {
 					return d.timestamp;
 				}))
-				.range([0 + (this._height * .15), this._height - (this._height * 0.15)])
+				.range([0 + (this.height * .15), this.height - (this.height * 0.15)])
 			for (let node of this._centralNodeArray) {
-				node.fx = this._width / 2;
+				node.fx = this.width / 2;
 				node.fy = yScale(node.timestamp);
 			}
 		} else {
@@ -391,7 +391,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Redraws the graph.
 	 */
 	public redrawEgo(): void {
-		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this._width, this._height);
+		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
 		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this._attrOpts);
 		if (this.onClickRedraw) {
 			this.positionNodesAndEdgesForceDirected(true);
