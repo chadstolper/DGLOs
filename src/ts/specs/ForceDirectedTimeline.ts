@@ -10,6 +10,7 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", 1));
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
+		this.lib.enableEnterExitColoring();
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
 }

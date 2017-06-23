@@ -181,7 +181,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							d.nodes.forEach(function (n: Node) {
 								let divisor: number;
 								if (self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length) === "px") {
-									divisor = 2.5;
+									divisor = 3;
 								}
 								else {
 									divisor = 2;
