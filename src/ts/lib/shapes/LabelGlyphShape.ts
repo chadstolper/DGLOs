@@ -5,7 +5,6 @@ import * as d3 from "d3"
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { Shape } from "./Shape"
-
 import { ScaleOrdinal, scaleOrdinal, scalePoint, schemeCategory20 } from "d3-scale";
 
 export class LabelGlyphShape extends Shape implements NodeGlyphShape {
