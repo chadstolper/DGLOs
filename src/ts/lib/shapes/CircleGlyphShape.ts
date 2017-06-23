@@ -16,7 +16,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
-	private _enterExitEnabled: boolean = false;
+	private _enterExitEnabled: boolean;
 
 	/**
 	 * Make new <g>
@@ -183,7 +183,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit?: boolean): void {
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("circle.node.side")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });

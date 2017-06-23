@@ -15,10 +15,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _timeStampIndex = 0;
 	/**
-	 * The overarching <g> tag holding the shape glyph selections
-	 */
-	protected _nodeG: Selection<any, {}, any, {}>;//TODO: still needed?
-	/**
 	 * A map of SVG related maps with pointers to their respective <g> tag selection by NodeGlyphShape.
 	 * <SVG#, Map<NodeGlyphShape, Selection<any, {}, any, {}>>.
 	 */
@@ -28,14 +24,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * <SVG#, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>.
 	 */
 	protected _edgeGlyphMap: Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>>();
-	/**
-	 * The overarching <g> tag holding the shape glyph selections (e.g. rectEdges, GestaltGlyphs, STLineEdges, etc..)
-	 */
-	protected _edgeG: Selection<any, {}, any, {}> //TODO: still needed?
-	/**  
-	 * The overarching <g> tag holding the GroupGlyph selections.
-	*/
-	protected _groupGlyphG: Selection<any, {}, any, {}>; //TODO: still needed?
 	/**
 	 * A map of SVG related maps with pointers to their respective <g> tag selection by GroupGlyph.
 	 * <SVG#, Map<GroupGlyph, Selection<any, {}, any, {}>>.
@@ -63,7 +51,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _currentEdgeShape: EdgeGlyphShape = this.rectShape;
 	protected _currentNodeShape: NodeGlyphShape = this.circleShape;
-	protected _currentGroupGlyph: GroupGlyph = this.voronoiGroupGlyph;
+	protected _currentGroupGlyph: GroupGlyph = this.voronoiShape;
 	/**
 	 * Voronoi Tesselation mechanic holders.
 	 * In case of rendering error, modify extent to larger values for calculations and Voronoi constraints.
@@ -101,6 +89,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _centralNodeArray: Array<Node>;
 
+	//TODO: more getters and setter
 	set timeStampIndex(newTime: number) {
 		this._timeStampIndex = newTime;
 	}
@@ -151,6 +140,12 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	}
 	get currentNodeShape(): NodeGlyphShape {
 		return this._currentNodeShape;
+	}
+	set currentGroupGlyph(shape: GroupGlyph) {
+		this._currentGroupGlyph = shape;
+	}
+	get currentGroupGlyph(): GroupGlyph {
+		return this._currentGroupGlyph;
 	}
 	get voronoi(): VoronoiLayout<Node> {
 		return this._voronoi;

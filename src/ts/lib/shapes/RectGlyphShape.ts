@@ -24,11 +24,13 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	private _colorMap: d3Scale.ScaleLinear<string, string>;
 	private _enterColor: string = "#00D50F"; /* Value used for initial enterEdge color transition. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for exitEdge color transition. Default #D90000. */
+	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _maxGradientColor: string = "#000000"; /* Value used for max gradient color showing edge weight. Default #000000. */
 	private _minGradientColor: string = "#FFFFFF"; /* Value used for min gradient color showing edge weight. Default #FFFFFF. */
 	private _transitionDuration: number = 2000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
-	private _enterExitEnabled: boolean = false;
+	private _enterExitEnabled: boolean;
 
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -86,15 +88,10 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		}
 		if (this.enterExitEnabled) {
 			glyphs
-				.style("fill", this.enterCheck(data, timeStampIndex, attr)).transition().call(function () {
-					glyphs.transition().style("fill", function (d: Edge): string {
-						return self.colorMap(d.weight);
-					}).delay(self.transitionDuration).duration(self.transitionDuration).transition().call(function () {
-						glyphs.transition().delay(self.transitionDelay).style("fill", self.exitCheck(data, timeStampIndex, attr)).duration(self.transitionDuration);
-					});
-				});
+				.style("fill", this.enterExitCheck());
 		}
 		else {
+			this.initColorMap(data, timeStampIndex, attr);
 			glyphs.style("fill", function (d: Edge): string {
 				return self.colorMap(d.weight);
 			});
@@ -109,48 +106,28 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		return glyphs;
 	}
 	/**
-	 * Check to see if the RectGlyph object will be present in the next timestep data. If not present, the RectGlyph will transition
-	 * to the exit color. Timestep[n] will default all data to be exitEdges. See _exitColor.
-	 * @param data 
-	 * @param timeStampIndex 
-	 * @param attr 
-	 */
-	private exitCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
+	* Returns the correct color relating to the Enter/Exit of data in each timestep.
+	* Green: Edge entering and present in next timestep; Red: Edge was present already and exiting;
+	* Yellow: Edge entering and exiting in same timestep; Blue: Edge present in previous and next timestep.
+	*/
+	private enterExitCheck() {
 		let self = this;
-		return function (d: Edge, i: number): string {
-			if (timeStampIndex === data.timesteps.length - 1) {
-				return self.exitColor;
-			}
-			for (let e of data.timesteps[timeStampIndex + 1].edges) {
-				if (d.id === e.id) {
-					return self.colorMap(d.weight);
+		return function (d: Edge): string {
+			if (d.origSource.isEnter || d.origTarget.isEnter) {
+				if (d.origSource.isExit || d.origTarget.isExit) {
+					return self.enterExitColor;
 				}
-			}
-			return self.exitColor;
-		}
-	}
-	/**
-		 * Check to see if the RectGlyph object was present in the previous timestep data. If not present, the object
-		 * will start as the enter color then transition to the set attribute color. Timestep[0], returns to timestep[0], and
-		 * cycles back to timestep[0] default to enterNodes. See _enterColor.
-	 * @param data 
-	 * @param timeStampIndex 
-	 * @param attr 
-	 */
-	private enterCheck(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
-		let self = this;
-		return function (d: Edge, i: number): string {
-			if (timeStampIndex === 0) {
 				return self.enterColor;
 			}
-			for (let e of data.timesteps[timeStampIndex - 1].edges) {
-				if (d.id === e.id) {
-					return self.colorMap(d.weight);
+			else { //isEnter=false
+				if (d.origSource.isExit || d.origTarget.isExit) {
+					return self.exitColor;
 				}
+				return self.stableColor;
 			}
-			return self.enterColor;
 		}
 	}
+
 	/**
 	 * Initialize the colorscheme used for shading based on weights of edge data at that timestep.
 	 * @param data 
@@ -198,7 +175,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit?: boolean): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
@@ -241,6 +218,18 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	}
 	get exitColor(): string {
 		return this._exitColor;
+	}
+	set enterExitColor(c: string) {
+		this._enterExitColor = c;
+	}
+	get enterExitColor(): string {
+		return this._enterExitColor;
+	}
+	set stableColor(c: string) {
+		this._stableColor = c;
+	}
+	get stableColor(): string {
+		return this._stableColor;
 	}
 	set maxGradientColor(c: string) {
 		this._maxGradientColor = c;

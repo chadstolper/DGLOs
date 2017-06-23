@@ -24,23 +24,20 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawNodeGlyphs() {
-		this.drawNodeGlyphsAt(this.loc);
+		this.drawNodeGlyphsAt(this.drawLoc);
 	}
 	/**
 	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
 	* @param loc: Selection<any, {}, any, {}>
 	*/
-	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
-		let SVGPosition = 0;
-		if (SVGNum !== undefined) {
-			SVGPosition = SVGNum;
-		}
+	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
+
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
-		this._nodeG = loc.append("g").classed("nodeG", true);
+		let nodeG = loc.append("g").classed("nodeG", true);
 
 		//create child "g" in parent for NodeGlyphs
-		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(this._nodeG);
-		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(this._nodeG);
+		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(nodeG);
+		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(nodeG);
 
 		nodeLabelG.style("display", "none");
 		nodeCircleG.style("display", "none");
@@ -50,33 +47,43 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		glyphMap.set(this.labelShape, nodeLabelG);
 		glyphMap.set(this.circleShape, nodeCircleG);
 
-		this._nodeGlyphMap.set(SVGPosition, glyphMap);
+		this.nodeGlyphMap.set(SVGNum, glyphMap);
 	}
 	/**
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
-	public drawRegions() { //TODO: expand drawregions to accept multiple timestep-svg drawing scheme?
-		if (this._groupGlyphG === undefined) {
-			this._groupGlyphG = this.loc.append("g").classed("groupG", true).lower();
+	public drawRegions() {
+		this.drawRegionsAt(this.drawLoc);
+	}
+	/**
+	 * Initialize and draw all GroupGlyphShapes at a specified Selection, adds them to Map and sets display to "none" 
+	 * @param loc 
+	 * @param SVGNum 
+	 */
+	protected drawRegionsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
+		let groupGlyphG = loc.append("g").classed("groupG", true).lower();
 
-			//create child "g" in parent for GroupGlyphs
-			let voronoiG: Selection<any, {}, any, {}> = this.voronoiGroupGlyph.init(this._groupGlyphG);
+		//create child "g" in parent for GroupGlyphs
+		let voronoiG: Selection<any, {}, any, {}> = this.voronoiShape.init(groupGlyphG);
 
-			voronoiG.style("display", "none");
+		voronoiG.style("display", "none");
 
-			//add voronoi regions to map
-			let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
-			glyphMap.set(this.voronoiGroupGlyph, voronoiG);
+		//add voronoi regions to map
+		let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
+		glyphMap.set(this.voronoiShape, voronoiG);
 
-			this._groupGlyphMap.set(this._timeStampIndex, glyphMap);
-		}
-
+		this.groupGlyphMap.set(SVGNum, glyphMap);
+	}
+	/**
+	 * Transforms/makes visible the target GroupGlyph. //TODO: update descriptiong for flubber
+	 * @param shape 
+	 */
+	public transformGroupGlyphsTo(shape: GroupGlyph) {
 		let self = this;
-		this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
-			self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
+		this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+			self.currentGroupGlyph.transformTo(glyphMap.get(self.currentGroupGlyph), shape, glyphMap.get(shape));
 		});
-
-		this._currentGroupGlyph = this.voronoiGroupGlyph; //TODO: assign possibly somewhere else
+		this.currentGroupGlyph = shape;
 	}
 
 	/**
@@ -88,7 +95,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this.nodeGlyphMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 			self.currentNodeShape.transformTo(nodeGlyphMap.get(self.currentNodeShape), shape, nodeGlyphMap.get(shape));
 		});
-
 		this.currentNodeShape = shape;
 	}
 
@@ -96,7 +102,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * (Re)sets the visual attributes of the NodeGlyphShape
 	 * @param attr 
 	 */
-	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
+	public setNodeGlyphAttrs(attr: SVGAttrOpts) { //TODO: fix all sets to generic attropt varible
 		this._attrOpts = attr;
 	}
 
@@ -139,40 +145,21 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
 					.force("charge", d3force.forceManyBody().strength(-100))
-					.force("center", d3force.forceCenter(self.width / 2, self.height / 2))
-					.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
-						try {
-							if (self.currentNodeShape.shapeType === "Label") {
-								let ret: number;
-								d.nodes.forEach(function (n: Node) {
-									ret = n.label.length * 4; //TODO: replace # with font related function
-								});
-								return ret;
-							}
-							else {
-								return self._attrOpts.radius;
-							}
-						}
-						catch (err) {
-							console.log("unreachable error catch, how did you...?")
-							return null;
-						}
-					})
-						.iterations(2))
+					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
 						console.log("SIMULATION DONE HALLELUJAH!");
 					});
 			}
-			if (this._simulation !== undefined) {
+			if (this.simulation !== undefined) {
 				if (this.onClickRedraw) {//Egograph
-					this._simulation.nodes(this.dataToDraw.metaNodesAsArray);
+					this.simulation.nodes(this.dataToDraw.metaNodesAsArray);
 				} else {
-					this._simulation.nodes(self.data.metaNodesAsArray);
+					this.simulation.nodes(self.data.metaNodesAsArray);
 				}
 
 
-				let linkForce = (this._simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>);
+				let linkForce = (this.simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>);
 				if (this.onClickRedraw) {//Egograph
 					linkForce.links(self.dataToDraw.metaEdgesAsArray)
 				} else {
@@ -181,11 +168,38 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				linkForce.strength(function (d: MetaEdge): number {
 					return d.weight * 0.05;
 				});
-				this._simulation.alpha(.3).restart();
+				this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
+					try {
+						if (self.currentNodeShape.shapeType === "Label") {
+							let ret: number;
+							d.nodes.forEach(function (n: Node) {
+								let divisor: number;
+								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
+									divisor = 3;
+								}
+								else {
+									divisor = 3;
+								}
+								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
+							});
+							return ret;
+						}
+						else {
+							return self._attrOpts.radius;
+						}
+					}
+					catch (err) {
+						console.log(err)
+						return null;
+					}
+				})
+					.iterations(2))
+				this.simulation.alpha(.3).restart();
 			}
 
 		} else {
 			this.simulation.stop();
+			console.log("SIMULATION STOPPED. DO NOT PASS GO, DO NOT COLLECT $200");
 		}
 	}
 

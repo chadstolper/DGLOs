@@ -1,6 +1,7 @@
 import { DGLOs, AttrOpts } from "./DGLOs";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
@@ -19,23 +20,26 @@ import { Selection } from "d3-selection";
 export class DGLOsSVGBaseClass implements DGLOs {
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
-	protected _height = 500;
-	protected _width = 500;
+	protected _drawLocation: Selection<any, {}, any, {}>;
+	protected _height: number;
+	protected _width: number;
 	protected _dataToDraw: model.DynamicGraph;
 
-	public get height(): number {
-		return this._height;
-	}
-	public get width(): number {
-		return this._width;
-	}
 	public get data(): model.DynamicGraph {
 		return this._data;
 	}
 	public set data(dGraph: model.DynamicGraph) {
 		this._data = dGraph;
 	}
-
+	public get width(): number {
+		return this._width;
+	}
+	public get height(): number {
+		return this._height;
+	}
+	public get drawLoc(): Selection<any, {}, any, {}> {
+		return this._drawLocation;
+	}
 	public get loc(): Selection<any, {}, any, {}> {
 		return this._location;
 	}
@@ -46,12 +50,19 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		return this._dataToDraw;
 	}
 
-	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
+
+	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>, width: number = 500, height: number = 500) {
 		this._data = data;
 		this._location = location;
 		this._dataToDraw = data;
-		if (location.attr("width")) { this._width = +location.attr("width"); }
-		if (location.attr("height")) { this._height = +location.attr("height") }
+		this._width = width;
+		this._height = height;
+		this._drawLocation = location.append("svg")
+			.classed("SVG_1", true)
+			.attr("width", this.width)
+			.attr("height", this.height);
+		// if (location.attr("width")) { this._width = +location.attr("width"); }
+		// if (location.attr("height")) { this._height = +location.attr("height") }
 	}
 	private _centralNodeID: number | string;
 	/**
@@ -102,7 +113,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	 * The __only instance__ of VoronoiGroupGlyph in the entire code. Used to coordinate transitions
 	 * as well as to draw regions when needed.
 	 */
-	readonly voronoiGroupGlyph: VoronoiGroupGlyph = new VoronoiGroupGlyph();
+	readonly voronoiShape: VoronoiGroupGlyph = new VoronoiGroupGlyph();
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
@@ -113,6 +124,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void { };
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void { };
+	transformGroupGlyphsTo(shape: GroupGlyph): void { };
 
 	removeNodeGlyphs(): void { };
 	removeExitNodeGlyphs(): void { };

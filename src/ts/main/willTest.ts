@@ -14,13 +14,13 @@ import { GestaltGlyphs } from "../specs/GestaltGlyphs"
 import { DynamicNewcombGraph, DynamicNewcombTopFiveGraph } from "../data/NewcombGraph"
 import { DynamicFiveKingsGraph } from "../data/FiveKingsGraph"
 
-json("data/fivekings/fivekings.json", function (response: any) {
+json("data/newcomb/newcomb.json", function (response: any) {
 	let width: number, height: number;
 	//width = height = 1000;
 	width = height = 2000;
 	//height = 2000;
 	//width = 1000;
-	let g: DynamicGraph = new DynamicFiveKingsGraph(response);
+	let g: DynamicGraph = new DynamicNewcombGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
 		.attr("width", width).attr("height", height);
 	let lib: DGLOs = new DGLOsSVG(g, svg);

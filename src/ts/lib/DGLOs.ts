@@ -5,32 +5,40 @@ import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
+import { VoronoiGroupGlyph } from "./shapes/VoronoiGroupGlyph";
 
 import { Selection } from "d3-selection";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 
-/**
- * TODO: map of varibles/attrs:
-	- fill
-	- stroke
-	- stroke-width
-	- radius
-	- opacity
-	 - width, height
- */
-export interface AttrOpts { }
+export interface AttrOpts {
+
+	fill: string;
+	stroke: string;
+	stroke_width: number | string;
+	stroke_width_label: number;
+	radius: number;
+	width: number;
+	height: number;
+	opacity: number;
+	font_size: string;
+}
 
 export interface DGLOs {
 
 	data: DynamicGraph;
 	loc: Selection<any, {}, any, {}>;
+	drawLoc: Selection<any, {}, any, {}>;
+	width: number;
+	height: number;
 
 	readonly rectShape: RectGlyphShape;
 	readonly circleShape: CircleGlyphShape;
 	readonly labelShape: LabelGlyphShape;
 	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
 	readonly gestaltShape: GestaltGlyphShape;
+	readonly voronoiShape: VoronoiGroupGlyph;
 
 	/**
 	 * Draw all NodeGlyphs in a given data set at the current timestep.
@@ -84,6 +92,14 @@ export interface DGLOs {
 	 * Returns void.
 	 */
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void;
+
+
+	/**
+	 * Morphs GroupGlyph visual representation to another visualization
+	 * Accepts GroupGlyphShape.
+	 * Returns void.
+	 */
+	transformGroupGlyphsTo(shape: GroupGlyph): void;
 
 
 	/**
