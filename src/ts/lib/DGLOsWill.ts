@@ -144,35 +144,12 @@ export class DGLOsWill extends DGLOsMatt {
 	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix
 	 */
 	public positionNodeGlyphsMatrix() {
-		let curGraph = this.dataToDraw.timesteps[this._timeStampIndex];
-		let h = this.height;
-		let w = this.width;
-		let scale = scalePoint<number>()
-			.domain(this.dataToDraw.timesteps[this.timeStampIndex].nodes.map(function (d) { return d.index; }))
-			.range([h / 8, h])
-			.padding(0.5);
-		this.dataToDraw.timesteps.forEach(function (g: Graph) {
-			g.nodes.forEach(function (d: Node) {
-				d.x = w / 8 - (3 * w / 100);
-				d.y = scale(d.index);
-			});
-		});
-
-		//TODO: fix this code so it works. it is supposed to make another set of nodes to draw on the top axis of the graph. 
-		// let nodeList = this.dataToDraw.timesteps[this.timeStampIndex].nodes;
-		// let scale2 = scalePoint<number>()
-		// 	.domain(nodeList.map(function (d) { return d.index; }))
-		// 	.range([w / 8, w])
-		// 	.padding(0.5);
-		// nodeList.forEach(function (d: Node) {
-		// 	d.x = scale2(d.index);
-		// 	d.y = h / 8 - (3 * h / 100);
-		// })
-		// let otherAxisNodes = new DynamicGraph([new Graph(nodeList, [], 0)]);
-
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width, this.width,
+			this.height, this._edgeAttrOpts.opacity)
+		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
+		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
 		if (!this.multipleTimestepsEnabled) {
-			//this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), otherAxisNodes, this._timeStampIndex, this._attrOpts, this.enterExitColorEnabled);
-			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, this._attrOpts, this.enterExitColorEnabled);
+			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
@@ -312,11 +289,8 @@ export class DGLOsWill extends DGLOsMatt {
 			this.redrawEgo();
 		}
 	}
-
-
-
 	/**
-	 * collects a list of nodes with the same _origID across all timesteps and places them into
+	* collects a list of nodes with the same _origID across all timesteps and places them into
  	* __ _centralNodeArray ___.
  	*/
 	protected _getCentralNodes() {
