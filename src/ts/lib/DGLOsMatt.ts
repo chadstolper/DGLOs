@@ -36,11 +36,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			SVGPosition = SVGNum;
 		}
 		//create "g" group for nodes; parent "g". Acts as pseudo init() function
-		this._nodeG = loc.append("g").classed("nodeG", true);
+		let nodeG = loc.append("g").classed("nodeG", true);
 
 		//create child "g" in parent for NodeGlyphs
-		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(this._nodeG);
-		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(this._nodeG);
+		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(nodeG);
+		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(nodeG);
 
 		nodeLabelG.style("display", "none");
 		nodeCircleG.style("display", "none");
@@ -50,7 +50,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		glyphMap.set(this.labelShape, nodeLabelG);
 		glyphMap.set(this.circleShape, nodeCircleG);
 
-		this._nodeGlyphMap.set(SVGPosition, glyphMap);
+		this.nodeGlyphMap.set(SVGPosition, glyphMap);
 	}
 	/**
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
@@ -68,10 +68,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		if (SVGNum !== undefined) {
 			SVGPosition = SVGNum;
 		}
-		this._groupGlyphG = loc.append("g").classed("groupG", true).lower();
+		let groupGlyphG = loc.append("g").classed("groupG", true).lower();
 
 		//create child "g" in parent for GroupGlyphs
-		let voronoiG: Selection<any, {}, any, {}> = this.voronoiShape.init(this._groupGlyphG);
+		let voronoiG: Selection<any, {}, any, {}> = this.voronoiShape.init(groupGlyphG);
 
 		voronoiG.style("display", "none");
 
@@ -79,7 +79,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
 		glyphMap.set(this.voronoiShape, voronoiG);
 
-		this._groupGlyphMap.set(SVGPosition, glyphMap);
+		this.groupGlyphMap.set(SVGPosition, glyphMap);
 
 		// let self = this;
 		// this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
@@ -94,7 +94,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	public transformGroupGlyphsTo(shape: GroupGlyph) {
 		let self = this;
 		this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
-			self._currentGroupGlyph.transformTo(glyphMap.get(self._currentGroupGlyph), shape, glyphMap.get(shape));
+			self.currentGroupGlyph.transformTo(glyphMap.get(self.currentGroupGlyph), shape, glyphMap.get(shape));
 		});
 	}
 
