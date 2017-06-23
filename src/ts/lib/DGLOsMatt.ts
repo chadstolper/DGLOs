@@ -24,7 +24,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawNodeGlyphs() {
-		this.drawNodeGlyphsAt(this.loc);
+		this.drawNodeGlyphsAt(this.drawLoc);
 	}
 	/**
 	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
@@ -212,6 +212,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		} else {
 			this.simulation.stop();
+			console.log("SIMULATION STOPPED. DO NOT PASS GO, DO NOT COLLECT $200");
 		}
 	}
 

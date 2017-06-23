@@ -28,9 +28,10 @@ export class DGLOsSandwich extends DGLOsWill {
 	public drawTimesteps() {
 		if (this.data.timesteps.length > 1) {
 			for (let i = 1; i < this.data.timesteps.length; i++) {
-				let newSVG: Selection<any, {}, any, {}> = select("body").append("svg") //TODO: needs to be a way to set the selection entry, ie. replace "body" varible
+				let newSVG: Selection<any, {}, any, {}> = this.loc.append("svg") //TODO: needs to be a way to set the selection entry, ie. replace "body" varible
 					.classed("SVG_" + (i + 1), true)
-					.attr("width", this._width).attr("height", this._height);
+					.attr("width", this.width)
+					.attr("height", this.height);
 				this.drawEdgeGlyphsAt(newSVG, i);
 				this.drawNodeGlyphsAt(newSVG, i);
 				this.drawRegionsAt(newSVG, i);

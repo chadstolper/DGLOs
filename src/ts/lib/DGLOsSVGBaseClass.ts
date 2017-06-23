@@ -20,8 +20,9 @@ import { Selection } from "d3-selection";
 export class DGLOsSVGBaseClass implements DGLOs {
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
-	protected _height = 500;
-	protected _width = 500;
+	protected _drawLocation: Selection<any, {}, any, {}>;
+	protected _height: number = 500;
+	protected _width: number = 500;
 	protected _dataToDraw: model.DynamicGraph;
 
 	public get data(): model.DynamicGraph {
@@ -30,7 +31,15 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	public set data(dGraph: model.DynamicGraph) {
 		this._data = dGraph;
 	}
-
+	public get width(): number {
+		return this._width;
+	}
+	public get height(): number {
+		return this._height;
+	}
+	public get drawLoc(): Selection<any, {}, any, {}> {
+		return this._drawLocation;
+	}
 	public get loc(): Selection<any, {}, any, {}> {
 		return this._location;
 	}
@@ -41,12 +50,19 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		return this._dataToDraw;
 	}
 
-	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
+
+	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>, width?: number, height?: number) {
 		this._data = data;
 		this._location = location;
 		this._dataToDraw = data;
-		if (location.attr("width")) { this._width = +location.attr("width"); }
-		if (location.attr("height")) { this._height = +location.attr("height") }
+		this._width = width;
+		this._height = height;
+		this._drawLocation = location.append("svg")
+			.classed("SVG_1", true)
+			.attr("width", this.width)
+			.attr("height", this.height);
+		// if (location.attr("width")) { this._width = +location.attr("width"); }
+		// if (location.attr("height")) { this._height = +location.attr("height") }
 	}
 	private _centralNodeID: number | string;
 	/**
