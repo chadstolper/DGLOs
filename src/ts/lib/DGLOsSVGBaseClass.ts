@@ -21,8 +21,8 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
 	protected _drawLocation: Selection<any, {}, any, {}>;
-	protected _height: number = 500;
-	protected _width: number = 500;
+	protected _height: number;
+	protected _width: number;
 	protected _dataToDraw: model.DynamicGraph;
 
 	public get data(): model.DynamicGraph {
@@ -51,7 +51,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	}
 
 
-	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>, width?: number, height?: number) {
+	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>, width: number = 500, height: number = 500) {
 		this._data = data;
 		this._location = location;
 		this._dataToDraw = data;

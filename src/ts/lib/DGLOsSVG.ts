@@ -17,13 +17,13 @@ import { DGLOsSandwich } from "./DGLOsSandwich";
 export class SVGAttrOpts implements AttrOpts {
 	private _fill: string = null;
 	private _stroke: string = null;
-	private _stroke_width: number | string = 0;
-	private _stroke_width_label: number = 0;
+	private _stroke_width: number | string;
+	private _stroke_width_label: number;
 	private _radius: number = null;
 	private _width: number = null;
 	private _height: number = null;
-	private _opacity = 100;
-	private _font_size: string = "12px";
+	private _opacity: number;
+	private _font_size: string;
 
 	/**
 	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
@@ -39,7 +39,8 @@ export class SVGAttrOpts implements AttrOpts {
 	 * @param opacity 
 	 * @param font_size eg. "12px", "25pt", "10px", "14pt", etc.
 	 */
-	constructor(fill: string, stroke: string, stroke_width: number | string, stroke_width_label?: number, radius?: number, width?: number, height?: number, opacity?: number, font_size?: string) {
+	// constructor(fill: string, stroke: string, stroke_width: number | string, stroke_width_label?: number, radius?: number, width?: number, height?: number, opacity?: number, font_size?: string) {
+	constructor(fill: string, stroke: string, stroke_width: number | string = 0, stroke_width_label: number = 0, radius?: number, width?: number, height?: number, opacity: number = 100, font_size: string = "12px") {
 		this._fill = fill;
 		this._stroke = stroke;
 		this._radius = radius;

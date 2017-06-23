@@ -27,11 +27,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".  //TODO: update description for flubber
 	 * @param loc: Selection<any, {}, any, {}> 
 	 */
-	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
-		let SVGPosition = 0;
-		if (SVGNum !== undefined) {
-			SVGPosition = SVGNum;
-		}
+	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
 
 		let edgeG = loc.append("g").classed("edgeG", true);
 
@@ -48,7 +44,7 @@ export class DGLOsWill extends DGLOsMatt {
 		glyphMap.set(this.gestaltShape, edgeGestaltG);
 		glyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
 
-		this.edgeGlyphMap.set(SVGPosition, glyphMap);
+		this.edgeGlyphMap.set(SVGNum, glyphMap);
 	}
 
 	/**
