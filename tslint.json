@@ -1,11 +1,22 @@
 {
+	"extends": "tslint-microsoft-contrib",
 	"rules": {
-		"no-unused-expression": true,
+		"no-unused-expression": [
+			true,
+			"allow-fast-null-checks"
+		],
 		"no-duplicate-variable": true,
 		"no-unused-variable": true,
 		"curly": true,
 		"class-name": true,
-		"semicolon": ["always"],
-		"triple-equals": true
+		"semicolon": [
+			"always"
+		],
+		"triple-equals": true,
+		"no-unnecessary-semicolons": false,
+		"no-any": false,
+		"indent": [
+			"tabs"
+		]
 	}
 }

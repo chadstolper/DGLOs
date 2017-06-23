@@ -8,7 +8,8 @@
   "license": "Apache-2.0",
   "dependencies": {
     "d3": "^4.9.1",
-    "flubber": "^0.2.5"
+    "flubber": "^0.2.5",
+    "tslint-microsoft-contrib": "^5.0.0"
   },
   "devDependencies": {
     "@types/d3": "^4.8.0",
@@ -30,7 +31,7 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "tslint": "^5.4.1",
+    "tslint": "next",
     "typescript": "next"
   }
 }

@@ -10,11 +10,31 @@
 			"args": [],
 			"isBuildCommand": true,
 			"problemMatcher": [
-				"$lessCompile",
+				// "$lessCompile",
 				"$tsc",
-				"$jshint",
-				"$tslint4"
+				// "$jshint",
+				// "$tslint5",
+				{
+					"base": "$tslint5",
+					"fileLocation": [
+						"relative"
+						// "${workspaceRoot}"
+					]
+				}
 			]
+		},
+		{
+			"taskName": "exec:tslint",
+			"args": [],
+			"isTestCommand": true,
+			"problemMatcher": {
+				"base": "$tslint5",
+				"owner": "$tslint5",
+				"fileLocation": [
+					"relative"
+					// "${workspaceRoot}"
+				]
+			}
 		}
 	]
 }
