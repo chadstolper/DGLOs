@@ -18,7 +18,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
-	private _enterExitEnabled: boolean = false;
+	private _enterExitEnabled: boolean;
 
 	/**
 	 * Make new <g>
@@ -140,7 +140,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param noisePoints
 	 * @param voronoi
 	 */
-	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit?: boolean): void {
+	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let vData = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
 		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = voronoiG.selectAll("path.voronoi")

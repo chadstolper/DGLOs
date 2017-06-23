@@ -30,7 +30,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	private _minGradientColor: string = "#FFFFFF"; /* Value used for min gradient color showing edge weight. Default #FFFFFF. */
 	private _transitionDuration: number = 2000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
-	private _enterExitEnabled: boolean = false;
+	private _enterExitEnabled: boolean;
 
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -175,7 +175,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExit?: boolean): void {
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let rects = rectG.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);

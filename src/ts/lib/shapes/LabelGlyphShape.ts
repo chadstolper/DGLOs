@@ -12,6 +12,12 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	readonly _textAnchor: string = "middle";
 	readonly _dominantBaseline: string = "middle";
+	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	private _enterColor: string = "#00D50F"; /* Value used for entering and non-exiting nodes. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
+	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
+	private _enterExitEnabled: boolean;
 	// readonly _font = "ComicSans";
 
 	/**
@@ -47,12 +53,13 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param glyphs 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+		let self = this;
 		try {
 			glyphs
 				.text(function (d: Node): string {
 					return d.label;
-				});
+				})
+				.style("font-size", attrOpts.font_size);
 			glyphs
 				.attr("x", function (d: Node) {
 					return d.x;
@@ -63,41 +70,56 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 		} catch (err) {
 			console.log("No label nodes!");
 		}
-		try {
-			switch (attrOpts.fill) {
-				case "id":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.id);
-						});
-					break;
-
-				case "label":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.label);
-						});
-					break;
-
-				case "type":
-					glyphs
-						.attr("fill", function (d: Node): string {
-							return colorScheme(d.type);
-						});
-					break;
-			}
-
-			glyphs
-				.attr("stroke", attrOpts.stroke)
-				.attr("r", attrOpts.radius)
-				.attr("stroke-width", attrOpts.stroke_width)
-				.attr("opacity", attrOpts.opacity);
+		if (this.enterExitEnabled) {
+			glyphs.style("fill", this.enterExitCheck());
 		}
-		catch (err) {
-			console.log("attropts label undefined")
+		else {
+			glyphs.style("fill", function (d: Node): string {
+				return self.fill(d, attrOpts.fill);
+			})
 		}
+		glyphs
+			.attr("stroke", attrOpts.stroke)
+			.attr("r", attrOpts.radius)
+			.attr("stroke-width", attrOpts.stroke_width_label)
+			.attr("opacity", attrOpts.opacity);
 
 		return glyphs;
+	}
+	/**
+	 * Returns the correct color relating to the Enter/Exit of data in each timestep.
+	 * Green: Node entering and present in next timestep; Red: Node was present already and exiting;
+	 * Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
+	 */
+	private enterExitCheck() {
+		let self = this;
+		return function (d: Node): string {
+			if (d.isEnter) {
+				if (d.isExit) {
+					return self.enterExitColor;
+				}
+				return self.enterColor;
+			}
+			else {
+				if (d.isExit) {
+					return self.exitColor;
+				}
+				return self.stableColor;
+			}
+		}
+	}
+	/**
+	 * Fill the LabelGlyph selection color. Returns hexCode as string.
+	 * @param d 
+	 * @param key 
+	 */
+	private fill(d: Node, key: string) {
+		switch (key) {
+			case "id": return this.colorScheme(d.origID);
+			case "label": return this.colorScheme(d.label);
+			case "type": return this.colorScheme(d.type);
+			default: return key;
+		}
 	}
 
 	/**
@@ -128,7 +150,8 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts): void {
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit: boolean = false): void {
+		this.enterExitEnabled = enterExit;
 		let labelGlyphs = labelG.selectAll("text.label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
@@ -146,9 +169,47 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	get dominantBaseline(): string {
 		return this._dominantBaseline;
 	}
-
-
+	/**
+	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
+	 * @param scheme
+	 */
+	set colorScheme(scheme: ScaleOrdinal<string | number, string>) {
+		this._colorScheme = scheme;
+	}
+	get colorScheme(): ScaleOrdinal<string | number, string> {
+		return this._colorScheme;
+	}
+	set enterColor(c: string) {
+		this._enterColor = c;
+	}
+	get enterColor(): string {
+		return this._enterColor;
+	}
+	set exitColor(c: string) {
+		this._exitColor = c;
+	}
+	get exitColor(): string {
+		return this._exitColor;
+	}
+	set enterExitColor(c: string) {
+		this._enterExitColor = c;
+	}
+	get enterExitColor(): string {
+		return this._enterExitColor;
+	}
+	set stableColor(c: string) {
+		this._stableColor = c;
+	}
+	get stableColor(): string {
+		return this._stableColor;
+	}
 	get shapeType(): string {
 		return this._shapeType;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }

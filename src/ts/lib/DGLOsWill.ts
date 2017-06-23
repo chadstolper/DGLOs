@@ -20,18 +20,14 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Initialize and draw all EdgeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawEdgeGlyphs() {
-		this.drawEdgeGlyphsAt(this.loc);
+		this.drawEdgeGlyphsAt(this.drawLoc);
 	}
 
 	/**
 	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".  //TODO: update description for flubber
 	 * @param loc: Selection<any, {}, any, {}> 
 	 */
-	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum?: number) {
-		let SVGPosition = 0;
-		if (SVGNum !== undefined) {
-			SVGPosition = SVGNum;
-		}
+	protected drawEdgeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
 
 		let edgeG = loc.append("g").classed("edgeG", true);
 
@@ -48,7 +44,7 @@ export class DGLOsWill extends DGLOsMatt {
 		glyphMap.set(this.gestaltShape, edgeGestaltG);
 		glyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
 
-		this.edgeGlyphMap.set(SVGPosition, glyphMap);
+		this.edgeGlyphMap.set(SVGNum, glyphMap);
 	}
 
 	/**
@@ -110,8 +106,8 @@ export class DGLOsWill extends DGLOsMatt {
 				e.y = (+e.target.index / g.nodes.length) * h;
 			});
 		});
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length - 1),
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._edgeAttrOpts.stroke_width, this._edgeAttrOpts.stroke_width_label, null,
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
 			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, _matrixAttrOpts, this.enterExitColorEnabled);
@@ -128,8 +124,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 * the dynamic graph's timesteps.
 	 */
 	public enableStepping() {
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
-			this._width / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length - 1),
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._edgeAttrOpts.stroke_width, this._edgeAttrOpts.stroke_width_label, null,
+			this._width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1), this._height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length - 1),
 			this._edgeAttrOpts.opacity)
 
 		let self = this;

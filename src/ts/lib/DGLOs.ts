@@ -12,21 +12,26 @@ import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 
-/**
- * TODO: map of varibles/attrs:
-	- fill
-	- stroke
-	- stroke-width
-	- radius
-	- opacity
-	 - width, height
- */
-export interface AttrOpts { }
+export interface AttrOpts {
+
+	fill: string;
+	stroke: string;
+	stroke_width: number | string;
+	stroke_width_label: number;
+	radius: number;
+	width: number;
+	height: number;
+	opacity: number;
+	font_size: string;
+}
 
 export interface DGLOs {
 
 	data: DynamicGraph;
 	loc: Selection<any, {}, any, {}>;
+	drawLoc: Selection<any, {}, any, {}>;
+	width: number;
+	height: number;
 
 	readonly rectShape: RectGlyphShape;
 	readonly circleShape: CircleGlyphShape;
