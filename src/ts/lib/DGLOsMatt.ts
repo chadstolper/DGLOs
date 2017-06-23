@@ -180,11 +180,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							let ret: number;
 							d.nodes.forEach(function (n: Node) {
 								let divisor: number;
-								if (self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length) === "px") {
+								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
 									divisor = 3;
 								}
 								else {
-									divisor = 2;
+									divisor = 3;
 								}
 								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
 							});

@@ -102,9 +102,9 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			}
 			else {
 				if (d.isExit) {
-					return this.exitColor;
+					return self.exitColor;
 				}
-				return this.stableColor;
+				return self.stableColor;
 			}
 		}
 	}
