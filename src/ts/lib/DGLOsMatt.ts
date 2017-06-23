@@ -73,12 +73,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		glyphMap.set(this.voronoiShape, voronoiG);
 
 		this.groupGlyphMap.set(SVGNum, glyphMap);
-
-		// let self = this;
-		// this._groupGlyphMap.forEach(function (groupMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
-		// 	self._currentGroupGlyph.transformTo(groupMap.get(self._currentGroupGlyph), self.voronoiGroupGlyph, groupMap.get(self.voronoiGroupGlyph));
-		// });
-
 	}
 	/**
 	 * Transforms/makes visible the target GroupGlyph. //TODO: update descriptiong for flubber
