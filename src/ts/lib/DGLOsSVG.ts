@@ -23,6 +23,7 @@ export class SVGAttrOpts implements AttrOpts {
 	private _width: number = null;
 	private _height: number = null;
 	private _opacity = 100;
+	private _font_size: string = "12px";
 
 	/**
 	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
@@ -36,8 +37,9 @@ export class SVGAttrOpts implements AttrOpts {
 	 * @param width 
 	 * @param height 
 	 * @param opacity 
+	 * @param font_size eg. "12px", "25pt", "10px", "14pt", etc.
 	 */
-	constructor(fill: string, stroke: string, stroke_width: number | string, stroke_width_label?: number, radius?: number, width?: number, height?: number, opacity?: number) {
+	constructor(fill: string, stroke: string, stroke_width: number | string, stroke_width_label?: number, radius?: number, width?: number, height?: number, opacity?: number, font_size?: string) {
 		this._fill = fill;
 		this._stroke = stroke;
 		this._radius = radius;
@@ -46,6 +48,7 @@ export class SVGAttrOpts implements AttrOpts {
 		this._width = width;
 		this._height = height;
 		this._opacity = opacity;
+		this._font_size = font_size;
 	}
 
 	get fill(): string {
@@ -114,6 +117,14 @@ export class SVGAttrOpts implements AttrOpts {
 	}
 	set opacity(opacity: number) {
 		this._opacity = opacity;
+	}
+
+
+	set font_size(v: string) {
+		this._font_size = v;
+	}
+	get font_size(): string {
+		return this._font_size;
 	}
 }
 

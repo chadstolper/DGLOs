@@ -52,7 +52,8 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs
 				.text(function (d: Node): string {
 					return d.label;
-				});
+				})
+				.style("font-size", attrOpts.font_size);
 			glyphs
 				.attr("x", function (d: Node) {
 					return d.x;

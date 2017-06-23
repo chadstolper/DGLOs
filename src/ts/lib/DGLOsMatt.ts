@@ -115,7 +115,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * (Re)sets the visual attributes of the NodeGlyphShape
 	 * @param attr 
 	 */
-	public setNodeGlyphAttrs(attr: SVGAttrOpts) {
+	public setNodeGlyphAttrs(attr: SVGAttrOpts) { //TODO: fix all sets to generic attropt varible
 		this._attrOpts = attr;
 	}
 
@@ -164,7 +164,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							if (self.currentNodeShape.shapeType === "Label") {
 								let ret: number;
 								d.nodes.forEach(function (n: Node) {
-									ret = n.label.length * 4; //TODO: replace # with font related function
+									let divisor: number;
+									if (self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length) === "px") {
+										divisor = 2.5;
+									}
+									else {
+										divisor = 2;
+									}
+									ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
 								});
 								return ret;
 							}
