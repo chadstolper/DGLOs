@@ -1,4 +1,4 @@
-import { DynamicGraph, Node } from "../model/DynamicGraph";
+import { DynamicGraph } from "../model/DynamicGraph";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";

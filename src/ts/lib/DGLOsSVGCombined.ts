@@ -89,9 +89,37 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _centralNodeArray: Array<Node>;
 
+	/**
+	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
+	 */
+	protected setNoisePoints(): Node[] { //TODO: private or protected?
+		let newNoiseNodes: Node[] = new Array<Node>();
+		let iterator = 0;
+		let limit = ((this._width + this._height) / 2) / 100 * 5;
+		while (iterator < limit) {
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
+			newNoiseNodes[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);
+			newNoiseNodes[iterator + 0].y = 0;
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 1), iterator + 1, "noise", "", 0)); //bottom
+			newNoiseNodes[iterator + 1].x = Math.floor((Math.random() * this._width) + 1);
+			newNoiseNodes[iterator + 1].y = this._height;
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 2), iterator + 2, "noise", "", 0)); //left
+			newNoiseNodes[iterator + 2].x = 0;
+			newNoiseNodes[iterator + 2].y = Math.floor((Math.random() * this._height) + 1);
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 3), iterator + 3, "noise", "", 0)); //right
+			newNoiseNodes[iterator + 3].x = this._width;
+			newNoiseNodes[iterator + 3].y = Math.floor((Math.random() * this._height) + 1);
+			iterator += 4;
+		}
+		return newNoiseNodes;
+	}
+
 	//TODO: more getters and setter
-	set timeStampIndex(newTime: number) {
-		this._timeStampIndex = newTime;
+	set timeStampIndex(v: number) {
+		this._timeStampIndex = v;
 	}
 	get timeStampIndex(): number {
 		return this._timeStampIndex;
@@ -153,32 +181,28 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	get noisePoints(): Node[] {
 		return this._noisePoints;
 	}
-
-	/**
-	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
-	 */
-	protected setNoisePoints(): Node[] {
-		let newNoiseNodes: Node[] = new Array<Node>();
-		let iterator = 0;
-		let limit = ((this._width + this._height) / 2) / 100 * 5;
-		while (iterator < limit) {
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
-			newNoiseNodes[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);
-			newNoiseNodes[iterator + 0].y = 0;
-
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 1), iterator + 1, "noise", "", 0)); //bottom
-			newNoiseNodes[iterator + 1].x = Math.floor((Math.random() * this._width) + 1);
-			newNoiseNodes[iterator + 1].y = this._height;
-
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 2), iterator + 2, "noise", "", 0)); //left
-			newNoiseNodes[iterator + 2].x = 0;
-			newNoiseNodes[iterator + 2].y = Math.floor((Math.random() * this._height) + 1);
-
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 3), iterator + 3, "noise", "", 0)); //right
-			newNoiseNodes[iterator + 3].x = this._width;
-			newNoiseNodes[iterator + 3].y = Math.floor((Math.random() * this._height) + 1);
-			iterator += 4;
-		}
-		return newNoiseNodes;
+	set neighboringNodesMap(map: Map<string | number, Node>) {
+		this._neighboringNodesMap = map;
+	}
+	get neighboringNodesMap(): Map<string | number, Node> {
+		return this._neighboringNodesMap;
+	}
+	set nbrNodes(arr: Array<Node>) {
+		this._nbrNodes = arr;
+	}
+	get nbrNodes(): Array<Node> {
+		return this._nbrNodes;
+	}
+	set nbrEdges(arr: Array<Edge>) {
+		this._nbrEdges = arr;
+	}
+	get nbrEdges(): Array<Edge> {
+		return this._nbrEdges;
+	}
+	set centralNodeArray(arr: Array<Node>) {
+		this._centralNodeArray = arr;
+	}
+	get centralNodeArray(): Array<Node> {
+		return this._centralNodeArray;
 	}
 }
