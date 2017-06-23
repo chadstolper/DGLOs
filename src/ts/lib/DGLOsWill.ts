@@ -218,7 +218,6 @@ export class DGLOsWill extends DGLOsMatt {
 				self.timeStampIndex = (self.timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.width, self.height, self.enterExitColorEnabled);
-					//self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, _matrixAttrOpts, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
 					self.positionNodesAndEdgesForceDirected(true);

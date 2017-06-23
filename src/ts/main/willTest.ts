@@ -21,9 +21,8 @@ json("data/newcomb/newcomb.json", function (response: any) {
 	//height = 2000;
 	//width = 1000;
 	let g: DynamicGraph = new DynamicNewcombGraph(response);
-	let svg: Selection<any, {}, any, {}> = select("body").append("svg")
-		.attr("width", width).attr("height", height);
-	let lib: DGLOs = new DGLOsSVG(g, svg);
+	let svg: Selection<any, {}, any, {}> = select("body")
+	let lib: DGLOs = new DGLOsSVG(g, svg, width, height);
 	let vis: Technique = new MatrixAnimated(lib, {});
 	vis.draw();
 })
