@@ -144,7 +144,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix
 	 */
 	public positionNodeGlyphsMatrix() {
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width, this.width,
+		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._attrOpts.radius, this._edgeAttrOpts.stroke_width, this.width,
 			this.height, this._edgeAttrOpts.opacity)
 		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
 		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
@@ -172,6 +172,7 @@ export class DGLOsWill extends DGLOsMatt {
 			});
 		});
 		//TODO: _martixAttrOpts is what is making this code work, but it is an ugly solution imo. not very flexible.
+		console.log(this.width, this.height);
 		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width,
 			(7 / 8) * (this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
 			(7 / 8) * (this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._edgeAttrOpts.opacity)
