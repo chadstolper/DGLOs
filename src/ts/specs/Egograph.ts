@@ -8,7 +8,7 @@ export class Egograph extends Technique {
 		this.lib.drawNodeGlyphs();
 		this.lib.setCenterNode(this.lib.data.timesteps[0].nodes[0].origID);
 		this.lib.fixCentralNodePositions(true);
-		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
+		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.setNodeGlyphAttrs(attr);
 		this.lib.setEdgeGlyphAttrs(attr);

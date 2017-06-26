@@ -102,7 +102,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 			.attr("width", attr.width)
 			.attr("height", attr.height)
 			.style("opacity", attr.opacity);
-		console.log(attr.width);
 
 		return glyphs;
 	}

@@ -62,11 +62,9 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 					});
 				glyphs
 					.attr("x", function (d: Node) {
-						d.x = 100;
 						return d.x;
 					})
 					.attr("y", function (d: Node) {
-						d.y = 100;
 						return d.y;
 					});
 			} catch (err) {
@@ -112,7 +110,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 							return xAxisScale(d.index);
 						})
 						.attr("y", function (d: Node) {
-							// d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
+							d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
 							// return attrOpts.height / 8 - (3 * attrOpts.height / 100);
 							return d.y;
 						});
@@ -202,9 +200,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param timeStepIndex 
 	 */
 	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = undefined, enterExit: boolean = false): void {
-		console.log(duplicateNodes);
 		if (duplicateNodes === undefined) {
-			console.log("undefined duplicate nodes");
 			this.enterExitEnabled = enterExit;
 			let labelGlyphs = labelG.selectAll("text.label.side")
 				.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
