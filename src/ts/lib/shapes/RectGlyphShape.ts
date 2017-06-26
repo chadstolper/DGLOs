@@ -96,7 +96,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				return self.colorMap(d.weight);
 			});
 		}
-		console.log("attr width, height: " + attr.width, attr.height);
 		glyphs
 			.style("stroke", attr.stroke)
 			.attr("stroke-width", attr.stroke_width)

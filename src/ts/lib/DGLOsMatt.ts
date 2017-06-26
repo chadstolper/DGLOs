@@ -233,7 +233,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}
@@ -253,7 +253,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
 			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}

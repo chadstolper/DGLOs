@@ -380,7 +380,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public redrawEgo(): void {
 		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
-		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this._attrOpts);
+		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this._attrOpts, undefined);
 		if (this.onClickRedraw) {
 			this.positionNodesAndEdgesForceDirected(true);
 		}

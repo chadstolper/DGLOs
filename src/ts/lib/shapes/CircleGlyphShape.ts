@@ -65,52 +65,54 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			} catch (err) {
 				console.log("No label nodes!");
 			}
-		}
-		if (labelYAxis) {
-			let yAxisScale = scalePoint<number>()
-				.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
-				.range([attrOpts.height / 8, attrOpts.height])
-				.padding(0.5);
-			try {
-				glyphs
-					.text(function (d: Node): string {
-						return d.label;
-					});
-				glyphs
-					.attr("cx", function (d: Node) {
-						d.x = attrOpts.width / 8 - (3 * attrOpts.width / 100);
-						return attrOpts.width / 8 - (3 * attrOpts.width / 100);
-					})
-					.attr("cy", function (d: Node) {
-						d.y = yAxisScale(d.index);
-						return yAxisScale(d.index);
-					});
-			} catch (err) {
-				console.log("No label nodes!");
-			}
 		} else {
-			let xAxisScale = scalePoint<number>()
-				.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
-				.range([attrOpts.width / 8, attrOpts.width])
-				.padding(0.5);
-			try {
-				glyphs
-					.text(function (d: Node): string {
-						return d.label;
-					});
-				glyphs
-					.attr("cx", function (d: Node) {
-						d.x = xAxisScale(d.index);
-						return xAxisScale(d.index);
-					})
-					.attr("cy", function (d: Node) {
-						d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
-						return attrOpts.height / 8 - (3 * attrOpts.height / 100);
-					});
-			} catch (err) {
-				console.log("No label nodes!");
+			if (labelYAxis) {
+				let yAxisScale = scalePoint<number>()
+					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+					.range([attrOpts.height / 8, attrOpts.height])
+					.padding(0.5);
+				try {
+					glyphs
+						.text(function (d: Node): string {
+							return d.label;
+						});
+					glyphs
+						.attr("cx", function (d: Node) {
+							d.x = attrOpts.width / 8 - (3 * attrOpts.width / 100);
+							return attrOpts.width / 8 - (3 * attrOpts.width / 100);
+						})
+						.attr("cy", function (d: Node) {
+							d.y = yAxisScale(d.index);
+							return yAxisScale(d.index);
+						});
+				} catch (err) {
+					console.log("No label nodes!");
+				}
+			} else {
+				let xAxisScale = scalePoint<number>()
+					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+					.range([attrOpts.width / 8, attrOpts.width])
+					.padding(0.5);
+				try {
+					glyphs
+						.text(function (d: Node): string {
+							return d.label;
+						});
+					glyphs
+						.attr("cx", function (d: Node) {
+							d.x = xAxisScale(d.index);
+							return xAxisScale(d.index);
+						})
+						.attr("cy", function (d: Node) {
+							d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
+							return attrOpts.height / 8 - (3 * attrOpts.height / 100);
+						});
+				} catch (err) {
+					console.log("No label nodes!");
+				}
 			}
 		}
+
 		if (this.enterExitEnabled) {
 			glyphs.style("fill", this.enterExitCheck());
 		}
@@ -198,6 +200,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param timeStepIndex 
 	 */
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
+		console.log(duplicateNodes);
 		if (duplicateNodes === undefined) {
 			this.enterExitEnabled = enterExit;
 			let circleGlyphs = circleG.selectAll("circle.node.side")
