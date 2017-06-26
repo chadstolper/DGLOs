@@ -53,7 +53,6 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-		console.log("attrOpts width, height: " + attrOpts.width, attrOpts.height);
 		if (labelYAxis === undefined) {
 			try {
 				glyphs

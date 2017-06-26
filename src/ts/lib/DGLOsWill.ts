@@ -146,15 +146,14 @@ export class DGLOsWill extends DGLOsMatt {
 			this._edgeAttrOpts.radius, this.width, this.height, this._edgeAttrOpts.opacity, this._edgeAttrOpts.font_size);
 		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
 		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
-		console.log(this.height);
 		if (!this.multipleTimestepsEnabled) {
-			console.log(_matrixAttrOpts.height);
 			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, true, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, self._attrOpts, true, self.enterExitColorEnabled);
+				console.log(_matrixAttrOpts.height);
+				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, _matrixAttrOpts, true, self.enterExitColorEnabled);
 			});
 		}
 	}

@@ -96,11 +96,12 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				return self.colorMap(d.weight);
 			});
 		}
+		console.log("attr width, height: " + attr.width, attr.height);
 		glyphs
 			.style("stroke", attr.stroke)
 			.attr("stroke-width", attr.stroke_width)
 			.attr("width", attr.width)
-			.attr("height", attr.height)
+			.attr("height", (7 / 8) * (svgHeight / data.timesteps[timeStampIndex].nodes.length))
 			.style("opacity", attr.opacity);
 
 		return glyphs;
