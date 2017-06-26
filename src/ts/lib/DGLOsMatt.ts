@@ -165,10 +165,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							d.nodes.forEach(function (n: Node) {
 								let divisor: number;
 								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-									divisor = 3;
+									divisor = 3.25;  //TODO: see github issue
 								}
 								else {
-									divisor = 3;
+									divisor = 2.75;
 								}
 								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
 							});
