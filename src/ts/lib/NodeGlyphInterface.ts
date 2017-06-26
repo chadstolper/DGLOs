@@ -13,6 +13,6 @@ export interface NodeGlyphShape {
 	//TODO: position and add attr
 	transformTo(source: Selection<any, {}, any, {}>, shape: NodeGlyphShape, target: Selection<any, {}, any, {}>): void;
 	//TODO: says what it does on the tin
-	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit?: any): void;
+	draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit?: any): void;
 	//TODO: .data(data.timestep[timestepindex]).enter().call(initDraw(location))
 }
