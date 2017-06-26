@@ -43,9 +43,17 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _matrixViewEnabled: boolean = false;
 	/**
-	 * Boolean representing wheter enter exit coloring is enabled on the current visualization.
+	 * Boolean representing if enter exit coloring is enabled on the current visualization.
 	 */
 	protected _enterExitColorEnabled: boolean = false;
+	/**
+	 * Boolean representing if simulation calculations are using edge weights to determine edge pull.
+	 */
+	protected _simulationWeightEnabled: boolean = false;
+	/**
+	 * Boolean representing if simulation calculations are using relative label length to determine node spacing.
+	 */
+	protected _simulationCollisionEnabled: boolean = false;
 	/**
 	 * Holders for current shapes being used in the visualization.
 	 */
@@ -156,6 +164,18 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	}
 	get enterExitColorEnabled(): boolean {
 		return this._enterExitColorEnabled;
+	}
+	set simulationWeightEnabled(boo: boolean) {
+		this._simulationWeightEnabled = boo;
+	}
+	get simulationWeightEnabled(): boolean {
+		return this._simulationWeightEnabled;
+	}
+	set simulationCollisionEnabled(boo: boolean) {
+		this._simulationCollisionEnabled = boo;
+	}
+	get simulationCollisionEnabled(): boolean {
+		return this._simulationCollisionEnabled;
 	}
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;

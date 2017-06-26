@@ -137,8 +137,12 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	disableStepping(): void { };
 	enableEnterExitColoring(): void { };
 	disableEnterExitColoring(): void { };
+	enableSimulationWeight(): void { };
+	disableSimulationWeight(): void { };
+	enableSimulationCollision(): void { };
+	disableSimulationCollision(): void { };
 	drawTimesteps(): void { };
-	removeTimesteps(): void { };
+	removeTimesteps(): void { }; //TODO: write removeTimesteps.
 
 
 	positionNodesAndEdgesForceDirected(setRunning: boolean): void { };

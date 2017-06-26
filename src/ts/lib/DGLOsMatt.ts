@@ -122,6 +122,36 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
+	 * Enables collision calculations in the simulation relating to the weight of the edge between 2 nodes.
+	 * Best used when sure weights are not uniform.
+	 */
+	public enableSimulationWeight() {
+		this.simulationWeightEnabled = true;
+	}
+
+	/**
+	 * Disables collision calculations in the simulation based on edge weight.
+	 */
+	public disableSimulationWeight() {
+		this.simulationWeightEnabled = false;
+	}
+
+	/**
+	 * Enables collision calculations between nodes. If displaying labels, collision is based on relative label width.
+	 * If displaying non-labels, defaults to set attributes radius value or otherwise null.
+	 */
+	public enableSimulationCollision() {
+		this.simulationCollisionEnabled = true;
+	}
+
+	/**
+	 * Disables collision calculations between nodes.
+	 */
+	public disableSimulationCollision() {
+		this.simulationCollisionEnabled = false;
+	}
+
+	/**
 	 * Begins the force simulation for positioning Nodes and Edges, calls internal tick().
 	 * True initializes simulation, if already exisits assigns data for Nodes and Edges and restarts simulation.
 	 * False stops the simulation internal tick. Returns simulation at that point.
@@ -155,35 +185,39 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				} else {
 					linkForce.links(self.data.metaEdgesAsArray)
 				}
-				linkForce.strength(function (d: MetaEdge): number {
-					return d.weight * 0.05;
-				});
-				this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
-					try {
-						if (self.currentNodeShape.shapeType === "Label") {
-							let ret: number;
-							d.nodes.forEach(function (n: Node) {
-								let divisor: number;
-								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-									divisor = 3.25;  //TODO: see github issue
-								}
-								else {
-									divisor = 2.75;
-								}
-								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
-							});
-							return ret;
+				if (this.simulationWeightEnabled) {
+					linkForce.strength(function (d: MetaEdge): number {
+						return d.weight * 0.05;
+					});
+				}
+				if (this.simulationCollisionEnabled) {
+					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
+						try {
+							if (self.currentNodeShape.shapeType === "Label") {
+								let ret: number;
+								d.nodes.forEach(function (n: Node) {
+									let divisor: number;
+									if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
+										divisor = 3.25;  //TODO: see github issue
+									}
+									else {
+										divisor = 2.75;
+									}
+									ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
+								});
+								return ret;
+							}
+							else {
+								return self._attrOpts.radius;
+							}
 						}
-						else {
-							return self._attrOpts.radius;
+						catch (err) {
+							console.log(err)
+							return null;
 						}
-					}
-					catch (err) {
-						console.log(err)
-						return null;
-					}
-				})
-					.iterations(2))
+					})
+						.iterations(2));
+				}
 				this.simulation.alpha(.3).restart();
 			}
 

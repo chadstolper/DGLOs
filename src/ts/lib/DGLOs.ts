@@ -164,6 +164,32 @@ export interface DGLOs {
 
 
 	/**
+	 * Enables collision calculations in the simulation relating to the weight of the edge between 2 nodes.
+	 * Best used when sure weights are not uniform.
+	 */
+	enableSimulationWeight(): void;
+
+
+	/**
+	 * Disables collision calculations in the simulation based on edge weight.
+	 */
+	disableSimulationWeight(): void;
+
+
+	/**
+	 * Enables collision calculations between nodes. If displaying labels, collision is based on relative label width.
+	 * If displaying non-labels, defaults to set attributes radius value or otherwise null.
+	 */
+	enableSimulationCollision(): void;
+
+
+	/**
+	 * Disables collision calculations between nodes.
+	 */
+	disableSimulationCollision(): void;
+
+
+	/**
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
