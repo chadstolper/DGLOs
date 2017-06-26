@@ -152,8 +152,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				} else {
 					this.simulation.nodes(self.data.metaNodesAsArray);
 				}
-
-
 				let linkForce = (this.simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>);
 				if (this.onClickRedraw) {//Egograph
 					linkForce.links(self.dataToDraw.metaEdgesAsArray)
@@ -164,6 +162,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					linkForce.strength(function (d: MetaEdge): number {
 						return d.weight * 0.05;
 					});
+				}
+				else {
+					linkForce.strength();
 				}
 				if (this._simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
