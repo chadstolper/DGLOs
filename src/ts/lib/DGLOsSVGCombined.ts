@@ -5,7 +5,7 @@ import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 import { VoronoiLayout, voronoi } from "d3-voronoi";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
@@ -46,14 +46,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * Boolean representing if enter exit coloring is enabled on the current visualization.
 	 */
 	protected _enterExitColorEnabled: boolean = false;
-	/**
-	 * Boolean representing if simulation calculations are using edge weights to determine edge pull.
-	 */
-	protected _simulationWeightEnabled: boolean = false;
-	/**
-	 * Boolean representing if simulation calculations are using relative label length to determine node spacing.
-	 */
-	protected _simulationCollisionEnabled: boolean = false;
+
 	/**
 	 * Holders for current shapes being used in the visualization.
 	 */
@@ -72,6 +65,10 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * see comment by will //TODO: rewrite, see comment in edgeattropts
 	 */
 	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
+	/**
+	 * Attributes pertaining to the simulation. Empty constructor defaults.
+	 */
+	protected _simulationAttrOpts: SimulationAttrOpts = new SimulationAttrOpts();
 	protected _groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
@@ -96,6 +93,10 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
 	protected _centralNodeArray: Array<Node>;
+	/**
+	 * Value of charge applied in simulation.
+	 * Default of -100.
+	 */
 
 	/**
 	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
@@ -164,18 +165,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	}
 	get enterExitColorEnabled(): boolean {
 		return this._enterExitColorEnabled;
-	}
-	set simulationWeightEnabled(boo: boolean) {
-		this._simulationWeightEnabled = boo;
-	}
-	get simulationWeightEnabled(): boolean {
-		return this._simulationWeightEnabled;
-	}
-	set simulationCollisionEnabled(boo: boolean) {
-		this._simulationCollisionEnabled = boo;
-	}
-	get simulationCollisionEnabled(): boolean {
-		return this._simulationCollisionEnabled;
 	}
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;

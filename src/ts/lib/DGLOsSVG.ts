@@ -5,7 +5,7 @@ import { DGLOsSandwich } from "./DGLOsSandwich";
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
  * Specific options for fill and stroke-width:
  */
-export class SVGAttrOpts {//implements AttrOpts { //TODO: do we need attrOpts?
+export class SVGAttrOpts implements AttrOpts { //TODO: do we need attrOpts?
 	private _fill: string = null;
 	private _stroke: string = null;
 	private _stroke_width: number | string;
@@ -126,6 +126,53 @@ export class SimulationAttrOpts implements AttrOpts {
 	private _divisorPX: number;
 	private _simulationAlpha: number;
 	private _simulationCharge: number;
+
+	constructor(simulationCollision: boolean = false, simulationWeight: boolean = false, divisorPT: number = 2.75, divisorPX: number = 3.25, alpha: number = .03, charge: number = -100) {
+		this._simulationCollision = simulationCollision;
+		this._simulationWeight = simulationWeight;
+		this._divisorPT = divisorPT;
+		this._divisorPX = divisorPX;
+		this._simulationAlpha = alpha;
+		this._simulationCharge = charge;
+	}
+
+	set simulationCollisionEnabled(boo: boolean) {
+		this._simulationCollision = boo;
+	}
+	get simulationCollisionEnabled(): boolean {
+		return this._simulationCollision;
+	}
+	set simulationWeightEnabled(boo: boolean) {
+		this._simulationWeight = boo;
+	}
+	get simulationWeightEnabled(): boolean {
+		return this._simulationWeight;
+	}
+	set divisorPT(v: number) {
+		this._divisorPT = v;
+	}
+	get divisorPT(): number {
+		return this._divisorPT;
+	}
+	set divisorPX(v: number) {
+		this._divisorPX = v;
+	}
+	get divisorPX(): number {
+		return this._divisorPX;
+	}
+	set alpha(v: number) {
+		this._simulationAlpha = v;
+	}
+	get alpha(): number {
+		return this._simulationAlpha;
+	}
+	set charge(v: number) {
+		this._simulationCharge = v;
+	}
+	get charge(): number {
+		return this._simulationCharge;
+	}
+
 }
 
 export class DGLOsSVG extends DGLOsSandwich { } //TODO: why do we need to extend the sandwich?

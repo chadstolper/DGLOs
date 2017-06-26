@@ -108,7 +108,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	public setSimulationAttrs(attr: SimulationAttrOpts) {
-
+		this._simulationAttrOpts = attr;
 	}
 
 	/**
@@ -132,13 +132,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * @param setRunning: boolean
 	 */
 	public positionNodesAndEdgesForceDirected(setRunning: boolean) {
+		console.log(this._simulationAttrOpts)
 		if (setRunning) {
 			let self = this;
 			//Check simulation exists
 			if (this.simulation === undefined) {
 				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(-100))
+					.force("charge", d3force.forceManyBody().strength(this._simulationAttrOpts.charge))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
@@ -159,12 +160,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				} else {
 					linkForce.links(self.data.metaEdgesAsArray)
 				}
-				if (this.simulationWeightEnabled) {
+				if (this._simulationAttrOpts.simulationWeightEnabled) {
 					linkForce.strength(function (d: MetaEdge): number {
 						return d.weight * 0.05;
 					});
 				}
-				if (this.simulationCollisionEnabled) {
+				if (this._simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
 							if (self.currentNodeShape.shapeType === "Label") {
@@ -172,10 +173,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 								d.nodes.forEach(function (n: Node) {
 									let divisor: number;
 									if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-										divisor = 3.25;  //TODO: see github issue
+										divisor = self._simulationAttrOpts.divisorPX;
 									}
 									else {
-										divisor = 2.75;
+										divisor = self._simulationAttrOpts.divisorPT;
 									}
 									ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
 								});
@@ -192,7 +193,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					})
 						.iterations(2));
 				}
-				this.simulation.alpha(.3).restart();
+				this.simulation.alpha(this._simulationAttrOpts.alpha).restart();
 			}
 
 		} else {
