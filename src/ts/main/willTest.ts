@@ -14,13 +14,13 @@ import { GestaltGlyphs } from "../specs/GestaltGlyphs"
 import { DynamicNewcombGraph, DynamicNewcombTopFiveGraph } from "../data/NewcombGraph"
 import { DynamicFiveKingsGraph } from "../data/FiveKingsGraph"
 
-json("data/newcomb/newcomb.json", function (response: any) {
+json("data/radoslaw/emails.json", function (response: any) {
 	let width: number, height: number;
 	//width = height = 1000;
 	width = height = 2000;
 	//height = 2000;
 	//width = 1000;
-	let g: DynamicGraph = new DynamicNewcombGraph(response);
+	let g: DynamicGraph = new DynamicRadoslawGraph(response);
 	let svg: Selection<any, {}, any, {}> = select("body")
 	let lib: DGLOs = new DGLOsSVG(g, svg, width, height);
 	let vis: Technique = new MatrixTimeline(lib, {});

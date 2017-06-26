@@ -100,7 +100,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		glyphs
 			.style("stroke", attr.stroke)
 			.attr("stroke-width", attr.stroke_width)
-			.attr("width", attr.width)
+			.attr("width", (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length))
 			.attr("height", (7 / 8) * (svgHeight / data.timesteps[timeStampIndex].nodes.length))
 			.style("opacity", attr.opacity);
 
