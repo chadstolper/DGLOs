@@ -117,9 +117,9 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs.style("fill", this.enterExitCheck());
 		}
 		else {
-			// glyphs.style("fill", function (d: Node): string {
-			// 	return self.fill(d, attrOpts.fill);
-			// });
+			glyphs.style("fill", function (d: Node): string {
+				return self.fill(d, attrOpts.fill);
+			});
 			glyphs
 				.attr("fill", "id");
 		}
@@ -200,13 +200,13 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param timeStepIndex 
 	 */
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
-		console.log(duplicateNodes);
 		if (duplicateNodes === undefined) {
 			this.enterExitEnabled = enterExit;
 			let circleGlyphs = circleG.selectAll("circle.node.side")
 				.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 
 			circleGlyphs.exit().remove();
+
 			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 
 			circleGlyphs = circleGlyphs.merge(circleEnter);

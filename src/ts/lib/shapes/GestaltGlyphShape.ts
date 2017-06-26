@@ -77,29 +77,35 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return d.x;
 				})
 				.attr("y1", function (d: Edge) {
-					let yPos = 0;
-					for (let edge of data.timesteps[timeStampIndex].edges) {
-						if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
-							let yPos = weightScale(d.weight);
-							d.y = yPos + d.y;
-							break;
-						}
-					}
-					return yPos + d.y;
+					// let yPos = 0;
+					// for (let edge of data.timesteps[timeStampIndex].edges) {
+					// 	if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
+					// 		let yPos = weightScale(d.weight);
+					// 		d.y = yPos + d.y;
+					// 		break;
+					// 	}
+					// }
+					// return yPos + d.y;
+					return 10;
 				})
 				.attr("x2", function (d: Edge) {
-					return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
+					//return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
+					return 10;
 				})
 				.attr("y2", function (d: Edge) {
-					let yPos = 0
-					for (let edge of data.timesteps[timeStampIndex].edges) {
-						if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
-							let yPos = weightScale(edge.weight);
-							d.y = yPos + d.y;
-							break;
-						}
-					}
-					return yPos + d.y;
+					// let yPos = 0
+					// for (let edge of data.timesteps[timeStampIndex].edges) {
+					// 	if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
+					// 		let yPos = weightScale(edge.weight);
+					// 		if (yPos === NaN) {
+					// 			yPos = 0;
+					// 		}
+					// 		d.y = yPos + d.y;
+					// 		break;
+					// 	}
+					// }
+					// return yPos + d.y;
+					return 10;
 
 				})
 				.attr("stroke", attrOpts.stroke)
