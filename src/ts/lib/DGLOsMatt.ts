@@ -6,7 +6,7 @@ import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
@@ -107,6 +107,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._edgeAttrOpts = new SVGAttrOpts(null, "grey", null, 0.25);
 	}
 
+	public setSimulationAttrs(attr: SimulationAttrOpts) {
+
+	}
+
 	/**
 	 * Enables enter and exit coloring between timestep visualizations.
 	 */
@@ -119,36 +123,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	public disableEnterExitColoring() {
 		this.enterExitColorEnabled = false;
-	}
-
-	/**
-	 * Enables collision calculations in the simulation relating to the weight of the edge between 2 nodes.
-	 * Best used when sure weights are not uniform.
-	 */
-	public enableSimulationWeight() {
-		this.simulationWeightEnabled = true;
-	}
-
-	/**
-	 * Disables collision calculations in the simulation based on edge weight.
-	 */
-	public disableSimulationWeight() {
-		this.simulationWeightEnabled = false;
-	}
-
-	/**
-	 * Enables collision calculations between nodes. If displaying labels, collision is based on relative label width.
-	 * If displaying non-labels, defaults to set attributes radius value or otherwise null.
-	 */
-	public enableSimulationCollision() {
-		this.simulationCollisionEnabled = true;
-	}
-
-	/**
-	 * Disables collision calculations between nodes.
-	 */
-	public disableSimulationCollision() {
-		this.simulationCollisionEnabled = false;
 	}
 
 	/**

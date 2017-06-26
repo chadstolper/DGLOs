@@ -137,10 +137,6 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	disableStepping(): void { };
 	enableEnterExitColoring(): void { };
 	disableEnterExitColoring(): void { };
-	enableSimulationWeight(): void { };
-	disableSimulationWeight(): void { };
-	enableSimulationCollision(): void { };
-	disableSimulationCollision(): void { };
 	drawTimesteps(): void { };
 	removeTimesteps(): void { }; //TODO: write removeTimesteps.
 
@@ -167,6 +163,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	setNodeGlyphAttrs(opts: AttrOpts): void { };
 	setEdgeGlyphAttrs(opts: AttrOpts): void { };
 	setRegionGlyphAttrs(opts: AttrOpts): void { };
+	setSimulationAttrs(opts: AttrOpts): void { };
 	fixCentralNodePositions(bool: boolean): void { };
 	redrawEgo(): void { };
 }

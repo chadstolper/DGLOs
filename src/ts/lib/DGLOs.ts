@@ -12,18 +12,7 @@ import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 
-export interface AttrOpts {
-
-	fill: string;
-	stroke: string;
-	stroke_width: number | string;
-	stroke_width_label: number;
-	radius: number;
-	width: number;
-	height: number;
-	opacity: number;
-	font_size: string;
-}
+export interface AttrOpts { }
 
 export interface DGLOs {
 
@@ -164,32 +153,6 @@ export interface DGLOs {
 
 
 	/**
-	 * Enables collision calculations in the simulation relating to the weight of the edge between 2 nodes.
-	 * Best used when sure weights are not uniform.
-	 */
-	enableSimulationWeight(): void;
-
-
-	/**
-	 * Disables collision calculations in the simulation based on edge weight.
-	 */
-	disableSimulationWeight(): void;
-
-
-	/**
-	 * Enables collision calculations between nodes. If displaying labels, collision is based on relative label width.
-	 * If displaying non-labels, defaults to set attributes radius value or otherwise null.
-	 */
-	enableSimulationCollision(): void;
-
-
-	/**
-	 * Disables collision calculations between nodes.
-	 */
-	disableSimulationCollision(): void;
-
-
-	/**
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
@@ -281,5 +244,14 @@ export interface DGLOs {
 	 * attribute that can be assigned to regionGlyphs. 
 	 */
 	setRegionGlyphAttrs(opts: AttrOpts): void;
+
+
+	/**
+	 * Takes a map of varibles and applies them to the simulation
+	 * to enable or disable certain calculations and change related values.
+	 */
+	setSimulationAttrs(opts: AttrOpts): void;
+
+
 	fixCentralNodePositions(bool: boolean): void;
 }

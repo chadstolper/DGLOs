@@ -5,7 +5,7 @@ import { DGLOsSandwich } from "./DGLOsSandwich";
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
  * Specific options for fill and stroke-width:
  */
-export class SVGAttrOpts implements AttrOpts { //TODO: do we need attrOpts?
+export class SVGAttrOpts {//implements AttrOpts { //TODO: do we need attrOpts?
 	private _fill: string = null;
 	private _stroke: string = null;
 	private _stroke_width: number | string;
@@ -117,6 +117,15 @@ export class SVGAttrOpts implements AttrOpts { //TODO: do we need attrOpts?
 	get font_size(): string {
 		return this._font_size;
 	}
+}
+
+export class SimulationAttrOpts implements AttrOpts {
+	private _simulationCollision: boolean;
+	private _simulationWeight: boolean;
+	private _divisorPT: number;
+	private _divisorPX: number;
+	private _simulationAlpha: number;
+	private _simulationCharge: number;
 }
 
 export class DGLOsSVG extends DGLOsSandwich { } //TODO: why do we need to extend the sandwich?
