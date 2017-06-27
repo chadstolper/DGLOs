@@ -93,7 +93,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		}
 		edges
 			.attr("stroke-width", function (d: Edge): number {
-				if (attrOpts.stroke_width === "weight") {
+				if (attrOpts.stroke_width_edge === "weight") {
 					return d.weight;
 				}
 				return +attrOpts.stroke_width;
