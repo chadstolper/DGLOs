@@ -163,9 +163,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 						return d.weight * 0.05;
 					});
 				}
-				else {
-					linkForce.strength();
-				}
 				if (this._simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						try {
