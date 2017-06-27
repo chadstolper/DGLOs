@@ -1,4 +1,5 @@
 import { DynamicGraph } from "../model/DynamicGraph";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -11,8 +12,6 @@ import { Selection } from "d3-selection";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-
-export interface AttrOpts { }
 
 export interface DGLOs {
 
@@ -227,7 +226,7 @@ export interface DGLOs {
 	 * present in the current visualization. Examples include
 	 * color and size.
 	 */
-	setNodeGlyphAttrs(opts: AttrOpts): void;
+	setNodeGlyphAttrs(opts: SVGAttrOpts): void;
 
 
 	/**
@@ -235,7 +234,7 @@ export interface DGLOs {
 	 * present in the current visualization. Examples include line-thickness
 	 * and color.
 	 */
-	setEdgeGlyphAttrs(opts: AttrOpts): void;
+	setEdgeGlyphAttrs(opts: SVGAttrOpts): void;
 
 
 	/**
@@ -243,14 +242,14 @@ export interface DGLOs {
 	 * present in the current visualization. Color is an example of an
 	 * attribute that can be assigned to regionGlyphs. 
 	 */
-	setRegionGlyphAttrs(opts: AttrOpts): void;
+	setRegionGlyphAttrs(opts: SVGAttrOpts): void;
 
 
 	/**
 	 * Takes a map of varibles and applies them to the simulation
 	 * to enable or disable certain calculations and change related values.
 	 */
-	setSimulationAttrs(opts: AttrOpts): void;
+	setSimulationAttrs(opts: SimulationAttrOpts): void;
 
 
 	fixCentralNodePositions(bool: boolean): void;

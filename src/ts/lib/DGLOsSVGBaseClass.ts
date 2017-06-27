@@ -1,8 +1,9 @@
-import { DGLOs, AttrOpts } from "./DGLOs";
+import { DGLOs } from "./DGLOs";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -166,10 +167,10 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		opacity
 		width, height
 	*/
-	setNodeGlyphAttrs(opts: AttrOpts): void { };
-	setEdgeGlyphAttrs(opts: AttrOpts): void { };
-	setRegionGlyphAttrs(opts: AttrOpts): void { };
-	setSimulationAttrs(opts: AttrOpts): void { };
+	setNodeGlyphAttrs(opts: SVGAttrOpts): void { };
+	setEdgeGlyphAttrs(opts: SVGAttrOpts): void { };
+	setRegionGlyphAttrs(opts: SVGAttrOpts): void { };
+	setSimulationAttrs(opts: SimulationAttrOpts): void { };
 	fixCentralNodePositions(bool: boolean): void { };
 	redrawEgo(): void { };
 }

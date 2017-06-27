@@ -1,11 +1,10 @@
-import { AttrOpts } from "./DGLOs";
 import { DGLOsSandwich } from "./DGLOsSandwich";
 
 /**
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
  * Specific options for fill and stroke-width:
  */
-export class SVGAttrOpts implements AttrOpts { //TODO: do we need attrOpts?
+export class SVGAttrOpts {
 	private _fill: string = null;
 	private _stroke: string = null;
 	private _stroke_width: number | string;
@@ -121,7 +120,7 @@ export class SVGAttrOpts implements AttrOpts { //TODO: do we need attrOpts?
 }
 
 
-export class SimulationAttrOpts implements AttrOpts {
+export class SimulationAttrOpts {
 	private _simulationCollision: boolean;
 	private _simulationWeight: boolean;
 	private _divisorPT: number;

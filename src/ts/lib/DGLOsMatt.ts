@@ -143,7 +143,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					.on("tick", this.ticked(self))
 					.on("end", function () {
 						console.log("SIMULATION DONE HALLELUJAH!");
-						self.removeTimesteps();
 					});
 			}
 			if (this.simulation !== undefined) {
@@ -207,8 +206,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	private tick() {
 		let self = this; //d3 scope this issue
-
-		console.log("tick");
 
 		if (!this._multipleTimestepsEnabled) { //check if small multiples are enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep
