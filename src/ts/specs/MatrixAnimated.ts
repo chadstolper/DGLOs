@@ -16,7 +16,7 @@ export class MatrixAnimated extends Technique {
 		let attr2 = new SVGAttrOpts("blue", "black", 1, 1, 10, 2000, 2000);
 		this.lib.drawNodeGlyphs();
 		this.lib.setEdgeGlyphAttrs(attr2);
-		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformEdgeGlyphsTo(this.lib.rectShape);
 		this.lib.setNodeGlyphAttrs(attr);
