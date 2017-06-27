@@ -1,5 +1,5 @@
 import { Technique } from "./Technique"
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGAttrOpts, SimulationAttrOpts } from "../lib/DGLOsSVG";
 
 export class ForceDirectedTimeline extends Technique {
 	public draw() {
@@ -10,7 +10,7 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", 1));
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
-		// this.lib.enableEnterExitColoring();
+		this.lib.setSimulationAttrs(new SimulationAttrOpts());
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
 }
