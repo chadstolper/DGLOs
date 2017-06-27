@@ -89,7 +89,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			edges.style("stroke", this.enterExitCheck());
 		}
 		else {
-			edges.style("stroke", attrOpts.stroke);
+			edges.style("stroke", attrOpts.stroke_edge);
 		}
 		edges
 			.attr("stroke-width", function (d: Edge): number {

@@ -92,7 +92,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * (Re)sets the visual attributes of the NodeGlyphShape
 	 * @param attr 
 	 */
-	public setNodeGlyphAttrs(attr: SVGAttrOpts) { //TODO: fix all sets to generic attropt varible
+	public setAttributes(attr: SVGAttrOpts) {
 		this._attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, attr.stroke_width, attr.stroke_width_edge, attr.radius, attr.width, attr.height, attr.opacity, attr.font_size);
 	}
 

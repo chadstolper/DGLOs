@@ -133,6 +133,7 @@ export class DGLOsWill extends DGLOsMatt {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, matrixAttrOpts, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
+					self._simulationAttrOpts.alpha = 0; //TODO: figure out how to fix this, or if this is even an issue...
 					self.positionNodesAndEdgesForceDirected(true);
 				}
 			});
@@ -146,6 +147,7 @@ export class DGLOsWill extends DGLOsMatt {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, matrixAttrOpts, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
+					self._simulationAttrOpts.alpha = 0;
 					self.positionNodesAndEdgesForceDirected(true);
 				}
 			});

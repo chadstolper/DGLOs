@@ -8,7 +8,7 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.drawTimesteps();
 		this.lib.setAttributes(new SVGAttrOpts("id", "grey", "black", 2, 1, 10, null, null, 100, "12pt"));
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
-		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.setSimulationAttrs(new SimulationAttrOpts());
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
