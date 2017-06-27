@@ -127,7 +127,7 @@ export class SimulationAttrOpts implements AttrOpts {
 	private _simulationAlpha: number;
 	private _simulationCharge: number;
 
-	constructor(simulationCollision: boolean = true, simulationWeight: boolean = true, divisorPT: number = 2.75, divisorPX: number = 3.25, alpha: number = .03, charge: number = -100) {
+	constructor(simulationCollision: boolean = true, simulationWeight: boolean = true, divisorPT: number = 2.75, divisorPX: number = 3.25, alpha: number = .3, charge: number = -100) {
 		this._simulationCollision = simulationCollision;
 		this._simulationWeight = simulationWeight;
 		this._divisorPT = divisorPT;

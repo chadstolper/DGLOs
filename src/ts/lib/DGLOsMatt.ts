@@ -132,7 +132,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * @param setRunning: boolean
 	 */
 	public positionNodesAndEdgesForceDirected(setRunning: boolean) {
-		console.log(this._simulationAttrOpts)
 		if (setRunning) {
 			let self = this;
 			//Check simulation exists
@@ -158,39 +157,39 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				} else {
 					linkForce.links(self.data.metaEdgesAsArray)
 				}
-				// if (this._simulationAttrOpts.simulationWeightEnabled) {
-				// 	linkForce.strength(function (d: MetaEdge): number {
-				// 		return d.weight * 0.05;
-				// 	});
-				// }
-				// if (this._simulationAttrOpts.simulationCollisionEnabled) {
-				// 	this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
-				// 		try {
-				// 			if (self.currentNodeShape.shapeType === "Label") {
-				// 				let ret: number;
-				// 				d.nodes.forEach(function (n: Node) {
-				// 					let divisor: number;
-				// 					if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-				// 						divisor = self._simulationAttrOpts.divisorPX;
-				// 					}
-				// 					else {
-				// 						divisor = self._simulationAttrOpts.divisorPT;
-				// 					}
-				// 					ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
-				// 				});
-				// 				return ret;
-				// 			}
-				// 			else {
-				// 				return self._attrOpts.radius;
-				// 			}
-				// 		}
-				// 		catch (err) {
-				// 			console.log(err)
-				// 			return null;
-				// 		}
-				// 	})
-				// 		.iterations(2));
-				// }
+				if (this._simulationAttrOpts.simulationWeightEnabled) {
+					linkForce.strength(function (d: MetaEdge): number {
+						return d.weight * 0.05;
+					});
+				}
+				if (this._simulationAttrOpts.simulationCollisionEnabled) {
+					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
+						try {
+							if (self.currentNodeShape.shapeType === "Label") {
+								let ret: number;
+								d.nodes.forEach(function (n: Node) {
+									let divisor: number;
+									if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
+										divisor = self._simulationAttrOpts.divisorPX;
+									}
+									else {
+										divisor = self._simulationAttrOpts.divisorPT;
+									}
+									ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
+								});
+								return ret;
+							}
+							else {
+								return self._attrOpts.radius;
+							}
+						}
+						catch (err) {
+							console.log(err)
+							return null;
+						}
+					})
+						.iterations(2));
+				}
 				this.simulation.alpha(this._simulationAttrOpts.alpha).restart();
 			}
 
