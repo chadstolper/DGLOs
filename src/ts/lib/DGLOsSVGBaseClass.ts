@@ -125,7 +125,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	drawEdgeGlyphs(): void { };
 	drawAllNodeGlyphs(): void { };
 	drawAllEdgeGlyphs(): void { };
-	drawRegions(): void { }; //take an attr for color in draw method
+	drawRegions(): void { };
 
 
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void { };
@@ -144,7 +144,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	enableEnterExitColoring(): void { };
 	disableEnterExitColoring(): void { };
 	drawTimesteps(): void { };
-	removeTimesteps(): void { }; //TODO: write removeTimesteps.
+	removeTimesteps(delay?: number): void { };
 
 
 	positionNodesAndEdgesForceDirected(setRunning: boolean): void { };

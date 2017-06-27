@@ -163,7 +163,7 @@ export interface DGLOs {
 	 * Removes all but one graph visualization from a series of graph 
 	 * visualizations.
 	 */
-	removeTimesteps(): void;
+	removeTimesteps(delay?: number): void;
 
 	/**
 	 * Starts running a node positioning simulation.

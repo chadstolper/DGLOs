@@ -165,28 +165,22 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				}
 				if (this._simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
-						try {
-							if (self.currentNodeShape.shapeType === "Label") {
-								let ret: number;
-								d.nodes.forEach(function (n: Node) {
-									let divisor: number;
-									if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-										divisor = self._simulationAttrOpts.divisorPX;
-									}
-									else {
-										divisor = self._simulationAttrOpts.divisorPT;
-									}
-									ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
-								});
-								return ret;
-							}
-							else {
-								return self._attrOpts.radius;
-							}
+						if (self.currentNodeShape.shapeType === "Label") {
+							let ret: number;
+							d.nodes.forEach(function (n: Node) {
+								let divisor: number;
+								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
+									divisor = self._simulationAttrOpts.divisorPX;
+								}
+								else {
+									divisor = self._simulationAttrOpts.divisorPT;
+								}
+								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
+							});
+							return ret;
 						}
-						catch (err) {
-							console.log(err)
-							return null;
+						else {
+							return self._attrOpts.radius;
 						}
 					})
 						.iterations(2));
@@ -213,6 +207,8 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	private tick() {
 		let self = this; //d3 scope this issue
+
+		console.log("tick");
 
 		if (!this._multipleTimestepsEnabled) { //check if small multiples are enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep

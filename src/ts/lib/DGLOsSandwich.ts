@@ -25,29 +25,28 @@ export class DGLOsSandwich extends DGLOsWill {
 	}
 
 	/**
-	 * If timeline view is enabled, all SVG elements are removed from the DOM, and a new single one is created starting at the first timestep in the data.
-	 * Takes as void n amount of SVGs, returns one SVG classed "SVG_1".
+	 * If timeline view is enabled, all SVG elements except SVG_1 are removed. If not specified, delay between SVG removal defaults to 0 seconds.
+	 * @param delay
 	 */
-	public removeTimesteps() {
+	public removeTimesteps(delay: number = 0) {
 		let self = this;
 		if (this.multipleTimestepsEnabled) {
-			console.log("hi")
-			let exitSVG = this.location.selectAll("svg").transition().delay(function (d: any, i: number): number {
-				console.log(i)
-				console.log(500 * (i + 1))
-				return 500 * (i + 1);
-			})
-				.style("opacity", 0);
-			// exitSVG.remove();
-			// let newSVG: Selection<any, {}, any, {}> = this.location.append("svg")
-			// 	.classed("SVG_1", true)
-			// 	.attr("width", this.width)
-			// 	.attr("height", this.height);
-			// this.drawEdgeGlyphsAt(newSVG);
-			// this.drawNodeGlyphsAt(newSVG); //TODO: expect chad not to like calling dglos inside dglos
-			// this.transformNodeGlyphsTo(this.currentNodeShape);
-			// this.transformEdgeGlyphsTo(this.currentEdgeShape);
-			// this.simulation.restart();
+			let reference: Array<number> = new Array<number>(); //array for reversing delay calculations
+			let SVGMap: Map<number, Selection<any, {}, any, {}>> = new Map<number, Selection<any, {}, any, {}>>();
+			for (let i = this.data.timesteps.length; i > 0; i--) {
+				let getSVG = this.location.select("svg.SVG_" + i);
+				SVGMap.set(i, getSVG);
+				reference.push(i);
+			}
+			SVGMap.forEach(function (curSVG: Selection<any, {}, any, {}>, i: number) {
+				if (i !== 1) {
+					curSVG.transition().delay(function (): number {
+						return delay * reference[i - 1];
+					})
+						.style("opacity", 0);
+					curSVG.transition().delay(500 * reference.length).remove();
+				}
+			});
 		}
 		this.multipleTimestepsEnabled = false;
 	}
