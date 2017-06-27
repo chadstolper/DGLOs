@@ -1,17 +1,10 @@
-import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
-import { Selection } from "d3-selection";
 import { Node, Edge, Graph, DynamicGraph, MetaNode } from "../model/dynamicgraph";
-import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsMatt } from "./DGLOsMatt";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { SVGAttrOpts } from "../lib/DGLOsSVG";
-import { RectGlyphShape } from "./shapes/RectGlyphShape";
-import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
-import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
-import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
-import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
 import * as d3 from "d3-selection";
+import { Selection } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import { extent } from "d3-array";
 
@@ -20,7 +13,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Initialize and draw all EdgeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawEdgeGlyphs() {
-		this.drawEdgeGlyphsAt(this.drawLoc);
+		this.drawEdgeGlyphsAt(this.drawLocation);
 	}
 
 	/**
@@ -130,7 +123,7 @@ export class DGLOsWill extends DGLOsMatt {
 
 		let self = this;
 
-		let buttonDiv = d3.select("body").append("div").classed("buttons", true)
+		let buttonDiv = d3.select("body").append("div").classed("buttons", true) //TODO: change input location, ala change "body"
 		let prevButton = buttonDiv.append("button")
 			.text("<--")
 			.on("click", function () {

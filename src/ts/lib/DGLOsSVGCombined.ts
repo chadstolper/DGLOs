@@ -5,7 +5,7 @@ import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 import { VoronoiLayout, voronoi } from "d3-voronoi";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
@@ -43,9 +43,10 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	protected _matrixViewEnabled: boolean = false;
 	/**
-	 * Boolean representing wheter enter exit coloring is enabled on the current visualization.
+	 * Boolean representing if enter exit coloring is enabled on the current visualization.
 	 */
 	protected _enterExitColorEnabled: boolean = false;
+
 	/**
 	 * Holders for current shapes being used in the visualization.
 	 */
@@ -64,6 +65,10 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * see comment by will //TODO: rewrite, see comment in edgeattropts
 	 */
 	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
+	/**
+	 * Attributes pertaining to the simulation. Empty constructor defaults.
+	 */
+	protected _simulationAttrOpts: SimulationAttrOpts = new SimulationAttrOpts();
 	protected _groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
 	/**
 	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
@@ -88,10 +93,42 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
 	protected _centralNodeArray: Array<Node>;
+	/**
+	 * Value of charge applied in simulation.
+	 * Default of -100.
+	 */
+
+	/**
+	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
+	 */
+	protected setNoisePoints(): Node[] { //TODO: private or protected?
+		let newNoiseNodes: Node[] = new Array<Node>();
+		let iterator = 0;
+		let limit = ((this._width + this._height) / 2) / 100 * 5;
+		while (iterator < limit) {
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
+			newNoiseNodes[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);
+			newNoiseNodes[iterator + 0].y = 0;
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 1), iterator + 1, "noise", "", 0)); //bottom
+			newNoiseNodes[iterator + 1].x = Math.floor((Math.random() * this._width) + 1);
+			newNoiseNodes[iterator + 1].y = this._height;
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 2), iterator + 2, "noise", "", 0)); //left
+			newNoiseNodes[iterator + 2].x = 0;
+			newNoiseNodes[iterator + 2].y = Math.floor((Math.random() * this._height) + 1);
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 3), iterator + 3, "noise", "", 0)); //right
+			newNoiseNodes[iterator + 3].x = this._width;
+			newNoiseNodes[iterator + 3].y = Math.floor((Math.random() * this._height) + 1);
+			iterator += 4;
+		}
+		return newNoiseNodes;
+	}
 
 	//TODO: more getters and setter
-	set timeStampIndex(newTime: number) {
-		this._timeStampIndex = newTime;
+	set timeStampIndex(v: number) {
+		this._timeStampIndex = v;
 	}
 	get timeStampIndex(): number {
 		return this._timeStampIndex;
@@ -153,32 +190,28 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	get noisePoints(): Node[] {
 		return this._noisePoints;
 	}
-
-	/**
-	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
-	 */
-	protected setNoisePoints(): Node[] {
-		let newNoiseNodes: Node[] = new Array<Node>();
-		let iterator = 0;
-		let limit = ((this._width + this._height) / 2) / 100 * 5;
-		while (iterator < limit) {
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
-			newNoiseNodes[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);
-			newNoiseNodes[iterator + 0].y = 0;
-
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 1), iterator + 1, "noise", "", 0)); //bottom
-			newNoiseNodes[iterator + 1].x = Math.floor((Math.random() * this._width) + 1);
-			newNoiseNodes[iterator + 1].y = this._height;
-
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 2), iterator + 2, "noise", "", 0)); //left
-			newNoiseNodes[iterator + 2].x = 0;
-			newNoiseNodes[iterator + 2].y = Math.floor((Math.random() * this._height) + 1);
-
-			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 3), iterator + 3, "noise", "", 0)); //right
-			newNoiseNodes[iterator + 3].x = this._width;
-			newNoiseNodes[iterator + 3].y = Math.floor((Math.random() * this._height) + 1);
-			iterator += 4;
-		}
-		return newNoiseNodes;
+	set neighboringNodesMap(map: Map<string | number, Node>) {
+		this._neighboringNodesMap = map;
+	}
+	get neighboringNodesMap(): Map<string | number, Node> {
+		return this._neighboringNodesMap;
+	}
+	set nbrNodes(arr: Array<Node>) {
+		this._nbrNodes = arr;
+	}
+	get nbrNodes(): Array<Node> {
+		return this._nbrNodes;
+	}
+	set nbrEdges(arr: Array<Edge>) {
+		this._nbrEdges = arr;
+	}
+	get nbrEdges(): Array<Edge> {
+		return this._nbrEdges;
+	}
+	set centralNodeArray(arr: Array<Node>) {
+		this._centralNodeArray = arr;
+	}
+	get centralNodeArray(): Array<Node> {
+		return this._centralNodeArray;
 	}
 }

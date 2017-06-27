@@ -1,20 +1,10 @@
-import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
-import { Selection } from "d3-selection";
-import { Node, Edge } from "../model/dynamicgraph";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
-import * as d3force from "d3-force";
-import { Simulation } from "d3-force";
-import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { AttrOpts } from "./DGLOs";
-import { DGLOsWill } from "./DGLOsWill";
-import { DGLOsMatt } from "./DGLOsMatt";
 import { DGLOsSandwich } from "./DGLOsSandwich";
 
 /**
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
  * Specific options for fill and stroke-width:
  */
-export class SVGAttrOpts implements AttrOpts {
+export class SVGAttrOpts {
 	private _fill: string = null;
 	private _stroke: string = null;
 	private _stroke_width: number | string;
@@ -39,7 +29,7 @@ export class SVGAttrOpts implements AttrOpts {
 	 * @param opacity 
 	 * @param font_size eg. "12px", "25pt", "10px", "14pt", etc.
 	 */
-	// constructor(fill: string, stroke: string, stroke_width: number | string, stroke_width_label?: number, radius?: number, width?: number, height?: number, opacity?: number, font_size?: string) {
+	//TODO: switch strokewidthlabel with strokeedge
 	constructor(fill: string, stroke: string, stroke_width: number | string = 0, stroke_width_label: number = 0, radius?: number, width?: number, height?: number, opacity: number = 100, font_size: string = "12px") {
 		this._fill = fill;
 		this._stroke = stroke;
@@ -58,24 +48,24 @@ export class SVGAttrOpts implements AttrOpts {
 	/**
 	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
 	 */
-	set fill(fill: string) {
-		this._fill = fill;
+	set fill(str: string) {
+		this._fill = str;
 	}
 
 
 	get stroke(): string {
 		return this._stroke;
 	}
-	set stroke(stroke: string) {
-		this._stroke = stroke;
+	set stroke(str: string) {
+		this._stroke = str;
 	}
 
 
 	get radius(): number {
 		return this._radius;
 	}
-	set radius(radius: number) {
-		this._radius = radius;
+	set radius(r: number) {
+		this._radius = r;
 	}
 
 
@@ -85,31 +75,31 @@ export class SVGAttrOpts implements AttrOpts {
 	/**
      * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
 	 */
-	set stroke_width(stroke_width: number | string) {
-		this._stroke_width = stroke_width;
+	set stroke_width(vStr: number | string) {
+		this._stroke_width = vStr;
 	}
 
 	get stroke_width_label(): number {
 		return this._stroke_width_label;
 	}
-	set stroke_width_label(stroke_width_label: number) {
-		this._stroke_width_label = stroke_width_label;
+	set stroke_width_label(v: number) {
+		this._stroke_width_label = v;
 	}
 
 
 	get width(): number {
 		return this._width;
 	}
-	set width(width: number) {
-		this._width = width;
+	set width(w: number) {
+		this._width = w;
 	}
 
 
 	get height(): number {
 		return this._height;
 	}
-	set height(height: number) {
-		this._height = height;
+	set height(h: number) {
+		this._height = h;
 	}
 
 
@@ -129,4 +119,80 @@ export class SVGAttrOpts implements AttrOpts {
 	}
 }
 
-export class DGLOsSVG extends DGLOsSandwich { }
+
+export class SimulationAttrOpts {
+	private _simulationCollision: boolean;
+	private _simulationWeight: boolean;
+	private _divisorPT: number;
+	private _divisorPX: number;
+	private _simulationAlpha: number;
+	private _simulationCharge: number;
+	private _simulationLinkStrength: number;
+
+	/**
+	 * Object holding simulation related information. Changing attributes will change the simulation characteristics as specified.
+	 * Leaving the contsructor empty will return default values for all attributes.
+	 * @param simulationCollision : Default = false; NodeGlyphShapes can clip/overlap.
+	 * @param simulationWeight : Default = false; Links will default to D3 link.strength values. Links will not pull based on Edge data.
+	 * @param divisorPT : Default = 2.75; Relative collision radius resizing value for LabelGlyphs with text sized by pt. Higher values = closer collision radius.
+	 * @param divisorPX : Default = 3.25; Relative collision radius resizing value for LabelGlyphs with text sized by px. Higher values = closer collision radius.
+	 * @param alpha : Default = 0.3; Starting "energy" for simulation elements.
+	 * @param charge : Default = -100; Push applied to simulation elements from the center.
+	 * @param linkStrength : Default = 0.05; strength of Edge pulling between 2 Nodes in the simualtion.
+	 */
+	constructor(simulationCollision: boolean = false, simulationWeight: boolean = false, divisorPT: number = 2.75, divisorPX: number = 3.25, alpha: number = .3, charge: number = -100, linkStrength: number = .05) {
+		this._simulationCollision = simulationCollision;
+		this._simulationWeight = simulationWeight;
+		this._divisorPT = divisorPT;
+		this._divisorPX = divisorPX;
+		this._simulationAlpha = alpha;
+		this._simulationCharge = charge;
+		this._simulationLinkStrength = linkStrength;
+	}
+
+	set simulationCollisionEnabled(boo: boolean) {
+		this._simulationCollision = boo;
+	}
+	get simulationCollisionEnabled(): boolean {
+		return this._simulationCollision;
+	}
+	set simulationWeightEnabled(boo: boolean) {
+		this._simulationWeight = boo;
+	}
+	get simulationWeightEnabled(): boolean {
+		return this._simulationWeight;
+	}
+	set divisorPT(v: number) {
+		this._divisorPT = v;
+	}
+	get divisorPT(): number {
+		return this._divisorPT;
+	}
+	set divisorPX(v: number) {
+		this._divisorPX = v;
+	}
+	get divisorPX(): number {
+		return this._divisorPX;
+	}
+	set alpha(v: number) {
+		this._simulationAlpha = v;
+	}
+	get alpha(): number {
+		return this._simulationAlpha;
+	}
+	set charge(v: number) {
+		this._simulationCharge = v;
+	}
+	get charge(): number {
+		return this._simulationCharge;
+	}
+	set linkStrength(v: number) {
+		this._simulationLinkStrength = v;
+	}
+	get linkStrength(): number {
+		return this._simulationLinkStrength;
+	}
+
+}
+
+export class DGLOsSVG extends DGLOsSandwich { } //TODO: why do we need to extend the sandwich?
