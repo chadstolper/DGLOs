@@ -200,25 +200,15 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param timeStepIndex 
 	 */
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
+		this.enterExitEnabled = enterExit;
+		let circleGlyphs = circleG.selectAll("circle.node")
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
+		circleGlyphs.exit().remove();
 		if (duplicateNodes === undefined) {
-			this.enterExitEnabled = enterExit;
-			let circleGlyphs = circleG.selectAll("circle.node.side")
-				.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-
-			circleGlyphs.exit().remove();
-
 			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
-
 			circleGlyphs = circleGlyphs.merge(circleEnter);
-
 			this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
 		} else {
-			this.enterExitEnabled = enterExit;
-			let circleGlyphs = circleG.selectAll("circle.node.side")
-				.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-
-			circleGlyphs.exit().remove();
-
 			if (duplicateNodes) {
 				let copySet = circleG.selectAll("circle.node.top")
 					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
@@ -227,13 +217,12 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 				copySet = copySet.merge(enterCircle);
 				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
 			}
-
 			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
-
 			circleGlyphs = circleGlyphs.merge(circleEnter);
-
 			this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex, true);
 		}
+
+
 	}
 
 	get shapeType(): string {

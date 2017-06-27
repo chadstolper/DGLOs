@@ -216,7 +216,6 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	private tick() {
 		let self = this; //d3 scope this issue
-
 		if (!this._multipleTimestepsEnabled) { //check if small multiples are enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
