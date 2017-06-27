@@ -53,8 +53,11 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+		glyphs.exit().remove();
 		let self = this;
 		if (labelYAxis === undefined) {
+			console.log("here!");
+			glyphs.exit().remove();
 			try {
 				glyphs
 					.text(function (d: Node): string {
@@ -72,6 +75,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			}
 
 		} else {
+			console.log("NOT here!");
 			if (labelYAxis) {
 				let yAxisScale = scalePoint<number>()
 					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
@@ -200,74 +204,26 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param timeStepIndex 
 	 */
 	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = undefined, enterExit: boolean = false): void {
-		// if (duplicateNodes === undefined) {
-		// 	this.enterExitEnabled = enterExit;
-		// 	let labelGlyphs = labelG.selectAll("text.label.side")
-		// 		.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-		// 	let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
-		// 	labelGlyphs = labelGlyphs.merge(labelEnter);
-		// 	this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex);
-		// } else {
-		// 	this.enterExitEnabled = enterExit;
-		// 	let labelGlyphs = labelG.selectAll("text.label.side")
-		// 		.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-		// 	labelGlyphs.exit().remove();
-		// 	if (duplicateNodes) {
-		// 		let copySet = labelG.selectAll("text.label.top")
-		// 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-		// 		copySet.exit().remove();
-		// 		let enterLabel: Selection<any, Node, any, {}> = this.initDraw(copySet.enter(), data, timeStepIndex);
-		// 		copySet = copySet.merge(enterLabel);
-		// 		this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
-		// 	}
-		// 	let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
-		// 	labelGlyphs = labelGlyphs.merge(labelEnter);
-		// 	this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
-		// }
-
-		// this.enterExitEnabled = enterExit;
-		// let labelGlyphs = labelG.selectAll("label.node")
-		// 	.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
-		// labelGlyphs.exit().remove();
-		// if (duplicateNodes === undefined) {
-		// 	let circleEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
-		// 	labelGlyphs = labelGlyphs.merge(circleEnter);
-		// 	this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex);
-		// } else {
-		// 	if (duplicateNodes) {
-		// 		let copySet = labelG.selectAll("circle.node.top")
-		// 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-		// 		copySet.exit().remove();
-		// 		let enterCircle: Selection<any, Node, any, {}> = this.initDraw(copySet.enter(), data, timeStepIndex);
-		// 		copySet = copySet.merge(enterCircle);
-		// 		this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
-		// 	}
-		// 	let circleEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
-		// 	labelGlyphs = labelGlyphs.merge(circleEnter);
-		// 	this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
-		// }
-
-
-		// this.enterExitEnabled = enterExit;
-		// let circleGlyphs = circleG.selectAll("circle.node")
-		// 	.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
-		// circleGlyphs.exit().remove();
-		// if (duplicateNodes === undefined) {
-		// 	let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
-		// 	circleGlyphs = circleGlyphs.merge(circleEnter);
-		// 	this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
-		// } else {
 		this.enterExitEnabled = enterExit;
 		let labelGlyphs = labelG.selectAll("label.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 		labelGlyphs.exit().remove();
 		if (duplicateNodes === undefined) {
-			// let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
-			// labelGlyphs = labelGlyphs.merge(labelEnter);
-			// this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, duplicateNodes);
-			console.log("here");
+			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
+			labelGlyphs = labelGlyphs.merge(labelEnter);
+			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex);
 		} else {
-			console.log("duplicateNodes is defined");
+			if (duplicateNodes) {
+				let copySet = labelG.selectAll("text.label.top")
+					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
+				copySet.exit().remove();
+				let enterLabel: Selection<any, Node, any, {}> = this.initDraw(copySet.enter(), data, timeStepIndex);
+				copySet = copySet.merge(enterLabel);
+				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
+			}
+			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
+			labelGlyphs = labelGlyphs.merge(labelEnter);
+			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
 		}
 	}
 

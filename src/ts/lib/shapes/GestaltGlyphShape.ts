@@ -63,8 +63,6 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param edges 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
-		console.log(data.timesteps[timeStampIndex].edges);
-		console.log(data.timesteps[timeStampIndex].nodes);
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))

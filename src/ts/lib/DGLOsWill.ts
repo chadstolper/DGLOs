@@ -67,64 +67,69 @@ export class DGLOsWill extends DGLOsMatt {
 		let h = this.height;
 		let w = this.width;
 		let self = this;
-		this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
+		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
+			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 
 
-			let yScale = scaleLinear()
-				.domain(extent(Array.from(meta.edges), function (d: Edge): number {
-					return d.timestep;
-				}))
-				.range([1, 50]);
+				let yScale = scaleLinear()
+					.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+						return d.timestep;
+					}))
+					.range([1, 50]);
 
-			// let yScale = scaleBand<number>()
-			// 	.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
-			// 		console.log(d.timestamp);
-			// 		return d.timestep;
-			// 	}))
-			// 	.range([1, 50]);
+				// let yScale = scaleBand<number>()
+				// 	.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
+				// 		console.log(d.timestamp);
+				// 		return d.timestep;
+				// 	}))
+				// 	.range([1, 50]);
 
-			//TODO: center Gestalt Glyphs in the middle of their respective row
-			// let yScale = scaleBand<number>()
-			// 	.domain(extent(Array.from(meta.edges), function (d: Edge): number {
-			// 		if (d.timestep === undefined) {
-			// 			console.log(d);
-			// 		}
-			// 		return d.timestep;
-			// 	}))
-			// 	.range([1, 20]);
+				//TODO: center Gestalt Glyphs in the middle of their respective row
+				// let yScale = scaleBand<number>()
+				// 	.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+				// 		if (d.timestep === undefined) {
+				// 			console.log(d);
+				// 		}
+				// 		return d.timestep;
+				// 	}))
+				// 	.range([1, 20]);
 
-			let gridScale = scaleBand<number>()
-				.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
-					return d.source.index;
-				}))
-				.range([h / 8 + 10, h - 10]);
+				let gridScale = scaleBand<number>()
+					.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
+						return d.source.index;
+					}))
+					.range([h / 8 + 10, h - 10]);
 
-			meta.edges.forEach(function (e: Edge) {
-				e.x = (w / 8) + (+e.source.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
-				//Take a scale of this
-				//e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
-				//e.y = (h / 8) + yScale(e.timestep) + gridScale(+e.target.index); /// self.dataToDraw.metaNodes.size) * (7 * h / 8);
-				e.y = gridScale(+e.target.index) //+ yScale(e.timestep); //+ gridScale(+e.target.index);
+				meta.edges.forEach(function (e: Edge) {
+
+					e.x = (w / 8) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
+					//Take a scale of this
+					//e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
+					//e.y = (h / 8) + yScale(e.timestep) + gridScale(+e.target.index); /// self.dataToDraw.metaNodes.size) * (7 * h / 8);
+					//e.y = gridScale(+e.target.index) //+ yScale(e.timestep); //+ gridScale(+e.target.index);
+					e.y = gridScale(e.source.index) + yScale(e.timestep);
+					console.log(e.y);
+				})
 			})
-		})
-		let edgeList = new Array<Edge>();
-		for (let step of this.dataToDraw.timesteps) {
-			edgeList = edgeList.concat(step.edges);
-		}
-		let nodeList = new Array<Node>();
-		let getNode = true;
-		for (let key of this.dataToDraw.metaNodes.keys()) {
-			for (let key2 of this.dataToDraw.metaNodes.get(key).nodes) {
-				if (getNode) {
-					nodeList = nodeList.concat(key2);
-					getNode = false;
-				}
-
+			let edgeList = new Array<Edge>();
+			for (let step of this.dataToDraw.timesteps) {
+				edgeList = edgeList.concat(step.edges);
 			}
-			getNode = true;
+			let nodeList = new Array<Node>();
+			let getNode = true;
+			for (let key of this.dataToDraw.metaNodes.keys()) {
+				for (let key2 of this.dataToDraw.metaNodes.get(key).nodes) {
+					if (getNode) {
+						nodeList = nodeList.concat(key2);
+						getNode = false;
+					}
+
+				}
+				getNode = true;
+			}
+			this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
+			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
 		}
-		this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
-		this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
 	}
 	public getNodeMatrixDomain(nodeList: Array<Node>): Array<number> {
 		return extent(nodeList, function (d: Node): number {
