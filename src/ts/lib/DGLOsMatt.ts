@@ -159,7 +159,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				}
 				if (this._simulationAttrOpts.simulationWeightEnabled) {
 					linkForce.strength(function (d: MetaEdge): number {
-						return d.weight * 0.05;
+						return d.weight * self._simulationAttrOpts.linkStrength;
 					});
 				}
 				if (this._simulationAttrOpts.simulationCollisionEnabled) {
