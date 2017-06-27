@@ -17,8 +17,8 @@ export interface AttrOpts { }
 export interface DGLOs {
 
 	data: DynamicGraph;
-	loc: Selection<any, {}, any, {}>;
-	drawLoc: Selection<any, {}, any, {}>;
+	location: Selection<any, {}, any, {}>;
+	drawLocation: Selection<any, {}, any, {}>;
 	width: number;
 	height: number;
 

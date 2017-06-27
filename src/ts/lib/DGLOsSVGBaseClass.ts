@@ -37,10 +37,16 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	public get height(): number {
 		return this._height;
 	}
-	public get drawLoc(): Selection<any, {}, any, {}> {
+	/**
+	 * Drawlocation is the initially created svg classed SVG_1.
+	 */
+	public get drawLocation(): Selection<any, {}, any, {}> {
 		return this._drawLocation;
 	}
-	public get loc(): Selection<any, {}, any, {}> {
+	/**
+	 * Location is the selection where the DGLO visualizations will go. eg. div tag, body tag, etc.
+	 */
+	public get location(): Selection<any, {}, any, {}> {
 		return this._location;
 	}
 	public set dataToDraw(dGraph: model.DynamicGraph) {

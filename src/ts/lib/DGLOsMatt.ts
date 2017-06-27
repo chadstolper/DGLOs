@@ -14,7 +14,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawNodeGlyphs() {
-		this.drawNodeGlyphsAt(this.drawLoc);
+		this.drawNodeGlyphsAt(this.drawLocation);
 	}
 	/**
 	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
@@ -43,7 +43,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
 	public drawRegions() {
-		this.drawRegionsAt(this.drawLoc);
+		this.drawRegionsAt(this.drawLocation);
 	}
 	/**
 	 * Initialize and draw all GroupGlyphShapes at a specified Selection, adds them to Map and sets display to "none" 
@@ -143,6 +143,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					.on("tick", this.ticked(self))
 					.on("end", function () {
 						console.log("SIMULATION DONE HALLELUJAH!");
+						self.removeTimesteps();
 					});
 			}
 			if (this.simulation !== undefined) {
