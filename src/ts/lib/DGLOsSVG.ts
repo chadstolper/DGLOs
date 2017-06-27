@@ -1,20 +1,11 @@
-import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
-import { Selection } from "d3-selection";
-import { Node, Edge } from "../model/dynamicgraph";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
-import * as d3force from "d3-force";
-import { Simulation } from "d3-force";
-import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { AttrOpts } from "./DGLOs";
-import { DGLOsWill } from "./DGLOsWill";
-import { DGLOsMatt } from "./DGLOsMatt";
 import { DGLOsSandwich } from "./DGLOsSandwich";
 
 /**
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
  * Specific options for fill and stroke-width:
  */
-export class SVGAttrOpts implements AttrOpts {
+export class SVGAttrOpts implements AttrOpts { //TODO: do we need attrOpts?
 	private _fill: string = null;
 	private _stroke: string = null;
 	private _stroke_width: number | string;
@@ -39,7 +30,6 @@ export class SVGAttrOpts implements AttrOpts {
 	 * @param opacity 
 	 * @param font_size eg. "12px", "25pt", "10px", "14pt", etc.
 	 */
-	// constructor(fill: string, stroke: string, stroke_width: number | string, stroke_width_label?: number, radius?: number, width?: number, height?: number, opacity?: number, font_size?: string) {
 	constructor(fill: string, stroke: string, stroke_width: number | string = 0, stroke_width_label: number = 0, radius?: number, width?: number, height?: number, opacity: number = 100, font_size: string = "12px") {
 		this._fill = fill;
 		this._stroke = stroke;
@@ -58,24 +48,24 @@ export class SVGAttrOpts implements AttrOpts {
 	/**
 	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
 	 */
-	set fill(fill: string) {
-		this._fill = fill;
+	set fill(str: string) {
+		this._fill = str;
 	}
 
 
 	get stroke(): string {
 		return this._stroke;
 	}
-	set stroke(stroke: string) {
-		this._stroke = stroke;
+	set stroke(str: string) {
+		this._stroke = str;
 	}
 
 
 	get radius(): number {
 		return this._radius;
 	}
-	set radius(radius: number) {
-		this._radius = radius;
+	set radius(r: number) {
+		this._radius = r;
 	}
 
 
@@ -85,31 +75,31 @@ export class SVGAttrOpts implements AttrOpts {
 	/**
      * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
 	 */
-	set stroke_width(stroke_width: number | string) {
-		this._stroke_width = stroke_width;
+	set stroke_width(vStr: number | string) {
+		this._stroke_width = vStr;
 	}
 
 	get stroke_width_label(): number {
 		return this._stroke_width_label;
 	}
-	set stroke_width_label(stroke_width_label: number) {
-		this._stroke_width_label = stroke_width_label;
+	set stroke_width_label(v: number) {
+		this._stroke_width_label = v;
 	}
 
 
 	get width(): number {
 		return this._width;
 	}
-	set width(width: number) {
-		this._width = width;
+	set width(w: number) {
+		this._width = w;
 	}
 
 
 	get height(): number {
 		return this._height;
 	}
-	set height(height: number) {
-		this._height = height;
+	set height(h: number) {
+		this._height = h;
 	}
 
 
@@ -129,4 +119,4 @@ export class SVGAttrOpts implements AttrOpts {
 	}
 }
 
-export class DGLOsSVG extends DGLOsSandwich { }
+export class DGLOsSVG extends DGLOsSandwich { } //TODO: why do we need to extend the sandwich?

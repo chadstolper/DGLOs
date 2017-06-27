@@ -1,22 +1,12 @@
-import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection, select } from "d3-selection";
 import { Node, Edge, DynamicGraph, MetaNode, MetaEdge } from "../model/dynamicgraph";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-
-import { RectGlyphShape } from "./shapes/RectGlyphShape";
-import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
-import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
-import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
-import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
-
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { SVGAttrOpts } from "./DGLOsSVG";
-import { DGLOsWill } from "./DGLOsWill";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
@@ -175,10 +165,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 							d.nodes.forEach(function (n: Node) {
 								let divisor: number;
 								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-									divisor = 3;
+									divisor = 3.25;  //TODO: see github issue
 								}
 								else {
-									divisor = 3;
+									divisor = 2.75;
 								}
 								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
 							});
