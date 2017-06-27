@@ -1,8 +1,9 @@
-import { DGLOs, AttrOpts } from "./DGLOs";
+import { DGLOs } from "./DGLOs";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -37,10 +38,16 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	public get height(): number {
 		return this._height;
 	}
-	public get drawLoc(): Selection<any, {}, any, {}> {
+	/**
+	 * Drawlocation is the initially created svg classed SVG_1.
+	 */
+	public get drawLocation(): Selection<any, {}, any, {}> {
 		return this._drawLocation;
 	}
-	public get loc(): Selection<any, {}, any, {}> {
+	/**
+	 * Location is the selection where the DGLO visualizations will go. eg. div tag, body tag, etc.
+	 */
+	public get location(): Selection<any, {}, any, {}> {
 		return this._location;
 	}
 	public set dataToDraw(dGraph: model.DynamicGraph) {
@@ -119,7 +126,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	drawEdgeGlyphs(): void { };
 	drawAllNodeGlyphs(): void { };
 	drawAllEdgeGlyphs(): void { };
-	drawRegions(): void { }; //take an attr for color in draw method
+	drawRegions(): void { };
 
 
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void { };
@@ -138,7 +145,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	enableEnterExitColoring(): void { };
 	disableEnterExitColoring(): void { };
 	drawTimesteps(): void { };
-	removeTimesteps(): void { };
+	removeTimesteps(delay?: number): void { };
 
 
 	positionNodesAndEdgesForceDirected(setRunning: boolean): void { };
@@ -160,9 +167,10 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		opacity
 		width, height
 	*/
-	setNodeGlyphAttrs(opts: AttrOpts): void { };
-	setEdgeGlyphAttrs(opts: AttrOpts): void { };
-	setRegionGlyphAttrs(opts: AttrOpts): void { };
+	setNodeGlyphAttrs(opts: SVGAttrOpts): void { };
+	setEdgeGlyphAttrs(opts: SVGAttrOpts): void { };
+	setRegionGlyphAttrs(opts: SVGAttrOpts): void { };
+	setSimulationAttrs(opts: SimulationAttrOpts): void { };
 	fixCentralNodePositions(bool: boolean): void { };
 	redrawEgo(): void { };
 }

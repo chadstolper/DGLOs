@@ -35,7 +35,14 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		let ret: Selection<any, VoronoiPolygon<Node>, any, {}> = paths.insert("path")
 			.classed("voronoi", true)
-			.attr("id", function (d: VoronoiPolygon<Node>): string | number { return d.data.id; })
+			.attr("id", function (d: VoronoiPolygon<Node>): string | number {
+				try {
+					return d.data.id;
+				}
+				catch (err) {
+					// console.log(err);
+				}
+			});
 		return ret;
 	}
 
@@ -94,21 +101,26 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	 * @param key 
 	 */
 	private fill(d: VoronoiPolygon<Node>, key: string) {
-		if (d.data.type === "noise") {
-			return this._noiseDefaultColor;
+		try {
+			if (d.data.type === "noise") {
+				return this._noiseDefaultColor;
+			}
+			switch (key) {
+				case "id":
+					return this.colorScheme(d.data.origID);
+
+				case "label":
+					return this.colorScheme(d.data.label);
+
+				case "type":
+					return this.colorScheme(d.data.type);
+
+				default:
+					return key;
+			}
 		}
-		switch (key) {
-			case "id":
-				return this.colorScheme(d.data.origID);
-
-			case "label":
-				return this.colorScheme(d.data.label);
-
-			case "type":
-				return this.colorScheme(d.data.type);
-
-			default:
-				return key;
+		catch (err) {
+			// console.log(d, err);
 		}
 	}
 
