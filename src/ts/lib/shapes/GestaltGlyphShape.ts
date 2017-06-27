@@ -63,6 +63,8 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param edges 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
+		console.log(data.timesteps[timeStampIndex].edges);
+		console.log(data.timesteps[timeStampIndex].nodes);
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
@@ -77,36 +79,32 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return d.x;
 				})
 				.attr("y1", function (d: Edge) {
-					// let yPos = 0;
-					// for (let edge of data.timesteps[timeStampIndex].edges) {
-					// 	if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
-					// 		let yPos = weightScale(d.weight);
-					// 		d.y = yPos + d.y;
-					// 		break;
-					// 	}
-					// }
-					// return yPos + d.y;
-					return 10;
+					let yPos = 0;
+					for (let edge of data.timesteps[timeStampIndex].edges) {
+						if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
+							let yPos = weightScale(d.weight);
+							d.y = yPos + d.y;
+							break;
+						}
+					}
+					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
-					//return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
-					return 10;
+					return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
 				})
 				.attr("y2", function (d: Edge) {
-					// let yPos = 0
-					// for (let edge of data.timesteps[timeStampIndex].edges) {
-					// 	if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
-					// 		let yPos = weightScale(edge.weight);
-					// 		if (yPos === NaN) {
-					// 			yPos = 0;
-					// 		}
-					// 		d.y = yPos + d.y;
-					// 		break;
-					// 	}
-					// }
-					// return yPos + d.y;
-					return 10;
-
+					let yPos = 0
+					for (let edge of data.timesteps[timeStampIndex].edges) {
+						if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
+							let yPos = weightScale(edge.weight);
+							if (yPos === NaN) {
+								yPos = 0;
+							}
+							d.y = yPos + d.y;
+							break;
+						}
+					}
+					return yPos + d.y;
 				})
 				.attr("stroke", attrOpts.stroke)
 				.attr("stroke-width", function (d: Edge) {
@@ -118,7 +116,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			return glyphs;
 		}
 		catch (err) {
-			// console.log("gestalt update error");
+			console.log("gestalt update error");
 		}
 	}
 
