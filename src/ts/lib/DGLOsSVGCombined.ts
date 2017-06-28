@@ -62,21 +62,13 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 		.y(function (d: Node) { return d.y; });
 	protected _noisePoints: Node[] = this.setNoisePoints();
 	/**
-	 * see comment by will //TODO: rewrite, see comment in edgeattropts
+	 * Attributes pertaining to SVG visualization.
 	 */
-	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
+	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("white", "black", "black");
 	/**
 	 * Attributes pertaining to the simulation. Empty constructor defaults.
 	 */
 	protected _simulationAttrOpts: SimulationAttrOpts = new SimulationAttrOpts();
-	protected _groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
-	/**
-	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
-	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and
-	 * an NodeAttrOpts class. TODO.
-	 */
-	protected _edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts("black", "black", null, 1, null, null, null);
-	protected _willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
 	/**
 	 * A map used for constructing an Egograph.
 	 */

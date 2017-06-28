@@ -5,37 +5,38 @@ import { DGLOsSandwich } from "./DGLOsSandwich";
  * Specific options for fill and stroke-width:
  */
 export class SVGAttrOpts {
-	private _fill: string = null;
-	private _stroke: string = null;
-	private _stroke_width: number | string;
-	private _stroke_width_label: number;
-	private _radius: number = null;
-	private _width: number = null;
-	private _height: number = null;
+	private _fill: string;
+	private _stroke: string;
+	private _stroke_edge: string;
+	private _stroke_width: number;
+	private _stroke_width_edge: number | string;
+	private _radius: number;
+	private _width: number;
+	private _height: number;
 	private _opacity: number;
 	private _font_size: string;
 
 	/**
 	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
      * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
- 	 * Opacity defaults to 100%.
 	 * @param fill 
 	 * @param stroke
-	 * @param stroke_width
-	 * @param stroke_width_label
-	 * @param radius
+	 * @param stroke_edge
+	 * @param stroke_width : Defaults to 2.
+	 * @param stroke_width_edge : Defaults to 1.
+	 * @param radius : Defaults to 10.
 	 * @param width 
 	 * @param height 
-	 * @param opacity 
-	 * @param font_size eg. "12px", "25pt", "10px", "14pt", etc.
+	 * @param opacity : Defaults to 100.
+	 * @param font_size : Defaults to "12px". eg. "12px", "25pt", "10px", "14pt", etc.
 	 */
-	//TODO: switch strokewidthlabel with strokeedge
-	constructor(fill: string, stroke: string, stroke_width: number | string = 0, stroke_width_label: number = 0, radius?: number, width?: number, height?: number, opacity: number = 100, font_size: string = "12px") {
+	constructor(fill: string, stroke: string, stroke_edge: string, stroke_width: number = 2, stroke_width_edge: number | string = 1, radius: number = 10, width?: number, height?: number, opacity: number = 100, font_size: string = "12px") {
 		this._fill = fill;
 		this._stroke = stroke;
-		this._radius = radius;
+		this._stroke_edge = stroke_edge;
 		this._stroke_width = stroke_width;
-		this._stroke_width_label = stroke_width_label;
+		this._stroke_width_edge = stroke_width_edge;
+		this._radius = radius;
 		this._width = width;
 		this._height = height;
 		this._opacity = opacity;
@@ -61,6 +62,14 @@ export class SVGAttrOpts {
 	}
 
 
+	get stroke_edge(): string {
+		return this._stroke_edge;
+	}
+	set stroke_edge(str: string) {
+		this._stroke_edge = str;
+	}
+
+
 	get radius(): number {
 		return this._radius;
 	}
@@ -69,21 +78,21 @@ export class SVGAttrOpts {
 	}
 
 
-	get stroke_width(): number | string {
+	get stroke_width(): number {
 		return this._stroke_width;
 	}
-	/**
-     * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
-	 */
-	set stroke_width(vStr: number | string) {
+	set stroke_width(vStr: number) {
 		this._stroke_width = vStr;
 	}
 
-	get stroke_width_label(): number {
-		return this._stroke_width_label;
+	/**
+     * Stroke-Width-Edge: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
+	 */
+	get stroke_width_edge(): number | string {
+		return this._stroke_width_edge;
 	}
-	set stroke_width_label(v: number) {
-		this._stroke_width_label = v;
+	set stroke_width_edge(v: number | string) {
+		this._stroke_width_edge = v;
 	}
 
 

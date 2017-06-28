@@ -73,7 +73,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
-		this.initColorMap(data, timeStampIndex, attr);
 		try {
 			glyphs
 				.attr("x", function (e: Edge) {
@@ -98,7 +97,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		}
 		glyphs
 			.style("stroke", attr.stroke)
-			.attr("stroke-width", attr.stroke_width)
+			.attr("stroke-width", attr.stroke_width_edge)
 			.attr("width", (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length))
 			.attr("height", (7 / 8) * (svgHeight / data.timesteps[timeStampIndex].nodes.length))
 			.style("opacity", attr.opacity);
@@ -136,7 +135,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 */
 	private initColorMap(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
 		if (this.colorMap === undefined) {
-			this.maxGradientColor = attr.fill;
+			this.maxGradientColor = attr.stroke_edge;
 			this.colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[timeStampIndex].edges))
 				.range([this.minGradientColor, this.maxGradientColor]);

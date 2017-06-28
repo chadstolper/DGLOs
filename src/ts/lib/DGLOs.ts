@@ -222,25 +222,14 @@ export interface DGLOs {
 
 
 	/**
-	 * Takes a map of variables and applies them to the nodes
-	 * present in the current visualization. Examples include
-	 * color and size.
+	 * Takes an SVGAttrOpts object with various node and edge visualization attributes and values.
 	 */
-	setNodeGlyphAttrs(opts: SVGAttrOpts): void;
+	setAttributes(opts: SVGAttrOpts): void;
 
 
 	/**
-	 * Takes a map of variables and applies them to the edges
-	 * present in the current visualization. Examples include line-thickness
-	 * and color.
-	 */
-	setEdgeGlyphAttrs(opts: SVGAttrOpts): void;
-
-
-	/**
-	 * Takes a map of variables and applies them to the regions 
-	 * present in the current visualization. Color is an example of an
-	 * attribute that can be assigned to regionGlyphs. 
+	 * Takes an SVGAttrOpts object with various node and edge visualization attributes and values.
+	 * Will assign certain values specific to region visualization regardless of passed parameters in those positions.
 	 */
 	setRegionGlyphAttrs(opts: SVGAttrOpts): void;
 

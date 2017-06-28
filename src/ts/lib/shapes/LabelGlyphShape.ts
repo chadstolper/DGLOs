@@ -124,14 +124,14 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs.style("fill", this.enterExitCheck());
 		}
 		else {
-			glyphs.style("fill", function (d: Node): string {
-				return self.fill(d, attrOpts.fill);
-			})
+			// glyphs.style("fill", function (d: Node): string {
+			// 	return self.fill(d, attrOpts.fill);
+			// })
+			glyphs.style("fill", attrOpts.stroke);
 		}
 		glyphs
-			.attr("stroke", attrOpts.stroke)
-			.attr("r", attrOpts.radius)
-			.attr("stroke-width", attrOpts.stroke_width_label)
+			.style("stroke", "black")
+			.style("stroke-width", 0.25)
 			.attr("opacity", attrOpts.opacity);
 
 		return glyphs;

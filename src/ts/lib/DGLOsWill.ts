@@ -48,7 +48,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * @param attr: SVGAttrOpts
 	 */
 	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		this._edgeAttrOpts = attr;
+		this._attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, attr.stroke_width, attr.stroke_width_edge, attr.radius, attr.width, attr.height, attr.opacity, attr.font_size);
 	}
 	/**
 	 * tansformEdgeGlyphsTo is a DGLO method that calls the ___ _currentEdgeShape ___ transformTo method.
@@ -108,7 +108,7 @@ export class DGLOsWill extends DGLOsMatt {
 				getNode = true;
 			}
 			this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
-			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
+			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._attrOpts, this.width, this.height);
 		}
 		//TODO: Decide if this line is necessary
 		this.dataToDraw = this.data;
@@ -124,10 +124,10 @@ export class DGLOsWill extends DGLOsMatt {
 	public positionNodeGlyphsMatrix() {
 		// let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._attrOpts.radius, this._edgeAttrOpts.stroke_width as number, this.width,
 		// 	2000, this._edgeAttrOpts.opacity)
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._edgeAttrOpts.stroke_width, this._edgeAttrOpts.stroke_width_label,
-			this._edgeAttrOpts.radius, this.width, this.height, this._edgeAttrOpts.opacity, this._edgeAttrOpts.font_size);
-		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
-		// / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)
+		// let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, this._attrOpts.stroke_width, this._attrOpts.stroke_width_label,
+		// 	this._attrOpts.radius, this.width, this.height, this._attrOpts.opacity, this._attrOpts.font_size);
+		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, this._attrOpts.stroke_edge, this._attrOpts.stroke_width, this._attrOpts.stroke_width_edge,
+			this._attrOpts.radius, this.width, this.height, this._attrOpts.opacity, this._attrOpts.font_size);
 		if (!this.multipleTimestepsEnabled) {
 			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, true, this.enterExitColorEnabled);
 		}
@@ -154,9 +154,9 @@ export class DGLOsWill extends DGLOsMatt {
 		});
 		//TODO: check matrix attr opts for correct parameter positions
 		//TODO: _martixAttrOpts is what is making this code work, but it is an ugly solution imo. not very flexible.
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width as number,
+		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, null, this._attrOpts.stroke_width as number,
 			(7 / 8) * (w / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
-			(7 / 8) * (h / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._edgeAttrOpts.opacity)
+			(7 / 8) * (h / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._attrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
 			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.width, this.height, this.enterExitColorEnabled);
 		}
@@ -175,9 +175,9 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public enableStepping() {
 		//TODO: _matrixAttrOpts shouldnt always be called here, this is a very hardcoded solution.
-		let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, null, this._edgeAttrOpts.stroke_width as number,
+		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, null, this._attrOpts.stroke_width as number,
 			(7 / 8) * (this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), (7 / 8) * (this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
-			this._edgeAttrOpts.opacity)
+			this._attrOpts.opacity)
 
 		let self = this;
 
@@ -191,6 +191,7 @@ export class DGLOsWill extends DGLOsMatt {
 					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.width, self.height, self.enterExitColorEnabled); //TODO: change matrixattropts as needed?	
 				}
 				if (!self.matrixViewEnabled) {
+					self._simulationAttrOpts.alpha = 0; //TODO: figure out how to fix this, or if this is even an issue...
 					self.positionNodesAndEdgesForceDirected(true);
 				}
 			});
@@ -204,6 +205,7 @@ export class DGLOsWill extends DGLOsMatt {
 					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.width, self.height, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
+					self._simulationAttrOpts.alpha = 0;
 					self.positionNodesAndEdgesForceDirected(true);
 				}
 			});
@@ -361,7 +363,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Redraws the graph.
 	 */
 	public redrawEgo(): void {
-		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
+		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._attrOpts, this.width, this.height);
 		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this._attrOpts, undefined);
 		if (this.onClickRedraw) {
 			this.positionNodesAndEdgesForceDirected(true);
