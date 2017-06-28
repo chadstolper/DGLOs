@@ -169,7 +169,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param attr 
 	 */
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
-
+		this.initColorMap(data, timeStampIndex, attr);
 		this.enterExitEnabled = enterExit;
 		let rects = location.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
