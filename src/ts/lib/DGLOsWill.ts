@@ -69,26 +69,26 @@ export class DGLOsWill extends DGLOsMatt {
 		let self = this;
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
 			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
-				let yScale = scaleLinear()
+				let innerGlyphSpacing = scaleLinear()
 					.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 						return d.timestep;
 					}))
-					.range([1, 50]);
-				let gridScale = scaleBand<number>()
-					.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
-						return d.source.index;
+					.range([(3 / 10) * (self.height / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length),
+					(7 / 10) * (self.height / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length)]);
+				let gridScaleY = scaleBand<number>()
+					.domain(self.dataToDraw.timesteps[self.timeStampIndex].nodes.map(function (d: any) {
+						return d.index;
 					}))
 					.range([h / 8 + 10, h - 10]);
+				let gridScaleX = scaleBand<number>()
+					.domain(self.dataToDraw.timesteps[self.timeStampIndex].nodes.map(function (d: any) {
+						return d.index;
+					}))
+					.range([w / 8 + 10, w - 10]);
 
 				meta.edges.forEach(function (e: Edge) {
-
-					e.x = (w / 8) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * w / 8);
-					//Take a scale of this
-					//e.y = (h / 8) + yScale(e.timestep) + (+e.target.index / self.dataToDraw.metaNodes.size) * (7 * h / 8);
-					//e.y = (h / 8) + yScale(e.timestep) + gridScale(+e.target.index); /// self.dataToDraw.metaNodes.size) * (7 * h / 8);
-					//e.y = gridScale(+e.target.index) //+ yScale(e.timestep); //+ gridScale(+e.target.index);
-					e.y = gridScale(e.source.index) + yScale(e.timestep);
-					console.log(e.y);
+					e.x = gridScaleX(e.target.index);
+					e.y = gridScaleY(e.source.index) + innerGlyphSpacing(e.timestep);
 				})
 			})
 			let edgeList = new Array<Edge>();
@@ -113,19 +113,10 @@ export class DGLOsWill extends DGLOsMatt {
 		//TODO: Decide if this line is necessary
 		this.dataToDraw = this.data;
 	}
-	public getNodeMatrixDomain(nodeList: Array<Node>): Array<number> {
-		return extent(nodeList, function (d: Node): number {
-			return d.index;
-		});
-	}
 	/**
-	 * positionNodeGlyphsMatrix positions the Nodes as Labels along the axis of the Matrix
+	 * positionNodeGlyphsMatrix positions the Nodes along the axis of the Matrix
 	 */
 	public positionNodeGlyphsMatrix() {
-		// let _matrixAttrOpts = new SVGAttrOpts(this._edgeAttrOpts.fill, this._edgeAttrOpts.stroke, this._attrOpts.radius, this._edgeAttrOpts.stroke_width as number, this.width,
-		// 	2000, this._edgeAttrOpts.opacity)
-		// let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, this._attrOpts.stroke_width, this._attrOpts.stroke_width_label,
-		// 	this._attrOpts.radius, this.width, this.height, this._attrOpts.opacity, this._attrOpts.font_size);
 		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, this._attrOpts.stroke_edge, this._attrOpts.stroke_width, this._attrOpts.stroke_width_edge,
 			this._attrOpts.radius, this.width, this.height, this._attrOpts.opacity, this._attrOpts.font_size);
 		if (!this.multipleTimestepsEnabled) {
@@ -134,7 +125,6 @@ export class DGLOsWill extends DGLOsMatt {
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				console.log(_matrixAttrOpts.height);
 				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, _matrixAttrOpts, true, self.enterExitColorEnabled);
 			});
 		}

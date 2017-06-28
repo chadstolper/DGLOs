@@ -48,7 +48,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		let self = this;
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
-			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id })
+			.attr("id", function (d: Edge): string { return d.source.label + ":" + d.target.label })
 			.attr("weight", function (d: Edge): string {
 				return d.weight + "";
 			})
@@ -88,7 +88,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
-					return d.x + ((svgWidth / data.timesteps[timeStampIndex].nodes.length) * (7 / 8));
+					return d.x + (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length);
 				})
 				.attr("y2", function (d: Edge) {
 					let yPos = 0

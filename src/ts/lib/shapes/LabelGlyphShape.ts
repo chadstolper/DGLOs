@@ -36,6 +36,9 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
+			.attr("index", function (d: Node) {
+				return d.index;
+			})
 			.style("dominant-baseline", this._dominantBaseline)
 			.style("text-anchor", this._textAnchor)
 			.style("user-select", "none")
@@ -72,7 +75,6 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			}
 
 		} else {
-			console.log("NOT here!");
 			if (labelYAxis) {
 				let yAxisScale = scalePoint<number>()
 					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
