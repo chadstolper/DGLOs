@@ -118,13 +118,13 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public positionNodeGlyphsMatrix() {
 		let self = this;
-    let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, this._attrOpts.stroke_edge, this._attrOpts.stroke_width, this._attrOpts.stroke_width_edge,
+		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, this._attrOpts.stroke_edge, this._attrOpts.stroke_width, this._attrOpts.stroke_width_edge,
 			this._attrOpts.radius, this.width, this.height, this._attrOpts.opacity, this._attrOpts.font_size);
 		if (!this.multipleTimestepsEnabled) {
 			this._currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, true, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
-				this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, _matrixAttrOpts, true, self.enterExitColorEnabled);
 			});
 		}
@@ -137,15 +137,15 @@ export class DGLOsWill extends DGLOsMatt {
 		this.matrixViewEnabled = true;
 		this.dataToDraw.timesteps.forEach(function (g: Graph) {
 			g.edges.forEach(function (e: Edge) {
-				e.x = (w / 8) + (+e.source.index / g.nodes.length) * (7 * w / 8);
-				e.y = (h / 8) + (+e.target.index / g.nodes.length) * (7 * h / 8);
+				e.x = (self.width / 8) + (+e.source.index / g.nodes.length) * (7 * self.width / 8);
+				e.y = (self.height / 8) + (+e.target.index / g.nodes.length) * (7 * self.height / 8);
 			});
 		});
 		//TODO: check matrix attr opts for correct parameter positions
 		//TODO: _martixAttrOpts is what is making this code work, but it is an ugly solution imo. not very flexible.
 		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, null, this._attrOpts.stroke_width as number,
-			(7 / 8) * (w / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
-			(7 / 8) * (h / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._attrOpts.opacity)
+			(7 / 8) * (self.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
+			(7 / 8) * (self.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), this._attrOpts.opacity)
 		if (!this.multipleTimestepsEnabled) {
 			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this._timeStampIndex, _matrixAttrOpts, this.width, this.height, this.enterExitColorEnabled);
 		}
@@ -163,6 +163,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * the dynamic graph's timesteps.
 	 */
 	public enableStepping() {
+		let self = this;
 		//TODO: _matrixAttrOpts shouldnt always be called here, this is a very hardcoded solution.
 		let _matrixAttrOpts = new SVGAttrOpts(this._attrOpts.fill, this._attrOpts.stroke, null, this._attrOpts.stroke_width as number,
 			(7 / 8) * (this.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)), (7 / 8) * (this.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length)),
@@ -174,7 +175,7 @@ export class DGLOsWill extends DGLOsMatt {
 			.text("<--")
 			.on("click", function () {
 				console.log("clicked");
-				self._timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
+				self.timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self._multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self._edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self._timeStampIndex, _matrixAttrOpts, self.width, self.height, self.enterExitColorEnabled); //TODO: change matrixattropts as needed?	
 				}

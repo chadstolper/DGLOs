@@ -209,7 +209,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 		labelGlyphs.exit().remove();
 		if (duplicateNodes === undefined) {
-			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
+			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
 			labelGlyphs = labelGlyphs.merge(labelEnter);
 			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex);
 		} else {
@@ -217,15 +217,15 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 				let copySet = labelG.selectAll("text.label.top")
 					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 				copySet.exit().remove();
-				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter(), data, timeStepIndex);
+				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
 				copySet = copySet.merge(copyEnter);
 				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
 			}
-			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
+			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
 			labelGlyphs = labelGlyphs.merge(labelEnter);
 			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
 		}
-  }
+	}
 
 	get textAnchor(): string {
 		return this._textAnchor;
