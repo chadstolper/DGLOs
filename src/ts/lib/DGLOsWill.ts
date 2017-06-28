@@ -69,31 +69,11 @@ export class DGLOsWill extends DGLOsMatt {
 		let self = this;
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
 			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
-
-
 				let yScale = scaleLinear()
 					.domain(extent(Array.from(meta.edges), function (d: Edge): number {
 						return d.timestep;
 					}))
 					.range([1, 50]);
-
-				// let yScale = scaleBand<number>()
-				// 	.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
-				// 		console.log(d.timestamp);
-				// 		return d.timestep;
-				// 	}))
-				// 	.range([1, 50]);
-
-				//TODO: center Gestalt Glyphs in the middle of their respective row
-				// let yScale = scaleBand<number>()
-				// 	.domain(extent(Array.from(meta.edges), function (d: Edge): number {
-				// 		if (d.timestep === undefined) {
-				// 			console.log(d);
-				// 		}
-				// 		return d.timestep;
-				// 	}))
-				// 	.range([1, 20]);
-
 				let gridScale = scaleBand<number>()
 					.domain(self.dataToDraw.timesteps[self.timeStampIndex].edges.map(function (d: any) {
 						return d.source.index;
@@ -130,6 +110,8 @@ export class DGLOsWill extends DGLOsMatt {
 			this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
 			this._currentEdgeShape.draw(this._edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this._edgeAttrOpts, this.width, this.height);
 		}
+		//TODO: Decide if this line is necessary
+		this.dataToDraw = this.data;
 	}
 	public getNodeMatrixDomain(nodeList: Array<Node>): Array<number> {
 		return extent(nodeList, function (d: Node): number {

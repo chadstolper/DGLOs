@@ -53,11 +53,8 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-		glyphs.exit().remove();
 		let self = this;
 		if (labelYAxis === undefined) {
-			console.log("here!");
-			glyphs.exit().remove();
 			try {
 				glyphs
 					.text(function (d: Node): string {
@@ -205,7 +202,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = undefined, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
-		let labelGlyphs = labelG.selectAll("label.node")
+		let labelGlyphs = labelG.selectAll("text.label")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 		labelGlyphs.exit().remove();
 		if (duplicateNodes === undefined) {
@@ -217,14 +214,15 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 				let copySet = labelG.selectAll("text.label.top")
 					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 				copySet.exit().remove();
-				let enterLabel: Selection<any, Node, any, {}> = this.initDraw(copySet.enter(), data, timeStepIndex);
-				copySet = copySet.merge(enterLabel);
+				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter(), data, timeStepIndex);
+				copySet = copySet.merge(copyEnter);
 				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
 			}
 			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter(), data, timeStepIndex);
 			labelGlyphs = labelGlyphs.merge(labelEnter);
 			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
 		}
+
 	}
 
 	get textAnchor(): string {

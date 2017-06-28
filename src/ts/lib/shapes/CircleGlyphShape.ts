@@ -213,8 +213,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 				let copySet = circleG.selectAll("circle.node.top")
 					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 				copySet.exit().remove();
-				let enterCircle: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
-				copySet = copySet.merge(enterCircle);
+				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
+				copySet = copySet.merge(copyEnter);
 				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
 			}
 			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
