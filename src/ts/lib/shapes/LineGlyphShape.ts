@@ -2,9 +2,9 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { AttrOpts } from "../DGLOs"
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
-import { Shape } from "./Shape"
+import { Shape } from "./Shape";
+import { SVGAttrOpts, SimulationAttrOpts } from "../DGLOsSVG";
 
 /**
  * LineGlyphShape implements __EdgeGlyphShape__.
@@ -21,13 +21,13 @@ export abstract class LineGlyphShape extends Shape implements EdgeGlyphShape {
 	public initDraw(selection: Selection<any, {}, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		return null;
 	}
-	public updateDraw(selection: Selection<any, {}, any, {}>, attr: AttrOpts, data: DynamicGraph, TimeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
+	public updateDraw(selection: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		return null;
 	}
 	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
 		return null;
 	}
-	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number, attr: AttrOpts, svgWidth: number, svgHeight: number): void {
+	public draw(selection: Selection<any, {}, any, {}>, dGraph: DynamicGraph, TimeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
 		return null;
 	}
 

@@ -15,7 +15,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Initialize and draw all EdgeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawEdgeGlyphs() {
-		this.drawEdgeGlyphsAt(this.drawLoc);
+		this.drawEdgeGlyphsAt(this.drawLocation);
 	}
 
 	/**

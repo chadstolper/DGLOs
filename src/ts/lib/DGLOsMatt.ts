@@ -6,7 +6,7 @@ import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 
@@ -14,7 +14,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * Initialize and draw all NodeGlyphshapes, adds them to Map and sets display to "none".
 	 */
 	public drawNodeGlyphs() {
-		this.drawNodeGlyphsAt(this.drawLoc);
+		this.drawNodeGlyphsAt(this.drawLocation);
 	}
 	/**
 	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
@@ -43,7 +43,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	* Initialize and draw all GroupGlyphShapes, adds them to Map and sets display to "none"
 	*/
 	public drawRegions() {
-		this.drawRegionsAt(this.drawLoc);
+		this.drawRegionsAt(this.drawLocation);
 	}
 	/**
 	 * Initialize and draw all GroupGlyphShapes at a specified Selection, adds them to Map and sets display to "none" 
@@ -107,6 +107,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this._edgeAttrOpts = new SVGAttrOpts(null, "grey", null, 0.25);
 	}
 
+	public setSimulationAttrs(attr: SimulationAttrOpts) {
+		this._simulationAttrOpts = attr;
+	}
+
 	/**
 	 * Enables enter and exit coloring between timestep visualizations.
 	 */
@@ -134,7 +138,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this.simulation === undefined) {
 				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(-100))
+					.force("charge", d3force.forceManyBody().strength(this._simulationAttrOpts.charge))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.on("tick", this.ticked(self))
 					.on("end", function () {
@@ -147,28 +151,28 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				} else {
 					this.simulation.nodes(self.data.metaNodesAsArray);
 				}
-
-
 				let linkForce = (this.simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>);
 				if (this.onClickRedraw) {//Egograph
 					linkForce.links(self.dataToDraw.metaEdgesAsArray)
 				} else {
 					linkForce.links(self.data.metaEdgesAsArray)
 				}
-				linkForce.strength(function (d: MetaEdge): number {
-					return d.weight * 0.05;
-				});
-				this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
-					try {
+				if (this._simulationAttrOpts.simulationWeightEnabled) {
+					linkForce.strength(function (d: MetaEdge): number {
+						return d.weight * self._simulationAttrOpts.linkStrength;
+					});
+				}
+				if (this._simulationAttrOpts.simulationCollisionEnabled) {
+					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						if (self.currentNodeShape.shapeType === "Label") {
 							let ret: number;
 							d.nodes.forEach(function (n: Node) {
 								let divisor: number;
 								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-									divisor = 3.25;  //TODO: see github issue
+									divisor = self._simulationAttrOpts.divisorPX;
 								}
 								else {
-									divisor = 2.75;
+									divisor = self._simulationAttrOpts.divisorPT;
 								}
 								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
 							});
@@ -177,14 +181,10 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 						else {
 							return self._attrOpts.radius;
 						}
-					}
-					catch (err) {
-						console.log(err)
-						return null;
-					}
-				})
-					.iterations(2))
-				this.simulation.alpha(.3).restart();
+					})
+						.iterations(2));
+				}
+				this.simulation.alpha(this._simulationAttrOpts.alpha).restart();
 			}
 
 		} else {

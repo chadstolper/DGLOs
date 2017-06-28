@@ -1,7 +1,6 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-import { AttrOpts } from "../DGLOs";
 import { extent } from "d3-array";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";

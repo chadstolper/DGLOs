@@ -1,4 +1,5 @@
 import { DynamicGraph } from "../model/DynamicGraph";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -12,24 +13,11 @@ import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 
-export interface AttrOpts {
-
-	fill: string;
-	stroke: string;
-	stroke_width: number | string;
-	stroke_width_label: number;
-	radius: number;
-	width: number;
-	height: number;
-	opacity: number;
-	font_size: string;
-}
-
 export interface DGLOs {
 
 	data: DynamicGraph;
-	loc: Selection<any, {}, any, {}>;
-	drawLoc: Selection<any, {}, any, {}>;
+	location: Selection<any, {}, any, {}>;
+	drawLocation: Selection<any, {}, any, {}>;
 	width: number;
 	height: number;
 
@@ -174,7 +162,7 @@ export interface DGLOs {
 	 * Removes all but one graph visualization from a series of graph 
 	 * visualizations.
 	 */
-	removeTimesteps(): void;
+	removeTimesteps(delay?: number): void;
 
 	/**
 	 * Starts running a node positioning simulation.
@@ -238,7 +226,7 @@ export interface DGLOs {
 	 * present in the current visualization. Examples include
 	 * color and size.
 	 */
-	setNodeGlyphAttrs(opts: AttrOpts): void;
+	setNodeGlyphAttrs(opts: SVGAttrOpts): void;
 
 
 	/**
@@ -246,7 +234,7 @@ export interface DGLOs {
 	 * present in the current visualization. Examples include line-thickness
 	 * and color.
 	 */
-	setEdgeGlyphAttrs(opts: AttrOpts): void;
+	setEdgeGlyphAttrs(opts: SVGAttrOpts): void;
 
 
 	/**
@@ -254,6 +242,15 @@ export interface DGLOs {
 	 * present in the current visualization. Color is an example of an
 	 * attribute that can be assigned to regionGlyphs. 
 	 */
-	setRegionGlyphAttrs(opts: AttrOpts): void;
+	setRegionGlyphAttrs(opts: SVGAttrOpts): void;
+
+
+	/**
+	 * Takes a map of varibles and applies them to the simulation
+	 * to enable or disable certain calculations and change related values.
+	 */
+	setSimulationAttrs(opts: SimulationAttrOpts): void;
+
+
 	fixCentralNodePositions(bool: boolean): void;
 }
