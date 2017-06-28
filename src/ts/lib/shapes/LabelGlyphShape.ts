@@ -28,12 +28,12 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Create selection of nodes. Returns new selection
-	 * @param glyphs
+	 * Create new Selection of label DOM elements and return the Selection.
+	 * @param location
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Node, any, {}> {
+	public initDraw(location: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
 		let self = this;
-		let ret: Selection<any, Node, any, {}> = glyphs.append("text")
+		let ret: Selection<any, Node, any, {}> = location.append("text")
 			.classed("label", true)
 			.attr("id", function (d: Node): string | number { return d.label; })
 			.attr("index", function (d: Node) {
@@ -56,6 +56,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+
 		let self = this;
 		if (labelYAxis === undefined) {
 			try {
@@ -126,9 +127,6 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs.style("fill", this.enterExitCheck());
 		}
 		else {
-			// glyphs.style("fill", function (d: Node): string {
-			// 	return self.fill(d, attrOpts.fill);
-			// })
 			glyphs.style("fill", attrOpts.stroke);
 		}
 		glyphs
@@ -198,10 +196,13 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	/**
 	 * Draw and create new visualizations of nodes, initial update included
-	 * @param labelG Should be the labelG
+	 * @param location
 	 * @param data 
 	 * @param timeStepIndex 
+	 * @param attrOpts
+	 * @param enterExit
 	 */
+
 	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = undefined, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let labelGlyphs = labelG.selectAll("text.label")
@@ -224,8 +225,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			labelGlyphs = labelGlyphs.merge(labelEnter);
 			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
 		}
-
-	}
+  }
 
 	get textAnchor(): string {
 		return this._textAnchor;
@@ -244,26 +244,26 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	get colorScheme(): ScaleOrdinal<string | number, string> {
 		return this._colorScheme;
 	}
-	set enterColor(c: string) {
-		this._enterColor = c;
+	set enterColor(color: string) {
+		this._enterColor = color;
 	}
 	get enterColor(): string {
 		return this._enterColor;
 	}
-	set exitColor(c: string) {
-		this._exitColor = c;
+	set exitColor(color: string) {
+		this._exitColor = color;
 	}
 	get exitColor(): string {
 		return this._exitColor;
 	}
-	set enterExitColor(c: string) {
-		this._enterExitColor = c;
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
 	}
 	get enterExitColor(): string {
 		return this._enterExitColor;
 	}
-	set stableColor(c: string) {
-		this._stableColor = c;
+	set stableColor(color: string) {
+		this._stableColor = color;
 	}
 	get stableColor(): string {
 		return this._stableColor;

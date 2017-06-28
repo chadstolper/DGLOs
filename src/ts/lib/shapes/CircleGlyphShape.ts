@@ -27,12 +27,12 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Create selection of nodes. Returns new selection
-	 * @param glyphs
+	 * Create a new Selection of circle DOM elements and return the Selection.
+	 * @param location
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+	public initDraw(location: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
 		let self = this;
-		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
+		let ret: Selection<any, Node, any, {}> = location.append("circle")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 			.on("click", function (d: Node) {
@@ -46,6 +46,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	/**
 	 * Assign and/or update node circle attributes and (cx,cy) positions. Assigns enter and exit coloring.
 	 * @param glyphs 
+	 * @param attrOpts
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let self = this;
@@ -154,7 +155,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	/**
 	 * Fill the CircleGlyph selection color. Returns hexCode as string.
-	 * @param d : current CircleGlyph
+	 * @param d current CircleGlyph
 	 * @param key 
 	 */
 	private fill(d: Node, key: string) {
@@ -195,10 +196,13 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 
 	/**
 	 * Draw and create new visualizations of nodes, initial update included
-	 * @param circleG Should be the circleG
+	 * @param location
 	 * @param data 
 	 * @param timeStepIndex 
+	 * @param attrOpts
+	 * @param enterExit
 	 */
+
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("circle.node")
@@ -238,26 +242,26 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	get colorScheme(): ScaleOrdinal<string | number, string> {
 		return this._colorScheme;
 	}
-	set enterColor(c: string) {
-		this._enterColor = c;
+	set enterColor(color: string) {
+		this._enterColor = color;
 	}
 	get enterColor(): string {
 		return this._enterColor;
 	}
-	set exitColor(c: string) {
-		this._exitColor = c;
+	set exitColor(color: string) {
+		this._exitColor = color;
 	}
 	get exitColor(): string {
 		return this._exitColor;
 	}
-	set enterExitColor(c: string) {
-		this._enterExitColor = c;
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
 	}
 	get enterExitColor(): string {
 		return this._enterExitColor;
 	}
-	set stableColor(c: string) {
-		this._stableColor = c;
+	set stableColor(color: string) {
+		this._stableColor = color;
 	}
 	get stableColor(): string {
 		return this._stableColor;

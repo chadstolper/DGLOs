@@ -46,15 +46,10 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * 
 	 * It takes an SVG selection with entered data and creates line objects with
 	 * an ID based on the source and target of the edge.
-	 * 
-	 * The DynamicGraph and number parameteres are required by the interface but are not
-	 * explicitly used here.
-	 * @param glyphs 
-	 * @param data 
-	 * @param TimeStampIndex 
+	 * @param location 
 	 */
-	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
-		let ret: Selection<any, Edge, any, {}> = edges.append("line")
+	public initDraw(location: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
+		let ret: Selection<any, Edge, any, {}> = location.append("line")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
@@ -63,20 +58,16 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	/**
-	 * The updateDraw method is a requirement of the __EdgeGlyphShape__ interface.
-	 * TODO: update description, include transitions
 	 * updateDraw takes a selection of rectangle glyphs and an SVGAttrOpts object
 	 * and assigns attributes to the lines (e.g. lenghth, thickness, etc..). The
 	 * method also takes a DynamicGraph and a number as required by the interface.
 	 * @param glyphs 
 	 * @param attr 
-	 * @param data 
-	 * @param TimeStampIndex 
 	 */
 	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
-			edges
+			glyphs
 				.attr("x1", function (d: Edge) { return d.source.x; })
 				.attr("y1", function (d: Edge) { return d.source.y; })
 				.attr("x2", function (d: Edge) { return d.target.x; })
@@ -86,12 +77,12 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		}
 
 		if (this.enterExitEnabled) {
-			edges.style("stroke", this.enterExitCheck());
+			glyphs.style("stroke", this.enterExitCheck());
 		}
 		else {
-			edges.style("stroke", attrOpts.stroke_edge);
+			glyphs.style("stroke", attrOpts.stroke_edge);
 		}
-		edges
+		glyphs
 			.attr("stroke-width", function (d: Edge): number {
 				if (attrOpts.stroke_width_edge === "weight") {
 					return d.weight;
@@ -99,7 +90,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				return +attrOpts.stroke_width_edge;
 			})
 			.attr("opacity", attrOpts.opacity);
-		return edges;
+		return glyphs;
 	}
 	/**
 	* Returns the correct color relating to the Enter/Exit of data in each timestep.
@@ -157,48 +148,45 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * 
 	 * The draw method takes a SVG selection to draw within, a DynamicGraph to be displayed, a timeStampIndex,
 	 * and an SVGAttrOpts object to assign attributes to draw.
-	 * @param rectG 
+	 * @param location 
 	 * @param data 
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
+
 	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
-		let sTLineEdges = sTLineG.selectAll("line.STLine")
+		let sTLineEdges = location.selectAll("line.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
-
 		sTLineEdges.exit().remove();
-
-		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter(), data, timeStampIndex);
-
+		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
-
 		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
 	}
 
 	get shapeType(): string {
 		return this._shapeType;
 	}
-	set enterColor(c: string) {
-		this._enterColor = c;
+	set enterColor(color: string) {
+		this._enterColor = color;
 	}
 	get enterColor(): string {
 		return this._enterColor;
 	}
-	set exitColor(c: string) {
-		this._exitColor = c;
+	set exitColor(color: string) {
+		this._exitColor = color;
 	}
 	get exitColor(): string {
 		return this._exitColor;
 	}
-	set enterExitColor(c: string) {
-		this._enterExitColor = c;
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
 	}
 	get enterExitColor(): string {
 		return this._enterExitColor;
 	}
-	set stableColor(c: string) {
-		this._stableColor = c;
+	set stableColor(color: string) {
+		this._stableColor = color;
 	}
 	get stableColor(): string {
 		return this._stableColor;

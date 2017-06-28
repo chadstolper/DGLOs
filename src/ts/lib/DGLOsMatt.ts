@@ -18,13 +18,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 	/**
 	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none".
-	* @param loc Selection<any, {}, any, {}>
+	* @param location Selection<any, {}, any, {}>
 	* @param SVGNum number; Default 0.
 	*/
-	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
+	protected drawNodeGlyphsAt(location: Selection<any, {}, any, {}>, SVGNum: number = 0) {
 
 		//create "g" group for nodes; parent "g".
-		let nodeG = loc.append("g").classed("nodeG", true);
+		let nodeG = location.append("g").classed("nodeG", true);
 
 		//create child "g" in parent for NodeGlyphs per shape and initialize.
 		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(nodeG);
@@ -48,11 +48,11 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 	/**
 	 * Initialize and draw all GroupGlyphShapes at a specified Selection, adds them to Map and sets display to "none" 
-	 * @param loc 
+	 * @param location 
 	 * @param SVGNum 
 	 */
-	protected drawRegionsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
-		let groupGlyphG = loc.append("g").classed("groupG", true).lower();
+	protected drawRegionsAt(location: Selection<any, {}, any, {}>, SVGNum: number = 0) {
+		let groupGlyphG = location.append("g").classed("groupG", true).lower();
 		let voronoiG: Selection<any, {}, any, {}> = this.voronoiShape.init(groupGlyphG);
 
 		voronoiG.style("display", "none");
@@ -203,41 +203,41 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 		if (!this._multipleTimestepsEnabled) { //check if timeline view is enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep
-			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges at the current timestep
-			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
-			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self._timeStampIndex, self._attrOpts, undefined, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}
 		else {
 			//update groups in map; run update of simulation on all groups accross multiple SVG elements
-			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
+			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
-			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
-			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, timestep, self._attrOpts, undefined, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}

@@ -60,6 +60,9 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	private readonly _voronoi: VoronoiLayout<Node> = voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]])
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
+	/**
+	 * Array of random points held as an array for vornoi calculations and GMap visualization.
+	 */
 	protected _noisePoints: Node[] = this.setNoisePoints();
 	/**
 	 * Attributes pertaining to SVG visualization.
@@ -85,10 +88,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
 	protected _centralNodeArray: Array<Node>;
-	/**
-	 * Value of charge applied in simulation.
-	 * Default of -100.
-	 */
 
 	/**
 	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
@@ -118,9 +117,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 		return newNoiseNodes;
 	}
 
-	//TODO: more getters and setter
-	set timeStampIndex(v: number) {
-		this._timeStampIndex = v;
+	set timeStampIndex(num: number) {
+		this._timeStampIndex = num;
 	}
 	get timeStampIndex(): number {
 		return this._timeStampIndex;
