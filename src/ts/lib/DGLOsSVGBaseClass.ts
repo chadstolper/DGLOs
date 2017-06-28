@@ -167,8 +167,7 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		opacity
 		width, height
 	*/
-	setNodeGlyphAttrs(opts: SVGAttrOpts): void { };
-	setEdgeGlyphAttrs(opts: SVGAttrOpts): void { };
+	setAttributes(opts: SVGAttrOpts): void { };
 	setRegionGlyphAttrs(opts: SVGAttrOpts): void { };
 	setSimulationAttrs(opts: SimulationAttrOpts): void { };
 	fixCentralNodePositions(bool: boolean): void { };

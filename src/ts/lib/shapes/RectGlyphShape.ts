@@ -43,19 +43,15 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		return rectG;
 	}
 	/**
-	 * The initDraw method is a requirement of the __EdgeGlyphShape__ interface.
-	 * 
 	 * It takes an SVG selection with entered data and creates rectangle objects with
 	 * an ID based on the source and target of the edge.
 	 * 
 	 * The DynamicGraph and number parameteres are required by the interface but are not
 	 * explicitly used here.
-	 * @param glyphs 
-	 * @param data 
-	 * @param TimeStampIndex 
+	 * @param location 
 	 */
-	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
-		let ret: Selection<any, Edge, any, {}> = glyphs.append("rect")
+	public initDraw(location: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
+		let ret: Selection<any, Edge, any, {}> = location.append("rect")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 		return ret;
 	}
@@ -68,12 +64,10 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * calculations required to color the rectanges on a linear color scale.
 	 * @param glyphs 
 	 * @param attr 
-	 * @param data 
-	 * @param TimeStampIndex 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number): Selection<any, {}, any, {}> {
+
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
-		this.initColorMap(data, timeStampIndex, attr);
 		try {
 			glyphs
 				.attr("x", function (e: Edge) {
@@ -85,21 +79,21 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		} catch (err) {
 			console.log("No edges!");
 		}
+		//TODO: Fix the fill of the rectangles. It is not working.
 		if (this.enterExitEnabled) {
 			glyphs
 				.style("fill", this.enterExitCheck());
 		}
 		else {
-			this.initColorMap(data, timeStampIndex, attr);
 			glyphs.style("fill", function (d: Edge): string {
 				return self.colorMap(d.weight);
 			});
 		}
 		glyphs
 			.style("stroke", attr.stroke)
-			.attr("stroke-width", attr.stroke_width)
-			.attr("width", attr.width)
-			.attr("height", attr.height)
+			.attr("stroke-width", attr.stroke_width_edge)
+			.attr("width", (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length))
+			.attr("height", (7 / 8) * (svgHeight / data.timesteps[timeStampIndex].nodes.length))
 			.style("opacity", attr.opacity);
 
 		return glyphs;
@@ -135,7 +129,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 */
 	private initColorMap(data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts) {
 		if (this.colorMap === undefined) {
-			this.maxGradientColor = attr.fill;
+			this.maxGradientColor = attr.stroke_edge;
 			this.colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[timeStampIndex].edges))
 				.range([this.minGradientColor, this.maxGradientColor]);
@@ -169,19 +163,20 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * 
 	 * The draw method takes a SVG selection to draw within, a DynamicGraph to be displayed, a timeStampIndex,
 	 * and an SVGAttrOpts object to assign attributes to draw.
-	 * @param rectG 
+	 * @param location 
 	 * @param data 
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExit: boolean = false): void {
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
+		this.initColorMap(data, timeStampIndex, attr);
 		this.enterExitEnabled = enterExit;
-		let rects = rectG.selectAll("rect")
+		let rects = location.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
-		let enter = this.initDraw(rects.enter(), data, timeStampIndex);
+		let enter = this.initDraw(rects.enter());
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
-		this.updateDraw(rects, attr, data, timeStampIndex);
+		this.updateDraw(rects, attr, data, timeStampIndex, svgWidth, svgHeight);
 	}
 
 	/**
@@ -206,38 +201,38 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	get colorMap(): d3Scale.ScaleLinear<string, string> {
 		return this._colorMap;
 	}
-	set enterColor(c: string) {
-		this._enterColor = c;
+	set enterColor(color: string) {
+		this._enterColor = color;
 	}
 	get enterColor(): string {
 		return this._enterColor;
 	}
-	set exitColor(c: string) {
-		this._exitColor = c;
+	set exitColor(color: string) {
+		this._exitColor = color;
 	}
 	get exitColor(): string {
 		return this._exitColor;
 	}
-	set enterExitColor(c: string) {
-		this._enterExitColor = c;
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
 	}
 	get enterExitColor(): string {
 		return this._enterExitColor;
 	}
-	set stableColor(c: string) {
-		this._stableColor = c;
+	set stableColor(color: string) {
+		this._stableColor = color;
 	}
 	get stableColor(): string {
 		return this._stableColor;
 	}
-	set maxGradientColor(c: string) {
-		this._maxGradientColor = c;
+	set maxGradientColor(color: string) {
+		this._maxGradientColor = color;
 	}
 	get maxGradientColor(): string {
 		return this._maxGradientColor;
 	}
-	set minGradientColor(c: string) {
-		this._minGradientColor = c;
+	set minGradientColor(color: string) {
+		this._minGradientColor = color;
 	}
 	get minGradientColor(): string {
 		return this._minGradientColor;

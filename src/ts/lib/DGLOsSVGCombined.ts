@@ -60,23 +60,18 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	private readonly _voronoi: VoronoiLayout<Node> = voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]])
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
+	/**
+	 * Array of random points held as an array for vornoi calculations and GMap visualization.
+	 */
 	protected _noisePoints: Node[] = this.setNoisePoints();
 	/**
-	 * see comment by will //TODO: rewrite, see comment in edgeattropts
+	 * Attributes pertaining to SVG visualization.
 	 */
-	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
+	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("white", "black", "black");
 	/**
 	 * Attributes pertaining to the simulation. Empty constructor defaults.
 	 */
 	protected _simulationAttrOpts: SimulationAttrOpts = new SimulationAttrOpts();
-	protected _groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
-	/**
-	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
-	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and
-	 * an NodeAttrOpts class. TODO.
-	 */
-	protected _edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts("black", "black", null, 1, null, null, null);
-	protected _willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
 	/**
 	 * A map used for constructing an Egograph.
 	 */
@@ -93,10 +88,6 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
 	protected _centralNodeArray: Array<Node>;
-	/**
-	 * Value of charge applied in simulation.
-	 * Default of -100.
-	 */
 
 	/**
 	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
@@ -126,9 +117,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 		return newNoiseNodes;
 	}
 
-	//TODO: more getters and setter
-	set timeStampIndex(v: number) {
-		this._timeStampIndex = v;
+	set timeStampIndex(num: number) {
+		this._timeStampIndex = num;
 	}
 	get timeStampIndex(): number {
 		return this._timeStampIndex;
@@ -189,6 +179,18 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	}
 	get noisePoints(): Node[] {
 		return this._noisePoints;
+	}
+	set attrOpts(attr: SVGAttrOpts) {
+		this._attrOpts = attr;
+	}
+	get attrOpts(): SVGAttrOpts {
+		return this._attrOpts;
+	}
+	set simulationAttrOpts(attr: SimulationAttrOpts) {
+		this._simulationAttrOpts = attr;
+	}
+	get simulationAttrOpts(): SimulationAttrOpts {
+		return this._simulationAttrOpts;
 	}
 	set neighboringNodesMap(map: Map<string | number, Node>) {
 		this._neighboringNodesMap = map;

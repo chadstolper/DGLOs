@@ -4,8 +4,7 @@ import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { SVGAttrOpts, DGLOsSVG } from "../DGLOsSVG";
 import { Shape } from "./Shape"
-
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
+import { ScaleOrdinal, scaleOrdinal, scalePoint, schemeCategory20 } from "d3-scale";
 import "d3-transition";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
@@ -28,12 +27,12 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Create selection of nodes. Returns new selection
-	 * @param glyphs
+	 * Create a new Selection of circle DOM elements and return the Selection.
+	 * @param location
 	 */
-	public initDraw(glyphs: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
+	public initDraw(location: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
 		let self = this;
-		let ret: Selection<any, Node, any, {}> = glyphs.append("circle")
+		let ret: Selection<any, Node, any, {}> = location.append("circle")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 			.on("click", function (d: Node) {
@@ -47,20 +46,74 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	/**
 	 * Assign and/or update node circle attributes and (cx,cy) positions. Assigns enter and exit coloring.
 	 * @param glyphs 
+	 * @param attrOpts
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let self = this;
-		try {
-			glyphs
-				.attr("cx", function (d: Node) {
-					return d.x;
-				})
-				.attr("cy", function (d: Node) {
-					return d.y;
-				});
-		} catch (err) {
-			console.log("No circle nodes!");
+		if (labelYAxis === undefined) {
+			try {
+				glyphs
+					.text(function (d: Node): string {
+						return d.label;
+					});
+				glyphs
+					.attr("cx", function (d: Node) {
+						return d.x;
+					})
+					.attr("cy", function (d: Node) {
+						return d.y;
+					});
+			} catch (err) {
+				console.log("No label nodes!");
+			}
+		} else {
+			if (labelYAxis) {
+				let yAxisScale = scalePoint<number>()
+					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+					.range([attrOpts.height / 8, attrOpts.height])
+					.padding(0.5);
+				try {
+					glyphs
+						.text(function (d: Node): string {
+							return d.label;
+						});
+					glyphs
+						.attr("cx", function (d: Node) {
+							d.x = attrOpts.width / 8 - (3 * attrOpts.width / 100);
+							return attrOpts.width / 8 - (3 * attrOpts.width / 100);
+						})
+						.attr("cy", function (d: Node) {
+							d.y = yAxisScale(d.index);
+							return yAxisScale(d.index);
+						});
+				} catch (err) {
+					console.log("No label nodes!");
+				}
+			} else {
+				let xAxisScale = scalePoint<number>()
+					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+					.range([attrOpts.width / 8, attrOpts.width])
+					.padding(0.5);
+				try {
+					glyphs
+						.text(function (d: Node): string {
+							return d.label;
+						});
+					glyphs
+						.attr("cx", function (d: Node) {
+							d.x = xAxisScale(d.index);
+							return xAxisScale(d.index);
+						})
+						.attr("cy", function (d: Node) {
+							d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
+							return attrOpts.height / 8 - (3 * attrOpts.height / 100);
+						});
+				} catch (err) {
+					console.log("No label nodes!");
+				}
+			}
 		}
+
 		if (this.enterExitEnabled) {
 			glyphs.style("fill", this.enterExitCheck());
 		}
@@ -68,13 +121,14 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs.style("fill", function (d: Node): string {
 				return self.fill(d, attrOpts.fill);
 			});
+			glyphs
+				.attr("fill", "id");
 		}
 		glyphs
 			.style("stroke", attrOpts.stroke)
 			.attr("r", attrOpts.radius)
 			.attr("stroke-width", attrOpts.stroke_width)
 			.style("opacity", attrOpts.opacity);
-
 		return glyphs;
 	}
 	/**
@@ -101,7 +155,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	/**
 	 * Fill the CircleGlyph selection color. Returns hexCode as string.
-	 * @param d : current CircleGlyph
+	 * @param d current CircleGlyph
 	 * @param key 
 	 */
 	private fill(d: Node, key: string) {
@@ -142,22 +196,37 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 
 	/**
 	 * Draw and create new visualizations of nodes, initial update included
-	 * @param circleG Should be the circleG
+	 * @param location
 	 * @param data 
 	 * @param timeStepIndex 
+	 * @param attrOpts
+	 * @param enterExit
 	 */
-	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, enterExit: boolean = false): void {
+
+	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("circle.node")
-			.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-
+			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 		circleGlyphs.exit().remove();
+		if (duplicateNodes === undefined) {
+			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+			circleGlyphs = circleGlyphs.merge(circleEnter);
+			this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
+		} else {
+			if (duplicateNodes) {
+				let copySet = circleG.selectAll("circle.node.top")
+					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
+				copySet.exit().remove();
+				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
+				copySet = copySet.merge(copyEnter);
+				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
+			}
+			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+			circleGlyphs = circleGlyphs.merge(circleEnter);
+			this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex, true);
+		}
 
-		let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 
-		circleGlyphs = circleGlyphs.merge(circleEnter);
-
-		this.updateDraw(circleGlyphs, attrOpts);
 	}
 
 	get shapeType(): string {
@@ -173,26 +242,26 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	get colorScheme(): ScaleOrdinal<string | number, string> {
 		return this._colorScheme;
 	}
-	set enterColor(c: string) {
-		this._enterColor = c;
+	set enterColor(color: string) {
+		this._enterColor = color;
 	}
 	get enterColor(): string {
 		return this._enterColor;
 	}
-	set exitColor(c: string) {
-		this._exitColor = c;
+	set exitColor(color: string) {
+		this._exitColor = color;
 	}
 	get exitColor(): string {
 		return this._exitColor;
 	}
-	set enterExitColor(c: string) {
-		this._enterExitColor = c;
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
 	}
 	get enterExitColor(): string {
 		return this._enterExitColor;
 	}
-	set stableColor(c: string) {
-		this._stableColor = c;
+	set stableColor(color: string) {
+		this._stableColor = color;
 	}
 	get stableColor(): string {
 		return this._stableColor;
