@@ -3,7 +3,10 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG"
 
 export class Egograph extends Technique {
 	public draw() {
-		let attr = new SVGAttrOpts("id", "black", 10, 1);
+		let attr = new SVGAttrOpts("id", "none", 1, 1, 10, 2000, 2000);
+		attr.font_size = "20";
+		let attr2 = new SVGAttrOpts("blue", "black", 1, 1, 10, 2000, 2000);
+		attr2.opacity = 75;
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
 		this.lib.setCenterNode(this.lib.data.timesteps[0].nodes[0].origID);
@@ -11,7 +14,7 @@ export class Egograph extends Technique {
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.setNodeGlyphAttrs(attr);
-		this.lib.setEdgeGlyphAttrs(attr);
+		this.lib.setEdgeGlyphAttrs(attr2);
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
 }
