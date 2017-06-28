@@ -11,6 +11,7 @@ export class MatrixTimeline extends Technique {
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.positionNodeGlyphsMatrix();
 		this.lib.positionEdgeGlyphsMatrix();
+		this.lib.removeTimesteps(250);
 	}
 
 }

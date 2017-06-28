@@ -182,6 +182,18 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	get noisePoints(): Node[] {
 		return this._noisePoints;
 	}
+	set attrOpts(attr: SVGAttrOpts) {
+		this._attrOpts = attr;
+	}
+	get attrOpts(): SVGAttrOpts {
+		return this._attrOpts;
+	}
+	set simulationAttrOpts(attr: SimulationAttrOpts) {
+		this._simulationAttrOpts = attr;
+	}
+	get simulationAttrOpts(): SimulationAttrOpts {
+		return this._simulationAttrOpts;
+	}
 	set neighboringNodesMap(map: Map<string | number, Node>) {
 		this._neighboringNodesMap = map;
 	}

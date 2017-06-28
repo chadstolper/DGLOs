@@ -17,22 +17,23 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 		this.drawNodeGlyphsAt(this.drawLocation);
 	}
 	/**
-	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none". //TODO: update description for flubber
-	* @param loc: Selection<any, {}, any, {}>
+	* Initialize and draw all NodeGlyphshapes to a specific Selection, adds them to Map and sets display to "none".
+	* @param loc Selection<any, {}, any, {}>
+	* @param SVGNum number; Default 0.
 	*/
 	protected drawNodeGlyphsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
 
-		//create "g" group for nodes; parent "g". Acts as pseudo init() function
+		//create "g" group for nodes; parent "g".
 		let nodeG = loc.append("g").classed("nodeG", true);
 
-		//create child "g" in parent for NodeGlyphs
+		//create child "g" in parent for NodeGlyphs per shape and initialize.
 		let nodeLabelG: Selection<any, {}, any, {}> = this.labelShape.init(nodeG);
 		let nodeCircleG: Selection<any, {}, any, {}> = this.circleShape.init(nodeG);
 
 		nodeLabelG.style("display", "none");
 		nodeCircleG.style("display", "none");
 
-		//add nodeselections to new map and map map
+		//add nodeselections to map, then add map to NodeGLyphMap at SVG position.
 		let glyphMap = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
 		glyphMap.set(this.labelShape, nodeLabelG);
 		glyphMap.set(this.circleShape, nodeCircleG);
@@ -52,20 +53,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 */
 	protected drawRegionsAt(loc: Selection<any, {}, any, {}>, SVGNum: number = 0) {
 		let groupGlyphG = loc.append("g").classed("groupG", true).lower();
-
-		//create child "g" in parent for GroupGlyphs
 		let voronoiG: Selection<any, {}, any, {}> = this.voronoiShape.init(groupGlyphG);
 
 		voronoiG.style("display", "none");
 
-		//add voronoi regions to map
 		let glyphMap = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
 		glyphMap.set(this.voronoiShape, voronoiG);
 
 		this.groupGlyphMap.set(SVGNum, glyphMap);
 	}
 	/**
-	 * Transforms/makes visible the target GroupGlyph. //TODO: update descriptiong for flubber
+	 * Transforms/makes visible the target GroupGlyph.
 	 * @param shape 
 	 */
 	public transformGroupGlyphsTo(shape: GroupGlyph) {
@@ -77,7 +75,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * Transforms/makes visible the target NodeGlyphShape //TODO: update description for flubber
+	 * Transforms/makes visible the target NodeGlyphShape.
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape) {
@@ -89,24 +87,28 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	}
 
 	/**
-	 * (Re)sets the visual attributes of the NodeGlyphShape
+	 * Sets the attributes of Node and Edge visualizations.
 	 * @param attr 
 	 */
 	public setAttributes(attr: SVGAttrOpts) {
-		this._attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, attr.stroke_width, attr.stroke_width_edge, attr.radius, attr.width, attr.height, attr.opacity, attr.font_size);
+		this.attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, attr.stroke_width, attr.stroke_width_edge, attr.radius, attr.width, attr.height, attr.opacity, attr.font_size);
 	}
 
 	/**
-	 * (Re)sets the visual attributes of the GroupGlyphShape.
-	 * Also sets NodeGlyph and EdgeGlyph attributes to correspond with GroupGlyph visualization.
+	 * Sets the attributes of Node and Edge visualizations with Gmap visualization.
+	 * Some attributes manually assigned for Gmap.
 	 * @param attr 
 	 */
 	public setRegionGlyphAttrs(attr: SVGAttrOpts) {
-		this._attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, 0, 0.25, 1, attr.width, attr.height, attr.opacity, attr.font_size);
+		this.attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, 0, 0.25, 1, attr.width, attr.height, attr.opacity, attr.font_size);
 	}
 
+	/**
+	 * Sets the attributes of the simulation used in force-directed visualizations.
+	 * @param attr 
+	 */
 	public setSimulationAttrs(attr: SimulationAttrOpts) {
-		this._simulationAttrOpts = attr;
+		this.simulationAttrOpts = attr;
 	}
 
 	/**
@@ -125,9 +127,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 
 	/**
 	 * Begins the force simulation for positioning Nodes and Edges, calls internal tick().
-	 * True initializes simulation, if already exisits assigns data for Nodes and Edges and restarts simulation.
+	 * True initializes simulation, if already exisits assigns data for Nodes and Edges and restarts simulation with alpha.
 	 * False stops the simulation internal tick. Returns simulation at that point.
-	 * @param setRunning: boolean
+	 * @param setRunning boolean
 	 */
 	public positionNodesAndEdgesForceDirected(setRunning: boolean) {
 		if (setRunning) {
@@ -138,7 +140,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
 					.force("charge", d3force.forceManyBody().strength(this._simulationAttrOpts.charge))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
-					.on("tick", this.ticked(self))
+					.on("tick", this.tick(self))
 					.on("end", function () {
 						console.log("SIMULATION DONE HALLELUJAH!");
 					});
@@ -163,18 +165,12 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				if (this._simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						if (self.currentNodeShape.shapeType === "Label") {
-							let ret: number;
 							d.nodes.forEach(function (n: Node) {
-								let divisor: number;
 								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-									divisor = self._simulationAttrOpts.divisorPX;
+									return (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / self._simulationAttrOpts.divisorPX;
 								}
-								else {
-									divisor = self._simulationAttrOpts.divisorPT;
-								}
-								ret = (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / divisor;
+								return (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / self._simulationAttrOpts.divisorPT;
 							});
-							return ret;
 						}
 						else {
 							return self._attrOpts.radius;
@@ -195,17 +191,17 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	 * "Super tick" called during simulation
 	 * @param self
 	 */
-	private ticked(self: DGLOsMatt) {
-		return () => self.tick();
+	private tick(self: DGLOsMatt) {
+		return () => self.tock();
 	}
 
 	/**
-	 *  Tick called during simulation updating x and y positions of DOM elements
+	 *  (Tick) Tock called during simulation updating x and y positions of DOM elements at all timesteps.
 	 */
-	private tick() {
-		let self = this; //d3 scope this issue
+	private tock() {
+		let self = this;
 
-		if (!this._multipleTimestepsEnabled) { //check if small multiples are enabled.
+		if (!this._multipleTimestepsEnabled) { //check if timeline view is enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep
 			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
