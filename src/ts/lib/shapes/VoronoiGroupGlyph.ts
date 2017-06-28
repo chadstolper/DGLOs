@@ -1,8 +1,6 @@
-import { NodeGlyphShape } from "../NodeGlyphInterface"
-import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { GroupGlyph } from "../GroupGlyphInterface";
 import { Selection } from "d3-selection";
-import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
+import { DynamicGraph, Node } from "../../model/dynamicgraph";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
@@ -30,10 +28,10 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 	/**
 	 * Creates selection of paths. Returns new selection.
-	 * @param paths
+	 * @param location
 	 */
-	public initDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>): Selection<any, VoronoiPolygon<Node>, any, {}> {
-		let ret: Selection<any, VoronoiPolygon<Node>, any, {}> = paths.insert("path")
+	public initDraw(location: Selection<any, VoronoiPolygon<Node>, any, {}>): Selection<any, VoronoiPolygon<Node>, any, {}> {
+		let ret: Selection<any, VoronoiPolygon<Node>, any, {}> = location.insert("path")
 			.classed("voronoi", true)
 			.attr("id", function (d: VoronoiPolygon<Node>): string | number {
 				try {
@@ -48,27 +46,27 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 	/**
 	 * Assign and/or update voronoi path attributes and draw paths. Assigns coloring for entering and exiting elements.
-	 * @param paths
+	 * @param glyphs
 	 * @param attrOpts
 	 */
-	public updateDraw(paths: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
-		paths.style("fill", "none").attr("stroke", "none");
+	public updateDraw(glyphs: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
+		glyphs.style("fill", "none").attr("stroke", "none");
 		let self = this;
 		if (this.enterExitEnabled) {
-			paths
+			glyphs
 				.style("fill", this.enterExitCheck())
 				.style("stroke", this.enterExitCheck());
 		}
 		else {
-			paths
+			glyphs
 				.style("fill", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); })
 				.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); });
 		}
-		paths
+		glyphs
 			.attr("d", function (d: any): string {
 				return d ? "M" + d.join("L") + "Z" : null;
 			});
-		return paths;
+		return glyphs;
 	}
 	/**
 	* Returns the correct color relating to the Enter/Exit of data in each timestep.
@@ -145,17 +143,17 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 	/**
 	 * Draw and create new visualizations of regions, initial update included.
-	 * @param voronoiG Should be the vonornoiG
+	 * @param loc location of glyphs
 	 * @param data 
 	 * @param timeStepIndex 
 	 * @param attrOpts
 	 * @param noisePoints
 	 * @param voronoi
 	 */
-	public draw(voronoiG: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit: boolean = false): void {
+	public draw(loc: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let vData = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
-		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = voronoiG.selectAll("path.voronoi")
+		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = loc.selectAll("path.voronoi")
 			.data(vData, function (d: VoronoiPolygon<Node>, i: number): string {
 				let ret: string;
 				try {
@@ -190,32 +188,32 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	get colorScheme(): ScaleOrdinal<string | number, string> {
 		return this._colorScheme;
 	}
-	set enterColor(c: string) {
-		this._enterColor = c;
+	set enterColor(color: string) {
+		this._enterColor = color;
 	}
 	get enterColor(): string {
 		return this._enterColor;
 	}
-	set exitColor(c: string) {
-		this._exitColor = c;
+	set exitColor(color: string) {
+		this._exitColor = color;
 	}
 	get exitColor(): string {
 		return this._exitColor;
 	}
-	set noiseColor(c: string) {
-		this._noiseDefaultColor = c;
+	set noiseColor(color: string) {
+		this._noiseDefaultColor = color;
 	}
 	get noiseColor(): string {
 		return this._noiseDefaultColor;
 	}
-	set enterExitColor(c: string) {
-		this._enterExitColor = c;
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
 	}
 	get enterExitColor(): string {
 		return this._enterExitColor;
 	}
-	set stableColor(c: string) {
-		this._stableColor = c;
+	set stableColor(color: string) {
+		this._stableColor = color;
 	}
 	get stableColor(): string {
 		return this._stableColor;

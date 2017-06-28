@@ -79,8 +79,8 @@ export class SVGAttrOpts {
 	get stroke_width(): number {
 		return this._stroke_width;
 	}
-	set stroke_width(vStr: number) {
-		this._stroke_width = vStr;
+	set stroke_width(num: number) {
+		this._stroke_width = num;
 	}
 
 	/**
@@ -113,13 +113,15 @@ export class SVGAttrOpts {
 	get opacity(): number {
 		return this._opacity;
 	}
-	set opacity(opacity: number) {
-		this._opacity = opacity;
+	set opacity(num: number) {
+		this._opacity = num;
 	}
 
-
-	set font_size(v: string) {
-		this._font_size = v;
+	/**
+	 * eg. "12px", "14pt", "42px", "69pt"
+	 */
+	set font_size(str: string) {
+		this._font_size = str;
 	}
 	get font_size(): string {
 		return this._font_size;
@@ -172,32 +174,32 @@ export class SimulationAttrOpts {
 	get simulationWeightEnabled(): boolean {
 		return this._simulationWeight;
 	}
-	set divisorPT(v: number) {
-		this._divisorPT = v;
+	set divisorPT(num: number) {
+		this._divisorPT = num;
 	}
 	get divisorPT(): number {
 		return this._divisorPT;
 	}
-	set divisorPX(v: number) {
-		this._divisorPX = v;
+	set divisorPX(num: number) {
+		this._divisorPX = num;
 	}
 	get divisorPX(): number {
 		return this._divisorPX;
 	}
-	set alpha(v: number) {
-		this._simulationAlpha = v;
+	set alpha(num: number) {
+		this._simulationAlpha = num;
 	}
 	get alpha(): number {
 		return this._simulationAlpha;
 	}
-	set charge(v: number) {
-		this._simulationCharge = v;
+	set charge(num: number) {
+		this._simulationCharge = num;
 	}
 	get charge(): number {
 		return this._simulationCharge;
 	}
-	set linkStrength(v: number) {
-		this._simulationLinkStrength = v;
+	set linkStrength(num: number) {
+		this._simulationLinkStrength = num;
 	}
 	get linkStrength(): number {
 		return this._simulationLinkStrength;
