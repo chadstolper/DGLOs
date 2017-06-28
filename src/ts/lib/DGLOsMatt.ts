@@ -211,7 +211,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges at the current timestep
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType != "Gestalt") {
+					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
 						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
@@ -235,7 +235,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
 			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
 				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
-					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType != "Gestalt") {
+					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
 						shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);

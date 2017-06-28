@@ -41,11 +41,8 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * The DynamicGraph and number parameteres are required by the interface but are not
 	 * explicitly used here.
 	 * @param glyphs 
-	 * @param data 
-	 * @param TimeStampIndex 
 	 */
-	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-		let self = this;
+	public initDraw(edges: Selection<any, Edge, any, {}>): Selection<any, {}, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("line")
 			.classed("edgeGestalt", true)
 			.attr("id", function (d: Edge): string { return d.source.label + ":" + d.target.label })
@@ -54,7 +51,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 			})
 			.attr("timestep", function (e: Edge): string {
 				return e.timestep + "";
-			})
+			});
 		return ret;
 	}
 
@@ -63,15 +60,14 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param edges 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
+		let self = this;
 		try {
 			let weightScale = scaleLinear<number>()
 				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
 				.range([-10, 10]);
-			let thicknessScale = scaleLinear<number>()
+			let thicknessScale = scaleLinear<number>() //TODO: move to own function, create private global varible
 				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
 				.range([.25, 1.5]);
-			let steps = data.timesteps.length;
-			let self = this;
 			glyphs
 				.attr("x1", function (d: Edge) {
 					return d.x;
@@ -104,13 +100,10 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					}
 					return yPos + d.y;
 				})
-				.attr("stroke", attrOpts.stroke)
+				.attr("stroke", attrOpts.stroke_edge)
 				.attr("stroke-width", function (d: Edge) {
 					return thicknessScale(d.weight);
 				});
-
-
-
 			return glyphs;
 		}
 		catch (err) {
@@ -146,18 +139,18 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 	/**
 	 * Draw and create new visualizations of edges, initial update included
-	 * @param gestaltG Should be the gestaltG
+	 * @param location
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(gestaltG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
 		// console.log("drawingGestalt");
-		let gestaltGlyphs = gestaltG.selectAll("line.edgeGestalt")
+		let gestaltGlyphs = location.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
 		gestaltGlyphs.exit().remove();
 
-		let gestaltEnter = this.initDraw(gestaltGlyphs.enter(), data, timeStampIndex);
+		let gestaltEnter = this.initDraw(gestaltGlyphs.enter());
 
 		gestaltGlyphs = gestaltGlyphs.merge(gestaltEnter as Selection<any, Edge, any, {}>);
 
