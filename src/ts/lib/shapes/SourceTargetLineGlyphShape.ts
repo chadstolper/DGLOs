@@ -96,7 +96,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 				if (attrOpts.stroke_width_edge === "weight") {
 					return d.weight;
 				}
-				return +attrOpts.stroke_width;
+				return +attrOpts.stroke_width_edge;
 			})
 			.attr("opacity", attrOpts.opacity);
 		return edges;

@@ -201,9 +201,9 @@ export class DGLOsWill extends DGLOsMatt {
 		let check = 0;
 		for (let node of this.dataToDraw.metaNodes.get(this.centralNodeID).nodes) {
 			let meta = new MetaNode(node.id);
-			console.log(node.fx);
+			// console.log(node.fx);
 			meta.fx = self._width / 2;//node.fx;
-			console.log(node.label + ": " + node.timestamp);
+			// console.log(node.label + ": " + node.timestamp);
 			meta.fy = yScale(node.timestamp);//node.fy;
 			meta.add(node);
 			this.dataToDraw.metaNodes.set(node.label + ":" + node.timestamp, meta);
