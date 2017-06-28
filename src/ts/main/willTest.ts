@@ -37,9 +37,9 @@ json("data/dummy/dummy.json", function (response: any) {
 	let svg: Selection<any, {}, any, {}> = select("body")
 	let lib: DGLOs = new DGLOsSVG(g, svg, width, height);
 	//let vis: Technique = new Egograph(lib, {}); // WORKS FOR DUMMY, RADOSLAW, AND NEWCOMB
-	let vis: Technique = new ForceDirectedAnimated(lib, {}); // WORKS FOR DUMMY, RADOSLAW, AND NEWCOMB SO LONG AS YOU ARE DISPLAYING CIRCLES, NOT LABELS
+	//let vis: Technique = new ForceDirectedAnimated(lib, {}); // WORKS FOR DUMMY, RADOSLAW, AND NEWCOMB SO LONG AS YOU ARE DISPLAYING CIRCLES, NOT LABELS
 	//let vis: Technique = new ForceDirectedTimeline(lib, {}); // WORKS FOR DUMMY, RADOSLAW, AND NEWCOMB SO LONG AS YOU ARE DISPLAYING CIRCLES, NOT LABELS
-	//let vis: Technique = new GestaltGlyphs(lib, {});
+	let vis: Technique = new GestaltGlyphs(lib, {});
 	//let vis: Technique = new MatrixAnimated(lib, {}); // WORKS FOR DUMMY, RADOSLAW, AND NEWCOMB
 	//let vis: Technique = new MatrixTimeline(lib, {}); // WORKS FOR DUMMY, RADOSLAW, AND NEWCOMB
 	//let vis: Technique = new GMap(lib, {}); // TODO: VORONOI LOSES DATA SOMETIMES
