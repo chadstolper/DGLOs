@@ -64,7 +64,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param glyphs 
 	 * @param attr 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
+	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			glyphs
@@ -153,18 +153,15 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, enterExit: boolean = false): void {
+
+	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let sTLineEdges = location.selectAll("line.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
-
 		sTLineEdges.exit().remove();
-
 		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
-
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
-
-		this.updateDraw(sTLineEdges, attrOpts);
+		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
 	}
 
 	get shapeType(): string {

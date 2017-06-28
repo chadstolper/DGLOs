@@ -65,7 +65,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param glyphs 
 	 * @param attr 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts): Selection<any, {}, any, {}> {
+
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			glyphs
@@ -78,6 +79,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		} catch (err) {
 			console.log("No edges!");
 		}
+		//TODO: Fix the fill of the rectangles. It is not working.
 		if (this.enterExitEnabled) {
 			glyphs
 				.style("fill", this.enterExitCheck());
@@ -90,8 +92,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		glyphs
 			.style("stroke", attr.stroke)
 			.attr("stroke-width", attr.stroke_width_edge)
-			.attr("width", attr.width)
-			.attr("height", attr.height)
+			.attr("width", (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length))
+			.attr("height", (7 / 8) * (svgHeight / data.timesteps[timeStampIndex].nodes.length))
 			.style("opacity", attr.opacity);
 
 		return glyphs;
@@ -166,15 +168,15 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, enterExit: boolean = false): void {
-		this.initColorMap(data, timeStampIndex, attr);
+	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
+
 		this.enterExitEnabled = enterExit;
 		let rects = location.selectAll("rect")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
 		let enter = this.initDraw(rects.enter());
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
-		this.updateDraw(rects, attr);
+		this.updateDraw(rects, attr, data, timeStampIndex, svgWidth, svgHeight);
 	}
 
 	/**
