@@ -13,11 +13,10 @@ import { GestaltGlyphShape } from "../lib/shapes/GestaltGlyphShape";
 export class MatrixAnimated extends Technique {
 	public draw(): void {
 		this.lib.drawNodeGlyphs();
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 1, 1500 / (this._library.data.timesteps[0].nodes.length - 1), 1500 / (this._library.data.timesteps[0].nodes.length - 1), null));
+		this.lib.setAttributes(new SVGAttrOpts("black", "black", "blue", 0, 1));
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.drawEdgeGlyphs();
 		this.lib.transformEdgeGlyphsTo(this.lib.rectShape);
-		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("pink", "black", null, 1, null, null));
 		this.lib.positionNodeGlyphsMatrix();
 		this.lib.positionEdgeGlyphsMatrix();
 		this.lib.enableStepping();
