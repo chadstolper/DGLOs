@@ -2,7 +2,7 @@ import { DGLOsSandwich } from "./DGLOsSandwich";
 
 /**
  * Attribute object used for passing collection of options pertaining to GlyphShape visualization.
- * Specific options for fill and stroke-width:
+ * Unique options for fill and stroke-width-edge.
  */
 export class SVGAttrOpts {
 	private _fill: string;
@@ -17,18 +17,17 @@ export class SVGAttrOpts {
 	private _font_size: string;
 
 	/**
-	 * Fill: "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
-     * Stroke-Width: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
-	 * @param fill 
+	 * Order: Node, Node, Edge, Node, Edge, Node, Edge, Edge, Both, Node/neither.
+	 * @param fill "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
 	 * @param stroke
 	 * @param stroke_edge
-	 * @param stroke_width : Defaults to 2.
-	 * @param stroke_width_edge : Defaults to 1.
-	 * @param radius : Defaults to 10.
+	 * @param stroke_width Defaults to 2.
+	 * @param stroke_width_edge Defaults to 1. "weight" - assign line thickness based on edge weight/10; <number> - set all edges' thickness to <number>.
+	 * @param radius Defaults to 10.
 	 * @param width 
 	 * @param height 
-	 * @param opacity : Defaults to 100.
-	 * @param font_size : Defaults to "12px". eg. "12px", "25pt", "10px", "14pt", etc.
+	 * @param opacity Defaults to 100.
+	 * @param font_size Defaults to "12px". eg. "12px", "25pt", "10px", "14pt", etc.
 	 */
 	constructor(fill: string, stroke: string, stroke_edge: string, stroke_width: number = 2, stroke_width_edge: number | string = 1, radius: number = 10, width?: number, height?: number, opacity: number = 100, font_size: string = "12px") {
 		this._fill = fill;
@@ -52,7 +51,6 @@ export class SVGAttrOpts {
 	set fill(str: string) {
 		this._fill = str;
 	}
-
 
 	get stroke(): string {
 		return this._stroke;
@@ -129,6 +127,9 @@ export class SVGAttrOpts {
 }
 
 
+/**
+ * Attribute object used for passing collection of options pertaining to simulation mechanics.
+ */
 export class SimulationAttrOpts {
 	private _simulationCollision: boolean;
 	private _simulationWeight: boolean;
@@ -141,13 +142,13 @@ export class SimulationAttrOpts {
 	/**
 	 * Object holding simulation related information. Changing attributes will change the simulation characteristics as specified.
 	 * Leaving the contsructor empty will return default values for all attributes.
-	 * @param simulationCollision : Default = false; NodeGlyphShapes can clip/overlap.
-	 * @param simulationWeight : Default = false; Links will default to D3 link.strength values. Links will not pull based on Edge data.
-	 * @param divisorPT : Default = 2.75; Relative collision radius resizing value for LabelGlyphs with text sized by pt. Higher values = closer collision radius.
-	 * @param divisorPX : Default = 3.25; Relative collision radius resizing value for LabelGlyphs with text sized by px. Higher values = closer collision radius.
-	 * @param alpha : Default = 0.3; Starting "energy" for simulation elements.
-	 * @param charge : Default = -100; Push applied to simulation elements from the center.
-	 * @param linkStrength : Default = 0.05; strength of Edge pulling between 2 Nodes in the simualtion.
+	 * @param simulationCollision Default = false; NodeGlyphShapes can clip/overlap.
+	 * @param simulationWeight Default = false; Links will default to D3 link.strength values. Links will not pull based on Edge data.
+	 * @param divisorPT Default = 2.75; Relative collision radius resizing value for LabelGlyphs with text sized by pt. Higher values = closer collision radius.
+	 * @param divisorPX Default = 3.25; Relative collision radius resizing value for LabelGlyphs with text sized by px. Higher values = closer collision radius.
+	 * @param alpha Default = 0.3; Starting "energy" for simulation elements.
+	 * @param charge Default = -100; Push applied to simulation elements from the center.
+	 * @param linkStrength Default = 0.05; strength of Edge pulling between 2 Nodes in the simualtion.
 	 */
 	constructor(simulationCollision: boolean = false, simulationWeight: boolean = false, divisorPT: number = 2.75, divisorPX: number = 3.25, alpha: number = .3, charge: number = -100, linkStrength: number = .05) {
 		this._simulationCollision = simulationCollision;
