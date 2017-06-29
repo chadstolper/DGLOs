@@ -1,89 +1,161 @@
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
 import { Node, Edge } from "../model/dynamicgraph";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
-import * as d3force from "d3-force";
 import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-import { SVGAttrOpts } from "./DGLOsSVG";
-import { VoronoiLayout } from "d3-voronoi";
-import * as d3 from "d3"; //TODO: replace later with module
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
+import { VoronoiLayout, voronoi } from "d3-voronoi";
 
 export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 
+	/**
+	 * Current timestep of the data.
+	 */
 	protected _timeStampIndex = 0;
+	/**
+	 * A map of SVG related maps with pointers to their respective <g> tag selection by NodeGlyphShape.
+	 * <SVG#, Map<NodeGlyphShape, Selection<any, {}, any, {}>>.
+	 */
+	protected _nodeGlyphMap: Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>>();
+	/**
+	 * A map of SVG related maps with pointers to their respective <g> tag selection by EdgeGlyphShape.
+	 * <SVG#, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>.
+	 */
+	protected _edgeGlyphMap: Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>> = new Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>>();
+	/**
+	 * A map of SVG related maps with pointers to their respective <g> tag selection by GroupGlyph.
+	 * <SVG#, Map<GroupGlyph, Selection<any, {}, any, {}>>.
+	 */
+	protected _groupGlyphMap: Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>> = new Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>>();
+	/**
+	 * The physics simulation used to direct force-directed visualizations.
+	 */
+	protected _simulation: Simulation<any, undefined>;
+	/**
+	 * Boolean representing the existance of multiple SVG elements needing to be updated by timestep.
+	 */
+	protected _multipleTimestepsEnabled: boolean = false;
+	/**
+	 * Boolean representing the current DGLO visualization being displayed.
+	 * Extended to Gestalt.
+	 */
+	protected _matrixViewEnabled: boolean = false;
+	/**
+	 * Boolean representing if enter exit coloring is enabled on the current visualization.
+	 */
+	protected _enterExitColorEnabled: boolean = false;
 
-
 	/**
-	 * The overarching <g> tag holding the shape glyph selections
+	 * Holders for current shapes being used in the visualization.
 	 */
-	_nodeG: Selection<any, {}, any, {}>;
-	_nodeCircleGlyphs: Selection<any, {}, any, {}>;
-	_nodeLabelGlyphs: Selection<any, {}, any, {}>;
+	protected _currentEdgeShape: EdgeGlyphShape = this.rectShape;
+	protected _currentNodeShape: NodeGlyphShape = this.circleShape;
+	protected _currentGroupGlyph: GroupGlyph = this.voronoiShape;
 	/**
-	 * A map linking NodeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. CircleNodes, LabelNodes etc).
+	 * Voronoi Tesselation mechanic holders.
+	 * In case of rendering error, modify extent to larger values for calculations and Voronoi constraints.
 	 */
-	_nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>> = new Map<NodeGlyphShape, Selection<any, {}, any, {}>>();
-	/**
-	 * A map linking EdgeGlyphShapes (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. rectEdges, STLineEdges etc).
-	 */
-	_edgeGlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>> = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
-	/**
-	 * The overarching <g> tag holding the shape glyph selections (e.g. rectEdges, GestaltGlyphs, STLineEdges, etc..)
-	 */
-	_edgeG: Selection<any, {}, any, {}>
-	/**  
-	 * The overarching <g> tag holding the GroupGlyph selections.
-	*/
-	_groupGlyphG: Selection<any, {}, any, {}>;
-	/**
-	 * A map linking GroupGlyphs (defined in DGLOsSVGBaseClass) to their respective <g> tag selections (e.g. VoronoiPaths).
-	 */
-	_groupGlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>> = new Map<GroupGlyph, Selection<any, {}, any, {}>>();
-	_colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
-	/**
-	 * The physics simulation used to direct froce-directed visualizations.
-	 */
-	_simulation: Simulation<any, undefined>
-	_currentEdgeShape: EdgeGlyphShape;
-	_currentNodeShape: NodeGlyphShape;
-	_currentGroupGlyph: GroupGlyph;
-	_voronoi: VoronoiLayout<Node> = d3.voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]]) //set dimensions of voronoi
+	private readonly _voronoi: VoronoiLayout<Node> = voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]])
 		.x(function (d: Node) { return d.x; })
 		.y(function (d: Node) { return d.y; });
-	_cardinalPoints: [number, number][];
-	_noisePoints: Node[];
-	_attrOpts: SVGAttrOpts = new SVGAttrOpts("id", "grey", 10, 2, null, null);
-	_groupAttrOpts: SVGAttrOpts = new SVGAttrOpts("id", null, null, null);
 	/**
-	 * The AttrOpts object pertaining to edges. At this point, there is no difference between
-	 * edgeAttrOpts and attrOpts. In the future, we will implement an EdgeAttrOpts and
-	 * an NodeAttrOpts class. TODO.
+	 * Array of random points held as an array for vornoi calculations and GMap visualization.
 	 */
-	_edgeAttrOpts: SVGAttrOpts = new SVGAttrOpts("black", "black", null, 0.25, this._width, this._height, null);
-	_willTestAttrOpts: SVGAttrOpts = new SVGAttrOpts("blue", "pink", null, 1, 20, 20, null);
+	protected _noisePoints: Node[] = this.setNoisePoints();
+	/**
+	 * Attributes pertaining to SVG visualization.
+	 */
+	protected _attrOpts: SVGAttrOpts = new SVGAttrOpts("white", "black", "black");
+	/**
+	 * Attributes pertaining to the simulation. Empty constructor defaults.
+	 */
+	protected _simulationAttrOpts: SimulationAttrOpts = new SimulationAttrOpts();
 	/**
 	 * A map used for constructing an Egograph.
 	 */
-	_neighboringNodesMap: Map<string | number, Node> = new Map<string | number, Node>();
+	protected _neighboringNodesMap: Map<string | number, Node> = new Map<string | number, Node>();
 	/**
 	 * An array holding all of the nodes that neighbor the central node.
 	 */
-	_nbrNodes: Array<Node>;
+	protected _nbrNodes: Array<Node>;
 	/**
 	 * An array holding all of the edges incident to the central node.
 	 */
-	_nbrEdges: Array<Edge>;
+	protected _nbrEdges: Array<Edge>;
 	/**
 	 * An array holding all of the instances of the cnetral node across all timesteps.
 	 */
-	_centralNodeArray: Array<Node>;
+	protected _centralNodeArray: Array<Node>;
 
+	/**
+	 * Initializes the noiseNodes[Node]. Random new nodes assigned with fixed x and y values along border.
+	 */
+	protected setNoisePoints(): Node[] { //TODO: private or protected?
+		let newNoiseNodes: Node[] = new Array<Node>();
+		let iterator = 0;
+		let limit = ((this._width + this._height) / 2) / 100 * 5;
+		while (iterator < limit) {
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
+			newNoiseNodes[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);
+			newNoiseNodes[iterator + 0].y = 0;
 
-	//TODO: MAKE ALL THE GETTERS! MAKE ALL THE SETTERS!
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 1), iterator + 1, "noise", "", 0)); //bottom
+			newNoiseNodes[iterator + 1].x = Math.floor((Math.random() * this._width) + 1);
+			newNoiseNodes[iterator + 1].y = this._height;
 
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 2), iterator + 2, "noise", "", 0)); //left
+			newNoiseNodes[iterator + 2].x = 0;
+			newNoiseNodes[iterator + 2].y = Math.floor((Math.random() * this._height) + 1);
+
+			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 3), iterator + 3, "noise", "", 0)); //right
+			newNoiseNodes[iterator + 3].x = this._width;
+			newNoiseNodes[iterator + 3].y = Math.floor((Math.random() * this._height) + 1);
+			iterator += 4;
+		}
+		return newNoiseNodes;
+	}
+
+	set timeStampIndex(num: number) {
+		this._timeStampIndex = num;
+	}
+	get timeStampIndex(): number {
+		return this._timeStampIndex;
+	}
+	get nodeGlyphMap(): Map<number, Map<NodeGlyphShape, Selection<any, {}, any, {}>>> {
+		return this._nodeGlyphMap;
+	}
+	get edgeGlyphMap(): Map<number, Map<EdgeGlyphShape, Selection<any, {}, any, {}>>> {
+		return this._edgeGlyphMap;
+	}
+	get groupGlyphMap(): Map<number, Map<GroupGlyph, Selection<any, {}, any, {}>>> {
+		return this._groupGlyphMap;
+	}
+	set simulation(newSim: Simulation<any, undefined>) {
+		this._simulation = newSim;
+	}
+	get simulation(): Simulation<any, undefined> {
+		return this._simulation;
+	}
+	set multipleTimestepsEnabled(boo: boolean) {
+		this._multipleTimestepsEnabled = boo;
+	}
+	get multipleTimestepsEnabled(): boolean {
+		return this._multipleTimestepsEnabled;
+	}
+	set matrixViewEnabled(boo: boolean) {
+		this._matrixViewEnabled = boo;
+	}
+	get matrixViewEnabled(): boolean {
+		return this._matrixViewEnabled;
+	}
+	set enterExitColorEnabled(boo: boolean) {
+		this._enterExitColorEnabled = boo;
+	}
+	get enterExitColorEnabled(): boolean {
+		return this._enterExitColorEnabled;
+	}
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;
 	}
@@ -96,5 +168,52 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	get currentNodeShape(): NodeGlyphShape {
 		return this._currentNodeShape;
 	}
-
+	set currentGroupGlyph(shape: GroupGlyph) {
+		this._currentGroupGlyph = shape;
+	}
+	get currentGroupGlyph(): GroupGlyph {
+		return this._currentGroupGlyph;
+	}
+	get voronoi(): VoronoiLayout<Node> {
+		return this._voronoi;
+	}
+	get noisePoints(): Node[] {
+		return this._noisePoints;
+	}
+	set attrOpts(attr: SVGAttrOpts) {
+		this._attrOpts = attr;
+	}
+	get attrOpts(): SVGAttrOpts {
+		return this._attrOpts;
+	}
+	set simulationAttrOpts(attr: SimulationAttrOpts) {
+		this._simulationAttrOpts = attr;
+	}
+	get simulationAttrOpts(): SimulationAttrOpts {
+		return this._simulationAttrOpts;
+	}
+	set neighboringNodesMap(map: Map<string | number, Node>) {
+		this._neighboringNodesMap = map;
+	}
+	get neighboringNodesMap(): Map<string | number, Node> {
+		return this._neighboringNodesMap;
+	}
+	set nbrNodes(arr: Array<Node>) {
+		this._nbrNodes = arr;
+	}
+	get nbrNodes(): Array<Node> {
+		return this._nbrNodes;
+	}
+	set nbrEdges(arr: Array<Edge>) {
+		this._nbrEdges = arr;
+	}
+	get nbrEdges(): Array<Edge> {
+		return this._nbrEdges;
+	}
+	set centralNodeArray(arr: Array<Node>) {
+		this._centralNodeArray = arr;
+	}
+	get centralNodeArray(): Array<Node> {
+		return this._centralNodeArray;
+	}
 }

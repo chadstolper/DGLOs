@@ -1,22 +1,16 @@
 import { Technique } from "./Technique";
-
-import { RectGlyphShape } from "../lib/shapes/RectGlyphShape";
-import { CircleGlyphShape } from "../lib/shapes/CircleGlyphShape";
-import { LabelGlyphShape } from "../lib/shapes/LabelGlyphShape";
-import { SourceTargetLineGlyphShape } from "../lib/shapes/SourceTargetLineGlyphShape";
-import { GestaltGlyphShape } from "../lib/shapes/GestaltGlyphShape";
-
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGAttrOpts, SimulationAttrOpts } from "../lib/DGLOsSVG";
 
 export class ForceDirectedAnimated extends Technique {
 	public draw() {
+		let attr = new SVGAttrOpts("id", "black", "gray", 1, .5, 15, 2000, 2000);
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
-		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("id", "grey", 10, 2, null, null));
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts(null, "black", null, "1"));
-		this.lib.runSimulation(true);
+		this.lib.setAttributes(new SVGAttrOpts("id", "grey", "black", 2, 1, 10, null, null, 100, "16pt"));
+		this.lib.setSimulationAttrs(new SimulationAttrOpts(true, true));
+		this.lib.positionNodesAndEdgesForceDirected(true);
 		this.lib.enableStepping();
 	}
 }

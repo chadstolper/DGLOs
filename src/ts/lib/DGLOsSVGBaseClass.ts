@@ -1,7 +1,9 @@
-import { DGLOs, AttrOpts } from "./DGLOs";
+import { DGLOs } from "./DGLOs";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -19,8 +21,9 @@ import { Selection } from "d3-selection";
 export class DGLOsSVGBaseClass implements DGLOs {
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
-	protected _height = 500;
-	protected _width = 500;
+	protected _drawLocation: Selection<any, {}, any, {}>;
+	protected _height: number;
+	protected _width: number;
 	protected _dataToDraw: model.DynamicGraph;
 
 	public get data(): model.DynamicGraph {
@@ -29,8 +32,22 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	public set data(dGraph: model.DynamicGraph) {
 		this._data = dGraph;
 	}
-
-	public get loc(): Selection<any, {}, any, {}> {
+	public get width(): number {
+		return this._width;
+	}
+	public get height(): number {
+		return this._height;
+	}
+	/**
+	 * Drawlocation is the initially created svg classed SVG_1.
+	 */
+	public get drawLocation(): Selection<any, {}, any, {}> {
+		return this._drawLocation;
+	}
+	/**
+	 * Location is the selection where the DGLO visualizations will go. eg. div tag, body tag, etc.
+	 */
+	public get location(): Selection<any, {}, any, {}> {
 		return this._location;
 	}
 	public set dataToDraw(dGraph: model.DynamicGraph) {
@@ -40,12 +57,19 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		return this._dataToDraw;
 	}
 
-	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>) {
+
+	constructor(data: DynamicGraph, location: Selection<any, {}, any, {}>, width: number = 500, height: number = 500) {
 		this._data = data;
 		this._location = location;
 		this._dataToDraw = data;
-		if (location.attr("width")) { this._width = +location.attr("width"); }
-		if (location.attr("height")) { this._height = +location.attr("height") }
+		this._width = width;
+		this._height = height;
+		this._drawLocation = location.append("svg")
+			.classed("SVG_1", true)
+			.attr("width", this.width)
+			.attr("height", this.height);
+		// if (location.attr("width")) { this._width = +location.attr("width"); }
+		// if (location.attr("height")) { this._height = +location.attr("height") }
 	}
 	private _centralNodeID: number | string;
 	/**
@@ -96,17 +120,18 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	 * The __only instance__ of VoronoiGroupGlyph in the entire code. Used to coordinate transitions
 	 * as well as to draw regions when needed.
 	 */
-	readonly voronoiGroupGlyph: VoronoiGroupGlyph = new VoronoiGroupGlyph();
+	readonly voronoiShape: VoronoiGroupGlyph = new VoronoiGroupGlyph();
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
 	drawAllNodeGlyphs(): void { };
 	drawAllEdgeGlyphs(): void { };
-	drawRegions(): void { }; //take an attr for color in draw method
+	drawRegions(): void { };
 
 
 	transformNodeGlyphsTo(shape: NodeGlyphShape): void { };
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void { };
+	transformGroupGlyphsTo(shape: GroupGlyph): void { };
 
 	removeNodeGlyphs(): void { };
 	removeExitNodeGlyphs(): void { };
@@ -117,12 +142,13 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	enableStepping(): void { };
 	disableStepping(): void { };
-	replicateTimesteps(): void { };
-	removeTimesteps(): void { };
+	enableEnterExitColoring(): void { };
+	disableEnterExitColoring(): void { };
+	drawTimesteps(): void { };
+	removeTimesteps(delay?: number): void { };
 
 
-	runSimulation(setRunning: boolean): void { };
-	stopSimulation(): void { };
+	positionNodesAndEdgesForceDirected(setRunning: boolean): void { };
 
 	setCenterNode(centerNodeID: number | string): void { };
 
@@ -141,9 +167,9 @@ export class DGLOsSVGBaseClass implements DGLOs {
 		opacity
 		width, height
 	*/
-	setNodeGlyphAttrs(opts: AttrOpts): void { };
-	setEdgeGlyphAttrs(opts: AttrOpts): void { };
-	setRegionGlyphAttrs(opts: AttrOpts): void { };
+	setAttributes(opts: SVGAttrOpts): void { };
+	setRegionGlyphAttrs(opts: SVGAttrOpts): void { };
+	setSimulationAttrs(opts: SimulationAttrOpts): void { };
 	fixCentralNodePositions(bool: boolean): void { };
-	redraw(): void { };
+	redrawEgo(): void { };
 }

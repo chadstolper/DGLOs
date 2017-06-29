@@ -22,6 +22,13 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  */
 export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "STLine";
+	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
+	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
+	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
+	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
+	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */ //TODO: still need transitision timing?
+	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
+	private _enterExitEnabled: boolean;
 
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -39,14 +46,9 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * 
 	 * It takes an SVG selection with entered data and creates line objects with
 	 * an ID based on the source and target of the edge.
-	 * 
-	 * The DynamicGraph and number parameteres are required by the interface but are not
-	 * explicitly used here.
-	 * @param glyphs 
-	 * @param data 
-	 * @param TimeStampIndex 
+	 * @param location 
 	 */
-	public initDraw(edges: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
+	public initDraw(edges: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
 		let ret: Selection<any, Edge, any, {}> = edges.append("path")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
@@ -56,19 +58,16 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	}
 
 	/**
-	 * The updateDraw method is a requirement of the __EdgeGlyphShape__ interface.
-	 * 
 	 * updateDraw takes a selection of rectangle glyphs and an SVGAttrOpts object
 	 * and assigns attributes to the lines (e.g. lenghth, thickness, etc..). The
 	 * method also takes a DynamicGraph and a number as required by the interface.
 	 * @param glyphs 
 	 * @param attr 
-	 * @param data 
-	 * @param TimeStampIndex 
 	 */
-	public updateDraw(edges: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
+		let self = this;
 		try {
-			edges
+			glyphs
 				// .attr("x1", function (d: Edge) { return d.source.x; })
 				// .attr("y1", function (d: Edge) { return d.source.y; })
 				// .attr("x2", function (d: Edge) { return d.target.x; })
@@ -80,25 +79,44 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			console.log("No STLines links!");
 		}
 
-		try {
-			if (attrOpts.stroke_width === "weight") {
-				edges.attr("stroke-width", function (d: Edge): number {
+		if (this.enterExitEnabled) {
+			glyphs.style("stroke", this.enterExitCheck());
+		}
+		else {
+			glyphs.style("stroke", attrOpts.stroke_edge);
+		}
+		glyphs
+			.attr("stroke-width", function (d: Edge): number {
+				if (attrOpts.stroke_width_edge === "weight") {
 					return d.weight;
-				});
-			}
-			else { edges.attr("stroke-width", attrOpts.stroke_width) };
-
-			edges
-				.attr("stroke", attrOpts.stroke)
-				.attr("opacity", attrOpts.opacity);
-		}
-		catch (err) {
-			console.log("attrOpts undefined");
-		}
-
-		return edges;
+				}
+				return +attrOpts.stroke_width_edge;
+			})
+			.attr("opacity", attrOpts.opacity);
+		return glyphs;
 	}
-
+	/**
+	* Returns the correct color relating to the Enter/Exit of data in each timestep.
+	* Green: Edge entering and present in next timestep; Red: Edge was present already and exiting;
+	* Yellow: Edge entering and exiting in same timestep; Blue: Edge present in previous and next timestep.
+	*/
+	private enterExitCheck() {
+		let self = this;
+		return function (d: Edge): string {
+			if (d.origSource.isEnter || d.origTarget.isEnter) {
+				if (d.origSource.isExit || d.origTarget.isExit) {
+					return self.enterExitColor;
+				}
+				return self.enterColor;
+			}
+			else { //isEnter=false
+				if (d.origSource.isExit || d.origTarget.isExit) {
+					return self.exitColor;
+				}
+				return self.stableColor;
+			}
+		}
+	}
 	/**
 	 * The transformTo is a requirement of the __EdgeGlyphShape__ interface.
 	 * 
@@ -133,25 +151,64 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * 
 	 * The draw method takes a SVG selection to draw within, a DynamicGraph to be displayed, a timeStampIndex,
 	 * and an SVGAttrOpts object to assign attributes to draw.
-	 * @param rectG 
+	 * @param location 
 	 * @param data 
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(sTLineG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
-		let sTLineEdges = sTLineG.selectAll("path.STLine")
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
+		this.enterExitEnabled = enterExit;
+		let sTLineEdges = location.selectAll("path.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
-
 		sTLineEdges.exit().remove();
-
-		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter(), data, timeStampIndex);
-
+		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
-
-		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex);
+		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
 	}
 
 	get shapeType(): string {
 		return this._shapeType;
+	}
+	set enterColor(color: string) {
+		this._enterColor = color;
+	}
+	get enterColor(): string {
+		return this._enterColor;
+	}
+	set exitColor(color: string) {
+		this._exitColor = color;
+	}
+	get exitColor(): string {
+		return this._exitColor;
+	}
+	set enterExitColor(color: string) {
+		this._enterExitColor = color;
+	}
+	get enterExitColor(): string {
+		return this._enterExitColor;
+	}
+	set stableColor(color: string) {
+		this._stableColor = color;
+	}
+	get stableColor(): string {
+		return this._stableColor;
+	}
+	set transitionDuration(duration: number) {
+		this._transitionDuration = duration;
+	}
+	get transitionDuration(): number {
+		return this._transitionDuration;
+	}
+	set transitionDelay(delay: number) {
+		this._transitionDelay = delay;
+	}
+	get transitionDelay(): number {
+		return this._transitionDelay;
+	}
+	set enterExitEnabled(boo: boolean) {
+		this._enterExitEnabled = boo;
+	}
+	get enterExitEnabled(): boolean {
+		return this._enterExitEnabled;
 	}
 }

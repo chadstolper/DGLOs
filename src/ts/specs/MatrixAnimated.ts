@@ -1,27 +1,16 @@
-import { Technique } from "./Technique"
-import { SVGAttrOpts } from "../lib/DGLOsSVG"
-import { NodeGlyphShape } from "../lib/NodeGlyphInterface";
-import { EdgeGlyphShape } from "../lib/EdgeGlyphInterface";
-
-import { RectGlyphShape } from "../lib/shapes/RectGlyphShape";
-import { CircleGlyphShape } from "../lib/shapes/CircleGlyphShape";
-import { LabelGlyphShape } from "../lib/shapes/LabelGlyphShape";
-import { SourceTargetLineGlyphShape } from "../lib/shapes/SourceTargetLineGlyphShape";
-import { GestaltGlyphShape } from "../lib/shapes/GestaltGlyphShape";
-
+import { Technique } from "./Technique";
+import { SVGAttrOpts } from "../lib/DGLOsSVG";
 
 export class MatrixAnimated extends Technique {
 	public draw(): void {
-		console.log("MatrixAnimated");
+		let attr = new SVGAttrOpts("id", "black", "gray", 1, .5, 15, 2000, 2000);
 		this.lib.drawNodeGlyphs();
-		this.lib.setEdgeGlyphAttrs(new SVGAttrOpts("blue", "black", null, 1, 1500 / (this._library.data.timesteps[0].nodes.length - 1), 1500 / (this._library.data.timesteps[0].nodes.length - 1), null));
-		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.drawEdgeGlyphs();
+		this.lib.enableStepping();
+		this.lib.setAttributes(attr);
 		this.lib.transformEdgeGlyphsTo(this.lib.rectShape);
-		this.lib.setNodeGlyphAttrs(new SVGAttrOpts("pink", "black", null, 1, null, null));
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.positionNodeGlyphsMatrix();
 		this.lib.positionEdgeGlyphsMatrix();
-		this.lib.enableStepping();
 	}
-
 }

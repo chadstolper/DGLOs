@@ -1,36 +1,32 @@
-import { DynamicGraph, Node } from "../model/DynamicGraph";
+import { DynamicGraph } from "../model/DynamicGraph";
+import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
 import { LabelGlyphShape } from "./shapes/LabelGlyphShape";
 import { SourceTargetLineGlyphShape } from "./shapes/SourceTargetLineGlyphShape";
 import { GestaltGlyphShape } from "./shapes/GestaltGlyphShape";
+import { VoronoiGroupGlyph } from "./shapes/VoronoiGroupGlyph";
 
 import { Selection } from "d3-selection";
 import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
-
-/**
- * TODO: map of varibles/attrs:
-	- fill
-	- stroke
-	- stroke-width
-	- radius
-	- opacity
-	 - width, height
- */
-export interface AttrOpts { }
+import { GroupGlyph } from "./GroupGlyphInterface";
 
 export interface DGLOs {
 
 	data: DynamicGraph;
-	loc: Selection<any, {}, any, {}>;
+	location: Selection<any, {}, any, {}>;
+	drawLocation: Selection<any, {}, any, {}>;
+	width: number;
+	height: number;
 
 	readonly rectShape: RectGlyphShape;
 	readonly circleShape: CircleGlyphShape;
 	readonly labelShape: LabelGlyphShape;
 	readonly sourceTargetLineShape: SourceTargetLineGlyphShape;
 	readonly gestaltShape: GestaltGlyphShape;
+	readonly voronoiShape: VoronoiGroupGlyph;
 
 	/**
 	 * Draw all NodeGlyphs in a given data set at the current timestep.
@@ -87,6 +83,14 @@ export interface DGLOs {
 
 
 	/**
+	 * Morphs GroupGlyph visual representation to another visualization
+	 * Accepts GroupGlyphShape.
+	 * Returns void.
+	 */
+	transformGroupGlyphsTo(shape: GroupGlyph): void;
+
+
+	/**
 	 * Removes __all__ NodeGlyphs.
 	 * Returns void.
 	 */
@@ -135,30 +139,35 @@ export interface DGLOs {
 
 
 	/**
+	 * Enables coloring showing entering and exiting data at a given timestep.
+	 * Returns void.
+	 */
+	enableEnterExitColoring(): void;
+
+
+	/**
+	 * Disables coloring of entering and exiting data.
+	 */
+	disableEnterExitColoring(): void;
+
+
+	/**
 	 * Draws a graph visualization of the current form for every timestep
 	 * in the timeline.
 	 */
-	replicateTimesteps(): void;
+	drawTimesteps(): void;
 
 
 	/**
 	 * Removes all but one graph visualization from a series of graph 
 	 * visualizations.
 	 */
-	removeTimesteps(): void;
+	removeTimesteps(delay?: number): void;
 
 	/**
 	 * Starts running a node positioning simulation.
 	 */
-	runSimulation(setRunning: boolean): void;
-
-
-	/**
-	 * Ends the current node positioning simulation.
-	 */
-	stopSimulation(): void;
-
-
+	positionNodesAndEdgesForceDirected(setRunning: boolean): void;
 
 	/**
 	 * Sets the central node for a Dynamic Graph. This is used 
@@ -213,26 +222,24 @@ export interface DGLOs {
 
 
 	/**
-	 * Takes a map of variables and applies them to the nodes
-	 * present in the current visualization. Examples include
-	 * color and size.
+	 * Takes an SVGAttrOpts object with various node and edge visualization attributes and values.
 	 */
-	setNodeGlyphAttrs(opts: AttrOpts): void;
+	setAttributes(opts: SVGAttrOpts): void;
 
 
 	/**
-	 * Takes a map of variables and applies them to the edges
-	 * present in the current visualization. Examples include line-thickness
-	 * and color.
+	 * Takes an SVGAttrOpts object with various node and edge visualization attributes and values.
+	 * Will assign certain values specific to region visualization regardless of passed parameters in those positions.
 	 */
-	setEdgeGlyphAttrs(opts: AttrOpts): void;
+	setRegionGlyphAttrs(opts: SVGAttrOpts): void;
 
 
 	/**
-	 * Takes a map of variables and applies them to the regions 
-	 * present in the current visualization. Color is an example of an
-	 * attribute that can be assigned to regionGlyphs. 
+	 * Takes a map of varibles and applies them to the simulation
+	 * to enable or disable certain calculations and change related values.
 	 */
-	setRegionGlyphAttrs(opts: AttrOpts): void;
+	setSimulationAttrs(opts: SimulationAttrOpts): void;
+
+
 	fixCentralNodePositions(bool: boolean): void;
 }
