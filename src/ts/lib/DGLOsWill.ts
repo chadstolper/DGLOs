@@ -138,6 +138,7 @@ export class DGLOsWill extends DGLOsMatt {
 				e.y = (self.height / 8) + (+e.target.index / g.nodes.length) * (7 * self.height / 8);
 			});
 		});
+		this.attrOpts.stroke_width_edge = null;
 		this.attrOpts.width = (7 / 8) * (self.width / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
 		this.attrOpts.height = (7 / 8) * (self.height / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
 		if (!this.multipleTimestepsEnabled) {

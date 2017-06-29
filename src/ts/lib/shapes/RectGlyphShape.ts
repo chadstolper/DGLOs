@@ -109,6 +109,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param TimeStampIndex 
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+		let self = this;
 		try {
 			let colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
@@ -116,14 +117,10 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 			glyphs
 				.transition()
 				.attrTween("d", function (d: Edge) {
-					let h = 2000 / data.timesteps[TimeStampIndex].nodes.length;
-					let w = 2000 / data.timesteps[TimeStampIndex].nodes.length;
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
-					let newD = "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " +
-						(d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
+					let newD = self.getPath(attr, d);
 					return interpolate(oldD, newD);
-
 				})
 				.attr("stroke", attr.stroke)
 				.attr("stroke-width", attr.stroke_width)
@@ -176,7 +173,11 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
 		this.updateDraw(rects, attr, data, timeStampIndex);
 	}
-
+	public getPath(attr: SVGAttrOpts, edge: Edge) {
+		let h = attr.height;/// data.timesteps[TimeStampIndex].nodes.length;
+		let w = attr.width;/// data.timesteps[TimeStampIndex].nodes.length; 
+		return "M " + edge.x + " " + edge.y + " L " + edge.x + " " + (edge.y + h) + " L " + (edge.x + w) + " " + (edge.y + h) + " L " + (edge.x + w) + " " + edge.y + " Z";
+	}
 	/**
 	* Returns the correct color relating to the Enter/Exit of data in each timestep.
 	* Green: Edge entering and present in next timestep; Red: Edge was present already and exiting;
