@@ -97,6 +97,9 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	/**
 	 * Sets the attributes of Node and Edge visualizations with Gmap visualization.
 	 * Some attributes manually assigned for Gmap.
+	 * Stroke-Width = 0.
+	 * Stroke-Width_Edge = 0.25.
+	 * Radius = 1.
 	 * @param attr 
 	 */
 	public setRegionGlyphAttrs(attr: SVGAttrOpts) {

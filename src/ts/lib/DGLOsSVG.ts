@@ -207,4 +207,4 @@ export class SimulationAttrOpts {
 
 }
 
-// export class DGLOsSVG extends DGLOsSandwich { } //TODO: why do we need to extend the sandwich?
+export class DGLOsSVG extends DGLOsSandwich { };

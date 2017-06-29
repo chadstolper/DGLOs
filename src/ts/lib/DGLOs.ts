@@ -45,20 +45,6 @@ export interface DGLOs {
 
 
 	/**
-	 * Draws all of the node glyphs of a certain shape for every timestep.
-	 * Returns void.
-	 */
-	drawAllNodeGlyphs(): void;
-
-
-	/**
-	 * Draws all of the edge glyphs of a certain shape for every timestep.
-	 * returns void.
-	 */
-	drawAllEdgeGlyphs(): void;
-
-
-	/**
 	 * Draw Voronoi Tesselation paths and fill them with a color. 
 	 * Color will defualt to #00000.
 	 * Returns void.
@@ -98,24 +84,10 @@ export interface DGLOs {
 
 
 	/**
-	 * Removes exiting or leaving Node visualizations not present in new data.
-	 * Returns void.
-	 */
-	removeExitNodeGlyphs(): void;
-
-
-	/**
 	 * Removes __all__ EdgeGlyphs.
 	 * Returns void.
 	 */
 	removeEdgeGlyphs(): void;
-
-
-	/**
-	 * Removes exiting or leaving Edge visualizations not present in new data.
-	 * Returns void.
-	 */
-	removeExitEdgeGlyphs(): void;
 
 
 	/**
@@ -181,20 +153,6 @@ export interface DGLOs {
 	 * are in position to serve as labels for a matrix.
 	 */
 	positionNodeGlyphsMatrix(): void;
-
-
-	/**
-	 * Positions the current nodes in the graph using a
-	 * Cartesian coordinate scheme.
-	 */
-	positionNodeGlyphsCartesian(): void; //TODO: still using?
-
-
-	/**
-	 * Positions the current nodes in the graph using a polar
-	 * coordinate scheme.
-	 */
-	positionNodeGlyphsPolar(): void; //TODO: still using?
 
 
 	/**
