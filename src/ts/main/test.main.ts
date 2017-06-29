@@ -7,6 +7,7 @@ import { DynamicFiveKingsGraph } from "../data/FiveKingsGraph";
 import { Technique } from "../specs/Technique";
 import { ForceDirectedAnimated } from "../specs/ForceDirectedAnimated";
 import { GMap } from "../specs/GMap";
+import { Egograph } from "../specs/Egograph";
 import { ForceDirectedTimeline } from "../specs/ForceDirectedTimeline";
 import { MatrixTimeline } from "../specs/MatrixTimeline";
 import { MatrixAnimated } from "../specs/MatrixAnimated";
@@ -18,8 +19,8 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 // json("data/dummy/dummy.json", function (response: any) {
 // json("data/miserables/miserables.json", function (response: any) {
 // json("data/radoslaw/emails.json", function (response: any) {
-// json("data/newcomb/newcomb.json", function (response: any) {
-json("data/fivekings/fivekings.json", function (response: any) {
+json("data/newcomb/newcomb.json", function (response: any) {
+	// json("data/fivekings/fivekings.json", function (response: any) {
 
 	let width: number, height: number;
 	width = height = 1000;
@@ -29,8 +30,8 @@ json("data/fivekings/fivekings.json", function (response: any) {
 	// let g: DynamicGraph = new DynamicDrinkGraph(response);
 	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
 	// let g: DynamicGraph = new DynamicNewcombGraph(response);
-	// let g: DynamicGraph = new DynamicNewcombTopFiveGraph(response);
-	let g: DynamicGraph = new DynamicFiveKingsGraph(response);
+	let g: DynamicGraph = new DynamicNewcombTopFiveGraph(response);
+	// let g: DynamicGraph = new DynamicFiveKingsGraph(response);
 	//------------------------------------------------------------//
 
 	let svg: Selection<any, {}, any, {}> = select("body")
@@ -39,11 +40,12 @@ json("data/fivekings/fivekings.json", function (response: any) {
 	let lib: DGLOs = new DGLOsSVG(g, svg, width, height);
 
 	//------------------------------------------------------------//
-	let vis: Technique = new ForceDirectedAnimated(lib, {});
+	// let vis: Technique = new ForceDirectedAnimated(lib, {});
 	// let vis: Technique = new GMap(lib, {});
 	// let vis: Technique = new ForceDirectedTimeline(lib, {});
 	// let vis: Technique = new MatrixTimeline(lib, {});
 	// let vis: Technique = new MatrixAnimated(lib, {});
+	let vis: Technique = new Egograph(lib, {});
 	//------------------------------------------------------------//
 
 
