@@ -5,7 +5,7 @@ import { extent } from "d3-array";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { LineGlyphShape } from "./LineGlyphShape";
 import { SVGAttrOpts } from "../DGLOsSVG";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear } from "d3-scale";
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear } from "d3-scale";
 
 /**
  * The __GestaltGlyphsShape__ class contains all of the methods required to draw and position a Gestalt Glyph on screen.
@@ -21,6 +21,8 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear } from "d3-sc
  */
 export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
 	readonly _shapeType = "Gestalt";
+	private _thicknessScale: ScaleLinear<number, number>;
+	private _weightScale: ScaleLinear<number, number>;
 
 	/**
  	* The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -62,12 +64,6 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
-			let weightScale = scaleLinear<number>()
-				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
-				.range([-10, 10]);
-			let thicknessScale = scaleLinear<number>() //TODO: move to own function, create private global varible
-				.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
-				.range([.25, 1.5]);
 			glyphs
 				.attr("x1", function (d: Edge) {
 					return d.x;
@@ -76,7 +72,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					let yPos = 0;
 					for (let edge of data.timesteps[timeStampIndex].edges) {
 						if (edge.target === d.source && edge.source === d.target && edge.timestep === d.timestep) {
-							let yPos = weightScale(d.weight);
+							let yPos = self.weightScale(d.weight);
 							d.y = yPos + d.y;
 							break;
 						}
@@ -90,7 +86,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					let yPos = 0
 					for (let edge of data.timesteps[timeStampIndex].edges) {
 						if (edge.source === d.target && edge.target === d.source && edge.timestep === d.timestep) {
-							let yPos = weightScale(edge.weight);
+							let yPos = self.weightScale(edge.weight);
 							if (yPos === NaN) {
 								yPos = 0;
 							}
@@ -102,13 +98,22 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 				})
 				.attr("stroke", attrOpts.stroke_edge)
 				.attr("stroke-width", function (d: Edge) {
-					return thicknessScale(d.weight);
+					return self.thicknessScale(d.weight);
 				});
 			return glyphs;
 		}
 		catch (err) {
 			console.log("gestalt update error");
 		}
+	}
+
+	initScales(data: DynamicGraph, timeStampIndex: number) {
+		this.weightScale = scaleLinear<number>()
+			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
+			.range([-10, 10]);
+		this.thicknessScale = scaleLinear<number>()
+			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
+			.range([.25, 1.5]);
 	}
 
 	/**
@@ -144,7 +149,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param timeStepIndex 
 	 */
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
-		// console.log("drawingGestalt");
+		this.initScales(data, timeStampIndex);
 		let gestaltGlyphs = location.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
@@ -167,5 +172,17 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		return extent(edges, function (d: Edge): number {
 			return d.weight;
 		});
+	}
+	set weightScale(scale: ScaleLinear<number, number>) {
+		this._weightScale = scale;
+	}
+	get weightScale(): ScaleLinear<number, number> {
+		return this._weightScale
+	}
+	set thicknessScale(scale: ScaleLinear<number, number>) {
+		this._thicknessScale = scale;
+	}
+	get thicknessScale(): ScaleLinear<number, number> {
+		return this._thicknessScale;
 	}
 }
