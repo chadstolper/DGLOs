@@ -75,29 +75,29 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
-			glyphs
-				// .attr("x", function (e: Edge) {
-				// 	return e.x;
-				// })
-				// .attr("y", function (e: Edge) {
-				// 	return e.y;
-				// })
-				// .attr("width", attr.width)
-				// .attr("height", attr.height)
-				.transition()
-				.attrTween("d", function (d: Edge) {
-					let h = 1000;
-					let w = 1000;
-					let elem: HTMLElement = this;
-					let oldD: string = elem.getAttribute("d");
-					// TODO: MAKE attr.width and attr.height DEFINED
-					// let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
-					// 	(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
-					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + h) + " L " + (d.source.x + w) + " " +
-						(d.source.y + h) + " L " + (d.source.x + w) + " " + d.source.y + " Z";
-					return interpolate(oldD, newD);
+			// glyphs
+			// 	// .attr("x", function (e: Edge) {
+			// 	// 	return e.x;
+			// 	// })
+			// 	// .attr("y", function (e: Edge) {
+			// 	// 	return e.y;
+			// 	// })
+			// 	// .attr("width", attr.width)
+			// 	// .attr("height", attr.height)
+			// 	.transition()
+			// 	.attrTween("d", function (d: Edge) {
+			// 		let h = 1000;
+			// 		let w = 1000;
+			// 		let elem: HTMLElement = this;
+			// 		let oldD: string = elem.getAttribute("d");
+			// 		// TODO: MAKE attr.width and attr.height DEFINED
+			// 		// let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " +
+			// 		// 	(d.source.y + attr.height) + " L " + (d.source.x + attr.width) + " " + d.source.y + " Z";
+			// 		let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + h) + " L " + (d.source.x + w) + " " +
+			// 			(d.source.y + h) + " L " + (d.source.x + w) + " " + d.source.y + " Z";
+			// 		return interpolate(oldD, newD);
 
-				})
+			// 	})
 		} catch (err) {
 			console.log("No edges!");
 		}
