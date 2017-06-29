@@ -85,9 +85,15 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param TimeStampIndex 
 	 */
 	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
+		let h = 2000 / data.timesteps[TimeStampIndex].nodes.length;
+		let w = 2000 / data.timesteps[TimeStampIndex].nodes.length;
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("path")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
-			.attr("d", "M 0,0 L 0,0 L 0,0 L 0,0 Z ");
+			.attr("d", function (d: Edge) {
+				console.log(d.x);
+				return "M " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L "
+					+ (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2));
+			});//"M 0,0 L 0,0 L 0,0 L 0,0 Z ");
 		return ret;
 	}
 	/**
@@ -114,10 +120,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 					let w = 2000 / data.timesteps[TimeStampIndex].nodes.length;
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
-					console.log(d.source.x);
-					console.log(d.source.y);
-					let newD = "M " + d.source.x + " " + d.source.y + " L " + d.source.x + " " + (d.source.y + h) + " L " + (d.source.x + w) + " " +
-						(d.source.y + h) + " L " + (d.source.x + w) + " " + d.source.y + " Z";
+					let newD = "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " +
+						(d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
 					return interpolate(oldD, newD);
 
 				})
