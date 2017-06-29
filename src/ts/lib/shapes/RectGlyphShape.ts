@@ -68,6 +68,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
 		let rectG = location.append("g").classed("rectEdges", true)
+			.style("fill", "green")
 			.attr("d", "M 0,0 L 0,0 L 0,0 L 0,0 Z ");
 		return rectG;
 	}
@@ -105,7 +106,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		try {
 			let colorMap = d3Scale.scaleLinear<string>()
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
-				.range(["white", attr.fill]);
+				.range(["white", attr.stroke_edge]);
 			glyphs
 				.transition()
 				.attrTween("d", function (d: Edge) {
