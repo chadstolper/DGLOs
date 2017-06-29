@@ -1,7 +1,6 @@
 import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-//import { AttrOpts } from "../DGLOs";
 import { extent } from "d3-array";
 import { SVGAttrOpts } from "../DGLOsSVG";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
@@ -53,7 +52,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	/**
 	 * Duration of transition / length of animation. Default 1000ms.
 	 */
-	private _transitionDuration: number = 2000;
+	private _transitionDuration: number = 1000;
 	/**
 	 * Time between animation from standard view to exitview. Default 7000ms.
 	 */
@@ -115,15 +114,15 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
 				.range(["white", attr.stroke_edge]);
 			glyphs
-				.transition()
+				.transition().duration(this._transitionDuration)
 				.attrTween("d", function (d: Edge) {
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
-					let newD = self.getPath(attr, d);
+					let newD = self.getPath(d, attr);
 					return interpolate(oldD, newD);
 				})
-				.attr("stroke", attr.stroke)
-				.attr("stroke-width", attr.stroke_width)
+				.attr("stroke", attr.stroke_edge)
+				.attr("stroke-width", attr.stroke_width_edge)
 				.attr("fill", function (d: Edge) {
 					return colorMap(d.weight);
 				});
@@ -173,10 +172,15 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
 		this.updateDraw(rects, attr, data, timeStampIndex);
 	}
-	public getPath(attr: SVGAttrOpts, edge: Edge) {
+	/**
+	 * //TODO: write description
+	 * @param attr 
+	 * @param edge 
+	 */
+	public getPath(d: Edge, attr: SVGAttrOpts) {
 		let h = attr.height;/// data.timesteps[TimeStampIndex].nodes.length;
 		let w = attr.width;/// data.timesteps[TimeStampIndex].nodes.length; 
-		return "M " + edge.x + " " + edge.y + " L " + edge.x + " " + (edge.y + h) + " L " + (edge.x + w) + " " + (edge.y + h) + " L " + (edge.x + w) + " " + edge.y + " Z";
+		return "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " + (d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
 	}
 	/**
 	* Returns the correct color relating to the Enter/Exit of data in each timestep.
