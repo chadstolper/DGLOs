@@ -43,95 +43,17 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			});
 		return ret;
 	}
-
-	// /**
-	//  * Assign and/or update node circle attributes and (cx,cy) positions. Assigns enter and exit coloring.
-	//  * @param glyphs 
-	//  * @param attrOpts
-	//  */
-	// public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
-	// 	let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-	// 	let self = this;
-	// 	glyphs
-	// 		.attr("d", function (d: Node) {
-	// 			return self.circlePath(10, 10, attrOpts.radius);
-	// 		})
-	// 	// .attr("init", function (d: Node): string {
-	// 	// 	//toCircle("M 10", d.x, d.y, attrOpts.radius);
-	// 	// 	return "complete";
-	// 	// })
-	// 	glyphs
-	// 		.attr("stroke", attrOpts.stroke)
-	// 		.attr("stroke", attrOpts.stroke_width)
-	// 		.attr("transform", function (d: Node): string {
-	// 			return "translate(" + (d.x - (attrOpts.radius)) + ", " + (d.y - (attrOpts.radius)) + ")";
-	// 		})
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
+	/**
+	 * Assigns and positions Nodes on the DOM. Color, size, etc. are assigned and drawn.
+	 * @param glyphs 
+	 * @param attrOpts
+	 */
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
 		let self = this;
-		if (labelYAxis === undefined) {
-			try {
-				glyphs
-					.text(function (d: Node): string {
-						return d.label;
-					});
-				glyphs
-					.attr("cx", function (d: Node) {
-						return d.x;
-					})
-					.attr("cy", function (d: Node) {
-						return d.y;
-					});
-			} catch (err) {
-				console.log("No label nodes!");
-			}
-		} else {
-			if (labelYAxis) {
-				let yAxisScale = scalePoint<number>()
-					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
-					.range([attrOpts.height / 8, attrOpts.height])
-					.padding(0.5);
-				try {
-					glyphs
-						.text(function (d: Node): string {
-							return d.label;
-						});
-					glyphs
-						.attr("cx", function (d: Node) {
-							d.x = attrOpts.width / 8 - (3 * attrOpts.width / 100);
-							return attrOpts.width / 8 - (3 * attrOpts.width / 100);
-						})
-						.attr("cy", function (d: Node) {
-							d.y = yAxisScale(d.index);
-							return yAxisScale(d.index);
-						});
-				} catch (err) {
-					console.log("No label nodes!");
-				}
-			} else {
-				let xAxisScale = scalePoint<number>()
-					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
-					.range([attrOpts.width / 8, attrOpts.width])
-					.padding(0.5);
-				try {
-					glyphs
-						.text(function (d: Node): string {
-							return d.label;
-						});
-					glyphs
-						.attr("cx", function (d: Node) {
-							d.x = xAxisScale(d.index);
-							return xAxisScale(d.index);
-						})
-						.attr("cy", function (d: Node) {
-							d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
-							return attrOpts.height / 8 - (3 * attrOpts.height / 100);
-						});
-				} catch (err) {
-					console.log("No label nodes!");
-				}
-			}
-		}
-
+		glyphs
+			.attr("d", function (d: Node) {
+				return self.circlePath(d.x, d.y, attrOpts.radius);
+			})
 		if (this.enterExitEnabled) {
 			glyphs.style("fill", this.enterExitCheck());
 		}
@@ -220,7 +142,6 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param attrOpts
 	 * @param enterExit
 	 */
-
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("path.node")
@@ -229,7 +150,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		if (duplicateNodes === undefined) {
 			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 			circleGlyphs = circleGlyphs.merge(circleEnter);
-			this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex);
+			this.updateDraw(circleGlyphs, attrOpts);
 		} else {
 			if (duplicateNodes) {
 				let copySet = circleG.selectAll("path.node.top")
@@ -237,18 +158,19 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 				copySet.exit().remove();
 				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
 				copySet = copySet.merge(copyEnter);
-				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
+				this.updateDraw(copySet, attrOpts);
 			}
 			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 			circleGlyphs = circleGlyphs.merge(circleEnter);
-			this.updateDraw(circleGlyphs, attrOpts, data, timeStepIndex, true);
+			this.updateDraw(circleGlyphs, attrOpts);
 		}
 
 
 	}
-
-	//https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
-	//I kind of jacked this guys code
+	/**
+	 * Returns the circle path of the Node by calculating two arcs, one starting at the endpoint of the first and returning.
+	 * https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
+	 */
 	private circlePath(cx: number, cy: number, r: number) {
 		return 'M ' + cx + ' ' + cy + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
