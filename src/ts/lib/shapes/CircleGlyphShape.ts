@@ -20,7 +20,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	private _enterExitEnabled: boolean;
 
 	/**
-	 * Make new <g>
+	 * Make a new <g> tag for the circle path glyphs to be created. Returns Selection <g> classed CircleNodes.
 	 * @param location
 	 */
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
@@ -28,7 +28,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 
 	/**
-	 * Create a new Selection of circle DOM elements and return the Selection.
+	 * Create a new Selection of circle path DOM elements and returns the Selection.
 	 * @param location
 	 */
 	public initDraw(location: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
@@ -44,7 +44,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		return ret;
 	}
 	/**
-	 * Assigns and positions Nodes on the DOM. Color, size, etc. are assigned and drawn.
+	 * Updates the circle path shape Selection to correct simulation positions. Color fill and other attributes handled. Returns updated Selection
 	 * @param glyphs 
 	 * @param attrOpts
 	 */
@@ -73,7 +73,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	/**
 	 * Returns the correct color relating to the Enter/Exit of data in each timestep.
-	 * Green: Node entering and present in next timestep; Red: Node was present already and exiting;
+	 * Green: Node entering and present in next timestep; Red: Node present in previous timestep and exiting;
 	 * Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
 	 */
 	private enterExitCheck() {
@@ -94,8 +94,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		}
 	}
 	/**
-	 * Fill the CircleGlyph selection color. Returns hexCode as string.
-	 * @param d current CircleGlyph
+	 * Returns the corresponding color based on passed attribute's fill parameter. Returns hexCode as string.
+	 * @param d
 	 * @param key 
 	 */
 	private fill(d: Node, key: string) {
@@ -178,10 +178,6 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
-	/**
-	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
-	 * @param scheme
-	 */
 	set colorScheme(scheme: ScaleOrdinal<string | number, string>) {
 		this._colorScheme = scheme;
 	}

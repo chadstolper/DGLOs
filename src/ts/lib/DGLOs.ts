@@ -187,17 +187,14 @@ export interface DGLOs {
 	 * Positions the current nodes in the graph using a
 	 * Cartesian coordinate scheme.
 	 */
-	positionNodeGlyphsCartesian(): void;
+	positionNodeGlyphsCartesian(): void; //TODO: still using?
 
 
 	/**
 	 * Positions the current nodes in the graph using a polar
 	 * coordinate scheme.
 	 */
-	positionNodeGlyphsPolar(): void;
-
-
-	//TODO: drop? positionNodeGlyphsGestalt(): void;
+	positionNodeGlyphsPolar(): void; //TODO: still using?
 
 
 	/**

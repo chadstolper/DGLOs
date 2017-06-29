@@ -19,7 +19,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	/**
-	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".  //TODO: update description for flubber
+	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".
 	 * @param location: Selection<any, {}, any, {}>
 	 */
 	protected drawEdgeGlyphsAt(location: Selection<any, {}, any, {}>, SVGNum: number = 0) {
