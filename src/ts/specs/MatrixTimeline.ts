@@ -14,5 +14,4 @@ export class MatrixTimeline extends Technique {
 		this.lib.positionEdgeGlyphsMatrix();
 		this.lib.removeTimesteps(1000);
 	}
-
 }
