@@ -107,7 +107,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		}
 	}
 
-	initScales(data: DynamicGraph, timeStampIndex: number) {
+	private initScales(data: DynamicGraph, timeStampIndex: number) {
 		this.weightScale = scaleLinear<number>()
 			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
 			.range([-10, 10]);

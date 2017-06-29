@@ -79,7 +79,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		} catch (err) {
 			console.log("No edges!");
 		}
-		//TODO: Fix the fill of the rectangles. It is not working.
 		if (this.enterExitEnabled) {
 			glyphs
 				.style("fill", this.enterExitCheck());
