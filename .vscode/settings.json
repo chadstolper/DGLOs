@@ -15,5 +15,5 @@
 	// Control whether tslint is enabled for TypeScript files or not.
 	"tslint.enable": false,
 	// Always show rule failures as warnings, independent of the tslint configuration.
-	"tslint.alwaysShowRuleFailuresAsWarnings": false
+	"tslint.alwaysShowRuleFailuresAsWarnings": true
 }
