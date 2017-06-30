@@ -110,9 +110,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
-			let colorMap = d3Scale.scaleLinear<string>()
-				.domain(this.createColorDomain(data.timesteps[TimeStampIndex].edges))
-				.range(["white", attr.stroke_edge]);
 			glyphs
 				.transition().duration(this._transitionDuration)
 				.attrTween("d", function (d: Edge) {
@@ -124,10 +121,10 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 				.attr("stroke", attr.stroke_edge)
 				.attr("stroke-width", attr.stroke_width_edge)
 				.attr("fill", function (d: Edge) {
-					return colorMap(d.weight);
+					return this.colorMap(d.weight);
 				});
 		} catch (err) {
-			console.log("No edges!");
+			console.log("No Rect edges!");
 		}
 		return glyphs;
 	}
@@ -173,7 +170,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		this.updateDraw(rects, attr, data, timeStampIndex);
 	}
 	/**
-	 * //TODO: write description
+	 * Returns the shape path as a string of the current rect shape.
 	 * @param attr 
 	 * @param edge 
 	 */

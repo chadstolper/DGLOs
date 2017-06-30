@@ -68,10 +68,6 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		let self = this;
 		try {
 			glyphs
-				// .attr("x1", function (d: Edge) { return d.source.x; })
-				// .attr("y1", function (d: Edge) { return d.source.y; })
-				// .attr("x2", function (d: Edge) { return d.target.x; })
-				// .attr("y2", function (d: Edge) { return d.target.y; });
 				.attr("d", function (d: Edge): string {
 					return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
 				})
@@ -164,6 +160,14 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
 		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
+	}
+
+	/**
+	 * Returns the shape path as a string of the current STLine shape.
+	 * @param d 
+	 */
+	public getPath(d: Edge) {
+		return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
 	}
 
 	get shapeType(): string {

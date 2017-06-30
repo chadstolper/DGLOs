@@ -175,6 +175,16 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 		return 'M ' + cx + ' ' + cy + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
 
+	/**
+	 * Returns the shape path as a string of the current circle shape.
+	 * @param d 
+	 * @param attr 
+	 */
+	public getPath(d: Node, attr: SVGAttrOpts) {
+		let r = attr.radius;
+		return 'M ' + d.x + ' ' + d.y + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
+	}
+
 	get shapeType(): string {
 		return this._shapeType;
 	}

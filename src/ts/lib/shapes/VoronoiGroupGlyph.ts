@@ -63,7 +63,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 				.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); });
 		}
 		glyphs
-			.attr("d", function (d: any): string {
+			.attr("d", function (d: VoronoiPolygon<Node>): string {
 				return d ? "M" + d.join("L") + "Z" : null;
 			});
 		return glyphs;
@@ -172,6 +172,13 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 		voronoiPaths = voronoiPaths.merge(voronoiEnter);
 
 		this.updateDraw(voronoiPaths, attrOpts);
+	}
+	/**
+	 * Returns the shape path as a string of the current VoronoiPolygon<Node> (Gmap Region) shape.
+	 * @param d 
+	 */
+	public getPath(d: VoronoiPolygon<Node>) {
+		return d ? "M" + d.join("L") + "Z" : null;
 	}
 
 	get groupType(): string {
