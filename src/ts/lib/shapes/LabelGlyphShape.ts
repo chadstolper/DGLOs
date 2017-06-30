@@ -11,12 +11,15 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	readonly _textAnchor: string = "middle";
 	readonly _dominantBaseline: string = "middle";
+	readonly PADDING_CONSTANT: number = 0.875;
 	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
 	private _enterColor: string = "#00D50F"; /* Value used for entering and non-exiting nodes. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
 	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
 	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _enterExitEnabled: boolean;
+	private _xAxisScale: any;
+	private _yAxisScale: any;
 	// readonly _font = "ComicSans";
 
 	/**
@@ -56,67 +59,43 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, labelYAxis?: boolean): Selection<any, {}, any, {}> {
 		let colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
-
 		let self = this;
 		if (labelYAxis === undefined) {
 			try {
-				glyphs
-					.text(function (d: Node): string {
-						return d.label;
-					});
 				glyphs
 					.attr("x", function (d: Node) {
 						return d.x;
 					})
 					.attr("y", function (d: Node) {
 						return d.y;
-					});
+					})
+					.style("font-size", attrOpts.font_size);
 			} catch (err) {
 				console.log("No label nodes!");
 			}
-
 		} else {
 			if (labelYAxis) {
-				let yAxisScale = scalePoint<number>()
-					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
-					.range([attrOpts.height / 8, attrOpts.height])
-					.padding(0.5);
+				console.log("do the y axis")
 				try {
 					glyphs
-						.text(function (d: Node): string {
-							return d.label;
-						});
-					glyphs
 						.attr("x", function (d: Node) {
-							d.x = attrOpts.width / 8 - (3 * attrOpts.width / 100);
 							return attrOpts.width / 8 - (3 * attrOpts.width / 100);
 						})
 						.attr("y", function (d: Node) {
-							d.y = yAxisScale(d.index);
-							return yAxisScale(d.index);
+							return self.yAxisScale(d.index);
 						});
 				} catch (err) {
 					console.log("No label nodes!");
 				}
 			} else {
-				let xAxisScale = scalePoint<number>()
-					.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
-					.range([attrOpts.width / 8, attrOpts.width])
-					.padding(0.5);
+				console.log("do the x axis")
 				try {
 					glyphs
-						.text(function (d: Node): string {
-							return d.label;
-						});
-					glyphs
 						.attr("x", function (d: Node) {
-							//d.x = xAxisScale(d.index);
-							return xAxisScale(d.index);
+							return self.xAxisScale(d.index);
 						})
 						.attr("y", function (d: Node) {
-							d.y = attrOpts.height / 8 - (3 * attrOpts.height / 100);
-							// return attrOpts.height / 8 - (3 * attrOpts.height / 100);
-							return d.y;
+							return attrOpts.height / 8 - (3 * attrOpts.height / 100);
 						});
 				} catch (err) {
 					console.log("No label nodes!");
@@ -130,6 +109,9 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			glyphs.style("fill", attrOpts.stroke);
 		}
 		glyphs
+			.text(function (d: Node): string {
+				return d.label;
+			})
 			.style("stroke", "black")
 			.style("stroke-width", 0.25)
 			.attr("opacity", attrOpts.opacity);
@@ -203,28 +185,47 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param enterExit
 	 */
 
-	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = undefined, enterExit: boolean = false): void {
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = false, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
-		let labelGlyphs = labelG.selectAll("text.label")
-			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
-		labelGlyphs.exit().remove();
-		if (duplicateNodes === undefined) {
+		this.initScales(data, timeStepIndex, attrOpts);
+
+		if (!duplicateNodes) {
+			let labelGlyphs = labelG.selectAll("text.label")
+				.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
+			labelGlyphs.exit().remove();
 			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
 			labelGlyphs = labelGlyphs.merge(labelEnter);
 			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex);
-		} else {
-			if (duplicateNodes) {
-				let copySet = labelG.selectAll("text.label.top")
-					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
-				copySet.exit().remove();
-				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
-				copySet = copySet.merge(copyEnter);
-				this.updateDraw(copySet, attrOpts, data, timeStepIndex, false);
-			}
-			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
-			labelGlyphs = labelGlyphs.merge(labelEnter);
-			this.updateDraw(labelGlyphs, attrOpts, data, timeStepIndex, true);
 		}
+		if (duplicateNodes) {
+			console.log(timeStepIndex)
+			//Draw X axis of labels
+			let labelGlyphsX = labelG.selectAll("text.label.x")
+				.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
+			labelGlyphsX.exit().remove();
+			let copyEnterX: Selection<any, Node, any, {}> = this.initDraw(labelGlyphsX.enter());
+			labelGlyphsX = labelGlyphsX.merge(copyEnterX);
+			this.updateDraw(labelGlyphsX, attrOpts, data, timeStepIndex, false);
+
+			//Draw y axis of labels
+			let labelGlyphsY = labelG.selectAll("text.label.y")
+				.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
+			labelGlyphsY.exit().remove();
+			let copyEnterY: Selection<any, Node, any, {}> = this.initDraw(labelGlyphsY.enter());
+			labelGlyphsY = labelGlyphsY.merge(copyEnterY);
+			this.updateDraw(labelGlyphsY, attrOpts, data, timeStepIndex, true);
+		}
+	}
+
+	private initScales(data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts) {
+		this.xAxisScale = scalePoint<number>()
+			.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+			.range([(attrOpts.width - (attrOpts.width * this.PADDING_CONSTANT)), attrOpts.width])
+			.padding(0.5);
+		this.yAxisScale = scalePoint<number>()
+			.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+			.range([attrOpts.height - (attrOpts.height * this.PADDING_CONSTANT), attrOpts.height])
+			.padding(0.5);
 	}
 
 	get textAnchor(): string {
@@ -276,5 +277,17 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	get enterExitEnabled(): boolean {
 		return this._enterExitEnabled;
+	}
+	set xAxisScale(scale: any) {
+		this._xAxisScale = scale;
+	}
+	get xAxisScale(): any {
+		return this._xAxisScale;
+	}
+	set yAxisScale(scale: any) {
+		this._yAxisScale = scale;
+	}
+	get yAxisScale(): any {
+		return this._yAxisScale;
 	}
 }

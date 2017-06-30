@@ -240,10 +240,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	get shapeType(): string {
 		return this._shapeType;
 	}
-	/**
-	 * Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
-	 * @param scheme
-	 */
 	set colorMap(scheme: d3Scale.ScaleLinear<string, string>) {
 		this._colorMap = scheme;
 	}

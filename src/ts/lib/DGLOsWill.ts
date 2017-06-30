@@ -159,6 +159,7 @@ export class DGLOsWill extends DGLOsMatt {
 				self.timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					self.currentNodeShape.draw(self._nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0; //TODO: figure out how to fix this, or if this is even an issue...
@@ -173,6 +174,7 @@ export class DGLOsWill extends DGLOsMatt {
 				self.timeStampIndex = (self.timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					self.currentNodeShape.draw(self._nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0;
