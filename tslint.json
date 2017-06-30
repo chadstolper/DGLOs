@@ -1,11 +1,80 @@
 {
 	"rules": {
-		"no-unused-expression": true,
+		// "no-unused-expression": true,
 		"no-duplicate-variable": true,
 		"no-unused-variable": true,
 		"curly": true,
 		"class-name": true,
-		"semicolon": ["always"],
-		"triple-equals": true
+		"semicolon": [
+			"always"
+		],
+		"triple-equals": true,
+		"no-magic-numbers": true,
+		"prefer-for-of": true,
+		"typedef": [
+			true,
+			"call-signature",
+			"parameter",
+			"arrow-parameter",
+			"property-declaration",
+			"variable-declaration",
+			"member-variable-declaration"
+		],
+		"typedef-whitespace": [
+			true,
+			{
+				"call-signature": "nospace",
+				"index-signature": "nospace",
+				"parameter": "nospace",
+				"property-declaration": "nospace",
+				"variable-declaration": "nospace"
+			},
+			{
+				"call-signature": "onespace",
+				"index-signature": "onespace",
+				"parameter": "onespace",
+				"property-declaration": "onespace",
+				"variable-declaration": "onespace"
+			}
+		],
+		"unified-signatures": true,
+		"no-conditional-assignment": true,
+		"no-duplicate-super": true,
+		"no-eval": true,
+		"no-misused-new": true,
+		"no-unsafe-any": true,
+		"no-var-keyword": true,
+		"no-use-before-declare": true,
+		"prefer-object-spread": true,
+		"strict-boolean-expressions": [
+			true,
+			"allow-boolean-or-undefined"
+		],
+		"typeof-compare": true,
+		"use-isnan": true,
+		"use-default-type-parameter": true,
+		"cyclomatic-complexity": [
+			true,
+			20
+		],
+		"deprecation": true,
+		"indent": [
+			true,
+			"tabs"
+		],
+		// "max-classes-per-file": [
+		// 	true,
+		// 	1
+		// ],
+		"prefer-const": true,
+		"no-boolean-literal-compare": true,
+		"no-irregular-whitespace": true,
+		"return-undefined": true,
+		"variable-name": [
+			true,
+			"ban-keywords",
+			"check-format",
+			"allow-leading-underscore"
+		]
 	}
 }

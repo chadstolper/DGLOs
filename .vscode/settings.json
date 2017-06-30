@@ -11,5 +11,9 @@
 	// Controls if the editor should automatically format the pasted content. A formatter must be available and the formatter should be able to format a range in a document.
 	"editor.formatOnPaste": true,
 	// Format a file on save. A formatter must be available, the file must not be auto-saved, and editor must not be shutting down.
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
+	// Control whether tslint is enabled for TypeScript files or not.
+	"tslint.enable": false,
+	// Always show rule failures as warnings, independent of the tslint configuration.
+	"tslint.alwaysShowRuleFailuresAsWarnings": false
 }
