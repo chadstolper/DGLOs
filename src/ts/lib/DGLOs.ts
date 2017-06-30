@@ -156,13 +156,6 @@ export interface DGLOs {
 
 
 	/**
-	 * Aligns the current edges in the graph so that
-	 * they point from source to target. 
-	 */
-	positionEdgeGlyphsSourceTarget(): void;
-
-
-	/**
 	 * Aligns the current edges in the graph so that they
 	 * are in position to form a matrix.
 	 */

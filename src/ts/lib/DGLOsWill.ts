@@ -132,15 +132,9 @@ export class DGLOsWill extends DGLOsMatt {
 	public positionEdgeGlyphsMatrix() {
 		let self = this;
 		this.matrixViewEnabled = true;
-		this.dataToDraw.timesteps.forEach(function (g: Graph) {
-			g.edges.forEach(function (e: Edge) {
-				e.x = (self.width / 8) + (+e.source.index / g.nodes.length) * (7 * self.width / 8);
-				e.y = (self.height / 8) + (+e.target.index / g.nodes.length) * (7 * self.height / 8);
-			});
-		});
 		this.attrOpts.stroke_width_edge = null;
-		this.attrOpts.width = (7 / 8) * (self.width / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
-		this.attrOpts.height = (7 / 8) * (self.height / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
+		this.attrOpts.width = this.width;
+		this.attrOpts.height = this.height;
 		if (!this.multipleTimestepsEnabled) {
 			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, this.width, this.height, this.enterExitColorEnabled);
 		}
@@ -157,9 +151,6 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public enableStepping() {
 		let self = this;
-		this.attrOpts.width = (7 / 8) * (self.width / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length));
-		this.attrOpts.height = (7 / 8) * (self.height / (this.dataToDraw.timesteps[this._timeStampIndex].nodes.length));
-
 		let buttonDiv = this.location.append("div").classed("buttons", true)
 		let prevButton = buttonDiv.append("button")
 			.text("<--")

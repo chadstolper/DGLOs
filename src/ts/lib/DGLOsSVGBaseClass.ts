@@ -148,7 +148,6 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	setCenterNode(centerNodeID: number | string): void { };
 
 	positionNodeGlyphsMatrix(): void { };
-	positionEdgeGlyphsSourceTarget(): void { };
 	positionEdgeGlyphsMatrix(): void { };
 	positionEdgeGlyphsGestalt(): void { };
 	setAttributes(opts: SVGAttrOpts): void { };

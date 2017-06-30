@@ -23,7 +23,8 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  *	 *draw()*, 
  */
 export class RectGlyphShape extends Shape implements EdgeGlyphShape {
-	readonly _shapeType = "Rect";
+	private readonly _shapeType = "Rect";
+	private readonly PADDING_CONSTANT: number = 0.875;
 	private _colorMap: d3Scale.ScaleLinear<string, string>;
 	/**
 	 *  Value used for initial enterEdge color transition. Default #00D50F.
@@ -58,6 +59,9 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 */
 	private _transitionDelay: number = 7000;
 	private _enterExitEnabled: boolean;
+	private _xPadding: number;
+	private _yPadding: number;
+
 	/**
 	 * The init method is a requirement of the __EdgeGlyphShape__ interface.
 	 * 
@@ -72,27 +76,20 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		return rectG;
 	}
 	/**
-	 * The initDraw method is a requirement of the __EdgeGlyphShape__ interface.
-	 * 
 	 * It takes an SVG selection with entered data and creates rectangle objects with
 	 * an ID based on the source and target of the edge.
-	 * 
-	 * The DynamicGraph and number parameteres are required by the interface but are not
-	 * explicitly used here.
 	 * @param glyphs 
-	 * @param data 
-	 * @param TimeStampIndex 
 	 */
-	public initDraw(glyphs: Selection<any, Edge, any, {}>, data: DynamicGraph, TimeStampIndex: number): Selection<any, Edge, any, {}> {
-		let h = 2000 / data.timesteps[TimeStampIndex].nodes.length;
-		let w = 2000 / data.timesteps[TimeStampIndex].nodes.length;
+	public initDraw(glyphs: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
+		let self = this;
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("path")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
-			.attr("d", function (d: Edge) {
-				console.log(d.x);
-				return "M " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L "
-					+ (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2));
-			});//"M 0,0 L 0,0 L 0,0 L 0,0 Z ");
+			.attr("d", function (d: Edge): string {
+				// return "M " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L "
+				// 	+ (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2));
+				return "M " + (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2)) + "L " + (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2)) + "L "
+					+ (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2)) + "L " + (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2));
+			});
 		return ret;
 	}
 	/**
@@ -107,7 +104,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param data 
 	 * @param TimeStampIndex 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts, data: DynamicGraph, TimeStampIndex: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attr: SVGAttrOpts): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			glyphs
@@ -116,12 +113,17 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
 					let newD = self.getPath(d, attr);
-					return interpolate(oldD, newD);
+					try {
+						return interpolate(oldD, newD);
+					}
+					catch (err) {
+						// console.log("interpolate error, rects do not (yet) exist");
+					}
 				})
 				.attr("stroke", attr.stroke_edge)
 				.attr("stroke-width", attr.stroke_width_edge)
 				.attr("fill", function (d: Edge) {
-					return this.colorMap(d.weight);
+					return self.colorMap(d.weight);
 				});
 		} catch (err) {
 			console.log("No Rect edges!");
@@ -148,7 +150,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 			default:
 				console.log("Transition from", this.shapeType, "to ", targetShape.shapeType, "is unknown.");
 		}
-		console.log("rectTransformTo: " + targetShape.shapeType);
+		// console.log("rectTransformTo: " + targetShape.shapeType);
 		super.transformTo(sourceG, targetShape, targetG);
 	}
 	/**
@@ -162,12 +164,20 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param attr 
 	 */
 	public draw(rectG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attr: SVGAttrOpts): void {
+		this.initColorMap(data, timeStampIndex, attr);
+		this.xPadding = this.PADDING_CONSTANT * (attr.height / (data.timesteps[timeStampIndex].nodes.length));
+		this.yPadding = this.PADDING_CONSTANT * (attr.width / (data.timesteps[timeStampIndex].nodes.length));
+		for (let e of data.timesteps[timeStampIndex].edges) {
+			e.x = (attr.width - (attr.width * this.PADDING_CONSTANT)) + (this.xPadding * +e.source.index);
+			e.y = (attr.height - (attr.height * this.PADDING_CONSTANT)) + (this.yPadding * +e.target.index);
+		}
+
 		let rects = rectG.selectAll("path")
 			.data(data.timesteps[timeStampIndex].edges);
 		rects.exit().remove();
-		let enter = this.initDraw(rects.enter(), data, timeStampIndex);
+		let enter = this.initDraw(rects.enter());
 		rects = rects.merge(enter as Selection<any, Edge, any, {}>);
-		this.updateDraw(rects, attr, data, timeStampIndex);
+		this.updateDraw(rects, attr);
 	}
 	/**
 	 * Returns the shape path as a string of the current rect shape.
@@ -175,8 +185,8 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param edge 
 	 */
 	public getPath(d: Edge, attr: SVGAttrOpts) {
-		let h = attr.height;/// data.timesteps[TimeStampIndex].nodes.length;
-		let w = attr.width;/// data.timesteps[TimeStampIndex].nodes.length; 
+		let h = this.xPadding;
+		let w = this.yPadding;
 		return "M " + d.x + " " + d.y + " L " + d.x + " " + (d.y + h) + " L " + (d.x + w) + " " + (d.y + h) + " L " + (d.x + w) + " " + d.y + " Z";
 	}
 	/**
@@ -293,5 +303,17 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	}
 	get enterExitEnabled(): boolean {
 		return this._enterExitEnabled;
+	}
+	set xPadding(num: number) {
+		this._xPadding = num;
+	}
+	get xPadding(): number {
+		return this._xPadding;
+	}
+	set yPadding(num: number) {
+		this._yPadding = num;
+	}
+	get yPadding(): number {
+		return this._yPadding;
 	}
 }
