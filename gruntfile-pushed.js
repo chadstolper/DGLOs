@@ -68,7 +68,11 @@ module.exports = function (grunt) {
 		// },
 
 		exec: {
-			gen_docs: 'node_modules/.bin/compodoc -p tsconfig.json --theme readthedocs -d docs'
+			gen_docs: 'node_modules/.bin/compodoc -p tsconfig.json --theme readthedocs -d docs',
+			tslint: {
+				cmd: "node_modules/.bin/tslint --project tsconfig.json --type-check -c tslint.json 'src/ts/**/*.ts'",
+				exitCodes: [0, 2]
+			}
 		},
 
 		rollup: {
@@ -115,7 +119,8 @@ module.exports = function (grunt) {
 		tslint: {
 			options: {
 				configuration: "tslint.json",
-				force: true
+				force: true,
+				// typeChecking: true,
 			},
 			files: {
 				src: "src/ts/**/*.ts"
@@ -139,7 +144,7 @@ module.exports = function (grunt) {
 		}
 	});
 	// grunt.registerTask('build', ['tslint', 'ts', 'clean', 'rollup', 'typedoc']);
-	grunt.registerTask('compile', ['tslint', 'ts', 'clean', 'rollup']);
+	grunt.registerTask('compile', ['exec:tslint', 'ts', 'clean', 'rollup']);
 	grunt.registerTask('gen_docs', ['compile', 'exec:gen_docs'])
 	grunt.registerTask('default', ['connect', 'open', 'watch']);
 	// grunt.registerTask('default', 'compile');
