@@ -108,7 +108,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		let self = this;
 		try {
 			glyphs
-				.transition().duration(this._transitionDuration)
+				.transition().duration(this.transitionDuration)
 				.attrTween("d", function (d: Edge) {
 					let elem: HTMLElement = this;
 					let oldD: string = elem.getAttribute("d");
