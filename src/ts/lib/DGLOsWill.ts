@@ -68,7 +68,7 @@ export class DGLOsWill extends DGLOsMatt {
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
 			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 				let innerGlyphSpacing = scaleLinear()
-					.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+					.domain(extent(Array.from(meta.edges), function (d: Edge): number { //TODO: remove magic numbers, possibly move calculations to gestaltGlyphShape class.
 						return d.timestep;
 					}))
 					.range([(3 / 10) * (self.height / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length),

@@ -9,7 +9,7 @@ export class DGLOsSandwich extends DGLOsWill {
 	 * Elements will be classed as SVG_#.
 	 * Initial drawNodeGlyphs() and drawEdgesGlyphs() should be called prior to calling drawTimesteps().
 	 */
-	public drawTimesteps() {
+	public drawTimesteps(): void {
 		if (this.data.timesteps.length > 1) {
 			for (let i = 1; i < this.data.timesteps.length; i++) {
 				let newSVG: Selection<any, {}, any, {}> = this.location.append("svg")
@@ -28,17 +28,17 @@ export class DGLOsSandwich extends DGLOsWill {
 	 * If timeline view is enabled, all SVG elements except SVG_1 are removed. If not specified, delay between SVG removal defaults to 0 seconds.
 	 * @param delay
 	 */
-	public removeTimesteps(delay: number = 0) {
+	public removeTimesteps(delay: number = 0): void {
 		let self = this;
 		if (this.multipleTimestepsEnabled) {
 			let reference: Array<number> = new Array<number>(); //array for reversing delay calculations
-			let SVGMap: Map<number, Selection<any, {}, any, {}>> = new Map<number, Selection<any, {}, any, {}>>();
+			let svgMap: Map<number, Selection<any, {}, any, {}>> = new Map<number, Selection<any, {}, any, {}>>();
 			for (let i = this.data.timesteps.length; i > 0; i--) {
-				let getSVG = this.location.select("svg.SVG_" + i);
-				SVGMap.set(i, getSVG);
+				let getSVG: Selection<any, {}, any, {}> = this.location.select("svg.SVG_" + i);
+				svgMap.set(i, getSVG);
 				reference.push(i);
 			}
-			SVGMap.forEach(function (curSVG: Selection<any, {}, any, {}>, i: number) {
+			svgMap.forEach(function (curSVG: Selection<any, {}, any, {}>, i: number): void {
 				if (i !== 1) {
 					curSVG.transition().delay(function (): number {
 						return delay * reference[i - 1];
