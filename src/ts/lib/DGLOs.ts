@@ -1,5 +1,6 @@
 import { DynamicGraph } from "../model/DynamicGraph";
-import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts } from "./DGLOsSVG";
+import { SimulationAttrOpts } from "./DGLOsSimulation";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";

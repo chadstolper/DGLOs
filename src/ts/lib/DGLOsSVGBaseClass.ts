@@ -3,7 +3,8 @@ import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
-import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts } from "./DGLOsSVG";
+import { SimulationAttrOpts } from "./DGLOsSimulation";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
