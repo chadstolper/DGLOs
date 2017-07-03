@@ -1,6 +1,9 @@
 import { Selection, select } from "d3-selection";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { DGLOsWill } from "./DGLOsWill";
+import { NodeGlyphShape } from "./NodeGlyphInterface";
+import { EdgeGlyphShape } from "./EdgeGlyphInterface";
+import { GroupGlyph } from "./GroupGlyphInterface";
 
 export class DGLOsSandwich extends DGLOsWill {
 
@@ -49,5 +52,47 @@ export class DGLOsSandwich extends DGLOsWill {
 			});
 		}
 		this.multipleTimestepsEnabled = false;
+	}
+
+	/**
+	 * Removes all regions from the SVG at all timesteps. All DOM elements are removed, <g> of groupGlyphs not removed.
+	 */
+	public removeRegions() {
+		this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, svgPosition: number): void {
+			glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph): void {
+				glyphs
+					.transition()
+					.style("opacity", 0)
+					.remove();
+			})
+		})
+	}
+
+	/**
+	 * Removes all Edges from the SVG at all timesteps. All DOM elements are removed, <g> of EdgeGlyphShape not removed.
+	 */
+	public removeEdgeGlyphs() {
+		this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
+			glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape): void {
+				glyphs
+					.transition()
+					.style("opacity", 0)
+					.remove();
+			})
+		})
+	}
+
+	/**
+	 * Removes all Nodes from the SVG at all timesteps. All DOM elements are removed, <g> of NodeGlyphShape not removed.
+	 */
+	public removeNodeGlyphs() {
+		this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
+			glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape): void {
+				glyphs
+					.transition()
+					.style("opacity", 0)
+					.remove();
+			})
+		})
 	}
 }

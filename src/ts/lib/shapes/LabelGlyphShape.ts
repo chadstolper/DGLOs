@@ -8,11 +8,11 @@ import { Shape } from "./Shape"
 import { ScaleOrdinal, scaleOrdinal, scalePoint, schemeCategory20 } from "d3-scale";
 
 export class LabelGlyphShape extends Shape implements NodeGlyphShape {
-	readonly _shapeType = "Label";
-	readonly _textAnchor: string = "middle";
-	readonly _dominantBaseline: string = "middle";
-	readonly PADDING_CONSTANT: number = 0.875;
-	readonly MARGIN_RATIO: number = 0.095;
+	private readonly _shapeType = "Label";
+	private _textAnchor: string = "middle";
+	private _dominantBaseline: string = "middle";
+	private readonly PADDING_CONSTANT: number = 0.875;
+	private readonly MARGIN_RATIO: number = 0.095;
 	private _xMargin: number;
 	private _yMargin: number;
 	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
@@ -124,7 +124,8 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 					})
 					.attr("y", function (d: Node) {
 						return d.y;
-					});
+					})
+					.style("opacity", attrOpts.opacity);
 			} catch (err) {
 				console.log("No label nodes!");
 			}
@@ -177,7 +178,6 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			.style("font-size", attrOpts.font_size)
 			.style("stroke", "black")
 			.style("stroke-width", 0.25)
-			.attr("opacity", attrOpts.opacity);
 
 		return glyphs;
 	}
@@ -254,16 +254,16 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 		this.initScales(data, timeStepIndex, attrOpts);
 
 		if (!duplicateNodes) {
+			this.duplicate = undefined;
 			let labelGlyphs = labelG.selectAll("text.label")
 				.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 			labelGlyphs.exit().remove();
 			let labelEnter: Selection<any, Node, any, {}> = this.initDraw(labelGlyphs.enter());
 			labelGlyphs = labelGlyphs.merge(labelEnter);
-			this.duplicate = undefined;
 			this.updateDraw(labelGlyphs, attrOpts);
 		}
 		if (duplicateNodes) {
-			this.xMargin = attrOpts.width * this.MARGIN_RATIO; //TODO: it works, but i dont like it...
+			this.xMargin = attrOpts.width * this.MARGIN_RATIO;
 			this.yMargin = attrOpts.height * this.MARGIN_RATIO;
 
 			attrOpts.font_size = this.PADDING_CONSTANT * (attrOpts.width / (data.timesteps[timeStepIndex].nodes.length)) + "px";

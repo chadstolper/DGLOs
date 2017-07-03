@@ -131,8 +131,8 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void { };
 	transformGroupGlyphsTo(shape: GroupGlyph): void { };
 
-	removeNodeGlyphs(): void { };//TODO: do?
-	removeEdgeGlyphs(): void { };//TODO: do?
+	removeNodeGlyphs(): void { };
+	removeEdgeGlyphs(): void { };
 	removeRegions(): void { };
 
 
