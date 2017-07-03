@@ -1,3 +1,4 @@
+///<reference path="../../../node_modules/calculate-size/lib/index.d.ts"/>
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 import { Selection } from "d3-selection";
 import { Node, Edge, Graph, DynamicGraph, MetaNode, MetaEdge } from "../model/dynamicgraph";
@@ -9,6 +10,7 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG";
 import * as d3 from "d3-selection";
 import { scaleLinear, scaleOrdinal, scalePoint, scaleBand } from "d3-scale";
 import { extent } from "d3-array";
+//import { default as calculateSize } from "calculate-size";
 
 export class DGLOsWill extends DGLOsMatt {
 	/**
@@ -126,6 +128,20 @@ export class DGLOsWill extends DGLOsMatt {
 			});
 		}
 	}
+	// protected calculateMatrixPadding(): number {
+	// 	let maxLength = 0;
+	// 	let self = this;
+	// 	for (let timestep of this.dataToDraw.timesteps) {
+	// 		for (let node of timestep.nodes) {
+	// 			//TODO: CALCULATE THE SIZE OF MATRIX PADDING
+	// 			let q = calculateSize(node.label, {
+	// 				font: "Arial",//self.attrOpts.font,
+	// 				fontSize: "12pt" //self.font_size
+	// 			});
+	// 		}
+	// 	}
+	// 	return maxLength;
+	// }
 	/**
 	 * positionEdgeGlyphsMatrix positions the Edges as Rectangles in the matrix.
 	 */

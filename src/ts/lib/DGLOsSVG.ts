@@ -41,7 +41,6 @@ export class SVGAttrOpts {
 		this._opacity = opacity;
 		this._font_size = font_size;
 	}
-
 	get fill(): string {
 		return this._fill;
 	}

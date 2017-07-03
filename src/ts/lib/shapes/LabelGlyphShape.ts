@@ -11,8 +11,8 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _shapeType = "Label";
 	readonly _textAnchor: string = "middle";
 	readonly _dominantBaseline: string = "middle";
-	readonly PADDING_CONSTANT: number = 0.875;
-	readonly INVERSE_PADDING_CONSTANT: number = 0.125;
+	private PADDING_CONSTANT: number = this.lib.matrixPadding;
+	readonly INVERSE_PADDING_CONSTANT: number = this.lib.matrixLabelPadding;
 	readonly MARGIN_RATIO: number = 0.095;
 	private _xMargin: number;
 	private _yMargin: number;

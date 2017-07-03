@@ -19,6 +19,8 @@ import { Selection } from "d3-selection";
  * Our extension of DGLOs to impelement SVG as the method of drawing.
  */
 export class DGLOsSVGBaseClass implements DGLOs {
+	protected _matrixPadding: number = 0.875;
+	protected _matrixLabelPadding: number = 1 - this._matrixPadding;
 	protected _data: model.DynamicGraph;
 	protected _location: Selection<any, {}, any, {}>;
 	protected _drawLocation: Selection<any, {}, any, {}>;
@@ -70,6 +72,20 @@ export class DGLOsSVGBaseClass implements DGLOs {
 			.attr("height", this.height);
 		// if (location.attr("width")) { this._width = +location.attr("width"); }
 		// if (location.attr("height")) { this._height = +location.attr("height") }
+	}
+	public get matrixPadding(): number {
+		return this._matrixPadding;
+	}
+	public set matrixPadding(ratio: number) {
+		if (ratio > 1 || ratio < 0) {
+			console.log("Invalid input. Input must be between 0 and 1");
+		} else {
+			this._matrixPadding = ratio;
+			this._matrixLabelPadding = 1 - ratio;
+		}
+	}
+	public get matrixLabelPadding(): number {
+		return this._matrixLabelPadding;
 	}
 	private _centralNodeID: number | string;
 	/**
