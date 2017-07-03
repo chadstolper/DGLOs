@@ -12,6 +12,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	readonly _textAnchor: string = "middle";
 	readonly _dominantBaseline: string = "middle";
 	readonly PADDING_CONSTANT: number = 0.875;
+	readonly INVERSE_PADDING_CONSTANT: number = 0.125;
 	readonly MARGIN_RATIO: number = 0.095;
 	private _xMargin: number;
 	private _yMargin: number;
@@ -25,6 +26,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	private _xAxisScale: any;
 	private _yAxisScale: any;
 	private _transitionDuration: number = 1000; //Duration of transition / length of animation. Default 1000ms.
+	private readonly LONGEST_TEXT_ESTIMATE: number = 5;
 	// readonly _font = "ComicSans";
 
 	/**
@@ -174,7 +176,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 			.text(function (d: Node): string {
 				return d.label;
 			})
-			.style("font-size", attrOpts.font_size)
+			.style("font-size", (this.INVERSE_PADDING_CONSTANT * attrOpts.width) / this.LONGEST_TEXT_ESTIMATE)
 			.style("stroke", "black")
 			.style("stroke-width", 0.25)
 			.attr("opacity", attrOpts.opacity);

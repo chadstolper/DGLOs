@@ -5,7 +5,7 @@ import { extent } from "d3-array";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { LineGlyphShape } from "./LineGlyphShape";
 import { SVGAttrOpts } from "../DGLOsSVG";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear } from "d3-scale";
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear, scalePoint, ScalePoint } from "d3-scale";
 
 /**
  * The __GestaltGlyphsShape__ class contains all of the methods required to draw and position a Gestalt Glyph on screen.
@@ -23,6 +23,13 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	readonly _shapeType = "Gestalt";
 	private _thicknessScale: ScaleLinear<number, number>;
 	private _weightScale: ScaleLinear<number, number>;
+	private readonly PADDING_CONSTANT: number = 0.875;
+	private _xAxisScale: ScalePoint<number>;
+	private _yAxisScale: ScalePoint<number>;
+	private readonly MIN_LINE_THICKNESS: number = 0.25;
+	private readonly MAX_LINE_THICKNESS: number = 1.5;
+	private readonly ANGLE_BOTTOM_BOUND: number = -10;
+	private readonly ANGLE_TOP_BOUND: number = 10;
 
 	/**
  	* The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -80,7 +87,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
-					return d.x + (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length);
+					return d.x + self.PADDING_CONSTANT * (svgWidth / data.timesteps[timeStampIndex].nodes.length);
 				})
 				.attr("y2", function (d: Edge) {
 					let yPos = 0
@@ -107,15 +114,36 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		}
 	}
 
-	private initScales(data: DynamicGraph, timeStampIndex: number) {
+	private initScales(data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts) {
+		let self = this;
 		this.weightScale = scaleLinear<number>()
 			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
-			.range([-10, 10]);
+			.range([self.ANGLE_BOTTOM_BOUND, self.ANGLE_TOP_BOUND]);
 		this.thicknessScale = scaleLinear<number>()
 			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
-			.range([.25, 1.5]);
+			.range([self.MIN_LINE_THICKNESS, self.MAX_LINE_THICKNESS]);
+		this.xAxisScale = scalePoint<number>()
+			.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+			.range([(attrOpts.width - (attrOpts.width * this.PADDING_CONSTANT)), attrOpts.width])
+			.padding(0.5);
+		this.yAxisScale = scalePoint<number>()
+			.domain(data.timesteps[timeStampIndex].nodes.map(function (d) { return d.index }))
+			.range([attrOpts.height - (attrOpts.height * this.PADDING_CONSTANT), attrOpts.height])
+			.padding(0.5);
 	}
 
+	set xAxisScale(scale: ScalePoint<number>) {
+		this._xAxisScale = scale;
+	}
+	get xAxisScale(): ScalePoint<number> {
+		return this._xAxisScale;
+	}
+	set yAxisScale(scale: ScalePoint<number>) {
+		this._yAxisScale = scale;
+	}
+	get yAxisScale(): ScalePoint<number> {
+		return this._yAxisScale;
+	}
 	/**
 	 * Transform the current EdgeGlyphShape to given EdgeGlyphShape
 	 * @param sourceG 
@@ -149,7 +177,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param timeStepIndex 
 	 */
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
-		this.initScales(data, timeStampIndex);
+		this.initScales(data, timeStampIndex, attrOpts);
 		let gestaltGlyphs = location.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 

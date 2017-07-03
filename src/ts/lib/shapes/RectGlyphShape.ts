@@ -85,8 +85,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		let ret: Selection<any, Edge, any, {}> = glyphs.append("path")
 			.attr("id", function (d: Edge): string { return d.source.id + ":" + d.target.id; })
 			.attr("d", function (d: Edge): string {
-				// return "M " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L "
-				// 	+ (d.x + (w / 2)) + "," + (d.y + (h / 2)) + "L " + (d.x + (w / 2)) + "," + (d.y + (h / 2));
 				return "M " + (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2)) + "L " + (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2)) + "L "
 					+ (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2)) + "L " + (d.x + (self.xPadding / 2)) + "," + (d.y + (self.yPadding / 2));
 			});
