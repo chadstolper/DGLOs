@@ -43,14 +43,6 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	/**
-	 * setEdgeGlyphAtters is used to set the _edgeAttrOpts SVGAttrOpts object. This object
-	 * determines the attributes that are used when drawing edges (e.g. color, thickness, etc..). 
-	 * @param attr: SVGAttrOpts
-	 */
-	public setEdgeGlyphAttrs(attr: SVGAttrOpts) {
-		this.attrOpts = new SVGAttrOpts(attr.fill, attr.stroke, attr.stroke_edge, attr.stroke_width, attr.stroke_width_edge, attr.radius, attr.width, attr.height, attr.opacity, attr.font_size);
-	}
-	/**
 	 * tansformEdgeGlyphsTo is a DGLO method that calls the ___ _currentEdgeShape ___ transformTo method.
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
 	 */

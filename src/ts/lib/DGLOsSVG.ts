@@ -17,17 +17,23 @@ export class SVGAttrOpts {
 	private _font_size: string = "12px";
 	private _font: string = "Sans Serif";
 
-	constructor(fill: string = "#FFFFFF", stroke: string = "#000000", stroke_edge: string = "#000000", stroke_width: number = 2, stroke_width_edge: number | string = 1, radius: number = 10, width?: number, height?: number, opacity: number = 100, font_size: string = "12px", font: string = "Sans Serif") {
-		this._fill = fill;
-		this._stroke = stroke;
-		this._stroke_edge = stroke_edge;
-		this._stroke_width = stroke_width;
-		this._stroke_width_edge = stroke_width_edge;
-		this._radius = radius;
-		this._opacity = opacity;
-		this._font_size = font_size;
-		this._font = font;
-	}
+	/**
+	 * Initializes SVGAttrOpts Object.
+	 * 
+	 * Current values as follows:
+	 * - Fill: "#FFFFFF"
+	 * - Stroke: "#000000"
+	 * - Stroke_Edge: "#000000"
+	 * - Stroke-width: 2
+	 * - Stroke-width_Edge: 1
+	 * - Radius: 10
+	 * - Width: null
+	 * - Height: null
+	 * - Opacity: 100
+	 * - Font-size: "12px"
+	 * - Font: "sans serif"
+	 */
+	constructor() { }
 
 	get fill(): string {
 		return this._fill;

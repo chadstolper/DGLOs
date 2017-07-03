@@ -68,7 +68,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * Attributes pertaining to SVG visualization.
 	 */
-	private _attrOpts: SVGAttrOpts = new SVGAttrOpts("white", "black", "black");
+	private _attrOpts: SVGAttrOpts = new SVGAttrOpts();
 	/**
 	 * Attributes pertaining to the simulation. Empty constructor defaults.
 	 */
