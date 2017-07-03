@@ -6,7 +6,8 @@ import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts } from "./DGLOsSVG";
+import { SimulationAttrOpts } from "./DGLOsSimulation";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 	readonly ITERATIONS: number = 3;

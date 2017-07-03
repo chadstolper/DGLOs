@@ -64,7 +64,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param glyphs 
 	 * @param attr 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			glyphs
@@ -159,7 +159,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		sTLineEdges.exit().remove();
 		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
-		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
+		this.updateDraw(sTLineEdges, attrOpts);
 	}
 
 	/**

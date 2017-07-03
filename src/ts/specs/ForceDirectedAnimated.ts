@@ -1,5 +1,6 @@
 import { Technique } from "./Technique";
-import { SVGAttrOpts, SimulationAttrOpts } from "../lib/DGLOsSVG";
+import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SimulationAttrOpts } from "../lib/DGLOsSimulation";
 
 export class ForceDirectedAnimated extends Technique {
 	// public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts("id", "black", "gray", 1, .5, 15, 2000, 2000);

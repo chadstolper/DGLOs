@@ -19,3 +19,64 @@
 - `yarn add _____` to install dependencies
 - `yarn add _____ -dev` to install developer tools
 - `grunt gen_docs` to re-generate documentation
+
+## Drawing:
+### drawNodeGlyphs():
+
+### drawEdgeGlyphs():
+
+### drawRegions():
+
+### drawTimesteps():
+
+### removeNodeGlyphs():
+
+### removeEdgeGlyphs():
+
+### removeRegions():
+
+### removeTimesteps(delay):
+
+## Positioning:
+### positionNodesAndEdgesForceDirected(boolean):
+
+### positionNodesMatrix():
+
+### posistionEdgesMatrix():
+
+### positionNodesGestalt():
+
+### positionEdgesGestalt():
+
+### fixCentralNodePositions():
+
+## Attributes and Visualization Settings:
+### setAttributes(SVGAttrOpts):
+
+### setRegionGlyphAttrs(SVGAttrOpts):
+
+### setSimulationAttrs(SimulationAttrOpts):
+
+### SVGAttrOpts:
+
+### SimulationAttrOpts:
+
+### setCenterNode():
+
+### enableEnterExitColoring():
+
+### disableEnterExitColoring():
+
+## Transformation and Data Traversal:
+### transformNodeGlyphTo(NodeGlyphShape):
+
+### transformEdgeGlyphTo(EdgeGlyphShape):
+
+### transformGroupGlyphTo(GroupGlyph):
+
+### enableStepping():
+
+### disableStepping():
+
+## DGLOs Objects?
+so attropts, simattropts, all the shapes, etc.

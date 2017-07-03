@@ -1,5 +1,6 @@
 import { Technique } from "./Technique";
-import { SVGAttrOpts, SimulationAttrOpts } from "../lib/DGLOsSVG";
+import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SimulationAttrOpts } from "../lib/DGLOsSimulation";
 
 export class GMap extends Technique {
 	public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts("type", "black", "grey");
