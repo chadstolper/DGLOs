@@ -125,11 +125,20 @@ Disables shading based on data direction. Coloring returns to attributes defined
 
 ### transformEdgeGlyphTo(EdgeGlyphShape):
 
+transformEdgeGlyphTo takes an EdgeGlyphShape object. We have built three EdgeGlyphShape classes that come with the library:
+	* SourceTargetLineGlyphShape
+	* GestaltGlyphShape
+	* RectGlyphShape
+
 ### transformGroupGlyphTo(GroupGlyph):
 
 ### enableStepping():
 
+Allows the user to traverse timesteps by appending forward and backward buttons to the page.
+
 ### disableStepping():
+
+Removes the forward and backward buttons from the page.
 
 ## DGLOs Objects?
 so attropts, simattropts, all the shapes, etc.
