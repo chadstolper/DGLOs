@@ -197,9 +197,6 @@ export interface DGLOs {
 	positionNodeGlyphsPolar(): void;
 
 
-	//TODO: drop? positionNodeGlyphsGestalt(): void;
-
-
 	/**
 	 * Aligns the current edges in the graph so that
 	 * they point from source to target. 

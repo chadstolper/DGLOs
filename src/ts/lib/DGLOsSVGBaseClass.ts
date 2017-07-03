@@ -155,18 +155,9 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	positionNodeGlyphsMatrix(): void { };
 	positionNodeGlyphsCartesian(): void { };
 	positionNodeGlyphsPolar(): void { };
-	//TODO: drop? positionNodeGlyphsGestalt(): void;
 	positionEdgeGlyphsSourceTarget(): void { };
 	positionEdgeGlyphsMatrix(): void { };
-	positionEdgeGlyphsGestalt(): void { }; //matrix-y
-	/*TODO: map of varibles/attrs
-		fill
-		stroke
-		stroke-width
-		radius
-		opacity
-		width, height
-	*/
+	positionEdgeGlyphsGestalt(): void { };
 	setAttributes(opts: SVGAttrOpts): void { };
 	setRegionGlyphAttrs(opts: SVGAttrOpts): void { };
 	setSimulationAttrs(opts: SimulationAttrOpts): void { };

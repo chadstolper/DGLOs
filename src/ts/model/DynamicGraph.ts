@@ -84,7 +84,7 @@ export class Node implements SimulationNodeDatum {
 }
 
 export class Edge {
-	private _id: string | number; //TODO: If edge id is ever changed via another operation, make OrigID attribute.
+	private _id: string | number;
 	private _source: Node;
 	private _target: Node;
 	private _weight: number;

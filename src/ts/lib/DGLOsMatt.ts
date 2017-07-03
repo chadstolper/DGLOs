@@ -138,7 +138,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this.simulation === undefined) {
 				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(this._simulationAttrOpts.charge))
+					.force("charge", d3force.forceManyBody().strength(this.simulationAttrOpts.charge))
 					.force("center", d3force.forceCenter(self._width / 2, self._height / 2))
 					.on("tick", this.tick(self))
 					.on("end", function () {
@@ -157,28 +157,28 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 				} else {
 					linkForce.links(self.data.metaEdgesAsArray)
 				}
-				if (this._simulationAttrOpts.simulationWeightEnabled) {
+				if (this.simulationAttrOpts.simulationWeightEnabled) {
 					linkForce.strength(function (d: MetaEdge): number {
-						return d.weight * self._simulationAttrOpts.linkStrength;
+						return d.weight * self.simulationAttrOpts.linkStrength;
 					});
 				}
-				if (this._simulationAttrOpts.simulationCollisionEnabled) {
+				if (this.simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						if (self.currentNodeShape.shapeType === "Label") {
 							d.nodes.forEach(function (n: Node) {
-								if ((self._attrOpts.font_size.substring(self._attrOpts.font_size.length - 2, self._attrOpts.font_size.length)) === "px") {
-									return (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / self._simulationAttrOpts.divisorPX;
+								if ((self.attrOpts.font_size.substring(self.attrOpts.font_size.length - 2, self.attrOpts.font_size.length)) === "px") {
+									return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPX;
 								}
-								return (n.label.length * +self._attrOpts.font_size.substring(0, self._attrOpts.font_size.length - 2)) / self._simulationAttrOpts.divisorPT;
+								return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPT;
 							});
 						}
 						else {
-							return self._attrOpts.radius;
+							return self.attrOpts.radius;
 						}
 					})
 						.iterations(2));
 				}
-				this.simulation.alpha(this._simulationAttrOpts.alpha).restart();
+				this.simulation.alpha(this.simulationAttrOpts.alpha).restart();
 			}
 
 		} else {
@@ -201,51 +201,51 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 	private tock() {
 		let self = this;
 
-		if (!this._multipleTimestepsEnabled) { //check if timeline view is enabled.
+		if (!this.multipleTimestepsEnabled) { //check if timeline view is enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep
-			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, SVGPosition: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+			this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, SVGPosition: number) {
+				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges at the current timestep
-			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+			this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
+				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
 					}
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
-			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, undefined, self.enterExitColorEnabled);
+			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
+				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}
 		else {
 			//update groups in map; run update of simulation on all groups accross multiple SVG elements
-			this._groupGlyphMap.forEach(function (GlyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, SVGPosition: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
-					shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+			this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, SVGPosition: number) {
+				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph) {
+					shape.draw(glyphs, self.dataToDraw, SVGPosition, self.attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
-			this._edgeGlyphMap.forEach(function (GlyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
+			this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
+				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape) {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, SVGPosition, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
 					}
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
-			this._nodeGlyphMap.forEach(function (GlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
-				GlyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
-					shape.draw(glyphs, self.dataToDraw, SVGPosition, self._attrOpts, undefined, self.enterExitColorEnabled);
+			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, SVGPosition: number) {
+				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape) {
+					shape.draw(glyphs, self.dataToDraw, SVGPosition, self.attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}
