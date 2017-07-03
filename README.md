@@ -157,5 +157,22 @@ these buttons will cause the page to display the next (or previous) graph in the
 `disableStepping` removes the foward and backward buttons added to the page by `enableStepping`. `disableStepping` does nothing
 if those buttons are not on the page.
 
-## DGLOs Objects?
-so attropts, simattropts, all the shapes, etc.
+### DGLOs Shape Classes
+DGLOs has five shape classes. Each are used to display data in different ways.
+## Node Shapes:
+Nodes do this
+# CircleGlyphShape:
+circleGlyphShape blah blah blah
+# LabelGlyphShape
+circleGlyphShape blah blah blah
+## Edge Shapes:
+Edges do that
+# RectGlyphShape
+circleGlyphShape blah blah blah
+# GestaltGlyphShape
+circleGlyphShape blah blah blah
+# SourceTargetGlyphShape
+circleGlyphShape blah blah blah
+
+
+//so attropts, simattropts, all the shapes, etc.
