@@ -11,6 +11,10 @@ export class ForceDirectedAnimated extends Technique {
 	public static readonly DEFAULT_RADIUS: number = 10;
 	public static readonly DEFAULT_FONT_SIZE: string = "16pt";
 	public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts();
+
+	public static readonly DEFAULT_COLLISION_ENABLED: boolean = true;
+	public static readonly DEFAULT_WEIGHT_ENABLED: boolean = true;
+	public static readonly DEFAULT_SIM_ATTR: SimulationAttrOpts = new SimulationAttrOpts();
 	public draw(): void {
 		ForceDirectedAnimated.DEFAULT_ATTR.fill = ForceDirectedAnimated.DEFAULT_FILL
 		ForceDirectedAnimated.DEFAULT_ATTR.stroke = ForceDirectedAnimated.DEFAULT_STROKE
@@ -20,12 +24,15 @@ export class ForceDirectedAnimated extends Technique {
 		ForceDirectedAnimated.DEFAULT_ATTR.radius = ForceDirectedAnimated.DEFAULT_RADIUS
 		ForceDirectedAnimated.DEFAULT_ATTR.font_size = ForceDirectedAnimated.DEFAULT_FONT_SIZE;
 
+		ForceDirectedAnimated.DEFAULT_SIM_ATTR.simulationCollisionEnabled = ForceDirectedAnimated.DEFAULT_COLLISION_ENABLED;
+		ForceDirectedAnimated.DEFAULT_SIM_ATTR.simulationWeightEnabled = ForceDirectedAnimated.DEFAULT_WEIGHT_ENABLED;
+
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.setAttributes(ForceDirectedAnimated.DEFAULT_ATTR);
-		this.lib.setSimulationAttrs(new SimulationAttrOpts(true, true));
+		this.lib.setSimulationAttrs(ForceDirectedAnimated.DEFAULT_SIM_ATTR);
 		this.lib.positionNodesAndEdgesForceDirected(true);
 		this.lib.enableStepping();
 	}
