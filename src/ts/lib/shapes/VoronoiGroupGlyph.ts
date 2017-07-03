@@ -5,7 +5,6 @@ import { SVGAttrOpts } from "../DGLOsSVG";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
 
-
 export class VoronoiGroupGlyph implements GroupGlyph {
 	readonly _groupType: string = "Voronoi";
 	private _colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
@@ -19,7 +18,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	private _enterExitEnabled: boolean;
 
 	/**
-	* Make new <g>
+	* Make a new <g> tag for the voronoi path glyphs to be created. Returns Selection <g> classed VoronoiPaths.
 	* @param location
 	*/
 	public init(location: Selection<any, {}, any, {}>): Selection<any, {}, any, {}> {
@@ -63,8 +62,8 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 				.style("stroke", function (d: VoronoiPolygon<Node>): string { return self.fill(d, attrOpts.fill); });
 		}
 		glyphs
-			.attr("d", function (d: any): string {
-				return d ? "M" + d.join("L") + "Z" : null;
+			.attr("d", function (d: VoronoiPolygon<Node>): string {
+				return (d !== undefined) ? "M" + d.join("L") + "Z" : null;
 			});
 		return glyphs;
 	}
@@ -74,7 +73,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	* Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
 	*/
 	private enterExitCheck(): (d: VoronoiPolygon<Node>) => string {
-		let self = this;
+		let self: VoronoiGroupGlyph = this;
 		return function (d: VoronoiPolygon<Node>): string {
 			if (d.data.type === "noise") {
 				return self.noiseColor;
@@ -142,26 +141,25 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 
 	/**
-	* Draw and create new visualizations of regions, initial update included.
-	* @param loc location of glyphs
-	* @param data 
-	* @param timeStepIndex 
+	* Method draws current timestep of Nodes with data. Enter/update/exit included. Draw update for visualization included.
+	* @param location location of glyphs
+	* @param data
+	* @param timeStepIndex
 	* @param attrOpts
 	* @param noisePoints
 	* @param voronoi
 	*/
-	public draw(loc: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit: boolean = false): void {
+	public draw(location: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let vData: VoronoiPolygon<Node>[] = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
-		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = loc.selectAll("path.voronoi")
+		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = location.selectAll("path.voronoi")
 			.data(vData, function (d: VoronoiPolygon<Node>, i: number): string {
 				let ret: string;
 				try {
 					ret = "" + d.data.id;
 					return ret;
 				} catch (err) {
-					// console.log(i, vData);
-					// throw err;
+					// console.log(err);
 				}
 				return "empty";
 			});
@@ -174,14 +172,17 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 
 		this.updateDraw(voronoiPaths, attrOpts);
 	}
+	/**
+	* Returns the shape path as a string of the current VoronoiPolygon<Node> (Gmap Region) shape.
+	* @param d 
+	*/
+	public getPath(d: VoronoiPolygon<Node>): string {
+		return (d !== undefined) ? "M" + d.join("L") + "Z" : null;
+	}
 
 	get groupType(): string {
 		return this._groupType;
 	}
-	/**
-	* Assigns new colorScheme: ScaleOrdinal<string | number, string>(schemeCategory#).
-	* @param scheme
-	*/
 	set colorScheme(scheme: ScaleOrdinal<string | number, string>) {
 		this._colorScheme = scheme;
 	}
