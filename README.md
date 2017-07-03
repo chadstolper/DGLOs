@@ -159,19 +159,19 @@ if those buttons are not on the page.
 
 ### DGLOs Shape Classes
 DGLOs has five shape classes. Each are used to display data in different ways.
-## Node Shapes:
+#### Node Shapes:
 Nodes do this
-# CircleGlyphShape:
+##### CircleGlyphShape:
 circleGlyphShape blah blah blah
-# LabelGlyphShape
+##### LabelGlyphShape
 circleGlyphShape blah blah blah
-## Edge Shapes:
+#### Edge Shapes:
 Edges do that
-# RectGlyphShape
+##### RectGlyphShape
 circleGlyphShape blah blah blah
-# GestaltGlyphShape
+##### GestaltGlyphShape
 circleGlyphShape blah blah blah
-# SourceTargetGlyphShape
+##### SourceTargetGlyphShape
 circleGlyphShape blah blah blah
 
 
