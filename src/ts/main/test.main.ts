@@ -22,8 +22,8 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 json("data/newcomb/newcomb.json", function (response: any) {
 	// json("data/fivekings/fivekings.json", function (response: any) {
 
-	let width: number, height: number;
-	width = height = 1000;
+	let width: number = 1000;
+	let height: number = width;
 
 	//------------------------------------------------------------//
 	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
