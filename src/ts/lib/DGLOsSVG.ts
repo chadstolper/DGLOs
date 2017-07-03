@@ -17,7 +17,7 @@ export class SVGAttrOpts {
 	private _font_size: string;
 
 	/**
-	 * Order: Node, Node, Edge, Node, Edge, Node, Edge, Edge, Both, Node/neither.
+	 * Order: Node, Node, Edge, Node, Edge, Node, Edge, Edge, Both, Node.
 	 * @param fill "id" - set fill color based on node id; "label" - set fill color based on node label; "type" - set fill color based on node type; "<color>" - set fill of all nodes to <color>.
 	 * @param stroke
 	 * @param stroke_edge
@@ -51,38 +51,30 @@ export class SVGAttrOpts {
 	set fill(str: string) {
 		this._fill = str;
 	}
-
 	get stroke(): string {
 		return this._stroke;
 	}
 	set stroke(str: string) {
 		this._stroke = str;
 	}
-
-
 	get stroke_edge(): string {
 		return this._stroke_edge;
 	}
 	set stroke_edge(str: string) {
 		this._stroke_edge = str;
 	}
-
-
 	get radius(): number {
 		return this._radius;
 	}
 	set radius(r: number) {
 		this._radius = r;
 	}
-
-
 	get stroke_width(): number {
 		return this._stroke_width;
 	}
 	set stroke_width(num: number) {
 		this._stroke_width = num;
 	}
-
 	/**
      * Stroke-Width-Edge: "weight" - assign line thickness based on edge weight/10; <number> - set all edge thickness to <number>.
 	 */
@@ -92,33 +84,26 @@ export class SVGAttrOpts {
 	set stroke_width_edge(v: number | string) {
 		this._stroke_width_edge = v;
 	}
-
-
 	get width(): number {
 		return this._width;
 	}
 	set width(w: number) {
 		this._width = w;
 	}
-
-
 	get height(): number {
 		return this._height;
 	}
 	set height(h: number) {
 		this._height = h;
 	}
-
-
 	get opacity(): number {
 		return this._opacity;
 	}
 	set opacity(num: number) {
 		this._opacity = num;
 	}
-
 	/**
-	 * eg. "12px", "14pt", "42px", "69pt"
+	 * eg. "12px", "14pt", "42px", "37pt"
 	 */
 	set font_size(str: string) {
 		this._font_size = str;
@@ -127,7 +112,6 @@ export class SVGAttrOpts {
 		return this._font_size;
 	}
 }
-
 
 /**
  * Attribute object used for passing collection of options pertaining to simulation mechanics.
@@ -204,7 +188,6 @@ export class SimulationAttrOpts {
 	get linkStrength(): number {
 		return this._simulationLinkStrength;
 	}
-
 }
 
-export class DGLOsSVG extends DGLOsSandwich { } //TODO: why do we need to extend the sandwich?
+export class DGLOsSVG extends DGLOsSandwich { };

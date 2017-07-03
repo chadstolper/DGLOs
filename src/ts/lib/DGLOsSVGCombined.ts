@@ -13,7 +13,7 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	/**
 	 * Current timestep of the data.
 	 */
-	private _timeStampIndex = 0;
+	private _timeStampIndex: number = 0;
 	/**
 	 * A map of SVG related maps with pointers to their respective <g> tag selection by NodeGlyphShape.
 	 * <SVG#, Map<NodeGlyphShape, Selection<any, {}, any, {}>>.
@@ -57,9 +57,9 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 * Voronoi Tesselation mechanic holders.
 	 * In case of rendering error, modify extent to larger values for calculations and Voronoi constraints.
 	 */
-	private readonly _voronoi: VoronoiLayout<Node> = voronoi<Node>().extent([[-1000, -1000], [this._width + 1000, this._height + 1000]])
-		.x(function (d: Node) { return d.x; })
-		.y(function (d: Node) { return d.y; });
+	private readonly _voronoi: VoronoiLayout<Node> = voronoi<Node>().extent([[-this.width, -this.height], [this.width * 2, this.height * 2]])
+		.x(function (d: Node): number { return d.x; })
+		.y(function (d: Node): number { return d.y; });
 	/**
 	 * Array of random points held as an array for vornoi calculations and GMap visualization.
 	 */
@@ -94,8 +94,8 @@ export class DGLOsSVGCombined extends DGLOsSVGBaseClass {
 	 */
 	private setNoisePoints(): Node[] {
 		let newNoiseNodes: Node[] = new Array<Node>();
-		let iterator = 0;
-		let limit = ((this._width + this._height) / 2) / 100 * 5;
+		let iterator: number = 0;
+		let limit: number = ((this.width + this.height) / 2) / 100 * 5;
 		while (iterator < limit) {
 			newNoiseNodes.push(new Node("NoiseNode" + (iterator + 0), iterator + 0, "noise", "", 0)); //top
 			newNoiseNodes[iterator + 0].x = Math.floor((Math.random() * this._width) + 1);

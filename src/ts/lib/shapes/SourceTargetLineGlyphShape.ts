@@ -48,8 +48,8 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * an ID based on the source and target of the edge.
 	 * @param location 
 	 */
-	public initDraw(location: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
-		let ret: Selection<any, Edge, any, {}> = location.append("line")
+	public initDraw(edges: Selection<any, Edge, any, {}>): Selection<any, Edge, any, {}> {
+		let ret: Selection<any, Edge, any, {}> = edges.append("path")
 			.classed("STLine", true)
 			.attr("id", function (d: Edge): string {
 				return d.source.id + ":" + d.target.id;
@@ -68,10 +68,9 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 		let self = this;
 		try {
 			glyphs
-				.attr("x1", function (d: Edge) { return d.source.x; })
-				.attr("y1", function (d: Edge) { return d.source.y; })
-				.attr("x2", function (d: Edge) { return d.target.x; })
-				.attr("y2", function (d: Edge) { return d.target.y; });
+				.attr("d", function (d: Edge): string {
+					return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
+				})
 		} catch (err) {
 			console.log("No STLines links!");
 		}
@@ -153,15 +152,22 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
-		let sTLineEdges = location.selectAll("line.STLine")
+		let sTLineEdges = location.selectAll("path.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 		sTLineEdges.exit().remove();
 		let edgeEnter: Selection<any, Edge, any, {}> = this.initDraw(sTLineEdges.enter());
 		sTLineEdges = sTLineEdges.merge(edgeEnter);
 		this.updateDraw(sTLineEdges, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
+	}
+
+	/**
+	 * Returns the shape path as a string of the current STLine shape.
+	 * @param d 
+	 */
+	public getPath(d: Edge) {
+		return "M " + d.source.x + " " + d.source.y + " L " + d.target.x + " " + d.target.y;
 	}
 
 	get shapeType(): string {

@@ -124,8 +124,6 @@ export class DGLOsSVGBaseClass implements DGLOs {
 
 	drawNodeGlyphs(): void { };
 	drawEdgeGlyphs(): void { };
-	drawAllNodeGlyphs(): void { };
-	drawAllEdgeGlyphs(): void { };
 	drawRegions(): void { };
 
 
@@ -133,10 +131,8 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void { };
 	transformGroupGlyphsTo(shape: GroupGlyph): void { };
 
-	removeNodeGlyphs(): void { };
-	removeExitNodeGlyphs(): void { };
-	removeEdgeGlyphs(): void { };
-	removeExitEdgeGlyphs(): void { };
+	removeNodeGlyphs(): void { };//TODO: do?
+	removeEdgeGlyphs(): void { };//TODO: do?
 	removeRegions(): void { };
 
 
@@ -147,15 +143,11 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	drawTimesteps(): void { };
 	removeTimesteps(delay?: number): void { };
 
-
 	positionNodesAndEdgesForceDirected(setRunning: boolean): void { };
 
 	setCenterNode(centerNodeID: number | string): void { };
 
 	positionNodeGlyphsMatrix(): void { };
-	positionNodeGlyphsCartesian(): void { };
-	positionNodeGlyphsPolar(): void { };
-	positionEdgeGlyphsSourceTarget(): void { };
 	positionEdgeGlyphsMatrix(): void { };
 	positionEdgeGlyphsGestalt(): void { };
 	setAttributes(opts: SVGAttrOpts): void { };

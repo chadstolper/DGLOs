@@ -68,7 +68,7 @@ export class DGLOsWill extends DGLOsMatt {
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
 			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
 				let innerGlyphSpacing = scaleLinear()
-					.domain(extent(Array.from(meta.edges), function (d: Edge): number {
+					.domain(extent(Array.from(meta.edges), function (d: Edge): number { //TODO: remove magic numbers, possibly move calculations to gestaltGlyphShape class.
 						return d.timestep;
 					}))
 					.range([(3 / 10) * (self.height / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length),
@@ -132,14 +132,9 @@ export class DGLOsWill extends DGLOsMatt {
 	public positionEdgeGlyphsMatrix() {
 		let self = this;
 		this.matrixViewEnabled = true;
-		this.dataToDraw.timesteps.forEach(function (g: Graph) {
-			g.edges.forEach(function (e: Edge) {
-				e.x = (self.width / 8) + (+e.source.index / g.nodes.length) * (7 * self.width / 8);
-				e.y = (self.height / 8) + (+e.target.index / g.nodes.length) * (7 * self.height / 8);
-			});
-		});
-		this.attrOpts.width = (7 / 8) * (self.width / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
-		this.attrOpts.height = (7 / 8) * (self.height / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
+		this.attrOpts.stroke_width_edge = null;
+		this.attrOpts.width = this.width;
+		this.attrOpts.height = this.height;
 		if (!this.multipleTimestepsEnabled) {
 			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, this.width, this.height, this.enterExitColorEnabled);
 		}
@@ -156,9 +151,6 @@ export class DGLOsWill extends DGLOsMatt {
 	 */
 	public enableStepping() {
 		let self = this;
-		this.attrOpts.width = (7 / 8) * (self.width / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
-		this.attrOpts.height = (7 / 8) * (self.height / (this.dataToDraw.timesteps[this.timeStampIndex].nodes.length));
-
 		let buttonDiv = this.location.append("div").classed("buttons", true)
 		let prevButton = buttonDiv.append("button")
 			.text("<--")
@@ -167,6 +159,7 @@ export class DGLOsWill extends DGLOsMatt {
 				self.timeStampIndex = (self.timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0;
@@ -181,6 +174,7 @@ export class DGLOsWill extends DGLOsMatt {
 				self.timeStampIndex = (self.timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0;
@@ -195,7 +189,9 @@ export class DGLOsWill extends DGLOsMatt {
 	public setCenterNode(newID: number | string) {
 		this.centralNodeID = newID;
 		this.emptyArrays();
-		this.calculateNeighborsAndIncidentEdges();
+		if (this.onClickRedraw) {
+			this.calculateNeighborsAndIncidentEdges();
+		}
 	}
 	/**
  	* _emptyArrays clears _nbrNodes, _nbrEdges, _neighboringNodesMap, and _centralNodeArray. It also
@@ -246,8 +242,7 @@ export class DGLOsWill extends DGLOsMatt {
 			this.redrawEgo();
 		}
 	}
-	/**
-	* collects a list of nodes with the same _origID across all timesteps and places them into
+	/** collects a list of nodes with the same _origID across all timesteps and places them into
  	* __ _centralNodeArray ___.
  	*/
 	protected getCentralNodes() {
