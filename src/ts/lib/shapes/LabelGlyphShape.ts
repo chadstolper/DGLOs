@@ -48,7 +48,17 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 				.attr("id", function (d: Node): string | number { return d.label; })
 				.attr("index", function (d: Node) {
 					return d.index;
+				})
+				.style("dominant-baseline", this._dominantBaseline)
+				.style("text-anchor", this._textAnchor)
+				.style("user-select", "none")
+				.style("opacity", 0)
+				.on("click", function (d: Node) {
+					if (self.lib.onClickRedraw) {
+						self.lib.setCenterNode(d.origID);
+					}
 				});
+			return ret;
 		}
 		else {
 			if (this.duplicate) {
@@ -61,7 +71,17 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 					})
 					.attr("y", function (d: Node) {
 						return self.yAxisScale(d.index);
+					})
+					.style("dominant-baseline", this._dominantBaseline)
+					.style("text-anchor", "end")//this._textAnchor)
+					.style("user-select", "none")
+					.style("opacity", 0)
+					.on("click", function (d: Node) {
+						if (self.lib.onClickRedraw) {
+							self.lib.setCenterNode(d.origID);
+						}
 					});
+				return ret;
 			}
 			else {
 				ret = location.append("text")
@@ -73,20 +93,21 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 					})
 					.attr("x", function (d: Node) {
 						return self.xAxisScale(d.index);
+					})
+					.style("dominant-baseline", this._dominantBaseline)
+					.style("text-anchor", "start") //this._textAnchor)
+					.style("user-select", "none")
+					.style("opacity", 0)
+					.on("click", function (d: Node) {
+						if (self.lib.onClickRedraw) {
+							self.lib.setCenterNode(d.origID);
+						}
 					});
+				return ret;
 			}
+
 		}
-		ret
-			.style("dominant-baseline", this._dominantBaseline)
-			.style("text-anchor", this._textAnchor)
-			.style("user-select", "none")
-			.style("opacity", 0)
-			.on("click", function (d: Node) {
-				if (self.lib.onClickRedraw) {
-					self.lib.setCenterNode(d.origID);
-				}
-			});
-		return ret;
+
 	}
 
 	/**
@@ -117,9 +138,9 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 							return self.xMargin;
 						})
 						.attr("y", function (d: Node) {
-							return self.yAxisScale(d.index);
+							return self.yAxisScale(d.index)
 						})
-						.style("opacity", attrOpts.opacity);
+						.style("opacity", attrOpts.opacity)
 				} catch (err) {
 					console.log("No label nodes!");
 				}
@@ -134,7 +155,10 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 						.attr("y", function (d: Node) {
 							return self.yMargin;
 						})
-						.style("opacity", attrOpts.opacity);
+						.style("opacity", attrOpts.opacity)
+						.attr("transform", function (d: Node) {
+							return "rotate(270 " + self.xAxisScale(d.index) + "," + self.yMargin + ")"
+						});
 				} catch (err) {
 					console.log("No label nodes!");
 				}
