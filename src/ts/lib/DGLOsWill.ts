@@ -337,8 +337,8 @@ export class DGLOsWill extends DGLOsMatt {
 	 * redraws.	
 	 * @param newOnClickRedraw 
 	 */
-	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
-		this.onClickRedraw = newOnClickRedraw;
+	public fixCentralNodePositions(fixed: boolean): void {
+		this.onClickRedraw = fixed;
 		this.setCentralNodeFixedPositions();
 		//this.redraw();
 	}

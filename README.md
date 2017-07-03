@@ -81,10 +81,11 @@ THIS NEEDS TO BE REMOVED
 ### positionEdgesGestalt():
 postionEdgesGestalt preforms the calculations necessary to create a Gestalt Glyph Graph.
 
-### fixCentralNodePositions(boolean):
-fixCentralNodePositions takes a boolean to decide whether or not to fixCentralNodePositions. If passed true, central nodes will be enabled.
-This allows the user to create an Egograph.
-
+### fixCentralNodePositions(fixed: boolean):
+`fixCentralNodePositions` takes a boolean to decide whether or not to enable central nodes. 
+`fixed = true` will enable center nodes. This allows the user to create an Egograph.
+`fixed = false` will disable central nodes. This is the default state of central nodes, and you will likely
+be in this state for most of your time with this library.
 
 ## Attributes and Visualization Settings:
 ### setAttributes(SVGAttrOpts):
@@ -113,7 +114,10 @@ An object holding various force-directed simulation calculation related informat
 - `alpha`: Initial energy of simulation. Higher value means rapid expansion, lower value means stagnated expansion. Default = 0.3.
 - `charge`: General pushing force of the simulation on Nodes. Default = -100.
 - `linkStrength`: Multiplier used when `weight = true` to calculated the pull between two Nodes where and Edge exisits. Default = 0.05
+
 ### setCenterNode():
+
+
 
 ### enableEnterExitColoring():
 When displaying data, the data will be colored based on the direction of the data. The color of the Node and Edge will change depending on if the data is present in the previous or next timestep. There are 4 states the data can be.
@@ -132,12 +136,12 @@ Disables shading based on data direction. Coloring returns to attributes defined
 
 ### transformEdgeGlyphTo(EdgeGlyphShape):
 
-transformEdgeGlyphTo takes an EdgeGlyphShape object. We have built three EdgeGlyphShape classes that come with the library:
-- SourceTargetLineGlyphShape
-- GestaltGlyphShape
-- RectGlyphShape
+`transformEdgeGlyphTo` takes an `EdgeGlyphShape` object. We have built three `EdgeGlyphShape` classes that come with the library:
+- `SourceTargetLineGlyphShape`
+- `GestaltGlyphShape`
+- `RectGlyphShape`
 
-transformEdgeGlyphTo does just that; It transforms the all of the edges on the screen into the type of edge passed to the function.
+`transformEdgeGlyphTo` does just that; It transforms the all of the edges on the screen into the type of edge passed to the function.
 
 _This area is a work in progress. We are using the flubber library to create smooth trnasitions between the shapes. It has been 
 implemented in some but not all of the shapes. Expect updates to come!_
@@ -146,11 +150,12 @@ implemented in some but not all of the shapes. Expect updates to come!_
 
 ### enableStepping():
 
-Allows the user to traverse timesteps by appending forward and backward buttons to the page.
+`enableStepping` allows the user to traverse through timesteps by appending forward and backward buttons to the page. When clicked,
+these buttons will cause the page to display the next (or previous) graph in the dynamic graph timeline.
 
 ### disableStepping():
-
-Removes the forward and backward buttons from the page.
+`disableStepping` removes the foward and backward buttons added to the page by `enableStepping`. `disableStepping` does nothing
+if those buttons are not on the page.
 
 ## DGLOs Objects?
 so attropts, simattropts, all the shapes, etc.
