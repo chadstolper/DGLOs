@@ -165,7 +165,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		return this._shapeType;
 	}
 	/**
- 	* Create color domain takes an array of edges and finds the extent of the edge weights. //TODO: is this an accurate description?
+ 	* Create a domain based on the data and the weights of those edges in the data.
  	* @param edges 
  	*/
 	public createDomain(edges: Array<Edge>) {

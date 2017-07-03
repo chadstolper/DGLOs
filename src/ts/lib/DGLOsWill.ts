@@ -63,7 +63,7 @@ export class DGLOsWill extends DGLOsMatt {
 	}
 
 	public positionEdgeGlyphsGestalt() {
-		this._matrixViewEnabled = true;
+		this.matrixViewEnabled = true;
 		let self = this;
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
 			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
@@ -118,7 +118,7 @@ export class DGLOsWill extends DGLOsMatt {
 		this.attrOpts.width = this.width;
 		this.attrOpts.height = this.height;
 		if (!this.multipleTimestepsEnabled) {
-			this.currentNodeShape.draw(this._nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, true, this.enterExitColorEnabled);
+			this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, true, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
@@ -156,13 +156,13 @@ export class DGLOsWill extends DGLOsMatt {
 			.text("<--")
 			.on("click", function () {
 				console.log("clicked");
-				self.timeStampIndex = (self._timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
+				self.timeStampIndex = (self.timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
-					self.currentNodeShape.draw(self._nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
+					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
-					self.simulationAttrOpts.alpha = 0; //TODO: figure out how to fix this, or if this is even an issue...
+					self.simulationAttrOpts.alpha = 0;
 					self.positionNodesAndEdgesForceDirected(true);
 				}
 			});
@@ -174,7 +174,7 @@ export class DGLOsWill extends DGLOsMatt {
 				self.timeStampIndex = (self.timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
 					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
-					self.currentNodeShape.draw(self._nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
+					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0;
@@ -290,7 +290,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * __ _nbrNodes __
 	 */
 	protected getNeighboringNodes() {
-		for (let edge of this._nbrEdges) {
+		for (let edge of this.nbrEdges) {
 			if (this.centralNodeArray.includes(edge.origTarget)) {
 				this.neighboringNodesMap.set(edge.origSource.origID, edge.origSource);
 			}
@@ -299,7 +299,7 @@ export class DGLOsWill extends DGLOsMatt {
 			}
 		}
 
-		for (let edge of this._nbrEdges) {
+		for (let edge of this.nbrEdges) {
 			if (this.neighboringNodesMap.has(edge.origSource.origID)) {
 				edge.source = this.neighboringNodesMap.get(edge.origSource.origID);
 				edge.target = edge.origTarget;

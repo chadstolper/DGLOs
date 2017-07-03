@@ -150,7 +150,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			if (this.simulation === undefined) {
 				this.simulation = d3force.forceSimulation()
 					.force("link", d3force.forceLink().id(function (d: MetaNode): string { return "" + d.id }))
-					.force("charge", d3force.forceManyBody().strength(this._simulationAttrOpts.charge))
+					.force("charge", d3force.forceManyBody().strength(this.simulationAttrOpts.charge))
 					.force("center", d3force.forceCenter(self.width / 2, self.height / 2))
 					.on("tick", this.tick(self))
 					.on("end", function (): void {
@@ -217,7 +217,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups at the current timestep
 			this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph): void {
-					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges at the current timestep
@@ -226,14 +226,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
 					}
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape): void {
-					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self._attrOpts, undefined, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}
@@ -241,7 +241,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 			//update groups in map; run update of simulation on all groups accross multiple SVG elements
 			this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph): void {
-					shape.draw(glyphs, self.dataToDraw, svgPosition, self._attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
 				});
 			});
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
@@ -250,14 +250,14 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, svgPosition, self._attrOpts, self.width, self.height, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
 					}
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape): void {
-					shape.draw(glyphs, self.dataToDraw, svgPosition, self._attrOpts, undefined, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, undefined, self.enterExitColorEnabled);
 				});
 			});
 		}
