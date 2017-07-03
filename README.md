@@ -70,14 +70,21 @@ Starts a force-directed simulation for positioning Nodes and Edges. The simulati
 The internal `Tick()` handles the visual drawing of the Nodes and Edges at the current timestep or (if enabled) across multiple SVG elements.
 
 ### positionNodesMatrix():
+positionNodesMatrix create two sets of the current node shape and positions them along the x and y axes.
 
 ### posistionEdgesMatrix():
+positionEdgesMatrix preforms the calculations necessary to position edges in a matrix fashion.
 
 ### positionNodesGestalt():
+THIS NEEDS TO BE REMOVED
 
 ### positionEdgesGestalt():
+postionEdgesGestalt preforms the calculations necessary to create a Gestalt Glyph Graph.
 
-### fixCentralNodePositions():
+### fixCentralNodePositions(boolean):
+fixCentralNodePositions takes a boolean to decide whether or not to fixCentralNodePositions. If passed true, central nodes will be enabled.
+This allows the user to create an Egograph.
+
 
 ## Attributes and Visualization Settings:
 ### setAttributes(SVGAttrOpts):
@@ -126,9 +133,14 @@ Disables shading based on data direction. Coloring returns to attributes defined
 ### transformEdgeGlyphTo(EdgeGlyphShape):
 
 transformEdgeGlyphTo takes an EdgeGlyphShape object. We have built three EdgeGlyphShape classes that come with the library:
-	* SourceTargetLineGlyphShape
-	* GestaltGlyphShape
-	* RectGlyphShape
+- SourceTargetLineGlyphShape
+- GestaltGlyphShape
+- RectGlyphShape
+
+transformEdgeGlyphTo does just that; It transforms the all of the edges on the screen into the type of edge passed to the function.
+
+_This area is a work in progress. We are using the flubber library to create smooth trnasitions between the shapes. It has been 
+implemented in some but not all of the shapes. Expect updates to come!_
 
 ### transformGroupGlyphTo(GroupGlyph):
 
