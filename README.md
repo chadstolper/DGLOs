@@ -157,22 +157,34 @@ these buttons will cause the page to display the next (or previous) graph in the
 `disableStepping` removes the foward and backward buttons added to the page by `enableStepping`. `disableStepping` does nothing
 if those buttons are not on the page.
 
-### DGLOs Shape Classes
+## DGLOs Shape Classes
 DGLOs has five shape classes. Each are used to display data in different ways.
-#### Node Shapes:
-Nodes do this
-##### CircleGlyphShape:
-circleGlyphShape blah blah blah
-##### LabelGlyphShape
-circleGlyphShape blah blah blah
-#### Edge Shapes:
-Edges do that
-##### RectGlyphShape
-circleGlyphShape blah blah blah
-##### GestaltGlyphShape
-circleGlyphShape blah blah blah
-##### SourceTargetGlyphShape
-circleGlyphShape blah blah blah
+### Node Shapes:
+All nodes implement the NodeGlyphInterface. Thus, they require:
+- init()
+- initDraw()
+- updateDraw()
+- transformTo()
+- draw()
+#### CircleGlyphShape:
+The `circleGlyphShape` class preforms all of the logic required to display nodes as circles. They are SVG paths so that they are
+compatible with the flubber library.  
+#### LabelGlyphShape
+The `labelGlyphShape` class preforms all of the logic required to display nodes as SVG text elements. The text displayed is the `label` property
+of the node. 
+### Edge Shapes:
+All edges implement the EdgeGlyphInterface. Thus, they require:
+- init()
+- initDraw()
+- updateDraw()
+- transformTo()
+- draw()
+#### RectGlyphShape
+We have used the `rectGlyphShape` in order to create matrices. Much of `rectGlyphShape` logic makes the assumption that they will be used in conjunction
+with the function `positionEdgesMatrix`.
+#### GestaltGlyphShape
 
+#### SourceTargetLineGlyphShape
+`soruceTargetLineGlyphShape` handles all of the logic required to display edges as STLines.
 
 //so attropts, simattropts, all the shapes, etc.
