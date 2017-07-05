@@ -5,6 +5,8 @@ export class Node implements SimulationNodeDatum {
 	private _index: number;
 	private _type: string;
 	private _label: string;
+	private _wordHeight: number;
+	private _wordLength: number;
 	public x?: number;
 	public y?: number;
 	public vx?: number;
@@ -23,6 +25,19 @@ export class Node implements SimulationNodeDatum {
 		this._label = label;
 		this._origID = id;
 		this._timestamp = timestamp;
+	}
+
+	get wordLength(): number {
+		return this._wordLength
+	}
+	set wordLength(length: number) {
+		this._wordLength = length;
+	}
+	get wordHeight(): number {
+		return this._wordHeight;
+	}
+	set wordHeight(height: number) {
+		this._wordHeight = height;
 	}
 
 	get origID(): string | number {
