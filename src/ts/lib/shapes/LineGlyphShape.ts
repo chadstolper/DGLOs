@@ -4,7 +4,7 @@ import { Selection } from "d3-selection";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { Shape } from "./Shape";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGAttrOpts } from "../SVGAttrOpts";
 
 /**
  * LineGlyphShape implements __EdgeGlyphShape__.

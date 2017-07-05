@@ -2,7 +2,7 @@ import { NodeGlyphShape } from "../NodeGlyphInterface"
 import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { extent } from "d3-array";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGAttrOpts } from "../SVGAttrOpts";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import * as d3Scale from "d3-scale";
 import { Shape } from "./Shape"

@@ -1,6 +1,6 @@
 import { Selection } from "d3-selection";
 import { DynamicGraph } from "../model/DynamicGraph";
-import { SVGAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts } from "./SVGAttrOpts";
 
 export interface NodeGlyphShape {
 	readonly shapeType: string;

@@ -1,6 +1,6 @@
 import { Technique } from "./Technique"
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
-import { SimulationAttrOpts } from "../lib/DGLOsSimulation";
+import { SVGAttrOpts } from "../lib/SVGAttrOpts";
+import { SimulationAttrOpts } from "../lib/SVGSimulationAttrOpts";
 
 export class ForceDirectedTimeline extends Technique {
 	public static readonly DEFAULT_FILL: string = "id";

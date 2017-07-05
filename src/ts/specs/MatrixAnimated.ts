@@ -1,5 +1,5 @@
 import { Technique } from "./Technique";
-import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SVGAttrOpts } from "../lib/SVGAttrOpts";
 
 export class MatrixAnimated extends Technique {
 	public static readonly DEFAULT_STROKE: string = "black";

@@ -4,7 +4,7 @@ import { Selection } from "d3-selection";
 import { extent } from "d3-array";
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
 import { LineGlyphShape } from "./LineGlyphShape";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGAttrOpts } from "../SVGAttrOpts";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear } from "d3-scale";
 
 /**

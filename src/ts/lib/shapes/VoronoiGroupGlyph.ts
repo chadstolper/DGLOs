@@ -1,7 +1,7 @@
 import { GroupGlyph } from "../GroupGlyphInterface";
 import { Selection } from "d3-selection";
 import { DynamicGraph, Node } from "../../model/dynamicgraph";
-import { SVGAttrOpts } from "../DGLOsSVG";
+import { SVGAttrOpts } from "../SVGAttrOpts";
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 import { VoronoiLayout, VoronoiPolygon } from "d3-voronoi";
 

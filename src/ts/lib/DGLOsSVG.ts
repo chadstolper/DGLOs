@@ -1,4 +1,3 @@
-import { DGLOsSandwich } from "./DGLOsSandwich";
 import { DGLOsSVGBaseClass } from "./DGLOsSVGBaseClass";
 
 import { Selection, select } from "d3-selection";
@@ -8,7 +7,6 @@ import { Simulation } from "d3-force";
 import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
-import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
 import { SVGAttrOpts } from "./SVGAttrOpts";
 import { SimulationAttrOpts } from "./SVGSimulationAttrOpts";
 
