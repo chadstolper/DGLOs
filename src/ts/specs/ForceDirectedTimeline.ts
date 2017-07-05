@@ -1,10 +1,25 @@
 import { Technique } from "./Technique"
-import { SVGAttrOpts, SimulationAttrOpts } from "../lib/DGLOsSVG";
+import { SVGAttrOpts } from "../lib/DGLOsSVG";
+import { SimulationAttrOpts } from "../lib/DGLOsSimulation";
 
 export class ForceDirectedTimeline extends Technique {
-	//public static readonly FDT_DEFAULT_ATTR =  new SVGAttrOpts("id", "black", "gray", 1, .5, 15, 2000, 2000);
-	public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts("id", "grey", "black", 2, 1, 10, null, null, 100, "12pt");
+	public static readonly DEFAULT_FILL: string = "id";
+	public static readonly DEFAULT_STROKE: string = "grey";
+	public static readonly DEFAULT_STROKE_EDGE: string = "black"
+	public static readonly DEFAULT_STROKE_WIDTH: number = 2;
+	public static readonly DEFAULT_STROKE_WIDTH_EDGE: number = 1;
+	public static readonly DEFAULT_RADIUS: number = 10;
+	public static readonly DEFAULT_FONT_SIZE: string = "12pt";
+	public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts();
 	public draw(): void {
+		ForceDirectedTimeline.DEFAULT_ATTR.fill = ForceDirectedTimeline.DEFAULT_FILL
+		ForceDirectedTimeline.DEFAULT_ATTR.stroke = ForceDirectedTimeline.DEFAULT_STROKE
+		ForceDirectedTimeline.DEFAULT_ATTR.stroke_edge = ForceDirectedTimeline.DEFAULT_STROKE_EDGE
+		ForceDirectedTimeline.DEFAULT_ATTR.stroke_width = ForceDirectedTimeline.DEFAULT_STROKE_WIDTH
+		ForceDirectedTimeline.DEFAULT_ATTR.stroke_width_edge = ForceDirectedTimeline.DEFAULT_STROKE_WIDTH_EDGE
+		ForceDirectedTimeline.DEFAULT_ATTR.radius = ForceDirectedTimeline.DEFAULT_RADIUS
+		ForceDirectedTimeline.DEFAULT_ATTR.font_size = ForceDirectedTimeline.DEFAULT_FONT_SIZE;
+
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
 		this.lib.drawTimesteps();

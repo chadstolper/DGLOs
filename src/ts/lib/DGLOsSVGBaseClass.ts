@@ -3,7 +3,8 @@ import { NodeGlyphShape } from "./NodeGlyphInterface"
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import * as model from "../model/DynamicGraph";
-import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts } from "./DGLOsSVG";
+import { SimulationAttrOpts } from "./DGLOsSimulation";
 
 import { RectGlyphShape } from "./shapes/RectGlyphShape";
 import { CircleGlyphShape } from "./shapes/CircleGlyphShape";
@@ -131,8 +132,8 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	transformEdgeGlyphsTo(shape: EdgeGlyphShape): void { };
 	transformGroupGlyphsTo(shape: GroupGlyph): void { };
 
-	removeNodeGlyphs(): void { };//TODO: do?
-	removeEdgeGlyphs(): void { };//TODO: do?
+	removeNodeGlyphs(): void { };
+	removeEdgeGlyphs(): void { };
 	removeRegions(): void { };
 
 

@@ -6,7 +6,8 @@ import { NodeGlyphShape } from "./NodeGlyphInterface";
 import { EdgeGlyphShape } from "./EdgeGlyphInterface";
 import { GroupGlyph } from "./GroupGlyphInterface";
 import { DGLOsSVGCombined } from "./DGLOsSVGCombined";
-import { SVGAttrOpts, SimulationAttrOpts } from "./DGLOsSVG";
+import { SVGAttrOpts } from "./DGLOsSVG";
+import { SimulationAttrOpts } from "./DGLOsSimulation";
 
 export class DGLOsMatt extends DGLOsSVGCombined {
 	readonly ITERATIONS: number = 3;
@@ -179,7 +180,7 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 						if (self.currentNodeShape.shapeType === "Label") {
 							d.nodes.forEach(function (n: Node): number {
 								if ((self.attrOpts.font_size.substring(self.attrOpts.font_size.length - 2, self.attrOpts.font_size.length)) === "px") {
-									return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPX;
+									return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPX; //TODO: see wills implementation to find width to make simpler
 								}
 								return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPT;
 							});
