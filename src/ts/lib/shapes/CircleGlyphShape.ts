@@ -55,15 +55,13 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			.attr("d", function (d: Node) {
 				return self.circlePath(d.x, d.y, attrOpts.radius);
 			})
-		if (this.enterExitEnabled) {
+		if (attrOpts.fill === "enterExit") {
 			glyphs.style("fill", this.enterExitCheck());
 		}
 		else {
 			glyphs.style("fill", function (d: Node): string {
 				return self.fill(d, attrOpts.fill);
 			});
-			glyphs
-				.attr("fill", "id");
 		}
 		glyphs
 			.style("stroke", attrOpts.stroke)

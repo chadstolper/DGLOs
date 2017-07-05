@@ -165,7 +165,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 				}
 			}
 		}
-		if (this.enterExitEnabled) {
+		if (attrOpts.fill === "enterExit") {
 			glyphs.style("fill", this.enterExitCheck());
 		}
 		else {

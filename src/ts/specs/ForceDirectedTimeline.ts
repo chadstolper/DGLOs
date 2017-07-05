@@ -3,7 +3,7 @@ import { SVGAttrOpts } from "../lib/SVGAttrOpts";
 import { SimulationAttrOpts } from "../lib/SVGSimulationAttrOpts";
 
 export class ForceDirectedTimeline extends Technique {
-	public static readonly DEFAULT_FILL: string = "id";
+	public static readonly DEFAULT_FILL: string = "enterExit";
 	public static readonly DEFAULT_STROKE: string = "grey";
 	public static readonly DEFAULT_STROKE_EDGE: string = "black"
 	public static readonly DEFAULT_STROKE_WIDTH: number = 2;
@@ -25,7 +25,7 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.drawTimesteps();
 		this.lib.setAttributes(ForceDirectedTimeline.DEFAULT_ATTR);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
-		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
+		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
 		this.lib.setSimulationAttrs(new SimulationAttrOpts());
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}

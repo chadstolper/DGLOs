@@ -75,7 +75,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 			console.log("No STLines links!");
 		}
 
-		if (this.enterExitEnabled) {
+		if (attrOpts.fill === "enterExit") {
 			glyphs.style("stroke", this.enterExitCheck());
 		}
 		else {
