@@ -148,7 +148,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param data 
 	 * @param timeStepIndex 
 	 */
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number): void {
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
 		this.initScales(data, timeStampIndex);
 		let gestaltGlyphs = location.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
@@ -159,7 +159,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 		gestaltGlyphs = gestaltGlyphs.merge(gestaltEnter as Selection<any, Edge, any, {}>);
 
-		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex, svgWidth, svgHeight);
+		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex, attrOpts.width, attrOpts.height);
 	}
 	get shapeType(): string {
 		return this._shapeType;

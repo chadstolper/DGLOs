@@ -415,6 +415,9 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		this.currentEdgeShape = shape;
 	}
 
+	/**
+	 * SEARCHFORME!!!
+	 */
 	public positionEdgeGlyphsGestalt() {
 		this.matrixViewEnabled = true;
 		let self = this;
@@ -462,6 +465,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		}
 		this.dataToDraw = this.data;
 	}
+
+
 	/**
 	 * positionNodeGlyphsMatrix positions the Nodes along the axis of the Matrix
 	 */
