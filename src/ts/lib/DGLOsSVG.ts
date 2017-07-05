@@ -7,14 +7,14 @@ import { DGLOsSandwich } from "./DGLOsSandwich";
 export class SVGAttrOpts {
 	private _fill: string = "#FFFFFF";
 	private _stroke: string = "#000000"
-	private _stroke_edge: string = "#000000";
-	private _stroke_width: number = 2;
-	private _stroke_width_edge: number | string = 1;
+	private _strokeEdge: string = "#000000";
+	private _strokeWidth: number = 2;
+	private _strokeWidthEdge: number | string = 1;
 	private _radius: number = 10;
 	private _width: number;
 	private _height: number;
 	private _opacity: number = 100;
-	private _font_size: string = "12px";
+	private _fontSize: string = "12px";
 	private _font: string = "Sans Serif";
 
 	/**
@@ -55,13 +55,13 @@ export class SVGAttrOpts {
 		this._stroke = str;
 	}
 	get stroke_edge(): string {
-		return this._stroke_edge;
+		return this._strokeEdge;
 	}
 	/**
 	 * Defaults to "#000000".
 	 */
 	set stroke_edge(str: string) {
-		this._stroke_edge = str;
+		this._strokeEdge = str;
 	}
 	get radius(): number {
 		return this._radius;
@@ -73,22 +73,22 @@ export class SVGAttrOpts {
 		this._radius = r;
 	}
 	get stroke_width(): number {
-		return this._stroke_width;
+		return this._strokeWidth;
 	}
 	/**
 	 * Defaults to 2.
 	 */
 	set stroke_width(num: number) {
-		this._stroke_width = num;
+		this._strokeWidth = num;
 	}
 	get stroke_width_edge(): number | string {
-		return this._stroke_width_edge;
+		return this._strokeWidthEdge;
 	}
 	/**
      * Stroke-Width-Edge: "weight" - assign line thickness based on edge weight; <number> - set all edge thickness to <number>.
 	 */
 	set stroke_width_edge(v: number | string) {
-		this._stroke_width_edge = v;
+		this._strokeWidthEdge = v;
 	}
 	get width(): number {
 		return this._width;
@@ -116,10 +116,10 @@ export class SVGAttrOpts {
 	 * eg. "12px", "14pt", "42px", "37pt"
 	 */
 	set font_size(str: string) {
-		this._font_size = str;
+		this._fontSize = str;
 	}
 	get font_size(): string {
-		return this._font_size;
+		return this._fontSize;
 	}
 	/**
 	 * Default = "Comic Sans".

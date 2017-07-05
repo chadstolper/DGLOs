@@ -57,7 +57,7 @@ export class DGLOsSandwich extends DGLOsWill {
 	/**
 	 * Removes all regions from the SVG at all timesteps. All DOM elements are removed, <g> of groupGlyphs not removed.
 	 */
-	public removeRegions() {
+	public removeRegions(): void {
 		this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, svgPosition: number): void {
 			glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph): void {
 				glyphs
@@ -71,7 +71,7 @@ export class DGLOsSandwich extends DGLOsWill {
 	/**
 	 * Removes all Edges from the SVG at all timesteps. All DOM elements are removed, <g> of EdgeGlyphShape not removed.
 	 */
-	public removeEdgeGlyphs() {
+	public removeEdgeGlyphs(): void {
 		this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
 			glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: EdgeGlyphShape): void {
 				glyphs
@@ -85,7 +85,7 @@ export class DGLOsSandwich extends DGLOsWill {
 	/**
 	 * Removes all Nodes from the SVG at all timesteps. All DOM elements are removed, <g> of NodeGlyphShape not removed.
 	 */
-	public removeNodeGlyphs() {
+	public removeNodeGlyphs(): void {
 		this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
 			glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape): void {
 				glyphs

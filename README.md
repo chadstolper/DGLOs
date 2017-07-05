@@ -30,7 +30,7 @@
 	- [removeEdges()](#removeEdges)
 	- [removeRegions()](#removeRegions)
 	- [removeTimesteps()](#removeTimesteps)
-- Positioning (Visual Drawing Handling)
+- Positioning (Visualization Handling)
 	- [positionNodesAndEdgesForceDirected()](#positionFD)
 	- [positionNodesMatrix()](#positionNodesM)
 	- [positionEdgesMatrix()](#positionEdgesM)
@@ -107,14 +107,17 @@ Starts a force-directed simulation for positioning Nodes and Edges. The simulati
 The internal `Tick()` handles the visual drawing of the Nodes and Edges at the current timestep or (if enabled) across multiple SVG elements.
 
 ### <a name="positionNodesM"></a>positionNodesMatrix():
+Positions all Nodes according to the matrix visualization. Nodes are set to labels, duplicated, and places along the top and left side of the grid. The size of the grid and label positioning is handled internally and dynamically scaled to the SVG dimensions.
 
 ### <a name="positionEdgeM"></a>posistionEdgesMatrix():
+Positions all Edges according the the matrix visualization. Edges are set to rectangle shapes and placed inside a grid representing a connection between two Nodes. Grid is dynamically sized based on SVG dimemnsions.
 
 ### <a name="positionNodesG"></a>positionNodesGestalt():
 
 ### <a name="positionEdgesG"></a>positionEdgesGestalt():
 
 ### <a name="fixCentralNodePositions"></a>fixCentralNodePositions():
+Assigns the central Nodes a fixed position
 
 ## Transformation and Data Traversal:
 ### <a name="transformNodes"></a>transformNodeGlyphTo(NodeGlyphShape):
@@ -141,7 +144,8 @@ Sets different simulation calculation attributes for different effects and data 
 
 See [SimulationAttrOpts()](#SimAttrOpts).
 
-### <a name="setCenterNode"></a>setCenterNode():
+### <a name="setCenterNode"></a>setCenterNode(string):
+Takes a string of a Node ID to act as the initial centerNode in EgoGraph Visualization. This value is partially arbitrary as it only refers to the first center data selection. This method also handles calculations for finding neighboring Nodes and Edges.
 
 ### <a name="enableEEC"></a>enableEnterExitColoring():
 When displaying data, the data will be colored based on the direction of the data. The color of the Node and Edge will change depending on if the data is present in the previous or next timestep. There are 4 states the data can be.
@@ -157,6 +161,24 @@ Disables shading based on data direction. Coloring returns to attributes defined
 
 ## DGLOs Attribute Objects
 ### <a name="SVGAttrOpts"></a>SVGAttrOpts():
+An object holding various Node, Edge, and (if enabled) region visualization attribute options. Constructing a new `SVGAttrOpts()` creates an object with default values for basic visuals. A default instance is already stored in the library.
+
+Attribute Options:
+- `attrOpts.fill` : Fill color for Nodes as a string. Default color is #FFFFFF. Unique options:
+	- `"id"` : The fill color is based on the Node's id value.
+	- `"label"` : The fill color is based on the Node's label content if any.
+	- `"type"` : The fill color is based on the Node's type, group or other data value.
+- `attrOpts.stroke` : Color for Node borders as a string. Default is #000000.
+- `attrOpts.stroke_edge` : Color for Edges as a string. Either acting as a fill or stroke depending on the visualization. Default is #000000.
+- `attrOpts.stroke_width` : Node border width/thickness as a number. Default is 2.
+- `attrOpts.stroke_width_edge` :  Edge border width/thickness as a number. Default is 1. Unique options:
+	- `"weight"` : The edge thickness is based on the Edge's weight data. Usefull if the weights are known to be different. See [SimulationAttrOpts.weight](#SimAttrOpts).
+- `attrOpts.radius` : Node radius as a number. Default is 10.
+- `attrOpts.width` : Either Node or Edge width as a number. Usually used to pass SVG width for visualization calculations.
+- `attrOpts.height` : Either Node or Edge height as a number. Usually used to pass SVG height for visualization calculations.
+- `attrOpts.opacity` : Opacity as a number where `0 < x < 100`. Default is 100.
+- `attrOpts.font` : Font of used for any text display. Default is "sans serif".
+- `attrOpts.font_size` : Size of font in either px or pt. Default is "12px".
 
 ### <a name="SimAttrOpts"></a>SimulationAttrOpts():
 An object holding various force-directed simulation calculation related information. Constructing a `new SimulationAttrOpts()` with no parameters defaults all values.
