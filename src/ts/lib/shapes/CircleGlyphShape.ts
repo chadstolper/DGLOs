@@ -37,7 +37,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
 			.on("click", function (d: Node) {
-				if (self.lib.onClickRedraw) {
+				if (self.lib.centralNodesEnabled) {
 					self.lib.setCenterNode(d.origID);
 				}
 			});

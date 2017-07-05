@@ -148,6 +148,57 @@ See [SimulationAttrOpts()](#SimAttrOpts).
 Takes a string of a Node ID to act as the initial centerNode in EgoGraph Visualization. This value is partially arbitrary as it only refers to the first center data selection. This method also handles calculations for finding neighboring Nodes and Edges.
 
 ### <a name="enableEEC"></a>enableEnterExitColoring():
+### positionNodesMatrix():
+positionNodesMatrix create two sets of the current node shape and positions them along the x and y axes.
+
+### posistionEdgesMatrix():
+positionEdgesMatrix preforms the calculations necessary to position edges in a matrix fashion.
+
+### positionNodesGestalt():
+THIS NEEDS TO BE REMOVED
+
+### positionEdgesGestalt():
+postionEdgesGestalt preforms the calculations necessary to create a Gestalt Glyph Graph.
+
+### fixCentralNodePositions(fixed: boolean):
+`fixCentralNodePositions` takes a boolean to decide whether or not to enable central nodes. 
+`fixed = true` will enable center nodes. This allows the user to create an Egograph.
+`fixed = false` will disable central nodes. This is the default state of central nodes, and you will likely
+be in this state for most of your time with this library.
+
+## Attributes and Visualization Settings:
+### setAttributes(SVGAttrOpts):
+Sets different data visualization attributes such as color, width, height, opacity, font, etc. This method is entirely optional. An internal default of `SVGAttrOpts` is stored within the library, this methods manipulates that.
+
+See SVGAttrOpts().
+
+### setRegionGlyphAttrs(SVGAttrOpts):
+`setRegionGlyphAttrs()` is similar to `setAttributes()` only it is specific to GMap visualization. Certain attributes are set to match with the GMap visualization.
+
+### setSimulationAttrs(SimulationAttrOpts):
+Sets different simulation calculation attributes for different effects and data visualization. This method is entirely optional. An internal default of `SimulationAttrOpts` is already stored within the library for the simulation, this method manipulates that. 
+
+See SimulationAttrOpts().
+
+### SVGAttrOpts():
+
+### SimulationAttrOpts():
+An object holding various force-directed simulation calculation related information. Constructing a `new SimulationAttrOpts()` with no parameters defaults all values.
+
+`SimulationAttrOpts(collision: boolean, weight: boolean, PTdivisor: number, PXdivisor: number, alpha: number, charge: number, linkStrength: number)`
+- `collision`: Enables or disables Node collision based on radius. Collision radius dependant on either circleGlyphShape radius or LabelGlyphShape text width. Default = `false`.
+- `weight`: Enables or disables Edge pull based on `function(d: Edge): number { return d.weight * linkStrength; }`. Only useful if you know the data has different edge weights between Nodes. Default = `false`;
+- pt
+- px
+- `alpha`: Initial energy of simulation. Higher value means rapid expansion, lower value means stagnated expansion. Default = 0.3.
+- `charge`: General pushing force of the simulation on Nodes. Default = -100.
+- `linkStrength`: Multiplier used when `weight = true` to calculated the pull between two Nodes where and Edge exisits. Default = 0.05
+
+### setCenterNode():
+
+
+
+### enableEnterExitColoring():
 When displaying data, the data will be colored based on the direction of the data. The color of the Node and Edge will change depending on if the data is present in the previous or next timestep. There are 4 states the data can be.
 - Green: Data is entering and is present in the next timestep.
 - Red: Data was in the previous timestep and is exiting.
@@ -191,3 +242,63 @@ An object holding various force-directed simulation calculation related informat
 - `alpha`: Initial energy of simulation. Higher value means rapid expansion, lower value means stagnated expansion. Default = 0.3.
 - `charge`: General pushing force of the simulation on Nodes. Default = -100.
 - `linkStrength`: Multiplier used when `weight = true` to calculated the pull between two Nodes where and Edge exisits. Default = 0.05
+### disableEnterExitColoring():
+Disables shading based on data direction. Coloring returns to attributes defined in `SVGAttrOpts`.
+
+## Transformation and Data Traversal:
+### transformNodeGlyphTo(NodeGlyphShape):
+
+### transformEdgeGlyphTo(EdgeGlyphShape):
+
+`transformEdgeGlyphTo` takes an `EdgeGlyphShape` object. We have built three `EdgeGlyphShape` classes that come with the library:
+- `SourceTargetLineGlyphShape`
+- `GestaltGlyphShape`
+- `RectGlyphShape`
+
+`transformEdgeGlyphTo` does just that; It transforms the all of the edges on the screen into the type of edge passed to the function.
+
+_This area is a work in progress. We are using the flubber library to create smooth trnasitions between the shapes. It has been 
+implemented in some but not all of the shapes. Expect updates to come!_
+
+### transformGroupGlyphTo(GroupGlyph):
+
+### enableStepping():
+
+`enableStepping` allows the user to traverse through timesteps by appending forward and backward buttons to the page. When clicked,
+these buttons will cause the page to display the next (or previous) graph in the dynamic graph timeline.
+
+### disableStepping():
+`disableStepping` removes the foward and backward buttons added to the page by `enableStepping`. `disableStepping` does nothing
+if those buttons are not on the page.
+
+## DGLOs Shape Classes
+DGLOs has five shape classes. Each are used to display data in different ways.
+### Node Shapes:
+All nodes implement the NodeGlyphInterface. Thus, they require:
+- init()
+- initDraw()
+- updateDraw()
+- transformTo()
+- draw()
+#### CircleGlyphShape:
+The `circleGlyphShape` class preforms all of the logic required to display nodes as circles. They are SVG paths so that they are
+compatible with the flubber library.  
+#### LabelGlyphShape
+The `labelGlyphShape` class preforms all of the logic required to display nodes as SVG text elements. The text displayed is the `label` property
+of the node. 
+### Edge Shapes:
+All edges implement the EdgeGlyphInterface. Thus, they require:
+- init()
+- initDraw()
+- updateDraw()
+- transformTo()
+- draw()
+#### RectGlyphShape
+We have used the `rectGlyphShape` in order to create matrices. Much of `rectGlyphShape` logic makes the assumption that they will be used in conjunction
+with the function `positionEdgesMatrix`.
+#### GestaltGlyphShape
+
+#### SourceTargetLineGlyphShape
+`soruceTargetLineGlyphShape` handles all of the logic required to display edges as STLines.
+
+//so attropts, simattropts, all the shapes, etc.

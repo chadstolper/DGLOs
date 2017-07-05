@@ -79,10 +79,10 @@ export class DGLOsSVGBaseClass implements DGLOs {
 	 */
 	private _onClickRedraw: boolean;
 
-	public get onClickRedraw(): boolean {
+	public get centralNodesEnabled(): boolean {
 		return this._onClickRedraw;
 	}
-	public set onClickRedraw(onClickRedraw: boolean) {
+	public set centralNodesEnabled(onClickRedraw: boolean) {
 		this._onClickRedraw = onClickRedraw;
 	}
 	public get centralNodeID(): number | string {

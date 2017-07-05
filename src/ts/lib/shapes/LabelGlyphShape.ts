@@ -54,7 +54,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 				.style("user-select", "none")
 				.style("opacity", 0)
 				.on("click", function (d: Node) {
-					if (self.lib.onClickRedraw) {
+					if (self.lib.centralNodesEnabled) {
 						self.lib.setCenterNode(d.origID);
 					}
 				});
@@ -77,7 +77,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 					.style("user-select", "none")
 					.style("opacity", 0)
 					.on("click", function (d: Node) {
-						if (self.lib.onClickRedraw) {
+						if (self.lib.centralNodesEnabled) {
 							self.lib.setCenterNode(d.origID);
 						}
 					});
@@ -99,7 +99,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 					.style("user-select", "none")
 					.style("opacity", 0)
 					.on("click", function (d: Node) {
-						if (self.lib.onClickRedraw) {
+						if (self.lib.centralNodesEnabled) {
 							self.lib.setCenterNode(d.origID);
 						}
 					});

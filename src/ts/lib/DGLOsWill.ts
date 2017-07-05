@@ -181,7 +181,7 @@ export class DGLOsWill extends DGLOsMatt {
 	public setCenterNode(newID: number | string) {
 		this.centralNodeID = newID;
 		this.emptyArrays();
-		if (this.onClickRedraw) {
+		if (this.centralNodesEnabled) {
 			this.calculateNeighborsAndIncidentEdges();
 		}
 	}
@@ -230,7 +230,7 @@ export class DGLOsWill extends DGLOsMatt {
 			this.dataToDraw.metaNodes.set(node.label + ":" + node.timestamp, meta);
 		}
 		this.dataToDraw.metaNodes.delete(this.centralNodeID);
-		if (this.onClickRedraw) {
+		if (this.centralNodesEnabled) {
 			this.redrawEgo();
 		}
 	}
@@ -247,7 +247,7 @@ export class DGLOsWill extends DGLOsMatt {
 	 * Sets the position of the central nodes.
  	*/
 	protected setCentralNodeFixedPositions(): void {
-		if (this.onClickRedraw) {
+		if (this.centralNodesEnabled) {
 			let yScale = scaleLinear()
 				.domain(extent(this.centralNodeArray, function (d: Node): number {
 					return d.timestamp;
@@ -258,7 +258,7 @@ export class DGLOsWill extends DGLOsMatt {
 				node.fy = yScale(node.timestamp);
 			}
 		} else {
-			this.onClickRedraw = false;
+			this.centralNodesEnabled = false;
 			for (let node of this.nbrNodes) {
 				node.fx = null;
 				node.fy = null;
@@ -320,17 +320,17 @@ export class DGLOsWill extends DGLOsMatt {
 	public redrawEgo(): void {
 		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this.attrOpts, this.width, this.height);
 		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this.attrOpts, undefined);
-		if (this.onClickRedraw) {
+		if (this.centralNodesEnabled) {
 			this.positionNodesAndEdgesForceDirected(true);
 		}
 	}
 	/**
 	 * A DGLO that decides if central nodes should have fixed positions, and then
 	 * redraws.	
-	 * @param newOnClickRedraw 
+	 * @param fixed
 	 */
-	public fixCentralNodePositions(newOnClickRedraw: boolean): void {
-		this.onClickRedraw = newOnClickRedraw;
+	public fixCentralNodePositions(fixed: boolean): void {
+		this.centralNodesEnabled = fixed;
 		this.setCentralNodeFixedPositions();
 		//this.redraw();
 	}

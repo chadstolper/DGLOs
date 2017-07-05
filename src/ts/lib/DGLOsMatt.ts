@@ -159,13 +159,13 @@ export class DGLOsMatt extends DGLOsSVGCombined {
 					});
 			}
 			if (this.simulation !== undefined) {
-				if (this.onClickRedraw) {//Egograph
+				if (this.centralNodesEnabled) {//Egograph
 					this.simulation.nodes(this.dataToDraw.metaNodesAsArray);
 				} else {
 					this.simulation.nodes(self.data.metaNodesAsArray);
 				}
 				let linkForce: d3force.ForceLink<MetaNode, MetaEdge> = (this.simulation.force("link") as d3force.ForceLink<MetaNode, MetaEdge>);
-				if (this.onClickRedraw) {//Egograph
+				if (this.centralNodesEnabled) {//Egograph
 					linkForce.links(self.dataToDraw.metaEdgesAsArray)
 				} else {
 					linkForce.links(self.data.metaEdgesAsArray)
