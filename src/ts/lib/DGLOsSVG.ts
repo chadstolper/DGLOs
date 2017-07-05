@@ -13,7 +13,7 @@ import { SimulationAttrOpts } from "./SVGSimulationAttrOpts";
 import * as d3 from "d3-selection";
 import { scaleLinear, scaleOrdinal, scalePoint, scaleBand } from "d3-scale";
 import { extent } from "d3-array";
-import calculateSize from "calculate-size"
+import calculateSize, { Size } from "calculate-size"
 
 import { VoronoiLayout, voronoi } from "d3-voronoi";
 
@@ -273,10 +273,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						if (self.currentNodeShape.shapeType === "Label") {
 							d.nodes.forEach(function (n: Node): number {
-								if ((self.attrOpts.font_size.substring(self.attrOpts.font_size.length - 2, self.attrOpts.font_size.length)) === "px") {
-									return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPX; //TODO: see wills implementation to find width to make simpler
-								}
-								return (n.label.length * +self.attrOpts.font_size.substring(0, self.attrOpts.font_size.length - 2)) / self.simulationAttrOpts.divisorPT;
+								let labelSize: Size = calculateSize(n.label);
+								return labelSize.width / 2;
 							});
 						}
 						else {

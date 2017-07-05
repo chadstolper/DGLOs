@@ -7,6 +7,7 @@
   "author": "Chad Stolper, Matt Sanford, Will Price",
   "license": "Apache-2.0",
   "dependencies": {
+    "calculate-size": "^1.1.1",
     "d3": "^4.9.1",
     "flubber": "^0.3.0"
   },

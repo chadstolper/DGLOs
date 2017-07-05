@@ -25,7 +25,7 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.drawTimesteps();
 		this.lib.setAttributes(ForceDirectedTimeline.DEFAULT_ATTR);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
-		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.setSimulationAttrs(new SimulationAttrOpts());
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
