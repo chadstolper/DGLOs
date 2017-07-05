@@ -1,11 +1,12 @@
-import { NodeGlyphShape } from "../NodeGlyphInterface"
-import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
 import { extent } from "d3-array";
-import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-import { LineGlyphShape } from "./LineGlyphShape";
-import { SVGAttrOpts } from "../SVGAttrOpts";
-import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear } from "d3-scale";
+import { DynamicGraph, Edge, MetaEdge, Node } from '../../model/dynamicgraph';
+import { EdgeGlyphShape } from '../EdgeGlyphInterface';
+import { NodeGlyphShape } from '../NodeGlyphInterface';
+import { SVGAttrOpts } from '../SVGAttrOpts';
+import { Shape } from './Shape';
+import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear, scaleBand, ScaleBand } from "d3-scale";
+
 
 /**
  * The __GestaltGlyphsShape__ class contains all of the methods required to draw and position a Gestalt Glyph on screen.
@@ -19,10 +20,12 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20, scaleLinear, ScaleLinear 
  * 	 *transformTo()*,
  *	 *draw()*, 
  */
-export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
+export class GestaltGlyphShape extends Shape implements EdgeGlyphShape {
 	readonly _shapeType = "Gestalt";
 	private _thicknessScale: ScaleLinear<number, number>;
 	private _weightScale: ScaleLinear<number, number>;
+	private readonly CELL_PADDING: number = 0.3;
+	private readonly MATRIX_PADDING: number = 0.125;
 
 	/**
  	* The init method is a requirement of the __EdgeGlyphShape__ interface.
@@ -61,7 +64,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * Assign and/or update edge attributes
 	 * @param edges 
 	 */
-	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data: DynamicGraph, timeStampIndex: number, svgWidth: number, svgHeight: number): Selection<any, {}, any, {}> {
+	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts, data?: DynamicGraph, timeStampIndex?: number): Selection<any, {}, any, {}> {
 		let self = this;
 		try {
 			glyphs
@@ -80,7 +83,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 					return yPos + d.y;
 				})
 				.attr("x2", function (d: Edge) {
-					return d.x + (7 / 8) * (svgWidth / data.timesteps[timeStampIndex].nodes.length);
+					return d.x + (7 / 8) * (attrOpts.width / data.timesteps[timeStampIndex].nodes.length);
 				})
 				.attr("y2", function (d: Edge) {
 					let yPos = 0
@@ -107,13 +110,43 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 		}
 	}
 
-	private initScales(data: DynamicGraph, timeStampIndex: number) {
+	private initScales(data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts) {
+		let self = this;
 		this.weightScale = scaleLinear<number>()
 			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
 			.range([-10, 10]);
 		this.thicknessScale = scaleLinear<number>()
 			.domain(this.createDomain(data.timesteps[timeStampIndex].edges))
 			.range([.25, 1.5]);
+		data.metaEdges.forEach(function (meta: MetaEdge) {
+			//innerGlyphSpacing is a scale that spaces glyphs within their respective cells.
+			let innerGlyphSpacing = scaleLinear()
+				.domain(extent(Array.from(meta.edges), function (d: Edge): number { //TODO: remove magic numbers, possibly move calculations to gestaltGlyphShape class.
+					return d.timestep;
+				}))
+				.range([self.CELL_PADDING * (attrOpts.height / data.timesteps[timeStampIndex].nodes.length),
+				(1 - self.CELL_PADDING) * (attrOpts.height / data.timesteps[timeStampIndex].nodes.length)]);
+			//gridScaleY calculates the yPos of the metaEdge's cell
+			let gridScaleY = scaleBand<number>()
+				.domain(data.timesteps[timeStampIndex].nodes.map(function (d: any) {
+					return d.index;
+				}))
+				.range([self.MATRIX_PADDING * attrOpts.height, attrOpts.height]);
+			//gridScaleX calculsates the xPos of the metaEdge's cell
+			let gridScaleX = scaleBand<number>()
+				.domain(data.timesteps[timeStampIndex].nodes.map(function (d: any) {
+					return d.index;
+				}))
+				.range([self.MATRIX_PADDING * attrOpts.width, attrOpts.width]);
+
+			meta.edges.forEach(function (e: Edge) {
+				console.log(gridScaleX(e.target.index))
+				console.log(gridScaleY(e.source.index))
+				console.log(innerGlyphSpacing(e.timestep))
+				e.x = gridScaleX(e.target.index);
+				e.y = gridScaleY(e.source.index) + innerGlyphSpacing(e.timestep);
+			});
+		});
 	}
 
 	/**
@@ -149,7 +182,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 	 * @param timeStepIndex 
 	 */
 	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts): void {
-		this.initScales(data, timeStampIndex);
+		this.initScales(data, timeStampIndex, attrOpts);
 		let gestaltGlyphs = location.selectAll("line.edgeGestalt")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
 
@@ -159,7 +192,7 @@ export class GestaltGlyphShape extends LineGlyphShape implements EdgeGlyphShape 
 
 		gestaltGlyphs = gestaltGlyphs.merge(gestaltEnter as Selection<any, Edge, any, {}>);
 
-		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex, attrOpts.width, attrOpts.height);
+		this.updateDraw(gestaltGlyphs, attrOpts, data, timeStampIndex);
 	}
 	get shapeType(): string {
 		return this._shapeType;

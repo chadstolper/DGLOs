@@ -319,7 +319,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.enterExitColorEnabled);
 					}
 				});
 			});
@@ -343,7 +343,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.enterExitColorEnabled);
 					}
 				});
 			});
@@ -419,30 +419,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	public positionEdgeGlyphsGestalt() {
 		this.matrixViewEnabled = true;
 		let self = this;
+		//Only make this large number of calculations if necessary
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
-			this.dataToDraw.metaEdges.forEach(function (meta: MetaEdge) {
-				let innerGlyphSpacing = scaleLinear()
-					.domain(extent(Array.from(meta.edges), function (d: Edge): number { //TODO: remove magic numbers, possibly move calculations to gestaltGlyphShape class.
-						return d.timestep;
-					}))
-					.range([(3 / 10) * (self.height / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length),
-					(7 / 10) * (self.height / self.dataToDraw.timesteps[self.timeStampIndex].nodes.length)]);
-				let gridScaleY = scaleBand<number>()
-					.domain(self.dataToDraw.timesteps[self.timeStampIndex].nodes.map(function (d: any) {
-						return d.index;
-					}))
-					.range([self.height / 8 + 10, self.height - 10]);
-				let gridScaleX = scaleBand<number>()
-					.domain(self.dataToDraw.timesteps[self.timeStampIndex].nodes.map(function (d: any) {
-						return d.index;
-					}))
-					.range([self.width / 8 + 10, self.width - 10]);
-
-				meta.edges.forEach(function (e: Edge) {
-					e.x = gridScaleX(e.target.index);
-					e.y = gridScaleY(e.source.index) + innerGlyphSpacing(e.timestep);
-				});
-			});
 			let edgeList = new Array<Edge>();
 			for (let step of this.dataToDraw.timesteps) {
 				edgeList = edgeList.concat(step.edges);
@@ -459,7 +437,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				getNode = true;
 			}
 			this.dataToDraw = new DynamicGraph([new Graph(nodeList, edgeList, 0)]);
-			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this.attrOpts, this.width, this.height);
+			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this.attrOpts);
 		}
 		this.dataToDraw = this.data;
 	}
@@ -492,12 +470,12 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		this.attrOpts.width = this.width;
 		this.attrOpts.height = this.height;
 		if (!this.multipleTimestepsEnabled) {
-			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, this.width, this.height, this.enterExitColorEnabled);
+			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, this.enterExitColorEnabled);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, self.attrOpts, self.enterExitColorEnabled);
 			});
 		}
 	}
@@ -514,7 +492,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				console.log("clicked");
 				self.timeStampIndex = (self.timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.enterExitColorEnabled);
 					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
@@ -529,7 +507,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				console.log("clicked");
 				self.timeStampIndex = (self.timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.width, self.height, self.enterExitColorEnabled);
+					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.enterExitColorEnabled);
 					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
 				}
 				if (!self.matrixViewEnabled) {
@@ -682,7 +660,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * Redraws the graph.
 	 */
 	public redrawEgo(): void {
-		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this.attrOpts, this.width, this.height);
+		this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, 0, this.attrOpts);
 		this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, 0, this.attrOpts, undefined);
 		if (this.centralNodesEnabled) {
 			this.positionNodesAndEdgesForceDirected(true);

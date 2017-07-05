@@ -1,11 +1,9 @@
-import { NodeGlyphShape } from "../NodeGlyphInterface"
-import { EdgeGlyphShape } from "../EdgeGlyphInterface";
 import { Selection } from "d3-selection";
-import { SVGAttrOpts } from "../SVGAttrOpts";
+import { EdgeGlyphShape } from '../EdgeGlyphInterface';
+import { NodeGlyphShape } from '../NodeGlyphInterface';
+import { SVGAttrOpts } from '../SVGAttrOpts';
+import { Shape } from './Shape';
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
-
-import { LineGlyphShape } from "./LineGlyphShape";
-
 import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
 
 /**
@@ -20,7 +18,7 @@ import { ScaleOrdinal, scaleOrdinal, schemeCategory20 } from "d3-scale";
  * 	 *transformTo()*,
  *	 *draw()*, 
  */
-export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGlyphShape {
+export class SourceTargetLineGlyphShape extends Shape implements EdgeGlyphShape {
 	readonly _shapeType = "STLine";
 	private _enterColor: string = "#00D50F"; /* Value used for initial enterNode color transition. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for exitNode color transition. Default #D90000. */
@@ -152,7 +150,7 @@ export class SourceTargetLineGlyphShape extends LineGlyphShape implements EdgeGl
 	 * @param timeStampIndex 
 	 * @param attr 
 	 */
-	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, svgWidth: number, svgHeight: number, enterExit: boolean = false): void {
+	public draw(location: Selection<any, {}, any, {}>, data: DynamicGraph, timeStampIndex: number, attrOpts: SVGAttrOpts, enterExit: boolean = false): void {
 		this.enterExitEnabled = enterExit;
 		let sTLineEdges = location.selectAll("path.STLine")
 			.data(data.timesteps[timeStampIndex].edges, function (d: Edge): string { return "" + d.id });
