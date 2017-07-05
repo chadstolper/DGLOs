@@ -9,8 +9,22 @@ import { SVGAttrOpts } from "../lib/DGLOsSVG";
 import * as d3 from "d3-selection";
 import { scaleLinear, scaleOrdinal, scalePoint, scaleBand } from "d3-scale";
 import { extent } from "d3-array";
+import calculateSize from "calculate-size"
 
 export class DGLOsWill extends DGLOsMatt {
+	private calculateMaxWordSize() {
+		let maxLength: number = 0;
+		for (let timestep of this.dataToDraw.timesteps) {
+			for (let node of timestep.nodes) {
+				const size = calculateSize(node.label);
+				console.log(size.height);
+				console.log(size.width);
+			}
+		}
+	}
+
+
+
 	/**
 	 * Initialize and draw all EdgeGlyphshapes, adds them to Map and sets display to "none".
 	 */
