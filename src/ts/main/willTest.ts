@@ -41,8 +41,8 @@ json("data/dummy/dummy.json", function (response: any) {
 	//let vis: Technique = new Egograph(lib, {}); // WORKS FOR RADOSLAW, DUMMY, AND NEWCOMB. DOESN'T WORK FOR FIVE KINGS.
 	//let vis: Technique = new ForceDirectedAnimated(lib, {}); //WORKS FOR RADOSLAW, DUMMY, NEWCOMB, AND FIVE KINGS
 	//let vis: Technique = new ForceDirectedTimeline(lib, {}); //WORKS FOR RADOSLAW (VERY SLOW), DUMMY, NEWCOMB, AND FIVE KINGS
-	//let vis: Technique = new GestaltGlyphs(lib, {}); // WORKS FOR DUMMY, NEWCOMB (THE LABEL TEXT IS LARGE), HALF WORKS FOR RADOSLAW AND FIVE KINGS
-	let vis: Technique = new MatrixAnimated(lib, {}); // WORKS FOR DUMMY, NEWCOMB, RADOSLAW, AND FIVE KINGS
+	let vis: Technique = new GestaltGlyphs(lib, {}); // WORKS FOR DUMMY, NEWCOMB (THE LABEL TEXT IS LARGE), HALF WORKS FOR RADOSLAW AND FIVE KINGS
+	//let vis: Technique = new MatrixAnimated(lib, {}); // WORKS FOR DUMMY, NEWCOMB, RADOSLAW, AND FIVE KINGS
 	//let vis: Technique = new MatrixTimeline(lib, {}); // WORKS FOR DUMMY, NEWCOMB, RADOSLAW, AND FIVE KINGS
 	//let vis: Technique = new GMap(lib, {});
 	vis.draw();
