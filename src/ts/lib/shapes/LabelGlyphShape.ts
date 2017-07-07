@@ -20,7 +20,6 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
 	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
 	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
-	private _enterExitEnabled: boolean;
 	private _duplicate: boolean;
 	private _xAxisScale: any;
 	private _yAxisScale: any;
@@ -249,8 +248,7 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param enterExit
 	 */
 
-	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = false, enterExit: boolean = false): void {
-		this.enterExitEnabled = enterExit;
+	public draw(labelG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes: boolean = false): void {
 		this.duplicate = duplicateNodes;
 		this.initScales(data, timeStepIndex, attrOpts);
 
@@ -350,12 +348,6 @@ export class LabelGlyphShape extends Shape implements NodeGlyphShape {
 	}
 	get shapeType(): string {
 		return this._shapeType;
-	}
-	set enterExitEnabled(boo: boolean) {
-		this._enterExitEnabled = boo;
-	}
-	get enterExitEnabled(): boolean {
-		return this._enterExitEnabled;
 	}
 	set duplicate(boo: boolean) {
 		this._duplicate = boo;

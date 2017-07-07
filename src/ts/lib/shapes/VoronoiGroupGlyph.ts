@@ -15,7 +15,6 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	private _stableColor: string = "#404ABC"; /* Values used for non-exiting, non-entering nodes. Default #404ABC. */
 	private _transitionDuration: number = 1000; /* Duration of transition / length of animation. Default 1000ms. */
 	private _transitionDelay: number = 7000; /* Time between animation from standard view to exitview. Default 7000ms. */
-	private _enterExitEnabled: boolean;
 
 	/**
 	* Make a new <g> tag for the voronoi path glyphs to be created. Returns Selection <g> classed VoronoiPaths.
@@ -51,7 +50,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	public updateDraw(glyphs: Selection<any, VoronoiPolygon<Node>, any, {}>, attrOpts: SVGAttrOpts): Selection<any, VoronoiPolygon<Node>, any, {}> {
 		glyphs.style("fill", "none").attr("stroke", "none");
 		let self: VoronoiGroupGlyph = this;
-		if (this.enterExitEnabled) {
+		if (attrOpts.fill === "enterExit") {
 			glyphs
 				.style("fill", this.enterExitCheck())
 				.style("stroke", this.enterExitCheck());
@@ -149,8 +148,7 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	* @param noisePoints
 	* @param voronoi
 	*/
-	public draw(location: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>, enterExit: boolean = false): void {
-		this.enterExitEnabled = enterExit;
+	public draw(location: Selection<any, Node, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, noisePoints: Node[], voronoi: VoronoiLayout<Node>): void {
 		let vData: VoronoiPolygon<Node>[] = voronoi.polygons(data.timesteps[timeStepIndex].nodes.concat(noisePoints));
 		let voronoiPaths: Selection<any, VoronoiPolygon<Node>, any, {}> = location.selectAll("path.voronoi")
 			.data(vData, function (d: VoronoiPolygon<Node>, i: number): string {
@@ -230,11 +228,5 @@ export class VoronoiGroupGlyph implements GroupGlyph {
 	}
 	get transitionDelay(): number {
 		return this._transitionDelay;
-	}
-	set enterExitEnabled(boo: boolean) {
-		this._enterExitEnabled = boo;
-	}
-	get enterExitEnabled(): boolean {
-		return this._enterExitEnabled;
 	}
 }

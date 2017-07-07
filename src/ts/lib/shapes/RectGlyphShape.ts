@@ -58,7 +58,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	 * Time between animation from standard view to exitview. Default 7000ms.
 	 */
 	private _transitionDelay: number = 7000;
-	private _enterExitEnabled: boolean;
 	private _xPadding: number;
 	private _yPadding: number;
 
@@ -119,15 +118,23 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 					catch (err) {
 						// console.log("interpolate error, rects do not (yet) exist");
 					}
-				})
-				.attr("stroke", attr.stroke_edge)
-				.attr("stroke-width", attr.stroke_width_edge)
-				.attr("fill", function (d: Edge) {
-					return self.colorMap(d.weight);
 				});
+
 		} catch (err) {
 			console.log("No Rect edges!");
 		}
+
+		if (attr.fill === "enterExit") {
+			glyphs
+				.attr("fill", this.enterExitCheck());
+		}
+		else {
+			glyphs
+				.attr("fill", function (d: Edge): string {
+					return this.colorMap(d.weight);
+				});
+		}
+
 		return glyphs;
 	}
 	/**
@@ -293,12 +300,6 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 	}
 	get transitionDelay(): number {
 		return this._transitionDelay;
-	}
-	set enterExitEnabled(boo: boolean) {
-		this._enterExitEnabled = boo;
-	}
-	get enterExitEnabled(): boolean {
-		return this._enterExitEnabled;
 	}
 	set xPadding(num: number) {
 		this._xPadding = num;

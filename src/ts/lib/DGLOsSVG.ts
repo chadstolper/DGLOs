@@ -59,10 +59,6 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * Extended to Gestalt.
 	 */
 	private _matrixViewEnabled: boolean = false;
-	/**
-	 * Boolean representing if enter exit coloring is enabled on the current visualization.
-	 */
-	private _enterExitColorEnabled: boolean = false;
 
 	/**
 	 * Holders for current shapes being used in the visualization.
@@ -217,20 +213,6 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	}
 
 	/**
-	 * Enables enter and exit coloring between timestep visualizations.
-	 */
-	public enableEnterExitColoring(): void {
-		this.enterExitColorEnabled = true;
-	}
-
-	/**
-	 * Disables enter and exit coloring between timestep visualizations.
-	 */
-	public disableEnterExitColoring(): void {
-		this.enterExitColorEnabled = false;
-	}
-
-	/**
 	 * Begins the force simulation for positioning Nodes and Edges, calls internal tick(). The simulation runs based on a compilation of all
 	 * data at all timesteps and then assigns the Nodes and Edges their positioning based on the full simulation and relative to other Nodes
 	 * which might not be present in the same timestep.
@@ -310,7 +292,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			//update groups in map; run update of simulation on all groups at the current timestep
 			this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph): void {
-					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.noisePoints, self.voronoi);
 				});
 			});
 			//update edges in map; run update of simulation on all edges at the current timestep
@@ -319,14 +301,14 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts);
 					}
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs at the current timestep
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape): void {
-					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, undefined, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, self.timeStampIndex, self.attrOpts, undefined);
 				});
 			});
 		}
@@ -334,7 +316,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			//update groups in map; run update of simulation on all groups accross multiple SVG elements
 			this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: GroupGlyph): void {
-					shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.noisePoints, self.voronoi, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.noisePoints, self.voronoi);
 				});
 			});
 			//update edges in map; run update of simulation on all edges accross multiple SVG elements
@@ -343,14 +325,14 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 					if (shape.shapeType === "Gestalt" && self.currentEdgeShape.shapeType !== "Gestalt") {
 
 					} else {
-						shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, self.enterExitColorEnabled);
+						shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts);
 					}
 				});
 			});
 			//update nodes in map; run update of simulation on all NodeGlyphs accross multiple SVG elements
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, svgPosition: number): void {
 				glyphMap.forEach(function (glyphs: Selection<any, {}, any, {}>, shape: NodeGlyphShape): void {
-					shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, undefined, self.enterExitColorEnabled);
+					shape.draw(glyphs, self.dataToDraw, svgPosition, self.attrOpts, undefined);
 				});
 			});
 		}
@@ -452,11 +434,11 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		this.attrOpts.width = this.width;
 		this.attrOpts.height = this.height;
 		if (!this.multipleTimestepsEnabled) {
-			this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, true, this.enterExitColorEnabled);
+			this.currentNodeShape.draw(this.nodeGlyphMap.get(0).get(this.currentNodeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, true);
 		}
 		if (this.multipleTimestepsEnabled) {
 			this.nodeGlyphMap.forEach(function (glyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, self.attrOpts, true, self.enterExitColorEnabled);
+				self.currentNodeShape.draw(glyphMap.get(self.currentNodeShape), self.dataToDraw, timestep, self.attrOpts, true);
 			});
 		}
 	}
@@ -470,12 +452,12 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		this.attrOpts.width = this.width;
 		this.attrOpts.height = this.height;
 		if (!this.multipleTimestepsEnabled) {
-			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts, this.enterExitColorEnabled);
+			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts);
 		}
 		if (this.multipleTimestepsEnabled) {
 			let self = this;
 			this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
-				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, self.attrOpts, self.enterExitColorEnabled);
+				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, self.attrOpts);
 			});
 		}
 	}
@@ -492,8 +474,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				console.log("clicked");
 				self.timeStampIndex = (self.timeStampIndex + self.data.timesteps.length - 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.enterExitColorEnabled);
-					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
+					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts);
+					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0;
@@ -507,8 +489,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				console.log("clicked");
 				self.timeStampIndex = (self.timeStampIndex + 1) % self.data.timesteps.length;
 				if (!self.multipleTimestepsEnabled || self.matrixViewEnabled) {
-					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts, self.enterExitColorEnabled);
-					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true, self.enterExitColorEnabled);
+					self.currentEdgeShape.draw(self.edgeGlyphMap.get(0).get(self.currentEdgeShape), self.data, self.timeStampIndex, self.attrOpts);
+					self.currentNodeShape.draw(self.nodeGlyphMap.get(0).get(self.currentNodeShape), self.dataToDraw, self.timeStampIndex, self.attrOpts, true);
 				}
 				if (!self.matrixViewEnabled) {
 					self.simulationAttrOpts.alpha = 0;
@@ -826,12 +808,6 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	}
 	get matrixViewEnabled(): boolean {
 		return this._matrixViewEnabled;
-	}
-	set enterExitColorEnabled(boo: boolean) {
-		this._enterExitColorEnabled = boo;
-	}
-	get enterExitColorEnabled(): boolean {
-		return this._enterExitColorEnabled;
 	}
 	set currentEdgeShape(shape: EdgeGlyphShape) {
 		this._currentEdgeShape = shape;

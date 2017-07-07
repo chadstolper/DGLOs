@@ -48,8 +48,6 @@
 	- [setRegionAttrs()](#setRAttrOpts)
 	- [setSimulationAttrs()](#setSimAttrOpts)
 	- [setCenterNode()](#setCenterNode)
-	- [enableEnterExitColoring()](#enableEEC)
-	- [disableEnterExitColoring()](#disableEEC)
 - DGLO Attribute Objects
 	- [SVGAttrOpts](#SVGAttrOpts)
 	- [SimulationAttrOpts](#SimAttrOpts)
@@ -196,20 +194,6 @@ An object holding various force-directed simulation calculation related informat
 
 ### setCenterNode():
 
-
-
-### enableEnterExitColoring():
-When displaying data, the data will be colored based on the direction of the data. The color of the Node and Edge will change depending on if the data is present in the previous or next timestep. There are 4 states the data can be.
-- Green: Data is entering and is present in the next timestep.
-- Red: Data was in the previous timestep and is exiting.
-- Yellow: Data is entering but is also not present in the next timestep and exiting.
-- Blue: Data was in the previous timestep and is in the next timestep; Staying.
-
-The first timestep all data is considered entering data. The last timestep all data is considered exiting.
-
-### <a name="disableEEC"></a>disableEnterExitColoring():
-Disables shading based on data direction. Coloring returns to attributes defined in `SVGAttrOpts`.
-
 ## DGLOs Attribute Objects
 ### <a name="SVGAttrOpts"></a>SVGAttrOpts():
 An object holding various Node, Edge, and (if enabled) region visualization attribute options. Constructing a new `SVGAttrOpts()` creates an object with default values for basic visuals. A default instance is already stored in the library.
@@ -219,6 +203,11 @@ Attribute Options:
 	- `"id"` : The fill color is based on the Node's id value.
 	- `"label"` : The fill color is based on the Node's label content if any.
 	- `"type"` : The fill color is based on the Node's type, group or other data value.
+	- `"enterExit"` : The fill color is based on the the direction of the data in relation to different timesteps. Nodes and Edges are colored based on their data entering and exiting. All Nodes and Edges considered entering in first timestep. All Nodes and Edges considered exiting in the last timestep.
+		- Green: Data entering and present in the next timestep.
+		- Red: Data present in the previous timestep and exiting.
+		- Yellow: Data entering and exiting in the same timestep.
+		- Blue: Data present in the current, previous, and next timestep.
 - `attrOpts.stroke` : Color for Node borders as a string. Default is #000000.
 - `attrOpts.stroke_edge` : Color for Edges as a string. Either acting as a fill or stroke depending on the visualization. Default is #000000.
 - `attrOpts.stroke_width` : Node border width/thickness as a number. Default is 2.
@@ -242,8 +231,6 @@ An object holding various force-directed simulation calculation related informat
 - `alpha`: Initial energy of simulation. Higher value means rapid expansion, lower value means stagnated expansion. Default = 0.3.
 - `charge`: General pushing force of the simulation on Nodes. Default = -100.
 - `linkStrength`: Multiplier used when `weight = true` to calculated the pull between two Nodes where and Edge exisits. Default = 0.05
-### disableEnterExitColoring():
-Disables shading based on data direction. Coloring returns to attributes defined in `SVGAttrOpts`.
 
 ## Transformation and Data Traversal:
 ### transformNodeGlyphTo(NodeGlyphShape):

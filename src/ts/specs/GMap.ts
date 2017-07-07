@@ -26,7 +26,6 @@ export class GMap extends Technique {
 		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.transformGroupGlyphsTo(this.lib.voronoiShape);
-		// this.lib.enableEnterExitColoring();
 		this.lib.setSimulationAttrs(new SimulationAttrOpts());
 		this.lib.enableStepping();
 		this.lib.positionNodesAndEdgesForceDirected(true);
