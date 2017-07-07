@@ -14,25 +14,25 @@ export class RadoslawEmail extends Edge {
 
 export class StaticRadoslawGraph extends Graph {
 	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestep: number) {
-		let nodeData = new Array<Node>();
-		let edgeData = new Array<Edge>();
-		let index = 0;
-		for (let n of rawNodeData) {
-			let node = new RadoslawEmployee(n, index, timestep);
+		const nodeData: Array<Node> = new Array<Node>();
+		const edgeData: Array<Edge> = new Array<Edge>();
+		let index: number = 0;
+		for (const n of rawNodeData) {
+			const node: RadoslawEmployee = new RadoslawEmployee(n, index, timestep);
 			nodeData.push(node);
 			index++;
 		}
-		for (let e of rawEdgeData) {
-			let source: Node = nodeData.find(function (n: Node): boolean {
+		for (const e of rawEdgeData) {
+			const source: Node = nodeData.find(function (n: Node): boolean {
 				return n.id === +e.from;
 			});
 
-			let target: Node = nodeData.find(function (n: Node): boolean {
+			const target: Node = nodeData.find(function (n: Node): boolean {
 				return n.id === +e.to;
 			});
-			let id: string = "" + source.id + ":" + target.id;
+			const id: string = "" + source.id + ":" + target.id;
 
-			let edge = new RadoslawEmail(id, source, target, e.weight, timestep);
+			const edge: RadoslawEmail = new RadoslawEmail(id, source, target, e.weight, timestep);
 			edgeData.push(edge);
 		}
 		nodeData.sort(function (a: Node, b: Node): number {
@@ -44,12 +44,12 @@ export class StaticRadoslawGraph extends Graph {
 
 export class DynamicRadoslawGraph extends DynamicGraph {
 	public constructor(response: Array<any>) {
-		let graphs: Array<StaticRadoslawGraph> = new Array<StaticRadoslawGraph>();
-		for (let timestep of response) {
-			let rawNodeData: Array<any> = timestep.nodes;
-			let rawEdgeData: Array<any> = timestep.edges;
-			let timestamp: number = timestep.timestamp;
-			let g: StaticRadoslawGraph = new StaticRadoslawGraph(rawNodeData, rawEdgeData, timestamp);
+		const graphs: Array<StaticRadoslawGraph> = new Array<StaticRadoslawGraph>();
+		for (const timestep of response) {
+			const rawNodeData: Array<any> = timestep.nodes;
+			const rawEdgeData: Array<any> = timestep.edges;
+			const timestamp: number = timestep.timestamp;
+			const g: StaticRadoslawGraph = new StaticRadoslawGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}
 		super(graphs);
