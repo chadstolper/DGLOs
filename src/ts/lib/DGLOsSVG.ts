@@ -541,7 +541,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			.domain(extent(this.centralNodeArray, function (d: Node): number {
 				return d.timestamp as number;
 			}))
-			.range([0 + (this.height * .15), this.height - (this.height * 0.15)]);
+			.range([(this.height * .15), this.height - (this.height * 0.15)]);
 		for (let node of this.centralNodeArray) {
 			node.fx = this.width / 2;
 			node.fy = yScale(node.timestamp);

@@ -150,7 +150,7 @@ export class GestaltGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape | NodeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
 				console.log("Gestalt-->Rect");
