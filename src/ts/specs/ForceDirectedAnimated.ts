@@ -13,7 +13,7 @@ export class ForceDirectedAnimated extends Technique {
 	public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts();
 
 	public static readonly DEFAULT_COLLISION_ENABLED: boolean = true;
-	public static readonly DEFAULT_WEIGHT_ENABLED: boolean = true;
+	public static readonly DEFAULT_WEIGHT_ENABLED: boolean = false;
 	public static readonly DEFAULT_SIM_ATTR: SimulationAttrOpts = new SimulationAttrOpts();
 	public draw(): void {
 		ForceDirectedAnimated.DEFAULT_ATTR.fill = ForceDirectedAnimated.DEFAULT_FILL
@@ -29,7 +29,7 @@ export class ForceDirectedAnimated extends Technique {
 
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
-		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
+		this.lib.transformNodeGlyphsTo(this.lib.labelShape);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.setAttributes(ForceDirectedAnimated.DEFAULT_ATTR);
 		this.lib.setSimulationAttrs(ForceDirectedAnimated.DEFAULT_SIM_ATTR);

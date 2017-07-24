@@ -3,7 +3,7 @@ import { SVGAttrOpts } from "../lib/SVGAttrOpts";
 import { SimulationAttrOpts } from "../lib/SVGSimulationAttrOpts";
 
 export class ForceDirectedTimeline extends Technique {
-	public static readonly DEFAULT_FILL: string = "enterExit";
+	public static readonly DEFAULT_FILL: string = "id";
 	public static readonly DEFAULT_STROKE: string = "grey";
 	public static readonly DEFAULT_STROKE_EDGE: string = "black"
 	public static readonly DEFAULT_STROKE_WIDTH: number = 2;

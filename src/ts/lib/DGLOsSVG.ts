@@ -25,7 +25,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	readonly REGION_STROKE_WIDTH: number = 0;
 	readonly REGION_STROKE_WIDTH_EDGE: number = .25;
 	readonly REGION_RADIUS: number = 1;
-
+	readonly COLLISION_DIVISOR: number = 1.5;
 
 	/**
 	 * Current timestep of the data.
@@ -254,11 +254,12 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				if (this.simulationAttrOpts.simulationCollisionEnabled) {
 					this.simulation.force("collide", d3force.forceCollide().radius(function (d: MetaNode): number {
 						if (self.currentNodeShape.shapeType === "Label") {
-							d.nodes.forEach(function (n: Node): number {
-								let labelSize: Size = calculateSize(n.label);
+							let labelSize: Size;
+							d.nodes.forEach(function (n: Node): void {
+								labelSize = calculateSize(n.label);
 								console.log(labelSize.width)
-								return labelSize.width;
-							});
+							})
+							return labelSize.width / self.COLLISION_DIVISOR;
 						}
 						else {
 							return self.attrOpts.radius;

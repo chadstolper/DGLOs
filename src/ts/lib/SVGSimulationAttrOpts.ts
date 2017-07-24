@@ -5,8 +5,6 @@
 export class SimulationAttrOpts {
 	private _simulationCollision: boolean = false;
 	private _simulationWeight: boolean = false;
-	private _divisorPT: number = 2.75;
-	private _divisorPX: number = 3.25;
 	private _simulationAlpha: number = 0.3;
 	private _simulationCharge: number = -100;
 	private _simulationLinkStrength: number = .05;
@@ -43,24 +41,6 @@ export class SimulationAttrOpts {
 	}
 	get simulationWeightEnabled(): boolean {
 		return this._simulationWeight;
-	}
-	/**
-	 * Define text collision tightness for font-size "##pt". Used when collision = true. Default  2.75.
-	 */
-	set divisorPT(num: number) {
-		this._divisorPT = num;
-	}
-	get divisorPT(): number {
-		return this._divisorPT;
-	}
-	/**
-	 * Define text collision tightness for font-size "##px". Used when collision = true. Default 3.25.
-	 */
-	set divisorPX(num: number) {
-		this._divisorPX = num;
-	}
-	get divisorPX(): number {
-		return this._divisorPX;
 	}
 	/**
 	 * Initial simulation energy. Higher value means more energetic start and vice versa. Default 0.3.

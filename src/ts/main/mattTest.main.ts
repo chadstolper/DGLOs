@@ -19,9 +19,9 @@ import { DGLOsSVG } from "../lib/DGLOsSVG";
 
 // json("data/dummy/dummy.json", function (response: any) {
 // json("data/fivekings/fivekings.json", function (response: any) {
-// json("data/miserables/miserables.json", function (response: any) {
-// json("data/radoslaw/emails.json", function (response: any) {
-json("data/newcomb/newcomb.json", function (response: any) {
+json("data/miserables/miserables.json", function (response: any) {
+	// json("data/radoslaw/emails.json", function (response: any) {
+	// json("data/newcomb/newcomb.json", function (response: any) {
 
 	let width: number, height: number;
 	width = height = 1000;
@@ -30,8 +30,8 @@ json("data/newcomb/newcomb.json", function (response: any) {
 	// let g: DynamicGraph = new DynamicRadoslawGraph(response);
 	// let g: DynamicGraph = new DynamicFiveKingsGraph(response);
 	// let g: DynamicGraph = new DynamicDrinkGraph(response);
-	// let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
-	let g: DynamicGraph = new DynamicNewcombGraph(response);
+	let g: DynamicGraph = new DynamicLesMiserablesGraph(response);
+	// let g: DynamicGraph = new DynamicNewcombGraph(response);
 	// let g: DynamicGraph = new DynamicNewcombTopFiveGraph(response);
 	//------------------------------------------------------------//
 
@@ -43,11 +43,11 @@ json("data/newcomb/newcomb.json", function (response: any) {
 	let lib: DGLOs = new DGLOsSVG(g, location, width, height);
 
 	//------------------------------------------------------------//
-	// let vis: Technique = new ForceDirectedAnimated(lib, {});
+	let vis: Technique = new ForceDirectedAnimated(lib, {});
 	// let vis: Technique = new GMap(lib, {});
 	// let vis: Technique = new ForceDirectedTimeline(lib, {});
 	// let vis: Technique = new MatrixTimeline(lib, {});
-	let vis: Technique = new MatrixAnimated(lib, {});
+	// let vis: Technique = new MatrixAnimated(lib, {});
 	// let vis: Technique = new Egograph(lib, {});
 	// let vis: Technique = new GestaltGlyphs(lib, {});
 	//------------------------------------------------------------//
