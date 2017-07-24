@@ -162,7 +162,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * @param shape 
 	 */
 	public transformGroupGlyphsTo(shape: GroupGlyph): void {
-		let self = this;
+		let self: DGLOsSVG = this;
 		this.groupGlyphMap.forEach(function (glyphMap: Map<GroupGlyph, Selection<any, {}, any, {}>>, timestep: number): void {
 			self.currentGroupGlyph.transformTo(glyphMap.get(self.currentGroupGlyph), shape, glyphMap.get(shape));
 		});
@@ -174,7 +174,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * @param shape 
 	 */
 	public transformNodeGlyphsTo(shape: NodeGlyphShape): void {
-		let self = this;
+		let self: DGLOsSVG = this;
 		this.nodeGlyphMap.forEach(function (nodeGlyphMap: Map<NodeGlyphShape, Selection<any, {}, any, {}>>, timestep: number): void {
 			self.currentNodeShape.transformTo(nodeGlyphMap.get(self.currentNodeShape), shape, nodeGlyphMap.get(shape));
 		});
@@ -222,7 +222,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 */
 	public positionNodesAndEdgesForceDirected(setRunning: boolean): void {
 		if (setRunning) {
-			let self = this;
+			let self: DGLOsSVG = this;
 			//Check simulation exists
 			if (this.simulation === undefined) {
 				this.simulation = d3force.forceSimulation()
@@ -288,7 +288,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 *  (Tick) Tock called during simulation updating x and y positions of DOM elements.
 	 */
 	private tock(): void {
-		let self = this;
+		let self: DGLOsSVG = this;
 
 		if (!this.multipleTimestepsEnabled) { //check if timeline view is enabled.
 			//update groups in map; run update of simulation on all groups at the current timestep
@@ -341,11 +341,11 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	}
 
 
-	private calculateMaxWordSize() {
+	private calculateMaxWordSize(): void {
 		let maxLength: number = 0;
 		for (let timestep of this.dataToDraw.timesteps) {
 			for (let node of timestep.nodes) {
-				const size = calculateSize(node.label);
+				const size: Size = calculateSize(node.label);
 				console.log(size.height);
 				console.log(size.width);
 			}
@@ -357,7 +357,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	/**
 	 * Initialize and draw all EdgeGlyphshapes, adds them to Map and sets display to "none".
 	 */
-	public drawEdgeGlyphs() {
+	public drawEdgeGlyphs(): void {
 		this.drawEdgeGlyphsAt(this.drawLocation);
 	}
 
@@ -365,9 +365,9 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * Initialize and draw all EdgeGlyphShapes to Selection, adds them to Map and sets display to "none".
 	 * @param location: Selection<any, {}, any, {}>
 	 */
-	protected drawEdgeGlyphsAt(location: Selection<any, {}, any, {}>, SVGNum: number = 0) {
+	protected drawEdgeGlyphsAt(location: Selection<any, {}, any, {}>, SVGNum: number = 0): void {
 
-		let edgeG = location.append("g").classed("edgeG", true);
+		let edgeG: Selection<any, {}, any, {}> = location.append("g").classed("edgeG", true);
 
 		let edgeRectG: Selection<any, {}, any, {}> = this.rectShape.init(edgeG);
 		let edgeGestaltG: Selection<any, {}, any, {}> = this.gestaltShape.init(edgeG);
@@ -377,7 +377,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 		edgeGestaltG.style("display", "none");
 		edgeSTLineG.style("display", "none");
 
-		let glyphMap = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
+		let glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>> = new Map<EdgeGlyphShape, Selection<any, {}, any, {}>>();
 		glyphMap.set(this.rectShape, edgeRectG);
 		glyphMap.set(this.gestaltShape, edgeGestaltG);
 		glyphMap.set(this.sourceTargetLineShape, edgeSTLineG);
@@ -389,9 +389,9 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * tansformEdgeGlyphsTo is a DGLO method that calls the ___ _currentEdgeShape ___ transformTo method.
 	 * It takes an __ EdgeGlyphShape __ in order to know what shape to transfrom th edge glyphs to.
 	 */
-	public transformEdgeGlyphsTo(shape: EdgeGlyphShape) {
-		let self = this;
-		this.edgeGlyphMap.forEach(function (edgeMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
+	public transformEdgeGlyphsTo(shape: EdgeGlyphShape): void {
+		let self: DGLOsSVG = this;
+		this.edgeGlyphMap.forEach(function (edgeMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number): void {
 			self.currentEdgeShape.transformTo(edgeMap.get(self.currentEdgeShape), shape, edgeMap.get(shape));
 		});
 		this.currentEdgeShape = shape;
@@ -400,17 +400,17 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	/**
 	 * SEARCHFORME!!!
 	 */
-	public positionEdgeGlyphsGestalt() {
+	public positionEdgeGlyphsGestalt(): void {
 		this.matrixViewEnabled = true;
-		let self = this;
+		let self: DGLOsSVG = this;
 		//Only make this large number of calculations if necessary
 		if (this.currentEdgeShape.shapeType === this.gestaltShape.shapeType) {
-			let edgeList = new Array<Edge>();
-			for (let step of this.dataToDraw.timesteps) {
+			let edgeList: Array<Edge> = new Array<Edge>();
+			for (const step of this.dataToDraw.timesteps) {
 				edgeList = edgeList.concat(step.edges);
 			}
-			let nodeList = new Array<Node>();
-			let getNode = true;
+			let nodeList: Array<Node> = new Array<Node>();
+			let getNode: boolean = true;
 			for (let key of this.dataToDraw.metaNodes.keys()) {
 				for (let key2 of this.dataToDraw.metaNodes.get(key).nodes) {
 					if (getNode) {
@@ -430,8 +430,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	/**
 	 * positionNodeGlyphsMatrix positions the Nodes along the axis of the Matrix
 	 */
-	public positionNodeGlyphsMatrix() {
-		let self = this;
+	public positionNodeGlyphsMatrix(): void {
+		let self: DGLOsSVG = this;
 		this.matrixViewEnabled = true;
 		this.attrOpts.width = this.width;
 		this.attrOpts.height = this.height;
