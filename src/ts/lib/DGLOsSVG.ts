@@ -11,7 +11,7 @@ import { SVGAttrOpts } from "./SVGAttrOpts";
 import { SimulationAttrOpts } from "./SVGSimulationAttrOpts";
 
 import * as d3 from "d3-selection";
-import { scaleLinear, scaleOrdinal, scalePoint, scaleBand } from "d3-scale";
+import { scaleLinear, scaleOrdinal, scalePoint, scaleBand, ScaleLinear } from "d3-scale";
 import { extent } from "d3-array";
 import calculateSize, { Size } from "calculate-size"
 
@@ -447,8 +447,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	/**
 	 * positionEdgeGlyphsMatrix positions the Edges as Rectangles in the matrix.
 	 */
-	public positionEdgeGlyphsMatrix() {
-		let self = this;
+	public positionEdgeGlyphsMatrix(): void {
 		this.matrixViewEnabled = true;
 		this.attrOpts.stroke_width_edge = null;
 		this.attrOpts.width = this.width;
@@ -457,7 +456,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			this.currentEdgeShape.draw(this.edgeGlyphMap.get(0).get(this.currentEdgeShape), this.dataToDraw, this.timeStampIndex, this.attrOpts);
 		}
 		if (this.multipleTimestepsEnabled) {
-			let self = this;
+			let self: DGLOsSVG = this;
 			this.edgeGlyphMap.forEach(function (glyphMap: Map<EdgeGlyphShape, Selection<any, {}, any, {}>>, timestep: number) {
 				self.currentEdgeShape.draw(glyphMap.get(self.currentEdgeShape), self.dataToDraw, timestep, self.attrOpts);
 			});
@@ -467,10 +466,10 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * A method that appends buttons to the webpage which allow the user to move through 
 	 * the dynamic graph's timesteps.
 	 */
-	public enableStepping() {
-		let self = this;
-		let buttonDiv = this.location.append("div").classed("buttons", true)
-		let prevButton = buttonDiv.append("button")
+	public enableStepping(): void {
+		let self: DGLOsSVG = this;
+		let buttonDiv: Selection<any, {}, any, {}> = this.location.append("div").classed("buttons", true)
+		let prevButton: Selection<any, {}, any, {}> = buttonDiv.append("button")
 			.text("<--")
 			.on("click", function () {
 				console.log("clicked");
@@ -485,7 +484,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 				}
 			});
 
-		let nextButton = buttonDiv.append("button")
+		let nextButton: Selection<any, {}, any, {}> = buttonDiv.append("button")
 			.text("-->")
 			.on("click", function () {
 				console.log("clicked");
@@ -504,7 +503,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * Sets the central node and calls calculateNeighhborAndIncidentEdges.
 	 * @param newID 
 	 */
-	public setCenterNode(newID: number | string) {
+	public setCenterNode(newID: number | string): void {
 		this.centralNodeID = newID;
 		this.emptyArrays();
 		if (this.centralNodesEnabled) {
@@ -515,7 +514,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
  	* _emptyArrays clears _nbrNodes, _nbrEdges, _neighboringNodesMap, and _centralNodeArray. It also
  	* sets the _fx and _fy properties of all nodes in _nbrNodes to null.
  	*/
-	protected emptyArrays() {
+	protected emptyArrays(): void {
 		if (this.nbrNodes !== undefined) {
 			for (let node of this.nbrNodes) {
 				node.fx = null;
@@ -531,8 +530,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * Calculates all edges and nodes that directly touch the central
 	 * node in every timestep.
 	 */
-	protected calculateNeighborsAndIncidentEdges() {
-		let self = this;
+	protected calculateNeighborsAndIncidentEdges(): void {
+		let self: DGLOsSVG = this;
 		this.getCentralNodes();
 		this.setCentralNodeFixedPositions();
 		this.getEdges();
@@ -563,7 +562,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	/** collects a list of nodes with the same _origID across all timesteps and places them into
  	* __ _centralNodeArray ___.
  	*/
-	protected getCentralNodes() {
+	protected getCentralNodes(): void {
 		this.dataToDraw = this.data;
 		for (let node of this.data.metaNodes.get(this.centralNodeID).nodes) {
 			this.centralNodeArray.push(node);
@@ -574,7 +573,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
  	*/
 	protected setCentralNodeFixedPositions(): void {
 		if (this.centralNodesEnabled) {
-			let yScale = scaleLinear()
+			let yScale: ScaleLinear<number, number> = scaleLinear()
 				.domain(extent(this.centralNodeArray, function (d: Node): number {
 					return d.timestamp;
 				}))
@@ -594,11 +593,11 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	/**
 	 * Places all edges that touch the central nodes into __ _nbrEdges __.
 	 */
-	protected getEdges() {
-		for (let i of this.dataToDraw.timesteps) {
-			for (let e of i.edges) {
-				if (this.centralNodeArray.includes(e.origSource) || this.centralNodeArray.includes(e.origTarget)) {
-					this.nbrEdges.push(e);
+	protected getEdges(): void {
+		for (let timestep of this.dataToDraw.timesteps) {
+			for (const edge of timestep.edges) {
+				if (this.centralNodeArray.includes(edge.origSource) || this.centralNodeArray.includes(edge.origTarget)) {
+					this.nbrEdges.push(edge);
 				}
 			}
 		}
@@ -607,8 +606,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 	 * Collects all nodes that share an edge with the central nodes and places them into 
 	 * __ _nbrNodes __
 	 */
-	protected getNeighboringNodes() {
-		for (let edge of this.nbrEdges) {
+	protected getNeighboringNodes(): void {
+		for (const edge of this.nbrEdges) {
 			if (this.centralNodeArray.includes(edge.origTarget)) {
 				this.neighboringNodesMap.set(edge.origSource.origID, edge.origSource);
 			}
@@ -617,7 +616,7 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			}
 		}
 
-		for (let edge of this.nbrEdges) {
+		for (const edge of this.nbrEdges) {
 			if (this.neighboringNodesMap.has(edge.origSource.origID)) {
 				edge.source = this.neighboringNodesMap.get(edge.origSource.origID);
 				edge.target = edge.origTarget;
@@ -628,15 +627,15 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 			}
 		}
 		//convert the map to an array
-		for (let key of this.neighboringNodesMap.keys()) {
+		for (const key of this.neighboringNodesMap.keys()) {
 			this.nbrNodes.push(this.neighboringNodesMap.get(key));
 		}
 	}
 	/**
  	* Merges __ _centralNodeArray __ into __ _nbrNodes __
  	*/
-	protected mergeNodeLists() {
-		for (let node of this.centralNodeArray) {
+	protected mergeNodeLists(): void {
+		for (const node of this.centralNodeArray) {
 			this.nbrNodes.push(node);
 		}
 	}
