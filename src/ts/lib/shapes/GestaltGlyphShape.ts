@@ -1,4 +1,4 @@
-import { Shape } from '../../../../out/src/ts/lib/shapes/Shape';
+import { Shape } from './Shape';
 import { EdgeGlyphShape } from '../EdgeGlyphInterface';
 import { NodeGlyphShape } from '../NodeGlyphInterface';
 import { DynamicGraph, Node, Edge } from "../../model/dynamicgraph";
@@ -150,7 +150,7 @@ export class GestaltGlyphShape extends Shape implements EdgeGlyphShape {
 	 * @param targetShape 
 	 * @param targetG 
 	 */
-	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: EdgeGlyphShape | NodeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
+	public transformTo(sourceG: Selection<any, {}, any, {}>, targetShape: NodeGlyphShape | EdgeGlyphShape, targetG: Selection<any, {}, any, {}>): void {
 		switch (targetShape.shapeType) {
 			case "Rect":
 				console.log("Gestalt-->Rect");

@@ -12,7 +12,7 @@ export class Shape {
 		this._lib = lib
 	}
 
-	protected transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
+	protected transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape | EdgeGlyphShape, targetSelection: Selection<any, {}, any, {}>): void {
 		try {
 			sourceSelection.transition().style("display", "none");
 			targetSelection.transition().style("display", null);
