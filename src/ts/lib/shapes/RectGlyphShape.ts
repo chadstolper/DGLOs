@@ -131,7 +131,7 @@ export class RectGlyphShape extends Shape implements EdgeGlyphShape {
 		else {
 			glyphs
 				.attr("fill", function (d: Edge): string {
-					return this.colorMap(d.weight);
+					return self.colorMap(d.weight);
 				});
 		}
 

@@ -11,6 +11,8 @@ export class ForceDirectedTimeline extends Technique {
 	public static readonly DEFAULT_RADIUS: number = 10;
 	public static readonly DEFAULT_FONT_SIZE: string = "12pt";
 	public static readonly DEFAULT_ATTR: SVGAttrOpts = new SVGAttrOpts();
+	public static readonly DEFAULT_SIMULATION_ATTR: SimulationAttrOpts = new SimulationAttrOpts();
+	public static readonly DEFAULT_COLLISION: boolean = true;
 	public draw(): void {
 		ForceDirectedTimeline.DEFAULT_ATTR.fill = ForceDirectedTimeline.DEFAULT_FILL
 		ForceDirectedTimeline.DEFAULT_ATTR.stroke = ForceDirectedTimeline.DEFAULT_STROKE
@@ -19,6 +21,7 @@ export class ForceDirectedTimeline extends Technique {
 		ForceDirectedTimeline.DEFAULT_ATTR.stroke_width_edge = ForceDirectedTimeline.DEFAULT_STROKE_WIDTH_EDGE
 		ForceDirectedTimeline.DEFAULT_ATTR.radius = ForceDirectedTimeline.DEFAULT_RADIUS
 		ForceDirectedTimeline.DEFAULT_ATTR.font_size = ForceDirectedTimeline.DEFAULT_FONT_SIZE;
+		ForceDirectedTimeline.DEFAULT_SIMULATION_ATTR.simulationCollisionEnabled = ForceDirectedTimeline.DEFAULT_COLLISION;
 
 		this.lib.drawEdgeGlyphs();
 		this.lib.drawNodeGlyphs();
@@ -26,7 +29,7 @@ export class ForceDirectedTimeline extends Technique {
 		this.lib.setAttributes(ForceDirectedTimeline.DEFAULT_ATTR);
 		this.lib.transformEdgeGlyphsTo(this.lib.sourceTargetLineShape);
 		this.lib.transformNodeGlyphsTo(this.lib.circleShape);
-		this.lib.setSimulationAttrs(new SimulationAttrOpts());
+		this.lib.setSimulationAttrs(ForceDirectedTimeline.DEFAULT_SIMULATION_ATTR);
 		this.lib.positionNodesAndEdgesForceDirected(true);
 	}
 }

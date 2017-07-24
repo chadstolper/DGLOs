@@ -142,7 +142,6 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param enterExit
 	 */
 	public draw(circleG: Selection<any, {}, any, {}>, data: DynamicGraph, timeStepIndex: number, attrOpts: SVGAttrOpts, duplicateNodes?: boolean, enterExit: boolean = false): void {
-		this.enterExitEnabled = enterExit;
 		let circleGlyphs = circleG.selectAll("path.node")
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 		circleGlyphs.exit().remove();

@@ -256,7 +256,8 @@ export class DGLOsSVG extends DGLOsSVGBaseClass {
 						if (self.currentNodeShape.shapeType === "Label") {
 							d.nodes.forEach(function (n: Node): number {
 								let labelSize: Size = calculateSize(n.label);
-								return labelSize.width / 2;
+								console.log(labelSize.width)
+								return labelSize.width;
 							});
 						}
 						else {
