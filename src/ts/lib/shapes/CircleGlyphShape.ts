@@ -10,8 +10,8 @@ import "d3-transition";
 import { interpolate, toCircle } from "flubber";
 
 export class CircleGlyphShape extends Shape implements NodeGlyphShape {
-	readonly _shapeType = "Circle";
-	private _colorScheme = scaleOrdinal<string | number, string>(schemeCategory20);
+	readonly _shapeType: string = "Circle";
+	private _colorScheme: ScaleOrdinal<string | number, string> = scaleOrdinal<string | number, string>(schemeCategory20);
 	private _enterColor: string = "#00D50F"; /* Value used for entering and non-exiting nodes. Default #00D50F. */
 	private _exitColor: string = "#D90000"; /* Value used for non-entering and exiting nodes. Default #D90000. */
 	private _enterExitColor: string = "#FFE241"; /* Value used for entering and exiting nodes. Default #FFE241. */
@@ -33,11 +33,11 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param location
 	 */
 	public initDraw(location: Selection<any, Node, any, {}>): Selection<any, Node, any, {}> {
-		let self = this;
-		let ret: Selection<any, Node, any, {}> = location.append("path")
+		const self: CircleGlyphShape = this;
+		const ret: Selection<any, Node, any, {}> = location.append("path")
 			.classed("node", true)
 			.attr("id", function (d: Node): string | number { return d.id; })
-			.on("click", function (d: Node) {
+			.on("click", function (d: Node): void {
 				if (self.lib.centralNodesEnabled) {
 					self.lib.setCenterNode(d.origID);
 				}
@@ -50,9 +50,9 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param attrOpts
 	 */
 	public updateDraw(glyphs: Selection<any, {}, any, {}>, attrOpts: SVGAttrOpts): Selection<any, {}, any, {}> {
-		let self = this;
+		const self: CircleGlyphShape = this;
 		glyphs
-			.attr("d", function (d: Node) {
+			.attr("d", function (d: Node): string {
 				return self.circlePath(d.x, d.y, attrOpts.radius);
 			})
 		if (attrOpts.fill === "enterExit") {
@@ -75,8 +75,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * Green: Node entering and present in next timestep; Red: Node present in previous timestep and exiting;
 	 * Yellow: Node entering and exiting in same timestep; Blue: Node present in previous and next timestep.
 	 */
-	private enterExitCheck() {
-		let self = this;
+	private enterExitCheck(): (d: Node) => string {
+		const self: CircleGlyphShape = this;
 		return function (d: Node): string {
 			if (d.isEnter) {
 				if (d.isExit) {
@@ -97,7 +97,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param d
 	 * @param key 
 	 */
-	private fill(d: Node, key: string) {
+	private fill(d: Node, key: string): string {
 		switch (key) {
 			case "id":
 				return this.colorScheme(d.origID);
@@ -115,7 +115,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param shape 
 	 * @param targetSelection 
 	 */
-	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>) {
+	public transformTo(sourceSelection: Selection<any, {}, any, {}>, shape: NodeGlyphShape, targetSelection: Selection<any, {}, any, {}>): void {
 		switch (shape.shapeType) {
 			case "Label":
 				//TODO: add a transition
@@ -146,19 +146,19 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 			.data(data.timesteps[timeStepIndex].nodes, function (d: Node) { return d.id + "" });
 		circleGlyphs.exit().remove();
 		if (duplicateNodes === undefined) {
-			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+			const circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 			circleGlyphs = circleGlyphs.merge(circleEnter);
 			this.updateDraw(circleGlyphs, attrOpts);
 		} else {
 			if (duplicateNodes) {
-				let copySet = circleG.selectAll("path.node.top")
+				let copySet: Selection<Element | any | Document | Window, Node, any, {}> = circleG.selectAll("path.node.top")
 					.data(data.timesteps[timeStepIndex].nodes, function (d: Node): string { return "" + d.id });
 				copySet.exit().remove();
-				let copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
+				const copyEnter: Selection<any, Node, any, {}> = this.initDraw(copySet.enter());
 				copySet = copySet.merge(copyEnter);
 				this.updateDraw(copySet, attrOpts);
 			}
-			let circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
+			const circleEnter: Selection<any, Node, any, {}> = this.initDraw(circleGlyphs.enter());
 			circleGlyphs = circleGlyphs.merge(circleEnter);
 			this.updateDraw(circleGlyphs, attrOpts);
 		}
@@ -169,7 +169,7 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * Returns the circle path of the Node by calculating two arcs, one starting at the endpoint of the first and returning.
 	 * https://stackoverflow.com/questions/5737975/circle-drawing-with-svgs-arc-path
 	 */
-	private circlePath(cx: number, cy: number, r: number) {
+	private circlePath(cx: number, cy: number, r: number): string {
 		return 'M ' + cx + ' ' + cy + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
 
@@ -178,8 +178,8 @@ export class CircleGlyphShape extends Shape implements NodeGlyphShape {
 	 * @param d 
 	 * @param attr 
 	 */
-	public getPath(d: Node, attr: SVGAttrOpts) {
-		let r = attr.radius;
+	public getPath(d: Node, attr: SVGAttrOpts): string {
+		const r: number = attr.radius;
 		return 'M ' + d.x + ' ' + d.y + ' m -' + r + ', 0 a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0 a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
 	}
 

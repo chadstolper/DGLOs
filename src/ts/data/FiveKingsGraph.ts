@@ -8,31 +8,31 @@ export class Combatant extends Node {
 
 export class Fight extends Edge {
 	constructor(attacker: Combatant, defender: Combatant, count: number, timestamp: number) {
-		let id: string = timestamp + ":" + attacker.label + " -->" + defender.label;
+		const id: string = timestamp + ":" + attacker.label + " -->" + defender.label;
 		super(id, attacker, defender, count, timestamp);
 	}
 }
 
 export class StaticFiveKingsGraph extends Graph {
 	public constructor(rawNodeData: any[], rawEdgeData: any[], timestamp: number) {
-		let nodeData = new Array<Node>();
-		let edgeData = new Array<Edge>();
-		let index = 0;
-		for (let name of rawNodeData) {
-			let node = new Combatant(name, index, timestamp);
+		const nodeData: Array<Node> = new Array<Node>();
+		const edgeData: Array<Edge> = new Array<Edge>();
+		let index: number = 0;
+		for (const name of rawNodeData) {
+			const node: Combatant = new Combatant(name, index, timestamp);
 			nodeData.push(node);
 			index++;
 		}
-		for (let e of rawEdgeData) {
-			let source: Node = nodeData.find(function (n: Node): boolean {
+		for (const e of rawEdgeData) {
+			const source: Node = nodeData.find(function (n: Node): boolean {
 				return n.label === e.attacker;
 			});
 
-			let target: Node = nodeData.find(function (n: Node): boolean {
+			const target: Node = nodeData.find(function (n: Node): boolean {
 				return n.label === e.defender;
 			});
 
-			let edge = new Fight(source, target, e.count, timestamp);
+			const edge: Fight = new Fight(source, target, e.count, timestamp);
 			edgeData.push(edge);
 		}
 		super(nodeData, edgeData, timestamp);
@@ -41,12 +41,12 @@ export class StaticFiveKingsGraph extends Graph {
 
 export class DynamicFiveKingsGraph extends DynamicGraph {
 	public constructor(response: any[]) {
-		let graphs: Array<StaticFiveKingsGraph> = new Array<StaticFiveKingsGraph>();
-		for (let timestep of response) {
-			let rawNodeData: Array<any> = timestep.nodes;
-			let rawEdgeData: Array<any> = timestep.edges;
-			let timestamp: number = timestep.year;
-			let g: StaticFiveKingsGraph = new StaticFiveKingsGraph(rawNodeData, rawEdgeData, timestamp);
+		const graphs: Array<StaticFiveKingsGraph> = new Array<StaticFiveKingsGraph>();
+		for (const timestep of response) {
+			const rawNodeData: Array<any> = timestep.nodes;
+			const rawEdgeData: Array<any> = timestep.edges;
+			const timestamp: number = timestep.year;
+			const g: StaticFiveKingsGraph = new StaticFiveKingsGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}
 		super(graphs);

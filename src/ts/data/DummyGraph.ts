@@ -60,34 +60,34 @@ export class DrinkEdge extends Edge {
 
 export class StaticDrinkGraph extends Graph {
 	public constructor(rawNodeData: Array<any>, rawEdgeData: Array<any>, timestep: number) {
-		let nodeData = new Array<Node>();
-		let edgeData = new Array<Edge>();
+		const nodeData: Array<Node> = new Array<Node>();
+		const edgeData: Array<Edge> = new Array<Edge>();
 
-		let index = 0;
-		for (let n of rawNodeData) {
+		let index: number = 0;
+		for (const n of rawNodeData) {
 			if (n.type === "person") {
-				let p = new Person(n.id, index, n.name, n.role, timestep);
+				const p: Person = new Person(n.id, index, n.name, n.role, timestep);
 				nodeData.push(p);
 			} else if (n.type === "drink") {
-				let d = new Drink(n.id, index, n.name, n.price, timestep);
+				const d: Drink = new Drink(n.id, index, n.name, n.price, timestep);
 				nodeData.push(d);
 			}
 			index++;
 		}
 
-		for (let e of rawEdgeData) {
+		for (const e of rawEdgeData) {
 
-			let source: Node = nodeData.find(function (n: Node): boolean {
+			const source: Node = nodeData.find(function (n: Node): boolean {
 				return n.id === +e.source;
 			});
 
-			let target: Node = nodeData.find(function (n: Node): boolean {
+			const target: Node = nodeData.find(function (n: Node): boolean {
 				return n.id === +e.target;
 			});
 
-			let id: string = "" + source.id + ":" + target.id;
+			const id: string = "" + source.id + ":" + target.id;
 
-			let de: DrinkEdge = new DrinkEdge(id, source, target, +e.consumption, +e.preference, timestep);
+			const de: DrinkEdge = new DrinkEdge(id, source, target, +e.consumption, +e.preference, timestep);
 			edgeData.push(de);
 		}
 
@@ -98,13 +98,13 @@ export class StaticDrinkGraph extends Graph {
 
 export class DynamicDrinkGraph extends DynamicGraph {
 	public constructor(response: Array<any>) {
-		let graphs: Array<StaticDrinkGraph> = new Array<StaticDrinkGraph>();
+		const graphs: Array<StaticDrinkGraph> = new Array<StaticDrinkGraph>();
 
-		for (let timestep of response) {
-			let rawNodeData: Array<any> = timestep.nodes;
-			let rawEdgeData: Array<any> = timestep.edges;
-			let timestamp: number = timestep.timestamp;
-			let g: StaticDrinkGraph = new StaticDrinkGraph(rawNodeData, rawEdgeData, timestamp);
+		for (const timestep of response) {
+			const rawNodeData: Array<any> = timestep.nodes;
+			const rawEdgeData: Array<any> = timestep.edges;
+			const timestamp: number = timestep.timestamp;
+			const g: StaticDrinkGraph = new StaticDrinkGraph(rawNodeData, rawEdgeData, timestamp);
 			graphs.push(g);
 		}
 
