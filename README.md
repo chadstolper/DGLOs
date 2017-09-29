@@ -1,5 +1,7 @@
 # DGLOs: A Dynamic Graph Visualization Library
 
+(see also [Graph-Level Operations](http://github.com/chadstolper/glo))
+
 ## To set up workspace:
 - install [yarn](https://yarnpkg.com) (if haven't already)
 - open terminal
